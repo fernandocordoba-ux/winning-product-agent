@@ -1,0 +1,6 @@
+# Never commit secrets
+.kalopilot/
+token
+*.token
+.env
+reports/
