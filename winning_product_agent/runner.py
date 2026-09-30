@@ -103,6 +103,12 @@ def response_error(resp):
         return resp.get("error_category") or "provider_error"
     data = resp.get("data") or {}
     status = data.get("status")
+    if status == "completed" and "text" in data and not data.get("text") and not data.get("report"):
+        out_tok = (data.get("token_usage") or {}).get("output_tokens")
+        if isinstance(out_tok, int) and out_tok >= 7900:
+            return "empty_answer_output_token_limit"      # Step U: answer cut at ~8k output tokens
+        if str(data.get("message_id")) != "0":
+            return "empty_answer"
     if status == "completed" and str(data.get("message_id")) == "0":
         # Step U finding: KaloPilot pauses on a plan restriction ("not included in your current plan")
         # and waits for a click in the web UI; the API then says "completed" with no final message.

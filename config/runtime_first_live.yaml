@@ -13,9 +13,9 @@
 # - Credit-saving plan (vs. canonical 9 discovery + 1 query per product):
 #     Discovery        : 1 query, Beauty & Personal Care only (the same per-category prompt that worked
 #                        live for Home; the 9-category "combined" prompt ended early on 2026-09-29, 0 credits)
-#     Deep Analysis    : 5 products in 1 batched query
-#     Amazon Validation: only WPS >= 70 and Confidence >= 60 products, max 5, in 1 batched query
-#   => 2 paid queries, 3 at most. Cached answers (< 24 h) are reused, never re-bought.
+#     Deep Analysis    : 5 products, 1 query each (a 5-product batch exceeded the answer size limit)
+#     Amazon Validation: only WPS >= 70 and Confidence >= 60 products, max 5, 2 per query
+#   Cached answers (< 24 h) are reused, never re-bought.
 # =============================================================================
 profile: first_live
 
@@ -34,10 +34,10 @@ limits:
 query_plan:
   discovery_mode: per_category
   discovery_categories: [beauty_personal_care]
-  deep_batch_size: 5
-  amazon_batch_size: 5
+  deep_batch_size: 1                         # Step U: a 5-product batch hit KaloPilot's ~8k output-token limit
+  amazon_batch_size: 2                       #         (empty answer, 0.44 credits) -> 1 product per deep query
   max_credits_for_run: 25                    # hard stop for this run (balance measured with the FREE endpoint)
   estimated_credits:
     discovery: 4.0                           # observed 3.98 (15-product Home discovery)
-    deep_analysis: 4.0                       # 5-product batch: not observed yet -> actual may differ
+    deep_analysis: 1.0                       # per 1-product query; observed 0.44 for one 8k-token answer
     amazon_validation: 4.0                   # not observed yet -> actual may differ

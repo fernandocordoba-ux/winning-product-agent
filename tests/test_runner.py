@@ -208,10 +208,10 @@ class DryRunDefaults(Base):
     def test_dry_run_budget_first_live(self):
         b = self.runner().dry_run()["query_budget"]
         self.assertEqual(b["stages"]["discovery"]["planned_queries"], 1)       # Beauty only: 1 instead of 9
-        self.assertEqual(b["stages"]["deep_analysis"]["expected_paid_max"], 1)  # 5 products, batch 5
+        self.assertEqual(b["stages"]["deep_analysis"]["expected_paid_max"], 5)  # 5 products, 1 per query
         self.assertEqual(b["stages"]["amazon_validation"]["expected_paid_min"], 0)
-        self.assertEqual((b["expected_paid_queries_min"], b["expected_paid_queries_max"]), (1, 3))
-        self.assertEqual(b["estimated_credits_max"], 12.0)
+        self.assertEqual((b["expected_paid_queries_min"], b["expected_paid_queries_max"]), (1, 9))
+        self.assertEqual(b["estimated_credits_max"], 4.0 + 5 * 1.0 + 3 * 4.0)
         self.assertEqual(b["max_credits_for_run"], 25)
 
     def test_unknown_estimate_stays_unknown(self):
@@ -328,10 +328,10 @@ class LiveRun(Base):
         deep_q = [q for q, k in zip(fake.submits, fake.kinds) if k == "deep"]
         self.assertEqual(len(disc_q), 1)
         self.assertIn('in the category "Beauty & Personal Care"', disc_q[0])   # profile: Beauty only
-        self.assertEqual(len(deep_q), 1)
-        self.assertEqual(len(fake.ids(deep_q[0])), 5)
+        self.assertEqual(len(deep_q), 5)                                     # 1 product per query (Step U)
+        self.assertTrue(all(len(fake.ids(q)) == 1 for q in deep_q))
         self.assertEqual(s["products"]["deep_analyzed_ok"], 5)
-        self.assertLessEqual(len(fake.submits), 3)
+        self.assertLessEqual(len(fake.submits), 1 + 5 + 3)                   # discovery + 5 deep + amazon pairs
 
     def test_stage_statuses_and_bvs_not_fabricated(self):
         fake = FakeProvider()
@@ -371,7 +371,7 @@ class LiveRun(Base):
         self.assertTrue({q["action"] for q in m["query_log"]} == {"CACHE_HIT"})
 
     def test_insufficient_credits_stops_and_resume_does_not_rebuy(self):
-        fake = FakeProvider(balance=11.0, cost=3.0)          # discovery ok (11->8), deep: 8-4 < 5 reserve
+        fake = FakeProvider(balance=9.0, cost=3.5)           # discovery ok (9->5.5), deep: 5.5-1 < 5 reserve
         r, s = self.live(fake)
         self.assertEqual(fake.kinds, ["discovery"])
         self.assertEqual(r.stages["deep_analysis"]["status"], "BLOCKED")
@@ -413,7 +413,8 @@ class LiveRun(Base):
         r, s = self.live(fake)
         self.assertEqual(r.stages["deep_analysis"]["status"], "PARTIAL")
         failed = r.stages["deep_analysis"]["failed"]
-        self.assertEqual([f["error"] for f in failed], ["missing_from_batch_response"])
+        self.assertEqual(len(failed), 1)                          # 1-product query: answer without the product
+        self.assertIn(failed[0]["error"], ("malformed", "missing_from_batch_response"))
         self.assertEqual(s["products"]["deep_analyzed_ok"], 4)
         self.assertEqual(r.stages["final_report"]["status"], "COMPLETED")
         self.assertEqual(s["final_status"], "PARTIAL")
@@ -663,6 +664,11 @@ class FollowUp(Base):
 
 # ============================================================ Step U: plan-restriction pause + free import
 class PlanRestriction(Base):
+    def test_empty_answer_at_token_limit_detected(self):
+        self.assertEqual(R.response_error({"success": True, "data": {
+            "status": "completed", "message_id": "697802", "text": "", "report": None,
+            "token_usage": {"output_tokens": 8001}}}), "empty_answer_output_token_limit")
+
     def test_paused_answer_detected(self):
         self.assertEqual(R.response_error({"success": True, "data": {"status": "completed", "message_id": "0",
                                                                       "text": "plan..."}}),
