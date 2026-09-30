@@ -139,16 +139,20 @@ risk_rules:
 
   insufficient_data:
     description: Not enough real data to evaluate (nothing is estimated).
-    required_fields:                        # missing any of these -> reject
-      - product_id
+    required_fields:                        # CRITICAL: missing any of these -> reject (FAIL)
       - product_name
       - price_min
       - gmv_30d
       - units_30d
     missing_required_action: reject
+    # product_id is not critical: a deterministic fallback key is used instead
+    # (see discovery_mode.dedupe) and the product goes to REVIEW.
+    missing_product_id_action: flag
     low_confidence:
-      below: 60                             # WPS confidence (config/scoring.yaml)
+      below: 60                             # Confidence Score (config/scoring.yaml)
       action: flag
+      stage: deep_analysis                  # NOT applied in discovery: discovery data is
+                                            # intentionally shallow, so confidence is low by design
 
 # -----------------------------------------------------------------------------
 # 3) Concentration analysis — avoid false positives
@@ -185,13 +189,43 @@ concentration:
   rounding: 2
 
 # -----------------------------------------------------------------------------
+# 4) Discovery mode (Step L) — cheap, broad first pass
+#    Used by scripts/discovery.py. Concentration + low_confidence are NOT
+#    applied here (they need deep-analysis data, Step M).
+# -----------------------------------------------------------------------------
+discovery_mode:
+  products_per_category: 15                 # asked from KaloPilot per category query
+  max_candidates: 100                       # PASS + REVIEW returned (hard cap)
+  # Missing any of these optional fields -> REVIEW (never FAIL by itself)
+  review_if_missing:
+    - growth_30d
+    - selling_creator_count
+  # Deterministic order of returned candidates. Momentum first, NOT total GMV.
+  sort_by:
+    - { field: filter_status, order: [PASS, REVIEW] }
+    - { field: growth_30d, direction: desc }        # N/A sorts last
+    - { field: units_30d, direction: desc }
+    - { field: key, direction: asc }                # final tie-breaker
+  dedupe:
+    # 1st choice: KaloData/TikTok product_id (digits only after trimming).
+    # Fallback (no product_id): "fallback:" + sha1 of
+    #   lowercase(trimmed, single-spaced product_name) | lowercase(shop_name or "") | price_min
+    # When duplicates exist, keep the record with the most non-null facts;
+    # tie -> earliest (raw_file, record_index). Values are never merged across records.
+    fallback_fields: [product_name, shop_name, price_min]
+
+# -----------------------------------------------------------------------------
 # Output: every product keeps its filter log
 # -----------------------------------------------------------------------------
 output:
-  keep_rejected_in_log: true                # rejected products saved with reasons
+  keep_rejected_in_log: true                # FAIL products saved with reasons
+  statuses:
+    PASS: all hard filters and risk rules passed, no review reasons
+    REVIEW: kept; at least one flag or missing optional data
+    FAIL: at least one reject rule triggered or critical data missing
   fields:
-    - product_id
-    - filter_status                         # pass | flagged | rejected
-    - reasons                               # rule + input value + threshold
+    - key
+    - filter_status                         # PASS | FAIL | REVIEW
+    - filter_reasons                        # rule + input value + threshold
     - na_checks                             # checks skipped because data was missing
     - config_version                        # "filters-v1"

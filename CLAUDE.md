@@ -82,7 +82,7 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 
 ## Pipeline
 
-1. **Discovery**: `prompts/discovery.md` → KaloPilot → raw JSON in `data/raw/`
+1. **Discovery (Step L)**: `python3 scripts/discovery.py plan` (free) → user OK on cost → `python3 scripts/kalopilot_client.py discover` (spends credits; one query per enabled category, raw saved read-only in `data/raw/`) → `python3 scripts/discovery.py process data/raw/<files>` (free) → `data/processed/discovery_<ts>.json`: normalized facts, dedupe, PASS/FAIL/REVIEW from `filters.yaml`, max 100 candidates ordered by momentum (not GMV), WPS pending, discovery-stage Confidence. No deep analysis here (Step M).
 2. **Validation**: `scripts/validate_data.py` (rules in `prompts/validation.md`) → `data/processed/`
 3. **Filters**: `config/filters.yaml` (+ category overrides) → pass / flagged / rejected, with reasons
 4. **Deep analysis**: `prompts/deep_analysis.md` → KaloPilot, for shortlisted products

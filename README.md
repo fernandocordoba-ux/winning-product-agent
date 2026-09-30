@@ -41,6 +41,8 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `scripts/setup-token.sh` | Saves token to `~/.kalopilot/token` and runs a free connectivity check |
 | `scripts/credits.sh` | Free credit balance check (no credits used) |
 | `scripts/ask.sh` | Submit a question, poll until done, print the answer, save raw response to `data/raw/` |
+| `scripts/discovery.py` | Discovery (Step L): plan queries, normalize, dedupe, PASS/FAIL/REVIEW, max 100 candidates (tested) |
+| `scripts/kalopilot_client.py` | KaloPilot client: free balance check; `discover` runs one query per category (spends credits) |
 | `scripts/concentration.py` | Creator/video revenue concentration + dependency flags (tested) |
 | `scripts/validate_data.py` | Validate raw data → `data/processed/` (skeleton) |
 | `scripts/score_products.py` | Scoring engine: WPS (not implemented yet → N/A) + Confidence Score |
