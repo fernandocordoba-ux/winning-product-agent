@@ -159,28 +159,26 @@ class EnvStore(HIST.HistoryStore):
         self.env = env
 
     def observations(self, identity):
-        """Same environment only; the same provider answer (stage + task_id) counts once (earliest kept).
-        Step U: one Discovery answer imported twice was stored at two fetch times."""
+        """Same environment only; one provider snapshot counts once (first kept, by source_snapshot_hash).
+        Step U: one Discovery answer imported twice had been stored at two fetch times (append-only kept)."""
         out, seen = [], set()
         for o in super().observations(identity):
             if o.get("data_environment") != self.env:
                 continue
-            key = source_key(o)
-            if key and key in seen:
+            h = o.get("source_snapshot_hash") or HIST.snapshot_hash(o)
+            if h in seen:
                 continue
-            seen.add(key)
+            seen.add(h)
             out.append(o)
         return out
 
+    def duplicate_snapshots(self, identity):
+        """Stored observations hidden by the snapshot dedupe (for audits)."""
+        allobs = [o for o in HIST.HistoryStore.observations(self, identity) if o.get("data_environment") == self.env]
+        return len(allobs) - len(self.observations(identity))
+
     def identities(self):
         return [i for i in super().identities() if self.observations(i)]
-
-
-def source_key(obs):
-    """(stage, provider task_id, record index) — identifies one provider answer about one product."""
-    src = obs.get("source") or {}
-    tid = src.get("task_id")
-    return (obs.get("source_stage"), tid, src.get("record_index")) if tid else None
 
 
 class KaloClient:
@@ -309,6 +307,8 @@ class Runner:
         self.filters = D.load_yaml("filters.yaml")
         self.categories = D.load_yaml("categories.yaml")
         self.ttl_hours = self.cfg_deep["credit_protection"]["cache_ttl_hours"]
+        self.cal_cfg = (yaml.safe_load((self.root / "config" / "calibration_lane.yaml").read_text()) or {}).get(
+            "calibration") or {"enabled": False}
 
     # ------------------------------------------------------------------ limits / plan
     @property
@@ -1155,6 +1155,9 @@ class Runner:
             return SKIPPED, {"summary": "amazon_validation.enabled is false"}
         cfg["max_products"] = self.limits["amazon_validation_max_products"]
         eligible, excluded = AV.select_eligible([{**r, "_deep_file": ctx.get("deep_file")} for r in ok], cfg)
+        cal = self.calibration_products(ok, eligible, ctx)             # calibration lane (off by default)
+        cal_ids = {str(d["product_id"]) for d in cal}
+        eligible = eligible + cal
         if not eligible:
             ctx["amazon"] = []
             return SKIPPED, {"summary": f"no eligible product (WPS >= {cfg['minimum_wps']} and Confidence >= "
@@ -1167,7 +1170,8 @@ class Runner:
         pending, stop = [], None
 
         def add(rec):
-            rec.update({"data_environment": self.env, "run_id": self.run_id})
+            rec.update({"data_environment": self.env, "run_id": self.run_id,
+                        "calibration_only": str(rec.get("product_id")) in cal_ids})
             results.append(rec)
             self._checkpoint("amazon_validation", {"status": RUNNING, "results": results})
 
@@ -1227,6 +1231,35 @@ class Runner:
         return status, {"summary": f"{good}/{len(eligible)} validated" + (f" — stopped: {stop}" if stop else ""),
                         "eligible": len(eligible), "saved": str(saved)}
 
+    # ---- calibration lane helpers
+    def calibration_products(self, ok, eligible, ctx):
+        c = self.cal_cfg or {}
+        if not c.get("enabled") or not c.get("allow_non_qualified_products"):
+            return []
+        taken = {str(d["product_id"]) for d in eligible}
+        pool = sorted([d for d in ok if str(d["product_id"]) not in taken],
+                      key=lambda d: (-(d.get("wps") or 0), str(d["product_id"])))
+        out = []
+        for status, n in (c.get("select") or {}).items():
+            out += [{**d, "_deep_file": ctx.get("deep_file")} for d in pool
+                    if (d.get("source") or {}).get("discovery_status") == status][:n]
+        return out[:c.get("max_products", 3)]
+
+    def calibration_rows(self, ctx):
+        amz = {str(a["product_id"]): a for a in ctx.get("amazon") or [] if a.get("calibration_only")}
+        bvs = {str(b["product_id"]): b for b in ctx.get("bvs") or [] if b.get("calibration_only")}
+        rows = []
+        for d in self._ok_deep(ctx):
+            pid = str(d["product_id"])
+            if pid in amz or pid in bvs:
+                a, b = amz.get(pid) or {}, bvs.get(pid) or {}
+                rows.append({"product_id": pid, "name": d.get("product_name"), "calibration_only": True,
+                             "wps": d.get("wps"), "confidence": d.get("confidence"),
+                             "amazon_match_status": a.get("amazon_match_status", a.get("status")), "avs": a.get("avs"),
+                             "amazon_confidence": a.get("amazon_confidence"), "bvs": b.get("bvs"),
+                             "bvs_confidence": b.get("bvs_confidence")})
+        return rows
+
     # ---- BVS (no paid query; supplier data only from stored raw records)
     def s_bvs(self, ctx, now):
         if not ctx.get("deep_file") or not self._ok_deep(ctx):
@@ -1236,7 +1269,16 @@ class Runner:
         cfg["eligibility"]["max_products"] = self.limits["bvs_max_products"]
         r = B.run(deep_path=ctx["deep_file"], amazon_path=ctx.get("amazon_file"),
                   raw_dir=self.raw / "business_viability", cfg=cfg, filters_cfg=self.filters, save=False)
-        results = [{**x, "data_environment": self.env, "run_id": self.run_id} for x in r.get("results", [])]
+        results = [{**x, "data_environment": self.env, "run_id": self.run_id, "calibration_only": False}
+                   for x in r.get("results", [])]
+        cal_amz = {str(a["product_id"]): a for a in ctx.get("amazon") or [] if a.get("calibration_only")}
+        if cal_amz:                                  # calibration lane: BVS plumbing, never ranked
+            for d in self._ok_deep(ctx):
+                if str(d["product_id"]) in cal_amz and str(d["product_id"]) not in {str(x["product_id"]) for x in results}:
+                    comm, src = B.load_commercial_data(d["product_id"], self.raw / "business_viability")
+                    x = B.evaluate({**d, "_file": ctx["deep_file"]}, cal_amz[str(d["product_id"])], comm, cfg,
+                                   self.filters, src)
+                    results.append({**x, "data_environment": self.env, "run_id": self.run_id, "calibration_only": True})
         ctx["bvs"] = results
         if not results:
             return SKIPPED, {"summary": "no product eligible for BVS", "excluded": r.get("excluded")}
@@ -1259,23 +1301,22 @@ class Runner:
         mkt = (ctx["discovery"].get("market") or {}).get("region", "US")
         obs = [HIST.from_discovery(r, ctx["discovery_file"], mkt)
                for r in ctx["discovery"].get("candidates", []) + ctx["discovery"].get("failed", [])]
-        amz = {str(a.get("product_id")): a for a in ctx.get("amazon") or [] if a.get("status") not in ("failed", "malformed")}
-        bvs = {str(b.get("product_id")): b for b in ctx.get("bvs") or []}
+        amz = {str(a.get("product_id")): a for a in ctx.get("amazon") or []
+               if a.get("status") not in ("failed", "malformed") and not a.get("calibration_only")}
+        bvs = {str(b.get("product_id")): b for b in ctx.get("bvs") or [] if not b.get("calibration_only")}
         obs += [HIST.from_deep(d, ctx["deep_file"], amz.get(str(d["product_id"])), bvs.get(str(d["product_id"])))
                 for d in self._ok_deep(ctx)]
         written, dup, paths = 0, 0, []
-        view = EnvStore(self.history_dir, self.env)
         for o in obs:
             if not o:
                 continue
             o["data_environment"], o["run_id"] = self.env, self.run_id
-            key = source_key(o)
-            if key and any(source_key(x) == key for x in view.observations(o["identity_key"])):
-                dup += 1                                       # same provider answer already stored
-                continue
             action, path = store.append(o)
             written += action == "written"
-            dup += action == "duplicate"
+            if action in ("duplicate", "duplicate_snapshot"):
+                dup += 1
+                self.log.log("historical_storage", "DUPLICATE_SNAPSHOT_SKIPPED", product_id=o.get("identity_key"),
+                             message=f"same provider snapshot already stored: {Path(path).name}")
             paths.append(str(path))
         store.rebuild_index()
         self._checkpoint("historical_storage", {"status": COMPLETED, "written": written, "duplicates": dup,
@@ -1317,8 +1358,11 @@ class Runner:
         inputs = {"discovery": {**ctx["discovery"], "_file": ctx["discovery_file"]},
                   "deep": [{**r, "_file": ctx["deep_file"]} for r in self._ok_deep(ctx)],
                   "amazon": [{**r, "_file": ctx.get("amazon_file")} for r in ctx.get("amazon") or []
-                             if r.get("status", "ok") not in ("failed", "malformed") and r.get("product_id")],
-                  "bvs": [{**r, "_file": ctx.get("bvs_file")} for r in ctx.get("bvs") or [] if r.get("product_id")]}
+                             if r.get("status", "ok") not in ("failed", "malformed") and r.get("product_id")
+                             and not r.get("calibration_only")],
+                  "bvs": [{**r, "_file": ctx.get("bvs_file")} for r in ctx.get("bvs") or [] if r.get("product_id")
+                          and not r.get("calibration_only")]}
+        cal_rows = self.calibration_rows(ctx)
         bad = self.environment_violations(inputs)
         if bad:
             return BLOCKED, {"summary": f"report blocked: {len(bad)} record(s) not {self.env}", "violations": bad[:20]}
@@ -1330,9 +1374,17 @@ class Runner:
         banner = (f"\n> Data environment: **{self.env}** · Run `{self.run_id}` · profile `{self.eff['profile_path']}` · "
                   f"BVS without supplier data stays incomplete (never estimated).\n")
         first, _, rest = md.partition("\n")
+        if cal_rows:
+            rest += ("\n\n## Calibration lane (not ranked)\n\n> calibration_only: tests Amazon/AVS/BVS plumbing with "
+                     "real data. These products did NOT meet the production thresholds and are never promoted.\n\n"
+                     "| Product | WPS | Confidence | Amazon match | AVS | Amazon Conf. | BVS | BVS Conf. |\n"
+                     "|---|---|---|---|---|---|---|---|\n" + "\n".join(
+                         f"| {c['name']} | {c['wps']} | {c['confidence']} | {c['amazon_match_status']} | {c['avs']} | "
+                         f"{c['amazon_confidence']} | {c['bvs']} | {c['bvs_confidence']} |" for c in cal_rows) + "\n")
         md = GR.scrub(first + "\n" + banner + rest, pats, self.secrets)
         js = GR.build_json(rep, cfg)
         js["report_metadata"].update({"data_environment": self.env, "run_id": self.run_id})
+        js["calibration_lane"] = cal_rows
         js = GR.scrub(js, pats, self.secrets)
         self.reports_dir.mkdir(parents=True, exist_ok=True)
         md_path, js_path = GR.dated_paths(self.reports_dir, rep["summary"]["research_date"])

@@ -30,5 +30,5 @@ Return the result as ONE fenced JSON code block (```json ... ```) containing ONE
 "top_creators" (up to {top_creators} objects, highest revenue first: {{"creator_id", "name", "revenue", "growth_pct"}}),
 "video_count", "selling_video_count", "video_growth_pct", "video_sales_share_pct" (% of product revenue from videos), "daily_video_count" (array oldest first, or null),
 "top_videos" (up to {top_videos} objects, highest revenue first: {{"video_id", "creator", "revenue", "views"}}),
-"shop_count" (shops selling this product), "similar_listings_count", "category_product_count" (number of products selling in the product's LEAF category, i.e. the LAST level of category_path — not a parent category), "category_product_count_level" (exact name of the category that count refers to).
+"shop_count" (shops selling this product), "similar_listings_count", "category_product_count" (number of products selling in the product's LEAF category, i.e. the LAST level of category_path — not a parent category), "category_product_count_level" (exact name of the category that count refers to), "leaf_category_id" (KaloData ID of that leaf category).
 ===

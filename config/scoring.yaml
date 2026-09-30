@@ -12,7 +12,7 @@
 #   - Raw input values are preserved unchanged in the output for audit.
 # =============================================================================
 
-version: "wps-v1.1"               # v1.1 (Step U calibration): growth_momentum trend_cap
+version: "wps-v2"                  # v2 (Step U post-live calibration): growth rebuilt 10+10+5, tiers, scope
 total_points: 100
 
 # -----------------------------------------------------------------------------
@@ -31,27 +31,54 @@ total_points: 100
 # -----------------------------------------------------------------------------
 
 metrics:
+  # Every metric has a TIER (see data_requirements below):
+  #   CORE        consistently returned by KaloPilot (first live runs); missing -> 0 points, WPS "incomplete"
+  #   SUPPORTING  improves the score when available; missing / not comparable -> excluded from the
+  #               WPS denominator (not a penalty) and Confidence is reduced instead
+  #   ENHANCEMENT not expected from every product (none scored in WPS today; see data_requirements)
+  # "group" only groups metrics for display (e.g. Growth Momentum /25 = 3 metrics).
 
-  # 1) GROWTH MOMENTUM — is revenue accelerating?
-  growth_momentum:
-    points: 25
-    # v1.1 (Step U live calibration): 30-day growth can be +100 % while the product's own daily
-    # sales are already falling (peak passed). If the daily-sales trend (deep analysis) is
-    # DECLINING, this metric can earn at most max_fraction of its points. Editable here.
-    trend_cap:
-      input: recent_trend                  # deep_analysis trend_metrics.label (daily GMV velocity)
-      when: [DECLINING]
-      max_fraction: 0.5
+  # 1) GROWTH MOMENTUM /25 (wps-v2, Step U calibration) = long-term 10 + recent trend 10 + acceleration 5.
+  #    Positive 30-day growth alone can earn at most 10 of 25.
+  growth_long_term:
+    group: growth_momentum
+    tier: CORE
+    points: 10
     components:
       revenue_growth:
         weight: 1.0
-        input: revenue_growth_pct          # product GMV growth vs. prior equal window (%)
+        input: revenue_growth_pct          # 30 days vs previous 30 days (%); CALCULATED from gmv_prev_30d when given
         scale: linear
         zero_at: 0                          # flat or declining -> 0
-        full_at: 100                        # +100% or more -> full points
+        full_at: 100                        # +100 % or more -> full points
+
+  growth_recent_trend:
+    group: growth_momentum
+    tier: SUPPORTING
+    points: 10
+    components:
+      recent_velocity:
+        weight: 1.0
+        input: recent_velocity_pct         # mean daily GMV of the last 7 days vs the 7 days before (%)
+        scale: linear                       # (deep_analysis.yaml trend.window_days; needs >= 14 daily points)
+        zero_at: -20                        # falling 20 % week over week or worse -> 0
+        full_at: 30                         # rising 30 % or more -> full. Any decline (< 0) earns < 4/10.
+
+  growth_acceleration:
+    group: growth_momentum
+    tier: SUPPORTING
+    points: 5
+    components:
+      velocity_change:
+        weight: 1.0
+        input: acceleration_pp             # recent_velocity_pct - prior_velocity_pct (percentage points)
+        scale: linear                       # prior = the 7 days before vs the 7 days before those (needs 21 days)
+        zero_at: -30                        # strongly decelerating -> 0
+        full_at: 30                         # any deceleration (< 0) earns < 2.5/5
 
   # 2) DEMAND — how much is actually selling?
   demand:
+    tier: CORE
     points: 15
     components:
       units_sold:
@@ -63,6 +90,7 @@ metrics:
 
   # 3) VIDEO MOMENTUM — is short-video content driving sales?
   video_momentum:
+    tier: CORE
     points: 15
     components:
       video_count:
@@ -78,42 +106,58 @@ metrics:
         zero_at: 50
         full_at: 95
 
-  # 4) CREATOR MOMENTUM — are creators joining and growing with it?
-  creator_momentum:
-    points: 15
+  # 4) CREATOR MOMENTUM /15 = reach 9 (CORE) + top-creator growth 6 (SUPPORTING; growth per creator
+  #    was returned for >= 3 creators in only 3 of 5 live deep answers)
+  creator_reach:
+    group: creator_momentum
+    tier: CORE
+    points: 9
     components:
       creator_count:
-        weight: 0.6
+        weight: 1.0
         input: creators_count               # creators promoting the product
         scale: log10
         zero_at: 100
         full_at: 5000
+  creator_growth:
+    group: creator_momentum
+    tier: SUPPORTING
+    points: 6
+    components:
       top_creators_growing:
-        weight: 0.4
+        weight: 1.0
         input: top_creators_growth_pct      # list: growth % of each top creator returned
         scale: ratio
         match: "> 0"                        # share of top creators with positive growth
         min_items: 3                        # fewer than 3 creators returned -> N/A
 
-  # 5) COMPETITION — room to enter (higher score = LESS competition)
-  competition:
-    points: 15
+  # 5) COMPETITION /15 = category growth 7.5 + saturation 7.5 (both SUPPORTING; scope-dependent)
+  competition_category_growth:
+    group: competition
+    tier: SUPPORTING
+    points: 7.5
     components:
       category_growth:
-        weight: 0.5
+        weight: 1.0
         input: category_growth_pct          # category GMV growth vs. prior window (%)
         scale: linear
         zero_at: -20
         full_at: 50
+  competition_saturation:
+    group: competition
+    tier: SUPPORTING
+    points: 7.5
+    components:
       category_saturation:
-        weight: 0.5
-        input: category_product_count       # products selling in the same category
-        scale: log10
+        weight: 1.0
+        input: competition_count_comparable # competitor count ONLY when its scope is comparable
+        scale: log10                        # (PRODUCT_CLUSTER / SUBCATEGORY; see competition_scope)
         zero_at: 50000                      # inverted: more products -> lower score
         full_at: 500
 
   # 6) MARGIN POTENTIAL — price room for profit (seller perspective)
   margin_potential:
+    tier: CORE
     points: 10
     components:
       price_level:
@@ -131,6 +175,7 @@ metrics:
 
   # 7) TREND STABILITY — are daily sales steady rather than spiky?
   trend_stability:
+    tier: SUPPORTING
     points: 5
     components:
       sales_volatility:
@@ -141,6 +186,32 @@ metrics:
         scale: linear
         zero_at: 1.0                        # inverted: CV >= 1.0 -> 0
         full_at: 0.2                        # CV <= 0.2 -> full points
+
+# -----------------------------------------------------------------------------
+# Data requirements (wps-v2). Tiers are based on config/provider_capabilities.yaml
+# (what KaloPilot actually returned in the first live runs), never on guesses.
+#   WPS = 100 * earned_points / possible_points
+#   possible_points = all CORE points + points of SUPPORTING/ENHANCEMENT metrics that are AVAILABLE
+#   -> a missing CORE metric counts 0 (penalty, WPS marked incomplete);
+#      a missing SUPPORTING metric is excluded (no WPS penalty) and lowers Confidence.
+# -----------------------------------------------------------------------------
+data_requirements:
+  missing_policy:
+    CORE: zero_points_and_incomplete
+    SUPPORTING: exclude_and_reduce_confidence
+    ENHANCEMENT: exclude_and_reduce_confidence
+  confidence_adjustments:                   # subtracted from the Confidence score (floor 0), documented per product
+    missing_supporting_metric: 3            # per SUPPORTING metric excluded from WPS
+    missing_enhancement_field: 1            # per ENHANCEMENT field below that is missing
+  enhancement_fields:                       # useful, not expected from every product (never mandatory)
+    - similar_listings_count
+    - price_history
+    - daily_creator_count
+    - daily_video_count
+    - daily_units
+    - creator_growth_pct
+    - video_growth_pct
+    - shops_count
 
 # -----------------------------------------------------------------------------
 # Missing data (N/A) rules

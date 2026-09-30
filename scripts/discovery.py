@@ -34,6 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from confidence import confidence_score, load_config as load_confidence_config  # noqa: E402
 from score_products import load_scoring_config, wps_score  # noqa: E402
+import provenance  # noqa: E402
 
 NA = "N/A"
 NA_TOKENS = {"", "n/a", "na", "null", "none", "-", "--", "—", "not available", "unknown"}
@@ -265,6 +266,7 @@ def normalize(record, meta, index):
             "original_record": copy.deepcopy(record),     # unchanged source record
         },
         "calculated": {},                                 # filled by evaluate()/score
+        "provenance": provenance.discovery_provenance(facts, meta),
     }, None
 
 

@@ -88,36 +88,66 @@ def component_value(product, comp):
 
 
 def wps_breakdown(product, cfg=None):
-    """Full deterministic WPS with per-metric breakdown (N/A metrics score 0)."""
+    """Deterministic WPS (wps-v2) with per-metric breakdown.
+
+    Tiers (scoring.yaml data_requirements): a missing CORE metric scores 0 and marks the WPS incomplete;
+    a missing SUPPORTING/ENHANCEMENT metric is excluded from the denominator (no WPS penalty) and is
+    reported so Confidence can be reduced. WPS = 100 * earned / possible.
+    """
     cfg = cfg or load_scoring_config()
     places = cfg.get("output", {}).get("rounding", 2)
-    metrics, na, total = {}, [], 0.0
+    metrics, na, earned, possible = {}, [], 0.0, 0.0
+    missing_by_tier = {"CORE": [], "SUPPORTING": [], "ENHANCEMENT": []}
+    groups = {}
     for name, m in cfg["metrics"].items():
+        tier = m.get("tier", "CORE")
         comps, frac, missing = {}, 0.0, []
         for cname, c in m["components"].items():
-            s, d = component_value(product, c)
+            s_, d = component_value(product, c)
             comps[cname] = d
-            if s is None:
+            if s_ is None:
                 missing.append(cname)
             else:
-                frac += s * c["weight"]
-        if missing:                                   # all_components_required
-            metrics[name] = {"points": NA, "max": m["points"], "missing_components": missing, "components": comps}
+                frac += s_ * c["weight"]
+        g = groups.setdefault(m.get("group", name), {"points": 0.0, "max": 0.0, "metrics": [], "na": []})
+        g["max"] += m["points"]
+        g["metrics"].append(name)
+        if missing:                                   # all components of a metric are required
+            metrics[name] = {"points": NA, "max": m["points"], "tier": tier, "missing_components": missing,
+                             "components": comps}
             na.append(name)
+            missing_by_tier.setdefault(tier, []).append(name)
+            g["na"].append(name)
+            if tier == "CORE":
+                possible += m["points"]              # CORE: counts as 0 points
         else:
-            cap = m.get("trend_cap")                  # wps-v1.1: e.g. full growth score but DECLINING daily sales
-            capped = None
-            if cap and product.get(cap["input"]) in cap["when"] and frac > cap["max_fraction"]:
-                capped = {"input": cap["input"], "value": product.get(cap["input"]),
-                          "uncapped_points": _round(m["points"] * frac, places), "max_fraction": cap["max_fraction"]}
-                frac = cap["max_fraction"]
             pts = m["points"] * frac
-            total += pts
-            metrics[name] = {"points": _round(pts, places), "max": m["points"], "components": comps}
-            if capped:
-                metrics[name]["trend_cap_applied"] = capped
-    return {"score": _round(total, places), "complete": not na, "metrics": metrics,
-            "na_metrics": na, "version": cfg.get("version")}
+            earned += pts
+            possible += m["points"]
+            g["points"] += pts
+            metrics[name] = {"points": _round(pts, places), "max": m["points"], "tier": tier, "components": comps}
+    score = _round(100 * earned / possible, places) if possible > 0 else 0.0
+    for g in groups.values():
+        g["points"] = _round(g["points"], places)
+    return {"score": score, "complete": not missing_by_tier["CORE"], "metrics": metrics, "na_metrics": na,
+            "missing_by_tier": missing_by_tier, "groups": groups,
+            "points_earned": _round(earned, places), "points_possible": _round(possible, places),
+            "version": cfg.get("version")}
+
+
+def confidence_adjustments(product, wps, cfg):
+    """Confidence reductions for data the WPS could not use (never changes WPS)."""
+    dr = cfg.get("data_requirements") or {}
+    adj = dr.get("confidence_adjustments") or {}
+    out = []
+    for name in wps["missing_by_tier"].get("SUPPORTING", []) + wps["missing_by_tier"].get("ENHANCEMENT", []):
+        out.append({"reason": f"SUPPORTING/ENHANCEMENT metric not available: {name}",
+                    "points": -adj.get("missing_supporting_metric", 0)})
+    for field in dr.get("enhancement_fields") or []:
+        v = product.get(field)
+        if v is None or (isinstance(v, list) and not [x for x in v if x is not None]):
+            out.append({"reason": f"ENHANCEMENT field missing: {field}", "points": -adj.get("missing_enhancement_field", 0)})
+    return [a for a in out if a["points"]]
 
 
 def wps_score(product, cfg=None):
@@ -145,6 +175,13 @@ def score_product(product, confidence_cfg=None, scoring_cfg=None):
     scoring_cfg = scoring_cfg or load_scoring_config()
     wps = wps_breakdown(product, scoring_cfg)
     conf = confidence_score(product, confidence_cfg or scoring_cfg["confidence"])
+    adj = confidence_adjustments(product, wps, scoring_cfg)
+    if adj:                                            # wps-v2: missing supporting data lowers Confidence
+        places = scoring_cfg.get("output", {}).get("rounding", 2)
+        conf = {**conf, "score_before_adjustments": conf["score"], "adjustments": adj,
+                "score": _round(max(0.0, conf["score"] + sum(a["points"] for a in adj)), places)}
+        conf["level"] = next(lv for lv, t in sorted(scoring_cfg["confidence"]["levels"].items(), key=lambda kv: -kv[1])
+                             if conf["score"] >= t)
     return {
         "product_id": product.get("product_id"),
         "product_name": product.get("product_name"),

@@ -87,3 +87,12 @@ red_flags:
   IP_REVIEW_REQUIRED: { source: filters.yaml risk_rules.trademark_ip_risk.keywords }   # never an infringement claim
   REGULATED_REVIEW_REQUIRED: { source: filters.yaml risk_rules.highly_regulated.keywords }
   SHIPPING_REVIEW_REQUIRED: { source: filters.yaml risk_rules.shipping_problems.keywords }
+
+# -----------------------------------------------------------------------------
+# Competition scope (Step U post-live calibration). A competitor count is only scored /
+# used for EXTREME_SATURATION when its taxonomy scope is comparable. PRODUCT_CLUSTER and
+# SUBCATEGORY counts are never compared with CATEGORY counts. Non-comparable -> N/A for WPS
+# (SUPPORTING metric: excluded, Confidence reduced) + COMPETITION_NOT_COMPARABLE flag.
+# -----------------------------------------------------------------------------
+competition_scope:
+  comparable_scopes: [PRODUCT_CLUSTER, SUBCATEGORY]

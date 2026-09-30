@@ -158,7 +158,8 @@ def wps_recompute(rec, disc_rec, scoring_cfg):
     obj = rec.get("original_record") or {}
     ctx = disc_rec or {"facts": {}}
     f, _, _ = DA.normalize_deep(obj, ctx)
-    inp = DA.scoring_input(f, 0, DA.trend_metrics(f, DA.load_cfg())["label"])
+    dcfg = DA.load_cfg()
+    inp = DA.scoring_input(f, 0, DA.trend_metrics(f, dcfg), DA.competition_scope(f, dcfg))
     b = wps_breakdown(inp, scoring_cfg)
     stored = rec.get("wps_breakdown") or {}
     mism = [k for k, m in b["metrics"].items() if (stored.get(k) or {}).get("points") != m["points"]]
@@ -170,14 +171,14 @@ def sanity(rec, amz, bvs, em, conc_rules):
     out = []
     bd = rec.get("wps_breakdown") or {}
     gr = _num(_get(rec, ("growth", "growth_30d_pct")))
-    gm = bd.get("growth_momentum") or {}
+    gm = (rec.get("wps_groups") or {}).get("growth_momentum") or bd.get("growth_momentum") or {}
     flags = {f.get("flag") for f in rec.get("red_flags") or []}
     trend = (rec.get("trend_metrics") or {}).get("label")
     if _num(gm.get("points")) and gm["points"] > 0.5 * gm["max"] and (
             (gr is not None and gr <= 0) or "SALES_DECLINING" in flags or trend == "DECLINING"):
         out.append(f"declining sales (growth {gr}, trend {trend}) but Growth score {gm['points']}/{gm['max']}")
     cm = rec.get("creator_metrics") or {}
-    cr = bd.get("creator_momentum") or {}
+    cr = bd.get("creator_reach") or bd.get("creator_momentum") or {}
     if cm.get("total") is None and _num(cr.get("points")):
         out.append(f"creator count missing but Creator score {cr['points']}/{cr['max']}")
     for code, st in ((rec.get("concentration_metrics") or {}).get("flags") or {}).items():

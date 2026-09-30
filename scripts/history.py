@@ -18,6 +18,7 @@ CLI:
   python3 scripts/history.py migrate --apply    # append processed observations to history
   python3 scripts/history.py show <product_id>  # snapshot for one product
 """
+import hashlib
 import json
 import math
 import os
@@ -33,7 +34,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 NA = "N/A"
 NEW_GROWTH = "NEW_GROWTH"
-SCHEMA_VERSION = "history-v1.1"   # v1.1 (Step R): + selling_video_count, competition, concentration (additive)
+SCHEMA_VERSION = "history-v1.2"   # v1.2 (Step U): provider_observation_timestamp, retrieved_at, imported_at, source_snapshot_hash
+_PREV_SCHEMA = "history-v1.1"   # v1.1 (Step R): + selling_video_count, competition, concentration (additive)
 SECRET_PATTERNS = ("token", "api_key", "apikey", "authorization", "secret", "password", "bearer")
 
 # metric -> (section, field) inside an observation
@@ -106,6 +108,31 @@ def _flags(v):
     return [f["flag"] for f in v or [] if isinstance(f, dict) and f.get("flag")]
 
 
+# ================================================================== snapshot identity (Step U)
+def snapshot_hash(obs):
+    """Deterministic identity of ONE provider snapshot of a product.
+    = stage + product + stable provider time + normalized source payload (tiktok/competition/concentration).
+    Stable provider time: provider_observation_timestamp (the provider's data_window_end); if the provider
+    gave none, the provider task (task_id + record) ; only if neither exists, the observation time itself
+    (so rows without any provider identity are never merged). Two records on the same day with different
+    values always hash differently."""
+    src = obs.get("source") or {}
+    anchor = (obs.get("provider_observation_timestamp")
+              or (f"task:{src.get('task_id')}#{src.get('record_index')}" if src.get("task_id") else None)
+              or f"obs:{obs.get('observation_timestamp')}")
+    payload = {"stage": obs.get("source_stage"), "identity": obs.get("identity_key"), "anchor": anchor,
+               "tiktok": obs.get("tiktok"), "competition": obs.get("competition"),
+               "concentration": obs.get("concentration")}
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()
+
+
+def _timestamps(o, provider_date, retrieved):
+    o["provider_observation_timestamp"] = provider_date          # provider's data as-of (data_window_end)
+    o["retrieved_at"] = retrieved                                 # when we fetched the provider answer
+    o["source_snapshot_hash"] = snapshot_hash(o)
+    return o
+
+
 # ================================================================== observation builders
 def empty_observation():
     return {"schema_version": SCHEMA_VERSION,
@@ -146,7 +173,7 @@ def from_discovery(rec, processed_file, market="US"):
     o["discovery_status"] = c.get("filter_status")
     o["source"] = {"stage": "discovery", "processed_file": str(processed_file), "raw_file": s.get("raw_file"),
                    "task_id": s.get("task_id"), "report_url": s.get("report_url"), "record_index": s.get("record_index")}
-    return o
+    return _timestamps(o, f.get("data_window_end"), iso(ts))
 
 
 def from_deep(d, processed_file, amazon=None, bvs=None):
@@ -198,7 +225,7 @@ def from_deep(d, processed_file, amazon=None, bvs=None):
         o["source"]["bvs_processed_file"] = bvs.get("_file")
         o["source"]["commercial_data_file"] = (bvs.get("source") or {}).get("commercial_data_file")
         o["missing_data"] += [f"economics:{m}" for m in bvs.get("missing_data") or []]
-    return o
+    return _timestamps(o, d.get("data_window_end"), iso(ts))
 
 
 # ================================================================== store
@@ -220,10 +247,15 @@ class HistoryStore:
         path = self.path_for(obs)
         if path.exists():
             return "duplicate", path
+        h = obs.get("source_snapshot_hash") or snapshot_hash(obs)
+        for prev in self.observations(obs["identity_key"]):
+            if (prev.get("source_snapshot_hash") or snapshot_hash(prev)) == h:
+                return "duplicate_snapshot", Path(prev["_path"])  # DUPLICATE_SNAPSHOT_SKIPPED: first one kept
         if dry_run:
             return "would_write", path
         path.parent.mkdir(parents=True, exist_ok=True)
-        body = scrub({**obs, "written_at": iso(datetime.now(timezone.utc))})
+        now_iso = iso(datetime.now(timezone.utc))
+        body = scrub({**obs, "source_snapshot_hash": h, "written_at": now_iso, "imported_at": now_iso})
         with open(path, "x") as fh:                        # 'x' -> fails instead of overwriting
             json.dump(body, fh, ensure_ascii=False, indent=2)
         os.chmod(path, 0o444)                              # immutable once written
@@ -637,7 +669,7 @@ def migrate(processed_dir=ROOT / "data" / "processed", store=None, dry_run=True)
                      "path": str(path)})
     summary = {"dry_run": dry_run, "observations_found": len(obs), "skipped_invalid": len(skipped),
                "new": sum(p["action"] in ("written", "would_write") for p in plan),
-               "duplicates": sum(p["action"] in ("duplicate", "duplicate_in_batch") for p in plan),
+               "duplicates": sum(p["action"] in ("duplicate", "duplicate_in_batch", "duplicate_snapshot") for p in plan),
                "products": len({p["identity"] for p in plan}),
                "by_stage": {s: sum(p["stage"] == s for p in plan) for s in ("discovery", "deep_analysis")}}
     if not dry_run:

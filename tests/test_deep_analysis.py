@@ -155,7 +155,7 @@ class DataIntegrity(TmpBase):
         self.assertEqual(r["growth"]["growth_30d_pct"], 0)
         self.assertEqual(r["competition_metrics"]["shop_count"], 0)
         self.assertNotIn("growth_30d_pct", r["missing_data"])
-        self.assertEqual(r["wps_breakdown"]["growth_momentum"]["points"], 0.0)   # scored as real 0, not N/A
+        self.assertEqual(r["wps_breakdown"]["growth_long_term"]["points"], 0.0)  # scored as real 0, not N/A
 
 
 # ------------------------------------------------------------------ concentration
@@ -227,12 +227,18 @@ class Scoring(TmpBase):
     def test_wps_integration_complete(self):
         r = self.analyze(deep_obj())
         self.assertTrue(r["wps_complete"])
-        self.assertEqual(set(r["wps_breakdown"]), {"growth_momentum", "demand", "video_momentum", "creator_momentum",
-                                                   "competition", "margin_potential", "trend_stability"})
-        total = round(sum(m["points"] for m in r["wps_breakdown"].values()), 2)
-        self.assertAlmostEqual(r["wps"], total, places=1)
-        # growth 60% on linear 0..100 -> 0.6 * 25 = 15.0 (deterministic, from scoring.yaml)
-        self.assertEqual(r["wps_breakdown"]["growth_momentum"]["points"], 15.0)
+        self.assertEqual(set(r["wps_groups"]), {"growth_momentum", "demand", "video_momentum", "creator_momentum",
+                                                "competition", "margin_potential", "trend_stability"})
+        avail = [m for m in r["wps_breakdown"].values() if m["points"] != "N/A"]
+        earned = sum(m["points"] for m in avail)
+        possible = sum(m["max"] for m in r["wps_breakdown"].values() if m["points"] != "N/A" or m["tier"] == "CORE")
+        self.assertAlmostEqual(r["wps"], round(100 * earned / possible, 2), places=1)
+        # wps-v2 growth: long-term 60 % -> 0.6*10 = 6.0; flat daily series: velocity 0 -> (0+20)/50*10 = 4.0;
+        # acceleration 0 -> (0+30)/60*5 = 2.5; group = 12.5 of 25 (deterministic, from scoring.yaml)
+        self.assertEqual(r["wps_breakdown"]["growth_long_term"]["points"], 6.0)
+        self.assertEqual(r["wps_breakdown"]["growth_recent_trend"]["points"], 4.0)
+        self.assertEqual(r["wps_breakdown"]["growth_acceleration"]["points"], 2.5)
+        self.assertEqual(r["wps_groups"]["growth_momentum"]["points"], 12.5)
         self.assertEqual(r["wps_breakdown"]["trend_stability"]["points"], 5.0)    # flat series, CV 0
 
     def test_wps_deterministic(self):

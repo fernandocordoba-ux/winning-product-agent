@@ -29,6 +29,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 import concentration  # noqa: E402
+import provenance  # noqa: E402
 import discovery as disc  # noqa: E402
 from score_products import load_scoring_config, score_product  # noqa: E402
 
@@ -172,7 +173,7 @@ SCALARS = [("product_id", "id"), ("product_name", "str"), ("product_url", "str")
            ("creator_growth_pct", "pct"), ("video_count", "count"), ("selling_video_count", "count"),
            ("video_growth_pct", "pct"), ("video_sales_share_pct", "num"), ("shop_count", "count"),
            ("similar_listings_count", "count"), ("category_product_count", "count"),
-           ("gmv_prev_30d", "num"), ("category_product_count_level", "str")]
+           ("gmv_prev_30d", "num"), ("category_product_count_level", "str"), ("leaf_category_id", "id")]
 SERIES = [("daily_gmv", "num"), ("daily_units", "count"), ("daily_creator_count", "count"),
           ("daily_video_count", "count")]
 
@@ -231,7 +232,6 @@ def normalize_deep(obj, context):
             items.append(item)
         f[lst] = items
     verify_growth(f, w)
-    verify_category_level(f, w)
     # fall back to the Discovery identifier only for identity (not metrics)
     if f["product_id"] is None and context["facts"].get("product_id"):
         f["product_id"] = context["facts"]["product_id"]
@@ -242,24 +242,38 @@ def normalize_deep(obj, context):
 
 # ============================================================ Step U calibration: verification
 AUX_FIELDS = {"gmv_prev_30d", "category_product_count_level", "growth_30d_provider", "growth_source",
-              "category_count_verified", "growth_mismatch"}
+              "growth_mismatch", "leaf_category_id"}
 verify_growth = disc.verify_growth                     # shared with Discovery (one definition)
 
 
-def verify_category_level(f, w):
-    """category_product_count must count the product's own LEAF category (last category_path level)."""
-    cnt, level, path = f.get("category_product_count"), f.get("category_product_count_level"), f.get("category_path")
-    leaf = path.split(">")[-1].strip().lower() if path else None
-    if cnt is None:
-        f["category_count_verified"] = None
-        return
-    if level and leaf and level.split(">")[-1].strip().lower() == leaf:
-        f["category_count_verified"] = True
-        return
-    f["category_count_verified"] = False
-    w.append(f"category_product_count {cnt} set to N/A: counted level "
-             f"'{level or 'not stated'}' is not the product's leaf category '{leaf or 'unknown'}'")
-    f["category_product_count"] = None
+COMPETITION_SCOPES = ("PRODUCT_CLUSTER", "SUBCATEGORY", "CATEGORY", "UNKNOWN")
+
+
+def competition_scope(f, cfg=None):
+    """Taxonomy scope of the competition count (Step U post-live calibration).
+    PRODUCT_CLUSTER: similar_listings_count (same/similar product)
+    SUBCATEGORY    : category_product_count whose stated level is the LEAF of category_path
+    CATEGORY       : count for a parent level (e.g. the whole Beauty category)
+    UNKNOWN        : level not stated / not matching the path (never guessed)
+    Only comparable scopes (config) are scored or used for EXTREME_SATURATION."""
+    cs = (cfg or {}).get("competition_scope") or {"comparable_scopes": ["PRODUCT_CLUSTER", "SUBCATEGORY"]}
+    segs = [x.strip().lower() for x in (f.get("category_path") or "").split(">") if x.strip()]
+    out = {"competition_count": None, "competition_scope": "UNKNOWN", "source_field": None,
+           "competition_category_id": f.get("category_id"), "competition_subcategory_id": None,
+           "competition_comparable": False, "category_level_stated": f.get("category_product_count_level")}
+    if f.get("similar_listings_count") is not None:
+        out.update(competition_count=f["similar_listings_count"], competition_scope="PRODUCT_CLUSTER",
+                   source_field="similar_listings_count")
+    elif f.get("category_product_count") is not None:
+        out.update(competition_count=f["category_product_count"], source_field="category_product_count")
+        level = (f.get("category_product_count_level") or "").split(">")[-1].strip().lower()
+        if level and segs and level == segs[-1] and len(segs) >= 2:
+            out.update(competition_scope="SUBCATEGORY", competition_subcategory_id=f.get("leaf_category_id"))
+        elif level and level in segs:
+            out["competition_scope"] = "CATEGORY"
+    out["competition_comparable"] = (out["competition_count"] is not None
+                                     and out["competition_scope"] in cs["comparable_scopes"])
+    return out
 
 
 # ============================================================ Stage 5 — trend
@@ -322,7 +336,7 @@ def concentration_metrics(f, filters_cfg):
     return concentration.analyze(prod, filters_cfg["concentration"])
 
 
-def scoring_input(f, history_snapshots, trend_label=None):
+def scoring_input(f, history_snapshots, trend=None, comp=None):
     pmin, pmax = f["price_min"], f["price_max"]
     launch_days = None
     if f["launch_date"] and f["data_window_end"]:
@@ -331,13 +345,23 @@ def scoring_input(f, history_snapshots, trend_label=None):
     creators = f["top_creators"]
     return {
         "product_id": f["product_id"], "product_name": f["product_name"],
-        "recent_trend": trend_label,                       # wps-v1.1 growth_momentum trend_cap
+        # wps-v2 growth momentum: recent trend + acceleration from the daily GMV series (never fabricated)
+        "recent_velocity_pct": ((trend or {}).get("gmv") or {}).get("velocity_pct"),
+        "acceleration_pp": (lambda g: round(g["velocity_pct"] - g["prior_velocity_pct"], 2)
+                            if g.get("velocity_pct") is not None and g.get("prior_velocity_pct") is not None
+                            else None)((trend or {}).get("gmv") or {}),
+        # competition count ONLY when its taxonomy scope is comparable (else N/A -> lowers Confidence)
+        "competition_count_comparable": (comp or {}).get("competition_count") if (comp or {}).get(
+            "competition_comparable") else None,
         # WPS inputs (config/scoring.yaml metrics)
         "revenue_growth_pct": f["growth_30d_pct"], "units_sold": f["units_30d"],
         "videos_count": f["video_count"], "video_sales_share_pct": f["video_sales_share_pct"],
         "creators_count": f["creator_count"],
         "top_creators_growth_pct": [c.get("growth_pct") for c in creators] if creators is not None else None,
-        "category_growth_pct": f["category_growth_pct"], "category_product_count": f["category_product_count"],
+        "category_growth_pct": f["category_growth_pct"],
+        # Confidence evidence: a competition count only counts when its scope is comparable
+        "category_product_count": (comp or {}).get("competition_count") if (comp or {}).get("competition_comparable")
+        else None,
         "price_avg": (pmin + pmax) / 2 if None not in (pmin, pmax) else None,
         "commission_pct": f["commission_pct"], "daily_sales_series": f["daily_gmv"],
         # Confidence inputs (config/scoring.yaml confidence)
@@ -349,7 +373,7 @@ def scoring_input(f, history_snapshots, trend_label=None):
     }
 
 
-def red_flags(f, trend, conc, conf_score, filters_cfg, cfg):
+def red_flags(f, trend, conc, conf_score, filters_cfg, cfg, comp=None):
     rf, flags = cfg["red_flags"], []
 
     def add(code, **detail):
@@ -366,7 +390,16 @@ def red_flags(f, trend, conc, conf_score, filters_cfg, cfg):
         add("GROWTH_UNVERIFIED", note="provider growth without previous-period revenue; not recalculated")
     if f.get("growth_mismatch"):
         add("GROWTH_MISMATCH", **f["growth_mismatch"], note="calculated growth used")
-    inputs = {"similar_listings_count": f["similar_listings_count"], "category_product_count": f["category_product_count"]}
+    # Step U: saturation only from a COMPARABLE competition scope (a whole-category count never flags a
+    # subcategory product); PRODUCT_CLUSTER -> similar_listings rule, SUBCATEGORY -> category count rule
+    comp = comp or competition_scope(f, cfg)
+    inputs = {"similar_listings_count": comp["competition_count"] if comp["competition_comparable"]
+              and comp["competition_scope"] == "PRODUCT_CLUSTER" else None,
+              "category_product_count": comp["competition_count"] if comp["competition_comparable"]
+              and comp["competition_scope"] == "SUBCATEGORY" else None}
+    if comp["competition_count"] is not None and not comp["competition_comparable"]:
+        add("COMPETITION_NOT_COMPARABLE", scope=comp["competition_scope"], count=comp["competition_count"],
+            note="count not used for WPS or saturation; Confidence reduced instead")
     for chk in filters_cfg["risk_rules"]["extreme_seller_saturation"]["checks"]:
         v = inputs.get(chk["input"])
         if v is not None and disc._cmp(v, chk["condition"]):
@@ -408,7 +441,8 @@ def history_count(product_id, out_dir=OUT_DIR):
             res = json.loads(path.read_text())
         except json.JSONDecodeError:
             continue
-        n += any(r.get("product_id") == product_id for r in res.get("results", []))
+        # Step U fix: only SUCCESSFUL prior analyses are evidence (a failed/empty answer is not a snapshot)
+        n += any(r.get("product_id") == product_id and r.get("status") == "ok" for r in res.get("results", []))
     return n
 
 
@@ -428,7 +462,9 @@ def analyze(envelope, raw_path, context, cfgs, history_snapshots=0, cache_hit=Fa
     f, missing, warnings = normalize_deep(obj, context)
     trend = trend_metrics(f, cfg)
     conc = concentration_metrics(f, filters_cfg)
-    scored = score_product(scoring_input(f, history_snapshots, trend["label"]), scoring_cfg["confidence"], scoring_cfg)
+    comp = competition_scope(f, cfg)
+    sin = scoring_input(f, history_snapshots, trend, comp)
+    scored = score_product(sin, scoring_cfg["confidence"], scoring_cfg)
     wps, conf = scored["wps"], scored["confidence"]
     pmin, pmax = f["price_min"], f["price_max"]
     return {
@@ -452,19 +488,30 @@ def analyze(envelope, raw_path, context, cfgs, history_snapshots=0, cache_hit=Fa
         "competition_metrics": {"shop_count": f["shop_count"], "similar_listings_count": f["similar_listings_count"],
                                 "category_product_count": f["category_product_count"],
                                 "category_product_count_level": f.get("category_product_count_level"),
-                                "category_count_verified": f.get("category_count_verified")},
+                                **{k: v for k, v in comp.items() if k != "source_field"},
+                                "competition_source_field": comp["source_field"]},
         "sales_history": {"daily_gmv": f["daily_gmv"], "daily_units": f["daily_units"]},
         "trend_metrics": trend,
         "concentration_metrics": conc,
         "wps": wps["score"],
         "wps_complete": wps["complete"],
-        "wps_breakdown": {k: {"points": m["points"], "max": m["max"]} for k, m in wps["metrics"].items()},
+        "wps_breakdown": {k: {"points": m["points"], "max": m["max"], "tier": m.get("tier")}
+                          for k, m in wps["metrics"].items()},
+        "wps_groups": {k: {"points": g["points"], "max": g["max"], "na": g["na"]} for k, g in wps["groups"].items()},
+        "wps_points": {"earned": wps["points_earned"], "possible": wps["points_possible"]},
+        "wps_missing_by_tier": wps["missing_by_tier"],
+        "wps_inputs": {k: v for k, v in sin.items() if not isinstance(v, list)},
+        "confidence_adjustments": conf.get("adjustments", []),
+        "confidence_before_adjustments": conf.get("score_before_adjustments", conf["score"]),
+        "provenance": provenance.deep_provenance(f, f.get("data_window_end"), envelope.get("observation_timestamp"),
+                                                 comp),
+        "wps_input_provenance": {k: v for k, v in provenance.WPS_INPUT_PROVENANCE.items() if k in sin},
         "wps_na_metrics": wps["na_metrics"],
         "confidence": conf["score"], "confidence_level": conf["level"],
         "confidence_breakdown": {k: {"earned": v["earned"], "max": v["max"], "status": v["status"]}
                                  for k, v in conf["breakdown"].items()},
         "verdict": scored["verdict"],
-        "red_flags": red_flags(f, trend, conc, conf["score"], filters_cfg, cfg),
+        "red_flags": red_flags(f, trend, conc, conf["score"], filters_cfg, cfg, comp),
         "missing_data": missing,
         "parse_warnings": warnings,
         "labels": {"FACT": ["product_*", "category*", "shop", "price.min/max/history", "gmv", "units", "growth",

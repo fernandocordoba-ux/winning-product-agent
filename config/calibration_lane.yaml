@@ -1,0 +1,21 @@
+# =============================================================================
+# Amazon / AVS / BVS calibration lane (Step U post-live calibration)
+# =============================================================================
+# Purpose: exercise Amazon Validation, AVS, Amazon Confidence, BVS and BVS Confidence with REAL
+# provider data even when no product meets the production thresholds (WPS >= 70, Confidence >= 60),
+# WITHOUT lowering those thresholds.
+#
+# - Products admitted here are tagged calibration_only: true on every Amazon / BVS record.
+# - They are NEVER promoted into the normal Top 10 (the report lists them in a separate
+#   "Calibration lane (not ranked)" section) and their Amazon/BVS values are not written into
+#   the production history observations.
+# - Paid: each admitted product adds Amazon queries (config/runtime profile amazon_batch_size).
+#   Disabled by default. Not run live yet.
+# =============================================================================
+calibration:
+  enabled: false
+  max_products: 3
+  allow_non_qualified_products: true
+  select:                                   # from deep-analyzed products not already eligible, WPS desc
+    PASS: 2
+    REVIEW: 1

@@ -161,8 +161,11 @@ class EngineIntegration(unittest.TestCase):
     def test_wps_and_confidence_returned_separately(self):
         r = score_product(complete(), CFG)
         self.assertIn("metrics", r["wps"])                           # WPS from the engine
-        self.assertEqual(r["confidence"]["score"], 100.0)
-        self.assertEqual(r["summary"]["Confidence"], "100.0/100 (VERY_HIGH)")
+        # engine Confidence is 100; wps-v2 then subtracts documented adjustments for data the WPS could not use
+        self.assertEqual(r["confidence"].get("score_before_adjustments", r["confidence"]["score"]), 100.0)
+        adj = sum(a["points"] for a in r["confidence"].get("adjustments", []))
+        self.assertEqual(r["confidence"]["score"], 100.0 + adj)
+        self.assertIn(f"{r['confidence']['score']}/100", r["summary"]["Confidence"])
 
     def test_confidence_never_changes_wps(self):
         p = complete()

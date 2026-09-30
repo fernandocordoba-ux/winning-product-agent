@@ -131,8 +131,16 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 - One answer holds ~8k output tokens: Deep Analysis is 1 product per query (~1.7–2.5 credits each, observed).
 - Growth is CALCULATED by the code from `gmv_30d` and `gmv_prev_30d` (provider value kept as growth_30d_provider;
   GROWTH_MISMATCH / GROWTH_UNVERIFIED flags). Discovery's provider growth was wrong by ~100x on 2026-09-29.
-- `category_product_count` is used only when `category_product_count_level` is the product's leaf category, else N/A.
-- WPS v1.1: growth_momentum capped at 50 % when the daily-sales trend is DECLINING (scoring.yaml trend_cap).
+- WPS v2 (post-live calibration): Growth Momentum /25 = long-term 10 (CORE) + recent trend 10 + acceleration 5
+  (SUPPORTING, from daily GMV). Metric tiers CORE/SUPPORTING/ENHANCEMENT (scoring.yaml data_requirements):
+  WPS = 100 x earned / (CORE points + available SUPPORTING points); missing SUPPORTING/ENHANCEMENT data lowers
+  Confidence (documented adjustments), never rejects. Tiers follow config/provider_capabilities.yaml (real responses).
+- Competition scope PRODUCT_CLUSTER / SUBCATEGORY / CATEGORY / UNKNOWN; only comparable scopes are scored or can
+  raise EXTREME_SATURATION (COMPETITION_NOT_COMPARABLE flag otherwise).
+- Field provenance (scripts/provenance.py) on every deep/discovery record; history has provider_observation_timestamp,
+  retrieved_at, imported_at and source_snapshot_hash (DUPLICATE_SNAPSHOT_SKIPPED).
+- Calibration lane (config/calibration_lane.yaml, off): calibration_only Amazon/BVS records, never ranked.
+- `python3 scripts/recalibrate_first_live.py` = offline recalculation of a live run (0 queries).
 - Discovery order puts low-base / spike products last. History counts one provider answer once (append-only kept).
 - Cached answers are reused only if asked with the current prompt version.
 - `python -m winning_product_agent audit [RUN_ID]` = calibration audit (read-only).

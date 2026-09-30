@@ -11,7 +11,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_FILES = ["runtime.yaml", "scoring.yaml", "filters.yaml", "categories.yaml", "deep_analysis.yaml",
-                "amazon_validation.yaml", "business_viability.yaml", "report.yaml", "history.yaml", "emerging.yaml"]
+                "amazon_validation.yaml", "business_viability.yaml", "report.yaml", "history.yaml", "emerging.yaml",
+                "calibration_lane.yaml", "provider_capabilities.yaml"]
 
 
 def load_all(config_dir=ROOT / "config"):
@@ -99,6 +100,17 @@ def validate(cfgs):
     _total(e, "scoring.yaml confidence", list(((sc.get("confidence") or {}).get("components") or {}).values()), "points")
     _levels(e, "scoring.yaml confidence.levels", (sc.get("confidence") or {}).get("levels"))
     _range01_100(e, "scoring.yaml confidence.min_for_verdict", (sc.get("confidence") or {}).get("min_for_verdict"))
+
+    cal = (cfgs.get("calibration_lane.yaml") or {}).get("calibration") or {}
+    if cal:
+        if not isinstance(cal.get("enabled"), bool):
+            e.append("calibration_lane.yaml: calibration.enabled must be true/false")
+        _pos_int(e, "calibration_lane.yaml calibration.max_products", cal.get("max_products"))
+        if sum((cal.get("select") or {}).values()) > (cal.get("max_products") or 0):
+            e.append("calibration_lane.yaml: select counts exceed max_products")
+    for name, m in (sc.get("metrics") or {}).items():
+        if m.get("tier", "CORE") not in ("CORE", "SUPPORTING", "ENHANCEMENT"):
+            e.append(f"scoring.yaml metric {name}: tier must be CORE, SUPPORTING or ENHANCEMENT")
 
     # ---------------------------------------------------------------- filters
     f = cfgs.get("filters.yaml") or {}
