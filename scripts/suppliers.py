@@ -79,7 +79,9 @@ class ProviderNotIntegrated(RuntimeError):
     """Asked for a supplier source the project has no real access to (never faked)."""
 
 
-def load_cfg(path=ROOT / "config" / "suppliers.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("suppliers.yaml")
     with open(path) as f:
         return yaml.safe_load(f)
 

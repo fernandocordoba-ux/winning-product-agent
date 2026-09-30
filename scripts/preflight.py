@@ -45,6 +45,10 @@ COMPONENTS = {
     "AA End-to-End": {"modules": ["aa_live"], "configs": ["runtime.yaml"], "tests": ["test_aa_live"]},
     "Production Calibration": {"modules": ["production_calibration"], "configs": ["scoring.yaml"],
                                "tests": ["test_production_calibration"]},
+    "Config Promotion": {"modules": ["promotion", "config_resolver"], "configs": ["runtime.yaml"],
+                         "tests": ["test_production"]},
+    "Production Runner": {"modules": ["winning_product_agent.production", "production_audit"],
+                          "configs": ["runtime.yaml"], "tests": ["test_production"]},
     "Master Runner": {"modules": ["winning_product_agent.runner"], "configs": ["runtime.yaml"],
                       "tests": ["test_runner", "test_e2e"]},
 }

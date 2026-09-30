@@ -31,7 +31,9 @@ class LiveQueryBlocked(RuntimeError):
 
 
 # ================================================================== config
-def load_runtime(path=ROOT / "config" / "runtime.yaml"):
+def load_runtime(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("runtime.yaml")
     with open(path) as f:
         return yaml.safe_load(f)
 

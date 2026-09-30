@@ -84,3 +84,17 @@ python -m winning_product_agent report        # where the last live report is
 | `kalopilot/` | Official KaloPilot skill by Kalodata (MIT), vendored |
 
 The token and secrets are **never** committed (see `.gitignore`: `.env`, `.env.*`, `secrets/`, `data/raw/`).
+
+## Production (Step AC)
+
+| Command | What it does |
+|---|---|
+| `python -m winning_product_agent production-config review` | review every proposed change (APPROVE / REJECT / DEFER) with live evidence |
+| `python -m winning_product_agent production-config promote` | write the next immutable `config/production/vN/` (+ `manifest.json` hashes) |
+| `python -m winning_product_agent production-config verify [vN]` / `list` / `activate vN` | hash check, list versions, rollback / roll forward (nothing deleted) |
+| `python -m winning_product_agent production-run` | DRY RUN (default): provider health, degraded mode, stages, budget, limits, report paths |
+| `python -m winning_product_agent production-run --live` | paid run; requires exactly `CONFIRM PRODUCTION LIVE RUN` |
+| `python -m winning_product_agent production-run --report-only [--run-id ID]` | rebuild reports / decision / audit, no query |
+
+Production data: `data/production/`, runs: `runs/production/`, reports: `reports/production/`.
+

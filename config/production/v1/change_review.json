@@ -1,0 +1,463 @@
+{
+  "generated_at": "2026-09-30T23:02:27.921040+00:00",
+  "changes": [
+    {
+      "file": "scoring_v2.yaml",
+      "path": "data_requirements.counted_in_confidence.competition_saturation",
+      "current_value": null,
+      "proposed_value": [
+        "category_product_count"
+      ],
+      "reason": "data_requirements.counted_in_confidence.competition_saturation: None -> ['category_product_count'] (penalize a missing value once)",
+      "supporting_live_evidence": "9/9 live answers penalized twice for the same missing value",
+      "expected_effect": "WPS Confidence rises exactly by the duplicated points; WPS unchanged",
+      "risk": "one live product crossed the WPS Confidence minimum (56 -> 61): its momentum became WEAK instead of UNKNOWN",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    },
+    {
+      "file": "scoring_v2.yaml",
+      "path": "data_requirements.counted_in_confidence.shops_count",
+      "current_value": null,
+      "proposed_value": [
+        "shops_count"
+      ],
+      "reason": "data_requirements.counted_in_confidence.shops_count: None -> ['shops_count'] (penalize a missing value once)",
+      "supporting_live_evidence": "9/9 live answers penalized twice for the same missing value",
+      "expected_effect": "WPS Confidence rises exactly by the duplicated points; WPS unchanged",
+      "risk": "one live product crossed the WPS Confidence minimum (56 -> 61): its momentum became WEAK instead of UNKNOWN",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    },
+    {
+      "file": "scoring_v2.yaml",
+      "path": "data_requirements.counted_in_confidence.similar_listings_count",
+      "current_value": null,
+      "proposed_value": [
+        "similar_listings_count"
+      ],
+      "reason": "data_requirements.counted_in_confidence.similar_listings_count: None -> ['similar_listings_count'] (penalize a missing value once)",
+      "supporting_live_evidence": "9/9 live answers penalized twice for the same missing value",
+      "expected_effect": "WPS Confidence rises exactly by the duplicated points; WPS unchanged",
+      "risk": "one live product crossed the WPS Confidence minimum (56 -> 61): its momentum became WEAK instead of UNKNOWN",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "hard_gates.CREATOR_DEPENDENCY_WEAK_BROADER.broader_weak_statuses",
+      "current_value": null,
+      "proposed_value": [
+        "WEAK"
+      ],
+      "reason": "hard_gates.CREATOR_DEPENDENCY_WEAK_BROADER.broader_weak_statuses: None -> ['WEAK'] (reject only on negative broader evidence)",
+      "supporting_live_evidence": "1 live product(s) rejected by CREATOR_DEPENDENCY_WEAK_BROADER while cross-platform demand was UNKNOWN (missing, not negative)",
+      "expected_effect": "REJECT requires WEAK broader evidence; UNKNOWN blocks READY and adds a validation task",
+      "risk": "a creator-dependent product waits (INSUFFICIENT_DATA / WATCHLIST) instead of being rejected",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "hard_gates.CREATOR_DEPENDENCY_WEAK_BROADER.when_broader_unknown",
+      "current_value": null,
+      "proposed_value": "block_ready",
+      "reason": "hard_gates.CREATOR_DEPENDENCY_WEAK_BROADER.when_broader_unknown: None -> block_ready (reject only on negative broader evidence)",
+      "supporting_live_evidence": "1 live product(s) rejected by CREATOR_DEPENDENCY_WEAK_BROADER while cross-platform demand was UNKNOWN (missing, not negative)",
+      "expected_effect": "REJECT requires WEAK broader evidence; UNKNOWN blocks READY and adds a validation task",
+      "risk": "a creator-dependent product waits (INSUFFICIENT_DATA / WATCHLIST) instead of being rejected",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "hard_gates.VIDEO_DEPENDENCY_WEAK_BROADER.broader_weak_statuses",
+      "current_value": null,
+      "proposed_value": [
+        "WEAK"
+      ],
+      "reason": "hard_gates.VIDEO_DEPENDENCY_WEAK_BROADER.broader_weak_statuses: None -> ['WEAK'] (reject only on negative broader evidence)",
+      "supporting_live_evidence": "no live product was rejected by VIDEO_DEPENDENCY_WEAK_BROADER: same logic, but untested live",
+      "expected_effect": "REJECT requires WEAK broader evidence; UNKNOWN blocks READY and adds a validation task",
+      "risk": "a creator-dependent product waits (INSUFFICIENT_DATA / WATCHLIST) instead of being rejected",
+      "checks": {
+        "supported_by_live_data": false,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "DEFER"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "hard_gates.VIDEO_DEPENDENCY_WEAK_BROADER.when_broader_unknown",
+      "current_value": null,
+      "proposed_value": "block_ready",
+      "reason": "hard_gates.VIDEO_DEPENDENCY_WEAK_BROADER.when_broader_unknown: None -> block_ready (reject only on negative broader evidence)",
+      "supporting_live_evidence": "no live product was rejected by VIDEO_DEPENDENCY_WEAK_BROADER: same logic, but untested live",
+      "expected_effect": "REJECT requires WEAK broader evidence; UNKNOWN blocks READY and adds a validation task",
+      "risk": "a creator-dependent product waits (INSUFFICIENT_DATA / WATCHLIST) instead of being rejected",
+      "checks": {
+        "supported_by_live_data": false,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "DEFER"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "minimum_confidence.creative",
+      "current_value": 50,
+      "proposed_value": 65,
+      "reason": "minimum_confidence.creative: 50 -> 65",
+      "supporting_live_evidence": "4 of 6 live products reached the creative minimum with no hook / angle / date classified (saved KaloPilot videos max 60)",
+      "expected_effect": "creative dimension needs some classified creative evidence; otherwise UNKNOWN (missing evidence)",
+      "risk": "creative dimension UNKNOWN more often until manual creative research is imported",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "validation_tasks.CREATOR_DEPENDENCY_WEAK_BROADER",
+      "current_value": null,
+      "proposed_value": "Collect broader demand evidence (Amazon validation or a later observation) before judging creator dependency",
+      "reason": "task text for CREATOR_DEPENDENCY_WEAK_BROADER",
+      "supporting_live_evidence": "companion of the dependency-gate change (same evidence rule)",
+      "expected_effect": "the missing broader evidence becomes an explicit next action",
+      "risk": "none",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "validation_tasks.VIDEO_DEPENDENCY_WEAK_BROADER",
+      "current_value": null,
+      "proposed_value": "Collect broader demand evidence before judging video dependency",
+      "reason": "task text for VIDEO_DEPENDENCY_WEAK_BROADER",
+      "supporting_live_evidence": "companion of the dependency-gate change (same evidence rule)",
+      "expected_effect": "the missing broader evidence becomes an explicit next action",
+      "risk": "none",
+      "checks": {
+        "supported_by_live_data": false,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "DEFER"
+    },
+    {
+      "file": "runtime_production_v1.yaml",
+      "path": "query_plan.estimated_credits.deep_analysis",
+      "current_value": 2.5,
+      "proposed_value": 3.6,
+      "reason": "query_plan.estimated_credits.deep_analysis: 2.5 -> 3.6",
+      "supporting_live_evidence": "observed deep_analysis cost per answer: {'n': 9, 'mean': 2.26, 'min': 1.51, 'max': 3.57}",
+      "expected_effect": "the run credit cap stops before a query that could exceed it",
+      "risk": "fewer queries per run under the same cap",
+      "checks": {
+        "supported_by_live_data": true,
+        "keeps_data_integrity": true,
+        "no_lowered_confidence_requirement": true,
+        "no_unreliable_provider_fields": true,
+        "offline_replay_ok": true,
+        "no_regression_failure": true
+      },
+      "approval_status": "APPROVE"
+    }
+  ],
+  "metadata_changes": [
+    {
+      "file": "scoring_v2.yaml",
+      "path": "version",
+      "current_value": "wps-v2",
+      "proposed_value": "wps-v2.1-proposed"
+    },
+    {
+      "file": "decision_rules_v2.yaml",
+      "path": "decision_rules_version",
+      "current_value": "Z-v1",
+      "proposed_value": "Z-v2-proposed"
+    },
+    {
+      "file": "runtime_production_v1.yaml",
+      "path": "profile",
+      "current_value": "aa_live",
+      "proposed_value": "production_v1"
+    }
+  ],
+  "counts": {
+    "APPROVE": 8,
+    "REJECT": 0,
+    "DEFER": 3
+  },
+  "replay_ok": true,
+  "regression": {
+    "blocked": false,
+    "issues": [],
+    "checks": [
+      "unsupported confidence",
+      "untraceable data",
+      "mixed competition scopes",
+      "unreliable matches",
+      "BVS without supplier economics",
+      "synthetic/live history",
+      "no new READY without new evidence",
+      "WPS unchanged"
+    ]
+  },
+  "replay_decisions": [
+    {
+      "product_id": "1732013057777898422",
+      "name": "BellaVita Luxury Honey Oud & Vanilla Perfume Combo | Unisex Eau De Parfum Gift Set | Long Lasting Floral, Spicy & Musky Fragrances | 2 x 100ml | Premium, Elegant & Cruelty-Free Perfume Duo",
+      "old_state": "INSUFFICIENT_DATA",
+      "new_state": "INSUFFICIENT_DATA",
+      "old_decision_confidence": 46.26,
+      "new_decision_confidence": 43.29,
+      "changed": false,
+      "dimension_changes": {},
+      "reason": "unchanged",
+      "new_explanation": "NEGATIVE_EVIDENCE"
+    },
+    {
+      "product_id": "1732085052798177429",
+      "name": "Byennwa Glow Body Cream | Exfoliate Gently",
+      "old_state": "INSUFFICIENT_DATA",
+      "new_state": "INSUFFICIENT_DATA",
+      "old_decision_confidence": 45.4,
+      "new_decision_confidence": 45.48,
+      "changed": false,
+      "dimension_changes": {},
+      "reason": "unchanged",
+      "new_explanation": "NEGATIVE_EVIDENCE"
+    },
+    {
+      "product_id": "1732362839287501028",
+      "name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+      "old_state": "INSUFFICIENT_DATA",
+      "new_state": "INSUFFICIENT_DATA",
+      "old_decision_confidence": 47.54,
+      "new_decision_confidence": 44.72,
+      "changed": false,
+      "dimension_changes": {},
+      "reason": "unchanged",
+      "new_explanation": "NEGATIVE_EVIDENCE"
+    },
+    {
+      "product_id": "1732421747771085102",
+      "name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+      "old_state": "INSUFFICIENT_DATA",
+      "new_state": "INSUFFICIENT_DATA",
+      "old_decision_confidence": 42.63,
+      "new_decision_confidence": 39.77,
+      "changed": false,
+      "dimension_changes": {},
+      "reason": "unchanged",
+      "new_explanation": "NEGATIVE_EVIDENCE"
+    },
+    {
+      "product_id": "1732504597553255078",
+      "name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+      "old_state": "INSUFFICIENT_DATA",
+      "new_state": "INSUFFICIENT_DATA",
+      "old_decision_confidence": 33.5,
+      "new_decision_confidence": 41.68,
+      "changed": false,
+      "dimension_changes": {
+        "market_momentum": "UNKNOWN -> WEAK",
+        "evidence_quality": "WEAK -> ACCEPTABLE"
+      },
+      "reason": "unchanged",
+      "new_explanation": "NEGATIVE_EVIDENCE"
+    },
+    {
+      "product_id": "1732506646693253928",
+      "name": "Blue Boomshampoo",
+      "old_state": "REJECT",
+      "new_state": "INSUFFICIENT_DATA",
+      "old_decision_confidence": 47.48,
+      "new_decision_confidence": 47.55,
+      "changed": true,
+      "dimension_changes": {},
+      "reason": "no reject gate; insufficient: required UNKNOWN [], UNKNOWN dimensions 4 (limit 4)",
+      "new_explanation": "NEGATIVE_EVIDENCE"
+    },
+    {
+      "product_id": "1732530555618759155",
+      "name": "Laura Geller Fresh-Faced Favorites Kit (3PC)",
+      "old_state": "INSUFFICIENT_DATA",
+      "new_state": "INSUFFICIENT_DATA",
+      "old_decision_confidence": 51.08,
+      "new_decision_confidence": 48.15,
+      "changed": false,
+      "dimension_changes": {},
+      "reason": "unchanged",
+      "new_explanation": "NEGATIVE_EVIDENCE"
+    }
+  ],
+  "source_calibration": {
+    "report": "reports/production-calibration.md",
+    "generated_at": "2026-09-30T22:42:01.668504+00:00",
+    "result": "MORE_CALIBRATION_REQUIRED"
+  },
+  "promoted_set_replay": {
+    "regression": {
+      "blocked": false,
+      "issues": [],
+      "checks": [
+        "unsupported confidence",
+        "untraceable data",
+        "mixed competition scopes",
+        "unreliable matches",
+        "BVS without supplier economics",
+        "synthetic/live history",
+        "no new READY without new evidence",
+        "WPS unchanged"
+      ]
+    },
+    "decisions": [
+      {
+        "product_id": "1732013057777898422",
+        "name": "BellaVita Luxury Honey Oud & Vanilla Perfume Combo | Unisex Eau De Parfum Gift Set | Long Lasting Floral, Spicy & Musky Fragrances | 2 x 100ml | Premium, Elegant & Cruelty-Free Perfume Duo",
+        "old_state": "INSUFFICIENT_DATA",
+        "new_state": "INSUFFICIENT_DATA",
+        "old_decision_confidence": 46.26,
+        "new_decision_confidence": 43.29,
+        "changed": false,
+        "dimension_changes": {},
+        "reason": "unchanged",
+        "new_explanation": "NEGATIVE_EVIDENCE"
+      },
+      {
+        "product_id": "1732085052798177429",
+        "name": "Byennwa Glow Body Cream | Exfoliate Gently",
+        "old_state": "INSUFFICIENT_DATA",
+        "new_state": "INSUFFICIENT_DATA",
+        "old_decision_confidence": 45.4,
+        "new_decision_confidence": 45.48,
+        "changed": false,
+        "dimension_changes": {},
+        "reason": "unchanged",
+        "new_explanation": "NEGATIVE_EVIDENCE"
+      },
+      {
+        "product_id": "1732362839287501028",
+        "name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+        "old_state": "INSUFFICIENT_DATA",
+        "new_state": "INSUFFICIENT_DATA",
+        "old_decision_confidence": 47.54,
+        "new_decision_confidence": 44.72,
+        "changed": false,
+        "dimension_changes": {},
+        "reason": "unchanged",
+        "new_explanation": "NEGATIVE_EVIDENCE"
+      },
+      {
+        "product_id": "1732421747771085102",
+        "name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+        "old_state": "INSUFFICIENT_DATA",
+        "new_state": "INSUFFICIENT_DATA",
+        "old_decision_confidence": 42.63,
+        "new_decision_confidence": 39.77,
+        "changed": false,
+        "dimension_changes": {},
+        "reason": "unchanged",
+        "new_explanation": "NEGATIVE_EVIDENCE"
+      },
+      {
+        "product_id": "1732504597553255078",
+        "name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+        "old_state": "INSUFFICIENT_DATA",
+        "new_state": "INSUFFICIENT_DATA",
+        "old_decision_confidence": 33.5,
+        "new_decision_confidence": 41.68,
+        "changed": false,
+        "dimension_changes": {
+          "market_momentum": "UNKNOWN -> WEAK",
+          "evidence_quality": "WEAK -> ACCEPTABLE"
+        },
+        "reason": "unchanged",
+        "new_explanation": "NEGATIVE_EVIDENCE"
+      },
+      {
+        "product_id": "1732506646693253928",
+        "name": "Blue Boomshampoo",
+        "old_state": "REJECT",
+        "new_state": "INSUFFICIENT_DATA",
+        "old_decision_confidence": 47.48,
+        "new_decision_confidence": 47.55,
+        "changed": true,
+        "dimension_changes": {},
+        "reason": "no reject gate; insufficient: required UNKNOWN [], UNKNOWN dimensions 4 (limit 4)",
+        "new_explanation": "NEGATIVE_EVIDENCE"
+      },
+      {
+        "product_id": "1732530555618759155",
+        "name": "Laura Geller Fresh-Faced Favorites Kit (3PC)",
+        "old_state": "INSUFFICIENT_DATA",
+        "new_state": "INSUFFICIENT_DATA",
+        "old_decision_confidence": 51.08,
+        "new_decision_confidence": 48.15,
+        "changed": false,
+        "dimension_changes": {},
+        "reason": "unchanged",
+        "new_explanation": "NEGATIVE_EVIDENCE"
+      }
+    ]
+  }
+}

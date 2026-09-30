@@ -346,6 +346,97 @@ def cmd_calibrate(a):
     return PC.main([])
 
 
+def cmd_production_config(a):
+    """Step AC: review / promote / verify / list / activate production config versions."""
+    import promotion as PROMO
+    if a.action == "review":
+        rev = PROMO.review()
+        _p(PROMO.render_review(rev))
+        return 0
+    if a.action == "promote":
+        r = PROMO.promote()
+        _p(PROMO.render_review(r["review"]))
+        _p(f"Promoted {r['manifest']['config_version']} -> {r['dir']} "
+           f"(approved {r['manifest']['changes']['approved']}, rejected {r['manifest']['changes']['rejected']}, "
+           f"deferred {r['manifest']['changes']['deferred']})")
+        return 0
+    if a.action == "list":
+        act = PROMO.active_version()
+        for v in PROMO.versions():
+            ok = PROMO.verify(PROMO.active_dir(version=v))["ok"]
+            _p(f"  {v}{'  (ACTIVE)' if v == act else ''}  hashes {'OK' if ok else 'CHANGED'}")
+        return 0
+    if a.action == "verify":
+        v = PROMO.verify(PROMO.active_dir(version=a.version))
+        _p(json.dumps({k: v[k] for k in ("config_version", "ok", "changed", "missing", "extra")}))
+        return 0 if v["ok"] else 1
+    if a.action == "activate":
+        if not a.version:
+            _p("activate needs a version, e.g. v1")
+            return 2
+        _p(json.dumps(PROMO.activate(R.ROOT, a.version, note="manual activation (rollback / roll forward)")))
+        return 0
+    return 2
+
+
+def print_production_dry(r):
+    _p(f"PRODUCTION DRY RUN {r['run_id']} | config {r['config_version']} | market {r['market']}")
+    v = r["config_hash_verification"]
+    _p(f"Config hashes: {'OK' if v['ok'] else 'CHANGED ' + str(v['changed'] + v['missing'] + v['extra'])} ({r['config_dir']})")
+    _p("\nPROVIDER HEALTH")
+    for k, h in r["provider_health"].items():
+        extra = {kk: vv for kk, vv in h.items() if kk not in ("status",)}
+        _p(f"  {k:<11} {h['status']:<12} {json.dumps(extra, default=str)}")
+    _p("\nDEGRADED-MODE DECISIONS")
+    for d in r["degraded_mode_decisions"] or [{"provider": "-", "status": "-", "action": "none", "effect": ""}]:
+        _p(f"  {d['provider']:<11} {d['status']:<12} -> {d['action']}  {d.get('effect') or ''}")
+    _p("\nPLANNED STAGES")
+    for i, s in enumerate(r["plan"], 1):
+        _p(f"  {i:>2}. {s['stage']:<24} {s['does']}" + (f"  [paid queries <= {s['paid']}]" if s["paid"] else ""))
+    _p("\nQUERY BUDGET (before execution)")
+    print_budget(r["query_budget"])
+    _p(f"  guardrails: {json.dumps(r['guardrails'])}")
+    _p(f"  current balance: {r['balance']}")
+    _p("\nPRODUCT LIMITS")
+    for k, v2 in r["product_limits"].items():
+        _p(f"  {k:<36} {v2}")
+    _p("\nREPORT DESTINATIONS")
+    for k, v2 in r["report_destinations"].items():
+        _p(f"  {k:<17} {v2}")
+    _p(f"  data paths: {json.dumps(r['data_paths'])}")
+    for w in r["warnings"]:
+        _p(f"  WARNING: {w}")
+    for b in r["blocking_issues"]:
+        _p(f"  BLOCKING: {b}")
+    _p(f"\nPaid queries executed in this dry run: {r['paid_queries_executed']}")
+    _p(f"Manifest: {r['manifest']}")
+    _p(f"Dry-run status: {r['status']}")
+    _p(f"Live readiness: {r['readiness']['verdict']}" + (f" — {'; '.join(r['readiness']['reasons'])}"
+                                                         if r["readiness"]["reasons"] else ""))
+
+
+def cmd_production_run(a):
+    from winning_product_agent import production as P
+    if a.live and a.dry_run:
+        _p("BLOCKED: --live and --dry-run cannot be combined")
+        return 2
+    if not a.live and (a.confirm_live is not None or a.resume):
+        _p("BLOCKED: --confirm-live / --resume are only valid with --live")
+        return 2
+    run = P.ProductionRunner(version=a.config_version, profile_path=a.profile, max_products=a.max_products)
+    if a.report_only:
+        r = run.report_only(a.run_id)
+        _p(json.dumps(r, indent=2, default=str))
+        return 0
+    if not a.live:                                    # default: DRY RUN, never paid
+        r = run.dry_run()
+        print_production_dry(r)
+        return 0 if r["status"] == "DRY_RUN_COMPLETED" else 1
+    s = run.live(confirm_value=a.confirm_live, resume_id=a.resume)
+    print_summary(s)
+    return 0 if s["final_status"] in ("COMPLETED", "PARTIAL") else 1
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="python -m winning_product_agent", description="winning-product-agent master runner")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -383,6 +474,19 @@ def build_parser():
     de = sub.add_parser("decide", help="Step Z final decision (offline): show / --rebuild / --explain <product_id>")
     de.add_argument("--rebuild", action="store_true", help="recompute from saved LIVE data (no query, no credits)")
     de.add_argument("--explain", help="print the full decision path of one product")
+    pr = sub.add_parser("production-run", help="Step AC canonical production command (default: dry run)")
+    pr.add_argument("--dry-run", action="store_true", help="plan only (default)")
+    pr.add_argument("--live", action="store_true", help=f'PAID queries; needs exactly "{R.PRODUCTION_PHRASE}"')
+    pr.add_argument("--profile", help="optional profile that may only LOWER production limits")
+    pr.add_argument("--max-products", type=int, help="max products for Deep Analysis (<= production limit)")
+    pr.add_argument("--resume", help="resume a stopped production run by run id (same config version)")
+    pr.add_argument("--report-only", action="store_true", help="rebuild reports / decision / audit (no query)")
+    pr.add_argument("--run-id", help="source run for --report-only (default: latest production live run)")
+    pr.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.PRODUCTION_PHRASE}"')
+    pr.add_argument("--config-version", help="production config version (default: ACTIVE)")
+    pc = sub.add_parser("production-config", help="review | promote | verify [v] | list | activate v")
+    pc.add_argument("action", choices=["review", "promote", "verify", "list", "activate"])
+    pc.add_argument("version", nargs="?")
     sub.add_parser("calibrate", help="Step AB production calibration (offline, LIVE evidence only, writes proposals)")
     au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
     au.add_argument("run_id", nargs="?")
@@ -393,7 +497,8 @@ def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit,
             "suppliers": cmd_suppliers, "competitors": cmd_competitors,
-            "creatives": cmd_creatives, "decide": cmd_decide, "calibrate": cmd_calibrate}[a.cmd](a)
+            "creatives": cmd_creatives, "decide": cmd_decide, "calibrate": cmd_calibrate,
+            "production-run": cmd_production_run, "production-config": cmd_production_config}[a.cmd](a)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,369 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v1 — IMMUTABLE (Step AC promotion)
+# created_at: 2026-09-30T23:02:25.179040+00:00
+# source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00, sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+# change_summary:
+#   - data_requirements.counted_in_confidence.competition_saturation: None -> ['category_product_count']
+#   - data_requirements.counted_in_confidence.shops_count: None -> ['shops_count']
+#   - data_requirements.counted_in_confidence.similar_listings_count: None -> ['similar_listings_count']
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Winning Product Score (WPS) — Version 1
+# =============================================================================
+# Deterministic scoring config. The engine (scripts/score_products.py) must
+# compute every score ONLY from the numeric rules below.
+#
+#   - Claude must NOT assign, adjust or "judge" any score subjectively.
+#   - Same input data + same config  =>  exactly the same output, always.
+#   - Missing input  =>  metric = "N/A" (never estimated, never defaulted),
+#                        metric contributes 0 points (Confidence is computed
+#                        separately from data completeness, see below).
+#   - Raw input values are preserved unchanged in the output for audit.
+# =============================================================================
+
+version: "wps-v2.1"                  # v2 (Step U post-live calibration): growth rebuilt 10+10+5, tiers, scope
+total_points: 100
+
+# -----------------------------------------------------------------------------
+# Scale functions (all deterministic). Result "s" is always clamped to [0, 1].
+#
+#   linear:          s = (x - zero_at) / (full_at - zero_at)
+#   log10:           s = (log10(x) - log10(zero_at)) / (log10(full_at) - log10(zero_at))
+#                    (x <= 0 -> s = 0)
+#   ratio:           s = count_matching / count_total      (count_total > 0)
+#
+# "zero_at" = value that scores 0, "full_at" = value that scores full points.
+# If zero_at > full_at the scale is inverted (lower is better).
+#
+# Component score  = s * component_weight
+# Metric score     = metric_points * sum(component scores)
+# -----------------------------------------------------------------------------
+
+metrics:
+  # Every metric has a TIER (see data_requirements below):
+  #   CORE        consistently returned by KaloPilot (first live runs); missing -> 0 points, WPS "incomplete"
+  #   SUPPORTING  improves the score when available; missing / not comparable -> excluded from the
+  #               WPS denominator (not a penalty) and Confidence is reduced instead
+  #   ENHANCEMENT not expected from every product (none scored in WPS today; see data_requirements)
+  # "group" only groups metrics for display (e.g. Growth Momentum /25 = 3 metrics).
+
+  # 1) GROWTH MOMENTUM /25 (wps-v2, Step U calibration) = long-term 10 + recent trend 10 + acceleration 5.
+  #    Positive 30-day growth alone can earn at most 10 of 25.
+  growth_long_term:
+    group: growth_momentum
+    tier: CORE
+    points: 10
+    components:
+      revenue_growth:
+        weight: 1.0
+        input: revenue_growth_pct          # 30 days vs previous 30 days (%); CALCULATED from gmv_prev_30d when given
+        scale: linear
+        zero_at: 0                          # flat or declining -> 0
+        full_at: 100                        # +100 % or more -> full points
+
+  growth_recent_trend:
+    group: growth_momentum
+    tier: SUPPORTING
+    points: 10
+    components:
+      recent_velocity:
+        weight: 1.0
+        input: recent_velocity_pct         # mean daily GMV of the last 7 days vs the 7 days before (%)
+        scale: linear                       # (deep_analysis.yaml trend.window_days; needs >= 14 daily points)
+        zero_at: -20                        # falling 20 % week over week or worse -> 0
+        full_at: 30                         # rising 30 % or more -> full. Any decline (< 0) earns < 4/10.
+
+  growth_acceleration:
+    group: growth_momentum
+    tier: SUPPORTING
+    points: 5
+    components:
+      velocity_change:
+        weight: 1.0
+        input: acceleration_pp             # recent_velocity_pct - prior_velocity_pct (percentage points)
+        scale: linear                       # prior = the 7 days before vs the 7 days before those (needs 21 days)
+        zero_at: -30                        # strongly decelerating -> 0
+        full_at: 30                         # any deceleration (< 0) earns < 2.5/5
+
+  # 2) DEMAND — how much is actually selling?
+  demand:
+    tier: CORE
+    points: 15
+    components:
+      units_sold:
+        weight: 1.0
+        input: units_sold                   # units sold in the time window
+        scale: log10
+        zero_at: 1000
+        full_at: 100000
+
+  # 3) VIDEO MOMENTUM — is short-video content driving sales?
+  video_momentum:
+    tier: CORE
+    points: 15
+    components:
+      video_count:
+        weight: 0.5
+        input: videos_count                 # videos promoting the product
+        scale: log10
+        zero_at: 100
+        full_at: 10000
+      video_sales_share:
+        weight: 0.5
+        input: video_sales_share_pct        # % of product sales coming from videos
+        scale: linear
+        zero_at: 50
+        full_at: 95
+
+  # 4) CREATOR MOMENTUM /15 = reach 9 (CORE) + top-creator growth 6 (SUPPORTING; growth per creator
+  #    was returned for >= 3 creators in only 3 of 5 live deep answers)
+  creator_reach:
+    group: creator_momentum
+    tier: CORE
+    points: 9
+    components:
+      creator_count:
+        weight: 1.0
+        input: creators_count               # creators promoting the product
+        scale: log10
+        zero_at: 100
+        full_at: 5000
+  creator_growth:
+    group: creator_momentum
+    tier: SUPPORTING
+    points: 6
+    components:
+      top_creators_growing:
+        weight: 1.0
+        input: top_creators_growth_pct      # list: growth % of each top creator returned
+        scale: ratio
+        match: "> 0"                        # share of top creators with positive growth
+        min_items: 3                        # fewer than 3 creators returned -> N/A
+
+  # 5) COMPETITION /15 = category growth 7.5 + saturation 7.5 (both SUPPORTING; scope-dependent)
+  competition_category_growth:
+    group: competition
+    tier: SUPPORTING
+    points: 7.5
+    components:
+      category_growth:
+        weight: 1.0
+        input: category_growth_pct          # category GMV growth vs. prior window (%)
+        scale: linear
+        zero_at: -20
+        full_at: 50
+  competition_saturation:
+    group: competition
+    tier: SUPPORTING
+    points: 7.5
+    components:
+      category_saturation:
+        weight: 1.0
+        input: competition_count_comparable # competitor count ONLY when its scope is comparable
+        scale: log10                        # (PRODUCT_CLUSTER / SUBCATEGORY; see competition_scope)
+        zero_at: 50000                      # inverted: more products -> lower score
+        full_at: 500
+
+  # 6) MARGIN POTENTIAL — price room for profit (seller perspective)
+  margin_potential:
+    tier: CORE
+    points: 10
+    components:
+      price_level:
+        weight: 0.6
+        input: price_avg                    # (price_min + price_max) / 2, USD
+        scale: linear
+        zero_at: 10
+        full_at: 60
+      commission_cost:
+        weight: 0.4
+        input: commission_pct               # affiliate commission paid by seller (%)
+        scale: linear
+        zero_at: 25                         # inverted: higher commission -> lower margin
+        full_at: 5
+
+  # 7) TREND STABILITY — are daily sales steady rather than spiky?
+  trend_stability:
+    tier: SUPPORTING
+    points: 5
+    components:
+      sales_volatility:
+        weight: 1.0
+        input: daily_sales_series           # daily sales values for the window
+        derive: coefficient_of_variation    # CV = population std dev / mean
+        min_items: 14                       # fewer than 14 days -> N/A; mean = 0 -> N/A
+        scale: linear
+        zero_at: 1.0                        # inverted: CV >= 1.0 -> 0
+        full_at: 0.2                        # CV <= 0.2 -> full points
+
+# -----------------------------------------------------------------------------
+# Data requirements (wps-v2). Tiers are based on config/provider_capabilities.yaml
+# (what KaloPilot actually returned in the first live runs), never on guesses.
+#   WPS = 100 * earned_points / possible_points
+#   possible_points = all CORE points + points of SUPPORTING/ENHANCEMENT metrics that are AVAILABLE
+#   -> a missing CORE metric counts 0 (penalty, WPS marked incomplete);
+#      a missing SUPPORTING metric is excluded (no WPS penalty) and lowers Confidence.
+# -----------------------------------------------------------------------------
+data_requirements:
+  counted_in_confidence:                  # AB: never penalize one missing value twice
+    competition_saturation: [category_product_count]
+    similar_listings_count: [similar_listings_count]
+    shops_count: [shops_count]
+  missing_policy:
+    CORE: zero_points_and_incomplete
+    SUPPORTING: exclude_and_reduce_confidence
+    ENHANCEMENT: exclude_and_reduce_confidence
+  confidence_adjustments:                   # subtracted from the Confidence score (floor 0), documented per product
+    missing_supporting_metric: 3            # per SUPPORTING metric excluded from WPS
+    missing_enhancement_field: 1            # per ENHANCEMENT field below that is missing
+  enhancement_fields:                       # useful, not expected from every product (never mandatory)
+    - similar_listings_count
+    - price_history
+    - daily_creator_count
+    - daily_video_count
+    - daily_units
+    - creator_growth_pct
+    - video_growth_pct
+    - shops_count
+
+# -----------------------------------------------------------------------------
+# Missing data (N/A) rules
+# -----------------------------------------------------------------------------
+missing_data:
+  # A value is missing if: absent, null, "", "N/A", non-numeric, or fails
+  # validation (prompts/validation.md). It is NEVER estimated or defaulted.
+  component_missing: "N/A"
+  # If ANY component of a metric is N/A, the whole metric is N/A
+  # (no partial or re-weighted metrics).
+  metric_rule: all_components_required
+  na_metric_points: 0
+  preserve_raw: true                        # raw inputs copied unchanged into output
+
+# -----------------------------------------------------------------------------
+# Confidence Score (0–100) — computed SEPARATELY from WPS
+#   Measures data completeness and evidence quality ONLY.
+#   It does NOT measure whether a product is good or bad:
+#     - never reads performance values to judge them (a real 0 or a -40% growth
+#       counts as available data exactly like a +300% growth)
+#     - never changes WPS; WPS never changes Confidence
+#
+#   A value is AVAILABLE if it is a real finite number (0 included).
+#   A value is MISSING if absent, null, "", "N/A", non-numeric text (e.g. "$400K"
+#   is not parsed here — normalization is validate_data.py's job), or violates
+#   its min_value (e.g. a negative count).
+#
+#   component_points = points * sum(check_weight * check_coverage) / sum(check_weight)
+#   check_coverage (0..1) by type:
+#     field          : 1 if available else 0
+#     series         : available entries / expected_items   (capped at 1)
+#     list           : items with available <value_key> / required_items (capped at 1)
+#     count_evidence : min(value, full_at) / full_at         (value must be available)
+#   consistency rule violated (e.g. price_min > price_max) -> component = 0 + warning
+#
+#   confidence = sum(component_points), rounded to 2 decimals (round half up)
+# -----------------------------------------------------------------------------
+confidence:
+  version: "confidence-v1"
+  components:
+
+    sales_history:
+      points: 15
+      checks:
+        - { type: series, field: daily_sales_series, expected_items: 30 }   # = period_days
+
+    gmv_data:
+      points: 10
+      checks:
+        - { type: field, field: gmv }
+
+    units_sold:
+      points: 10
+      checks:
+        - { type: field, field: units_sold, min_value: 0 }
+
+    growth_data:
+      points: 15
+      checks:
+        - { type: field, field: revenue_growth_pct, weight: 2 }
+        - { type: field, field: category_growth_pct, weight: 1 }
+
+    price_data:
+      points: 5
+      checks:
+        - { type: field, field: price_min, min_value: 0 }
+        - { type: field, field: price_max, min_value: 0 }
+      consistency:
+        - { rule: lte, fields: [price_min, price_max] }
+
+    creator_data:
+      points: 15
+      checks:
+        - { type: field, field: creators_count, min_value: 0 }
+        - { type: list, field: creators, value_key: revenue, required_items: 3 }
+
+    video_data:
+      points: 15
+      checks:
+        - { type: field, field: videos_count, min_value: 0 }
+        - { type: list, field: videos, value_key: revenue, required_items: 3 }
+
+    competition_shop_data:
+      points: 10
+      checks:
+        - { type: field, field: shops_count, min_value: 0 }
+        - { type: field, field: category_product_count, min_value: 0 }
+        - { type: field, field: similar_listings_count, min_value: 0 }
+
+    trend_history_data:
+      points: 5
+      checks:
+        - { type: field, field: launch_date_days, min_value: 0 }          # days since launch
+        - { type: count_evidence, field: history_snapshots, full_at: 2 }  # prior dated snapshots in data/history/
+
+  levels:                                   # applied to the rounded total, >= threshold
+    VERY_HIGH: 90
+    HIGH: 75
+    MODERATE: 60
+    LOW: 40
+    VERY_LOW: 0
+
+  # Below this, the product gets no verdict (label "insufficient_data").
+  min_for_verdict: 60
+  rounding: 2
+
+# -----------------------------------------------------------------------------
+# Final score
+#   wps = sum of metric scores (N/A metrics = 0). Max 100.
+#   Always report wps TOGETHER with confidence; never rescale N/A away.
+# -----------------------------------------------------------------------------
+output:
+  rounding: 2                               # decimals, round half up (final values only)
+  verdict_bands:                            # applied to wps when confidence >= min_for_verdict
+    winner: 75                              # >= 75
+    watch: 55                               # 55–74.99
+    skip: 0                                 # < 55
+  fields:
+    - product_id
+    - product_name
+    - wps
+    - confidence
+    - confidence_level
+    - confidence_breakdown                  # points earned per component
+    - verdict
+    - metric_scores                         # per metric: points, or "N/A"
+    - na_metrics                            # list of metrics that were N/A and why
+    - raw_inputs                            # unchanged source values
+    - source                                # task_id, report_url, fetched_at
+    - config_version                        # "wps-v1"
+
+production_meta:
+  config_version: production-v1
+  created_at: '2026-09-30T23:02:25.179040+00:00'
+  source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00,
+    sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+  change_summary:
+  - 'data_requirements.counted_in_confidence.competition_saturation: None -> [''category_product_count'']'
+  - 'data_requirements.counted_in_confidence.shops_count: None -> [''shops_count'']'
+  - 'data_requirements.counted_in_confidence.similar_listings_count: None -> [''similar_listings_count'']'

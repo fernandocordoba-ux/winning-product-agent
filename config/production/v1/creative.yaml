@@ -1,0 +1,183 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v1 — IMMUTABLE (Step AC promotion)
+# created_at: 2026-09-30T23:02:25.179040+00:00
+# source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00, sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+# change_summary:
+#   - no change vs development config
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Creative Intelligence — Step Y (EXPERIMENTAL v1, editable here)
+# =============================================================================
+# scripts/creatives.py analyzes creatives (TikTok videos, ads) of shortlisted products:
+# which angles / hooks / formats repeat, how saturated the creative space is, and
+# evidence-backed gaps. NOT combined with WPS / AVS / BVS (BVS adapter prepared, not wired).
+#
+#  - NO copying: competitor scripts / ad copy / transcripts are never stored. Only short
+#    analytical summaries (max summary_max_chars) and normalized categories.
+#  - Nothing inferred: unavailable metrics stay null; unclear hook/angle = UNKNOWN.
+#  - Views alone are never treated as profitability; long-running = persistence only.
+# =============================================================================
+version: "creatives-v1"
+
+providers:
+  manual_import:    { implemented: true,  note: "CSV / JSON creative research supplied by the user" }
+  kalopilot_saved:  { implemented: true,  note: "top_videos already contained in SAVED KaloPilot deep-analysis answers (no new query, no credits)" }
+  kalopilot_live:   { implemented: false, note: "a live creative/video query spends KaloPilot credits; not enabled in Step Y" }
+  meta_ad_library:  { implemented: false, note: "no Meta Ad Library API access configured" }
+  minea:            { implemented: false, note: "no API access configured" }
+  pipiads:          { implemented: false, note: "no API access configured" }
+
+manual_import:
+  required_fields: [matched_product_id, platform, creative_url, format]
+  summary_max_chars: 120                   # hook_text_summary etc.: analytical summary, NOT the ad copy
+  forbidden_fields: [script, transcript, ad_copy, full_text, caption_full, voiceover_text]
+
+platforms: [TIKTOK, META, INSTAGRAM, YOUTUBE, OTHER]
+formats: [VIDEO, IMAGE, CAROUSEL, LIVE, OTHER]
+
+# ----------------------------------------------------------------------------- matching
+matching:
+  qualified_min: 75                        # below -> not used in any concentration / saturation figure
+  linked_product_confidence: 100           # the source ties the creative to this exact product id
+
+# ----------------------------------------------------------------------------- taxonomy (Stages 5-6)
+# A label given in an import must be one of these. Without a label, a category is assigned ONLY if the
+# analytical summary contains one of its cue phrases (whole words); otherwise UNKNOWN. Never forced.
+hooks:
+  PROBLEM:       [problem, struggle, tired of, annoying, hate when]
+  CURIOSITY:     [you won't believe, secret, did you know, nobody tells you, wait for it]
+  SHOCK:         [shocking, insane, crazy, unbelievable]
+  DEMONSTRATION: [watch this, demo, see how, look at this]
+  BEFORE_AFTER:  [before and after, before/after, before after]
+  SOCIAL_PROOF:  [everyone is, viral, sold out, bestseller, million sold]
+  TESTIMONIAL:   [i tried, my honest review, review, i've been using]
+  PRICE:         [only $, cheap, under $, price]
+  OFFER:         [discount, deal, sale, bogo, free gift, "% off"]
+  COMPARISON:    [vs, versus, compared to, better than]
+  HOW_TO:        [how to, tutorial, step by step, hack]
+  UGC_STORY:     [story time, storytime, pov]
+  RESULT:        [results, result after, glow, transformation]
+  CONVENIENCE:   [easy, in seconds, no mess, one step]
+  EMOTIONAL:     [cried, emotional, made my day, obsessed]
+angles:
+  PROBLEM_SOLUTION: [fixes, solves, solution, finally]
+  TIME_SAVING:      [save time, faster, in seconds, minutes]
+  MONEY_SAVING:     [save money, cheaper, dupe, affordable]
+  BEAUTY_RESULT:    [glow, skin, lips, lashes, hair, makeup look]
+  COMFORT:          [comfort, comfy, relaxing, soothing]
+  CONVENIENCE:      [easy, convenient, portable, no mess]
+  TRANSFORMATION:   [transformation, makeover, before and after]
+  STATUS:           [luxury, designer, premium look]
+  SAFETY:           [safe, non-toxic, gentle, dermatologist]
+  ORGANIZATION:     [organize, organized, declutter, storage]
+  CLEANING:         [clean, cleaning, scrub, stains]
+  GIFT:             [gift, present, stocking stuffer]
+  NOVELTY:          [new, gadget, weird, never seen]
+  EDUCATION:        [learn, how it works, explained, tips]
+  SOCIAL_PROOF:     [reviews, everyone, viral, trending]
+  OTHER:            []
+
+duration_buckets:                           # seconds; first match wins
+  - { label: "0-15s",  max: 15 }
+  - { label: "16-30s", max: 30 }
+  - { label: "31-60s", max: 60 }
+  - { label: "60s+",   max: null }
+
+# ----------------------------------------------------------------------------- longevity (Stage 9)
+longevity:                                  # creative_age_days = (last_seen or observed) - (first_seen or published)
+  - { label: NEW,          max_days: 7 }
+  - { label: EARLY,        max_days: 30 }
+  - { label: ESTABLISHED,  max_days: 90 }
+  - { label: LONG_RUNNING, max_days: null }
+longevity_limitation: >
+  A long-running creative shows PERSISTENCE only, not profitability. Views alone are never
+  treated as profitability; sales / GMV are used only when the source provides them.
+
+# ----------------------------------------------------------------------------- Creative Saturation (Stage 12)
+saturation:
+  min_available_points: 45
+  components:
+    creative_volume:           { points: 25, full_at: 50 }   # s = min(qualified / full_at, 1)
+    angle_concentration:       { points: 20, min_classified: 3 }   # s = top angle share (classified only)
+    hook_concentration:        { points: 20, min_classified: 3 }   # s = top hook share
+    creator_repetition:        { points: 15, min_identified: 3 }   # s = top creator/advertiser share
+    longevity_concentration:   { points: 10, min_dated: 3 }        # s = LONG_RUNNING share of dated creatives
+    format_concentration:      { points: 10 }                      # s = top format share
+
+# ----------------------------------------------------------------------------- Creative Opportunity (Stage 13)
+opportunity:
+  min_available_points: 50
+  components:
+    proven_demand:          { points: 20, input: units_30d, scale: log10, zero_at: 1000, full_at: 100000 }
+    proven_patterns:        { points: 15, full_at: 3 }   # distinct hook+angle patterns among creatives with performance evidence
+    underused_angles:       { points: 15 }               # s = 1 - top angle share
+    format_diversity_gap:   { points: 10 }               # s = top format share (one dominant format = room)
+    weak_demos:             { points: 15 }               # s = 1 - demo share (demo known)
+    low_hook_diversity:     { points: 10 }               # s = top hook share
+    demonstration_potential: { points: 15 }              # 1 if a demo creative has above-median performance evidence, 0.5 if demos exist
+  demand_caps:
+    - { max_demand_s: 0.2, cap: 30 }
+    - { max_demand_s: 0.4, cap: 50 }
+  require_demand: true
+  performance_evidence: "sales or GMV > 0 (sourced), else views >= median views of qualified creatives"
+
+# ----------------------------------------------------------------------------- Creative Confidence (Stage 14)
+confidence:
+  full_count: 10
+  components:
+    creative_count:        { points: 20 }   # min(qualified / full_count, 1)
+    performance_data:      { points: 20 }   # share with views / engagement
+    hook_classification:   { points: 15 }   # share with hook != UNKNOWN
+    angle_classification:  { points: 15 }   # share with angle != UNKNOWN
+    timestamps:            { points: 10 }   # share with a first_seen / published date
+    sales_attribution:     { points: 10 }   # share with sourced sales or GMV
+    source_identification: { points: 10 }   # share with creator / advertiser identified
+  levels: { VERY_HIGH: 90, HIGH: 75, MODERATE: 60, LOW: 40, VERY_LOW: 0 }
+
+# ----------------------------------------------------------------------------- gaps (Stage 15)
+gaps:
+  min_known: 5                              # a feature must be known for >= 5 qualified creatives to claim a gap
+  share_below: 0.3                          # e.g. demos in < 30 % of creatives = "few demos"
+  rare_share_below: 0.1                     # comparison / educational / before-after
+  underused_angle_candidates: [PROBLEM_SOLUTION, TIME_SAVING, CONVENIENCE, TRANSFORMATION, EDUCATION, GIFT]
+  format_candidates: [VIDEO, IMAGE, CAROUSEL, LIVE]
+
+# gap -> test-hypothesis template (Stage 18). Suggestions only; never "will work".
+hypotheses:
+  few_demos:            { format: VIDEO, hook: DEMONSTRATION, angle: PROBLEM_SOLUTION }
+  few_comparisons:      { format: VIDEO, hook: COMPARISON,    angle: PROBLEM_SOLUTION }
+  few_ugc:              { format: VIDEO, hook: UGC_STORY,     angle: TRANSFORMATION }
+  few_educational:      { format: VIDEO, hook: HOW_TO,        angle: EDUCATION }
+  few_before_after:     { format: VIDEO, hook: BEFORE_AFTER,  angle: TRANSFORMATION }
+  weak_opening_hooks:   { format: VIDEO, hook: CURIOSITY,     angle: PROBLEM_SOLUTION }
+  underused_angle:      { format: VIDEO, hook: PROBLEM,       angle: null }      # angle = the underused one
+  underused_format:     { format: null,  hook: DEMONSTRATION, angle: null }      # format = the underused one
+
+# ----------------------------------------------------------------------------- red flags (Stage 17)
+flags:
+  CREATIVE_SATURATION_HIGH:      { score_at_least: 70 }
+  ANGLE_CONCENTRATION_HIGH:      { top_share_at_least: 0.7, min_classified: 5 }
+  HOOK_SATURATION_HIGH:          { top_share_at_least: 0.7, min_classified: 5 }
+  CREATOR_CONCENTRATION_HIGH:    { top_share_at_least: 0.5, min_identified: 5, platform_group: creator }
+  ADVERTISER_CONCENTRATION_HIGH: { top_share_at_least: 0.5, min_identified: 5, platform_group: advertiser }
+  LOW_FORMAT_DIVERSITY:          { top_share_at_least: 0.9, min_qualified: 5 }
+  LOW_CREATIVE_DATA:             { confidence_below: 50 }
+  WEAK_DEMONSTRATION_EVIDENCE:   { demo_share_below: 0.2, min_known: 5 }
+
+history:
+  min_snapshots_for_velocity: 2
+
+creative_calibration:
+  enabled: false
+  max_products: 3
+  max_creatives_per_product: 30
+
+production_meta:
+  config_version: production-v1
+  created_at: '2026-09-30T23:02:25.179040+00:00'
+  source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00,
+    sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+  change_summary:
+  - no change vs development config

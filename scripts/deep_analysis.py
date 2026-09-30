@@ -39,7 +39,8 @@ OUT_DIR = ROOT / "data" / "processed" / "deep_analysis"
 
 
 def load_cfg():
-    with open(ROOT / "config" / "deep_analysis.yaml") as f:
+    import config_resolver as _CR
+    with open(_CR.path("deep_analysis.yaml")) as f:
         return yaml.safe_load(f)
 
 

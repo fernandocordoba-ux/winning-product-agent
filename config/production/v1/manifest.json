@@ -1,0 +1,44 @@
+{
+  "config_version": "production-v1",
+  "version": "v1",
+  "promotion_timestamp": "2026-09-30T23:02:25.179040+00:00",
+  "source_calibration_version": {
+    "report": "reports/production-calibration.md",
+    "generated_at": "2026-09-30T22:42:01.668504+00:00",
+    "result": "MORE_CALIBRATION_REQUIRED"
+  },
+  "source_calibration_report": "reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00, sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)",
+  "decision_rules_version": "Z-v1-production-v1",
+  "scoring_version": "wps-v2.1",
+  "changes": {
+    "approved": 8,
+    "rejected": 0,
+    "deferred": 3
+  },
+  "aliases": {
+    "decision.yaml": "decision_rules.yaml",
+    "suppliers.yaml": "supplier.yaml",
+    "competitors.yaml": "competitor.yaml",
+    "creatives.yaml": "creative.yaml"
+  },
+  "hash_algorithm": "sha256",
+  "files": {
+    "amazon_validation.yaml": "7591c78dd8610550e2828cc9b40193992e729a7b7c5b738e6ebcabbccd08150b",
+    "business_viability.yaml": "f638093ef35521ee92e24b00925c304664bcba8188b9aa1035c168e1c1f28b9e",
+    "calibration_lane.yaml": "781e56315014eca60487cb201ff0036d6815a29f580bc49d672c1bb7fea59573",
+    "categories.yaml": "4599b31c95200836b0e118c28d63bc63f76bafe0d3ac7301120aa5299a2e8c3e",
+    "change_review.json": "20ab80946d8f59634943c83b574a4dfe15a5202989ab674d787c20bd9a13c29a",
+    "competitor.yaml": "9a6945a65d7139700df74cd0760f18bb18687345a8553e0d2ad905df0561d161",
+    "creative.yaml": "9025079a33b89580a5387d3968535d365bee3dc7082745f9d1b8694a5952c25d",
+    "decision_rules.yaml": "5998340e0dafb40ba85b63477e2037d8b32b066f5150f81d46d4ae403163da5f",
+    "deep_analysis.yaml": "46546a7a2877b39d693b2fdf210c6a98a807e75d8e2a433a8f57831227d33033",
+    "emerging.yaml": "8341982f1a08d53fa2f1ac589fc2ee43060affe6f307061ae0855f0536c42db3",
+    "filters.yaml": "56b2c9caa26ed8e3cc8ba0a7e1bcf24aba94113f507089d0718595ea81f00edd",
+    "history.yaml": "4c1ae38fa126d035b0badbcdfb89a47b75cc8c3a6c5f17b5ce184595506cb641",
+    "provider_capabilities.yaml": "55937fb0c3b62127a2c9390750d36118e89bb796f32144b0c39ec2bd9dc46fef",
+    "report.yaml": "45955f153cf23da865dbf09d9de2aa9ab2b0f18052cc7386351b169bf468ebd9",
+    "runtime.yaml": "5397ed7a3f28592d69c8846ab756590ab6696ad7dae6872c22495178fe2e7f1b",
+    "scoring.yaml": "1608962d9cfee7eb0046829a0e64d5405346aed1ea45c60aec1832553dff593b",
+    "supplier.yaml": "c57b2f201192b732bd4174fa93a473f07ab7fce00060e724654fa77f2b5ed5e8"
+  }
+}

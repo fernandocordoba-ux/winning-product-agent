@@ -58,6 +58,7 @@ AA_STAGES = ["preflight", "discovery", "filtering", "deep_analysis", "wps", "wps
              "supplier_research", "bvs", "competitor_intelligence", "creative_intelligence", "historical_storage",
              "emerging_detector", "final_report", "final_decision", "aa_validation", "run_summary"]
 AA_PHRASE = "CONFIRM AA LIVE RUN"
+PRODUCTION_PHRASE = "CONFIRM PRODUCTION LIVE RUN"
 E2E_KEYS = ("supplier_products_max", "supplier_offers_per_product_max", "competitor_products_max",
             "competitors_per_product_max", "creative_products_max", "creatives_per_product_max",
             "final_decision_max_products")
@@ -297,8 +298,8 @@ def validate_effective(rt, eff):
                 v = e2e.get(k)
                 if not isinstance(v, int) or isinstance(v, bool) or v <= 0:
                     e.append(f"e2e.{k} must be a positive integer (got {v!r})")
-            if e2e.get("confirmation_phrase") != AA_PHRASE:
-                e.append(f"e2e.confirmation_phrase must be exactly {AA_PHRASE!r}")
+            if e2e.get("confirmation_phrase") not in (AA_PHRASE, PRODUCTION_PHRASE):
+                e.append(f"e2e.confirmation_phrase must be exactly {AA_PHRASE!r} or {PRODUCTION_PHRASE!r}")
             if isinstance(e2e.get("final_decision_max_products"), int) and \
                     isinstance(lim.get("deep_analysis_max_products"), int) and \
                     e2e["final_decision_max_products"] < lim["deep_analysis_max_products"]:
@@ -338,7 +339,8 @@ class Runner:
         self.filters = D.load_yaml("filters.yaml")
         self.categories = D.load_yaml("categories.yaml")
         self.ttl_hours = self.cfg_deep["credit_protection"]["cache_ttl_hours"]
-        self.cal_cfg = (yaml.safe_load((self.root / "config" / "calibration_lane.yaml").read_text()) or {}).get(
+        import config_resolver as _CR
+        self.cal_cfg = (yaml.safe_load(Path(_CR.path("calibration_lane.yaml")).read_text()) or {}).get(
             "calibration") or {"enabled": False}
 
     # ------------------------------------------------------------------ e2e (Step AA)
@@ -513,7 +515,8 @@ class Runner:
         import yaml as _y
 
         def implemented(name):
-            c = _y.safe_load((self.root / "config" / name).read_text()) or {}
+            import config_resolver as _CR
+            c = _y.safe_load(Path(_CR.path(name)).read_text()) or {}
             return sorted(k for k, v in (c.get("providers") or {}).items() if isinstance(v, dict) and v.get("implemented"))
         e, dq, am = self.e2e, rows["discovery"], rows["amazon_validation"]
         dp = rows["deep_analysis"]
@@ -627,6 +630,18 @@ class Runner:
     def paid_query(self, stage, query_type, query, products, followup_task=None):
         """Cap -> gate -> submit -> wait. Returns (response, task_id, cost). Raises StopPaid / ProviderFailure."""
         est = self.est(stage)
+        g = self.eff["query_plan"].get("guardrails") or {}
+        if not self.stop_paid and g:
+            executed = self.budget.executed
+            by_stage = sum(c["LIVE_QUERY"] for c in self.counts.values())
+            if g.get("max_queries_per_run") is not None and executed >= g["max_queries_per_run"]:
+                self.stop_paid = ("query_cap", f"max_queries_per_run {g['max_queries_per_run']} reached")
+            elif g.get("max_provider_queries", {}).get("kalopilot") is not None and \
+                    by_stage >= g["max_provider_queries"]["kalopilot"]:
+                self.stop_paid = ("provider_query_cap", f"max_provider_queries.kalopilot "
+                                                        f"{g['max_provider_queries']['kalopilot']} reached")
+            elif g.get("max_failed_queries") is not None and self.failed_answers() >= g["max_failed_queries"]:
+                self.stop_paid = ("failed_query_cap", f"max_failed_queries {g['max_failed_queries']} reached")
         if self.stop_paid:
             self.budget.record("blocked")
             self._qlog(stage, "BLOCKED", query_type, products, error_category=self.stop_paid[0])
@@ -683,6 +698,10 @@ class Runner:
         self.budget.record("executed", cost, bal_after)
         self._qlog(stage, "LIVE_QUERY", query_type, products, task_id=task_id, credits=cost, error_category=err)
         return resp, task_id, cost
+
+    def failed_answers(self):
+        """Paid queries that failed or returned no usable answer (guardrail input)."""
+        return sum(1 for q in self.query_log if q["action"] in ("FAILED", "LIVE_QUERY") and q.get("error_category"))
 
     # ================================================================== DRY RUN
     def dry_run(self, check_balance=False, preflight_result=None):
@@ -910,7 +929,7 @@ class Runner:
         now = self.now or now_utc()
         client = self.client or KaloClient()
         self.client = client
-        env = getattr(client, "data_environment", SYNTHETIC)
+        env = self.environment_for(client)
         if env == SYNTHETIC and self.data_root.resolve() == ROOT.resolve():
             raise ValueError("a SYNTHETIC (test) provider may not write into the real project data")
         if resume_id and not (self.runs_dir / resume_id / "manifest.json").exists():
@@ -923,6 +942,7 @@ class Runner:
         if r.get("dry_run") is not False:
             blocks.append(f"dry_run is not false in {self.eff['profile_path']}")
         blocks += self.limit_errors()
+        blocks += self.extra_live_blocks()
         if resume_id and self.manifest.get("profile", {}).get("path") != self.eff["profile_path"]:
             blocks.append("resume must use the same profile as the original run")
         pf = self._preflight()
@@ -973,6 +993,33 @@ class Runner:
             safety.clear_run_overrides()
         return self.summary()
 
+    def extra_live_blocks(self):
+        """Hook (AC): additional reasons that block a live run before confirmation."""
+        return []
+
+    def report_banner_extra(self):
+        return ""
+
+    def environment_for(self, client):
+        return getattr(client, "data_environment", SYNTHETIC)
+
+    def pre_stage_check(self, name):
+        """Hook (AC config lock): return an error string to stop the run before stage `name`."""
+        return None
+
+    def degraded_penalties(self, prods, ctx):
+        """Hook (AC degraded mode): {product_id: [{"reason", "points"}]} lowering Decision Confidence."""
+        return {}
+
+    def e2e_steps(self):
+        return [("discovery", self.s_discovery), ("filtering", self.s_filtering),
+                ("deep_analysis", self.s_deep), ("wps", self.s_wps), ("wps_confidence", self.s_conf),
+                ("amazon_validation", self.s_amazon), ("supplier_research", self.s_suppliers),
+                ("bvs", self.s_bvs), ("competitor_intelligence", self.s_competitors),
+                ("creative_intelligence", self.s_creatives), ("historical_storage", self.s_history),
+                ("emerging_detector", self.s_emerging), ("final_report", self.s_report),
+                ("final_decision", self.s_final_decision), ("aa_validation", self.s_aa_validation)]
+
     # ------------------------------------------------------------------ stage execution
     def _execute(self, now):
         ctx = {}
@@ -982,14 +1029,17 @@ class Runner:
                  ("historical_storage", self.s_history), ("emerging_detector", self.s_emerging),
                  ("final_report", self.s_report)]
         if self.e2e:                                   # Step AA: full chain, all layers + decision + audit
-            steps = [("discovery", self.s_discovery), ("filtering", self.s_filtering),
-                     ("deep_analysis", self.s_deep), ("wps", self.s_wps), ("wps_confidence", self.s_conf),
-                     ("amazon_validation", self.s_amazon), ("supplier_research", self.s_suppliers),
-                     ("bvs", self.s_bvs), ("competitor_intelligence", self.s_competitors),
-                     ("creative_intelligence", self.s_creatives), ("historical_storage", self.s_history),
-                     ("emerging_detector", self.s_emerging), ("final_report", self.s_report),
-                     ("final_decision", self.s_final_decision), ("aa_validation", self.s_aa_validation)]
+            steps = self.e2e_steps()
         for name, fn in steps:
+            err = self.pre_stage_check(name)
+            if err:
+                self.stages[name] = {"status": BLOCKED, "summary": err}
+                for rest, _ in steps[[n for n, _ in steps].index(name) + 1:]:
+                    self.stages[rest] = {"status": BLOCKED, "summary": "run stopped: " + err}
+                self.manifest["run_invalid"] = err
+                self.stop_paid = ("config_drift", err)
+                self._save_manifest()
+                break
             if self.stages.get(name, {}).get("status") == COMPLETED and name not in self.FREE_RERUN and \
                     self._restore(name, ctx):
                 continue                                               # resume: completed stage reused
@@ -1573,7 +1623,7 @@ class Runner:
         pats = [p.lower() for p in cfg["secret_key_patterns"]]
         md = GR.render_markdown(rep, cfg)
         banner = (f"\n> Data environment: **{self.env}** · Run `{self.run_id}` · profile `{self.eff['profile_path']}` · "
-                  f"BVS without supplier data stays incomplete (never estimated).\n")
+                  f"BVS without supplier data stays incomplete (never estimated).\n" + self.report_banner_extra())
         first, _, rest = md.partition("\n")
         if cal_rows:
             rest += ("\n\n## Calibration lane (not ranked)\n\n> calibration_only: tests Amazon/AVS/BVS plumbing with "
@@ -1746,7 +1796,10 @@ class Runner:
         manual = json.loads(mv.read_text()) if mv.exists() else None
         res = DE.run(prods, ctx.get("competitor") or {}, ctx.get("creative") or {}, manual=manual,
                      expected_env=self.env, now=now, require_trust=True,
-                     runtime_path=self.root / self.eff["profile_path"])
+                     runtime_path=self.root / self.eff["profile_path"] if not Path(self.eff["profile_path"]).is_absolute()
+                     else Path(self.eff["profile_path"]),
+                     confidence_penalties=self.degraded_penalties(prods, ctx),
+                     config_version=getattr(self, "config_version", None))
         res["metadata"]["run_id"] = self.run_id
         out = DE.write_reports(res, self.reports_dir, secrets=self.secrets)
         ctx["decision"] = res

@@ -18,7 +18,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG = ROOT / "config" / "scoring.yaml"
 
 
-def load_config(path=DEFAULT_CONFIG):
+def load_config(path=None):
+    import config_resolver as _CR
+    path = path or (_CR.path(Path(DEFAULT_CONFIG).name) if _CR.active_dir() else DEFAULT_CONFIG)
     with open(path) as f:
         return yaml.safe_load(f)["confidence"]
 

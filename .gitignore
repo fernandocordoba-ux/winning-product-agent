@@ -21,3 +21,6 @@ __pycache__/
 # Run artifacts (manifests, logs)
 runs/*
 !runs/.gitkeep
+
+# Production raw provider data
+data/production/raw/

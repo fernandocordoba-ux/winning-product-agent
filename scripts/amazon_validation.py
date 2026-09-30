@@ -47,7 +47,9 @@ UNIT_ALIASES = {"feet": "ft", "foot": "ft", "inches": "in", "inch": "in", "pcs":
                 "ct": "count", "gallon": "gal"}
 
 
-def load_cfg(path=ROOT / "config" / "amazon_validation.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("amazon_validation.yaml")
     with open(path) as f:
         return yaml.safe_load(f)["amazon_validation"]
 

@@ -83,7 +83,9 @@ class ProviderNotIntegrated(RuntimeError):
     pass
 
 
-def load_cfg(path=ROOT / "config" / "competitors.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("competitors.yaml")
     with open(path) as f:
         return yaml.safe_load(f)
 

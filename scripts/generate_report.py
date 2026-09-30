@@ -45,7 +45,9 @@ BVS_PARTS = [("gross_margin_potential", "Gross margin potential"), ("shipping_vi
              ("compliance_ip", "Compliance / IP")]
 
 
-def load_cfg(path=ROOT / "config" / "report.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("report.yaml")
     with open(path) as f:
         return yaml.safe_load(f)["report"]
 

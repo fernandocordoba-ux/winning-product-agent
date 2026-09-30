@@ -47,7 +47,9 @@ DISCLAIMER = ("READY_FOR_PRODUCT_VALIDATION means the product passed the data ru
               "validation (sample, quotes, margin, policy). It is not a prediction of sales or profit.")
 
 
-def load_cfg(path=ROOT / "config" / "decision.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("decision.yaml")
     with open(path) as f:
         return yaml.safe_load(f)
 
@@ -781,8 +783,12 @@ def shortlist(decisions, cfg):
 
 # ============================================================================ run / versioning
 def run(products, competitor_by_id=None, creative_by_id=None, cfg=None, manual=None, expected_env=None,
-        now=None, require_trust=False, scoring_path=ROOT / "config" / "scoring.yaml", runtime_path=ROOT / "config" / "runtime.yaml",
-        decision_path=ROOT / "config" / "decision.yaml"):
+        now=None, require_trust=False, scoring_path=None, runtime_path=None, decision_path=None,
+        confidence_penalties=None, config_version=None):
+    import config_resolver as _CR
+    scoring_path = scoring_path or _CR.path("scoring.yaml")
+    runtime_path = runtime_path or _CR.path("runtime.yaml")
+    decision_path = decision_path or _CR.path("decision.yaml")
     cfg = cfg or load_cfg(decision_path)
     now = now or datetime.now(timezone.utc)
     competitor_by_id, creative_by_id = competitor_by_id or {}, creative_by_id or {}
@@ -791,13 +797,21 @@ def run(products, competitor_by_id=None, creative_by_id=None, cfg=None, manual=N
         pid = str(p.get("product_id") or p.get("id"))
         ev = build_evidence(p, competitor_by_id.get(pid), creative_by_id.get(pid), expected_env)
         ev["trust_required"] = require_trust
-        decisions.append(decide(ev, cfg, manual))
+        d = decide(ev, cfg, manual)
+        pens = (confidence_penalties or {}).get(pid) or []
+        if pens:                                   # AC degraded mode: penalties only LOWER Decision Confidence
+            dc = d["decision_confidence"]
+            total = sum(abs(x["points"]) for x in pens)
+            dc["components"]["degraded_mode_penalty"] = -round(total, 2)
+            dc["score"] = round(max(0.0, dc["score"] - total), 2)
+            dc["degraded_mode"] = pens
+        decisions.append(d)
     decisions.sort(key=lambda d: d["product_id"])
     meta = {"decision_rules_version": cfg["decision_rules_version"],
             "scoring_config_hash": file_hash(scoring_path), "runtime_config_hash": file_hash(runtime_path),
             "decision_config_hash": file_hash(decision_path), "timestamp": now.isoformat(),
             "data_environment": expected_env or NA, "products_evaluated": len(decisions),
-            "data_trust_enforced": require_trust,
+            "data_trust_enforced": require_trust, "config_version": config_version or NA,
             "disclaimer": DISCLAIMER}
     for d in decisions:
         d["versioning"] = {k: meta[k] for k in ("decision_rules_version", "scoring_config_hash",
@@ -853,7 +867,11 @@ def build_json(result):
 def render_markdown(result):
     meta, decs, sl = result["metadata"], result["decisions"], result["shortlist"]
     by = {s: [d for d in decs if d["decision_state"] == s] for s in (READY, PROMISING, WATCH, REJECT, INSUFFICIENT)}
-    L = [f"# Final Decision — {meta['timestamp'][:10]}", "",
+    L = [f"# Final Decision — {meta['timestamp'][:10]}", ""]
+    if meta.get("config_version") not in (None, NA):
+        L += [f"**CONFIG VERSION:** {meta['config_version']} · **RUN ID:** {meta.get('run_id', NA)} · "
+              f"**DATA ENVIRONMENT:** {meta.get('data_environment')}", ""]
+    L += [
          f"> Rules `{meta['decision_rules_version']}` · scoring config `{meta['scoring_config_hash']}` · runtime config "
          f"`{meta['runtime_config_hash']}` · decision config `{meta['decision_config_hash']}` · data environment "
          f"**{meta['data_environment']}** · {meta['timestamp']}", "", f"> {DISCLAIMER}", ""]

@@ -87,7 +87,8 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 # --------------------------------------------------------------------------- config
 def load_yaml(name):
-    with open(ROOT / "config" / name) as f:
+    import config_resolver as _CR
+    with open(_CR.path(name)) as f:
         return yaml.safe_load(f)
 
 

@@ -33,7 +33,9 @@ POINTS_METRICS = {"wps"}
 STATUS_ORDER = ["EMERGING_STRONG", "EMERGING", "EMERGING_REVIEW"]
 
 
-def load_cfg(path=ROOT / "config" / "emerging.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("emerging.yaml")
     with open(path) as f:
         return yaml.safe_load(f)["emerging_detector"]
 

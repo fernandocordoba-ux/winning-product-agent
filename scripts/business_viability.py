@@ -41,7 +41,9 @@ DEEP_DIR = ROOT / "data" / "processed" / "deep_analysis"
 AMAZON_DIR = ROOT / "data" / "processed" / "amazon_validation"
 
 
-def load_cfg(path=ROOT / "config" / "business_viability.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("business_viability.yaml")
     with open(path) as f:
         return yaml.safe_load(f)["business_viability"]
 

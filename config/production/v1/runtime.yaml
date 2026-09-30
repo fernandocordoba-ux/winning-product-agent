@@ -1,0 +1,132 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v1 — IMMUTABLE (Step AC promotion)
+# created_at: 2026-09-30T23:02:25.179040+00:00
+# source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00, sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+# change_summary:
+#   - query_plan.estimated_credits.deep_analysis: 2.5 -> 3.6
+#   - safe defaults: live_mode false, dry_run true
+#   - production data paths, guardrails, degraded mode
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+runtime:
+  market: US
+  live_mode: false
+  dry_run: true
+  explicit_live_confirmation: false
+limits:
+  discovery_max_products: 20
+  deep_analysis_max_products: 5
+  amazon_validation_max_products: 3
+  bvs_max_products: 3
+safety:
+  preserve_raw_data: true
+  append_only_history: true
+  block_secrets_in_outputs: true
+  require_credit_check: true
+  min_balance_reserve: 5.0
+  estimated_credits_per_query: 4.0
+query_plan:
+  discovery_mode: per_category
+  discovery_categories:
+  - beauty_personal_care
+  deep_batch_size: 1
+  amazon_batch_size: 2
+  max_credits_for_run: 25
+  estimated_credits:
+    discovery: 4.0
+    deep_analysis: 3.6
+    amazon_validation: 4.0
+  guardrails:
+    max_queries_per_run: 8
+    max_provider_queries:
+      kalopilot: 8
+    max_failed_queries: 2
+    max_retry_count: 0
+    note: sized from the approved limits; stop new paid queries, keep completed data,
+      PARTIAL report
+allowed_markets:
+- US
+provider:
+  name: kalopilot
+  credential_sources:
+    env:
+    - KALOPILOT_TOKEN
+    - KALODATA_API_KEY
+    file: ~/.kalopilot/token
+paths:
+  raw: data/production/raw
+  processed: data/production/processed
+  history: data/production/history
+  reports: reports/production
+  runs: runs/production
+  cache: data/production/raw
+e2e:
+  step: PRODUCTION
+  confirmation_phrase: CONFIRM PRODUCTION LIVE RUN
+  supplier_products_max: 3
+  supplier_offers_per_product_max: 5
+  competitor_products_max: 3
+  competitors_per_product_max: 10
+  creative_products_max: 3
+  creatives_per_product_max: 20
+  final_decision_max_products: 5
+  layer_product_order: discovery PASS before REVIEW, then WPS desc, WPS Confidence
+    desc, product_id
+cache_policy:
+  discovery_ttl_hours: 24
+  deep_ttl_hours: 24
+  amazon_ttl_hours: 24
+  cache_key: query sha256 + prompt_version
+  reuse_across_environments: false
+  note: only PRODUCTION-tagged raw answers under data/production/raw are reused
+provider_retry:
+  max_retries: 0
+  retry_on: []
+  note: no automatic re-buy of a paid query
+credit_safety:
+  min_balance_reserve: 5.0
+  max_credits_for_run: 25
+  free_balance_check: true
+history_settings:
+  path: data/production/history
+  append_only: true
+  dedupe: source_snapshot_hash
+  decision_history: true
+  environment: PRODUCTION
+report_settings:
+  dir: reports/production
+  dated_never_overwritten: true
+  latest_files:
+  - latest-winning-products.md
+  - latest-final-decision.md
+  shortlist_max: 3
+  shortlist_only_state: READY_FOR_PRODUCT_VALIDATION
+degraded_mode:
+  kalopilot:
+    critical: true
+    on_unavailable: BLOCK_RUN
+    on_degraded: CONTINUE_WITH_WARNING
+  amazon:
+    mandatory: false
+    on_unavailable: CONTINUE
+    effect: cross-platform demand UNKNOWN (never estimated)
+  supplier:
+    on_unavailable: CONTINUE_NO_READY
+    on_degraded: CONTINUE
+    effect: READY requires supplier economics (decision rules ready.require_supplier_economics)
+  competitor:
+    on_unavailable: CONTINUE_REDUCED_CONFIDENCE
+    on_degraded: CONTINUE_REDUCED_CONFIDENCE
+    decision_confidence_penalty: 10
+    effect: Decision Confidence -10 for products without competitor evidence
+  creative:
+    on_unavailable: CONTINUE
+    effect: creative dimension UNKNOWN
+production_meta:
+  config_version: production-v1
+  created_at: '2026-09-30T23:02:25.179040+00:00'
+  source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00,
+    sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+  change_summary:
+  - production runtime built from approved runtime_production_v1 changes + safe defaults

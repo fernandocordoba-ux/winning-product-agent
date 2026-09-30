@@ -56,7 +56,9 @@ PCT_METRICS = ["gmv", "units", "creators", "videos", "price"]
 VELOCITY_METRICS = ["gmv", "units", "creators", "videos", "wps"]
 
 
-def load_cfg(path=ROOT / "config" / "history.yaml"):
+def load_cfg(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("history.yaml")
     with open(path) as f:
         return yaml.safe_load(f)["history"]
 

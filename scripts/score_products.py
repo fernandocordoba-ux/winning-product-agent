@@ -26,7 +26,9 @@ from confidence import NA, confidence_score, load_config as load_confidence_conf
 ROOT = Path(__file__).resolve().parent.parent
 
 
-def load_scoring_config(path=ROOT / "config" / "scoring.yaml"):
+def load_scoring_config(path=None):
+    import config_resolver as _CR
+    path = path or _CR.path("scoring.yaml")
     with open(path) as f:
         return yaml.safe_load(f)
 

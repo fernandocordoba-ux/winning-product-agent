@@ -1,0 +1,174 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v1 — IMMUTABLE (Step AC promotion)
+# created_at: 2026-09-30T23:02:25.179040+00:00
+# source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00, sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+# change_summary:
+#   - no change vs development config
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Competitor Intelligence — Step X (EXPERIMENTAL v1, editable here)
+# =============================================================================
+# scripts/competitors.py captures, normalizes and scores competitor stores / listings for
+# finalist products. NOT combined with WPS / AVS / BVS until source quality is validated.
+#
+#  - No scraping and no access that violates a source's terms: only configured integrations
+#    and user-supplied research (manual import).
+#  - Nothing is estimated: no competitor counts, ad spend, traffic or sales are invented.
+#  - Independent scores (never combined): Competitor Saturation Score, Competitive Opportunity
+#    Score, Competitor Confidence, Store Quality Score.
+# =============================================================================
+version: "competitors-v1"
+
+# ----------------------------------------------------------------------------- providers
+providers:
+  manual_import:   { implemented: true,  note: "CSV / JSON research supplied by the user (Stage 3)" }
+  meta_ad_library: { implemented: false, note: "no Meta Ad Library API access configured in this project" }
+  google_search:   { implemented: false, note: "no search API access configured in this project" }
+  minea:           { implemented: false, note: "no API access configured" }
+  dropship_io:     { implemented: false, note: "no API access configured" }
+  similarweb:      { implemented: false, note: "no API access configured" }
+  builtwith:       { implemented: false, note: "no API access configured" }
+  kalopilot:       { implemented: false, note: "KaloPilot covers TikTok Shop, not Shopify stores / Meta ads" }
+
+manual_import:
+  required_fields: [matched_product_id, competitor_name, competitor_url, product_url, selling_price]
+  accepted_currencies: [USD]
+
+# ----------------------------------------------------------------------------- matching (same method as suppliers)
+matching:
+  classes: { VERY_STRONG: 90, STRONG: 75, POSSIBLE: 60, UNRELIABLE: 0 }
+  min_for_economics: 75                    # (key shared with the supplier matcher)
+  min_evidence_points: 50
+  components:
+    name_tokens:   { points: 35 }
+    function:      { points: 20 }
+    model:         { points: 15 }
+    dimensions:    { points: 10 }
+    variant:       { points: 10 }
+    brand:         { points: 10 }
+  stopwords: [the, a, an, and, or, with, for, of, to, in, on, by, new, hot, best, set, kit, pcs, piece, pieces,
+              pack, "1", "2", "3", women, men, gift, gifts, premium, sale, official, store, shop, free, shipping]
+  function_words: [shampoo, conditioner, cream, lotion, serum, oil, spray, gloss, lip, blush, lash, lashes,
+                   eyelash, nail, nails, brush, scrubber, massager, perfume, fragrance, mask, cleanser, wash,
+                   moisturizer, exfoliating, organizer, divider, basket, hanger, rack, shelf, tray, pad, holder,
+                   bottle, cup, bag, lamp, light, charger, cable, case, stand, mat, towel, comb, dryer, curler]
+
+# ----------------------------------------------------------------------------- relationships (Stage 5)
+# Counts are NEVER mixed. DIRECT requires match >= direct_min regardless of what an import claims.
+relationships:
+  direct_min: 75                            # STRONG / VERY_STRONG -> DIRECT (the same product)
+  adjacent_min: 60                          # POSSIBLE -> ADJACENT (similar / substitute product)
+  # below adjacent_min: CATEGORY if it shares a function word with our product, else UNRELATED (ignored)
+
+# ----------------------------------------------------------------------------- ads (Stages 6-7)
+ads:
+  longevity_classes:                        # oldest active ad age (days); first match wins
+    - { label: very_new,     max_days: 7 }
+    - { label: new,          max_days: 30 }
+    - { label: established,  max_days: 90 }
+    - { label: long_running, max_days: null }
+  limitation: >
+    Ad longevity shows PERSISTENCE only. A long-running ad is NOT evidence of profitability
+    (it can be a brand campaign, a forgotten ad, or a loss leader). Spend is never estimated.
+
+# ----------------------------------------------------------------------------- pricing (Stage 9)
+pricing:
+  min_prices: 3                             # fewer qualified prices -> distribution N/A
+  position:                                 # our target price vs competitor median (%)
+    premium_above_pct: 10
+    discounted_below_pct: -10
+
+# ----------------------------------------------------------------------------- Saturation Score (Stage 10)
+# 0-100, HIGHER = MORE saturated. Over AVAILABLE components; < min_available_points -> N/A.
+saturation:
+  min_available_points: 45
+  components:
+    direct_competitor_count: { points: 30, full_at: 20 }        # s = min(direct / full_at, 1)
+    advertising_density:     { points: 25 }                     # s = direct advertisers with active Meta ads / direct with ad data
+    offer_similarity:        { points: 15, min_competitors: 2 } # s = mean pairwise Jaccard of offer_features
+    price_compression:       { points: 15, full_spread: 0.5 }   # s = 1 - min((max-min)/median / full_spread, 1)
+    store_dominance:         { points: 15, min_competitors: 2 } # s = largest review_count share among direct
+
+# ----------------------------------------------------------------------------- Competitive Opportunity (Stage 11)
+# 0-100, HIGHER = better opportunity. NOT the inverse of saturation: demand gates the score.
+opportunity:
+  min_available_points: 50
+  components:
+    demand_evidence:     { points: 20, input: units_30d, scale: log10, zero_at: 1000, full_at: 100000 }
+    competition_room:    { points: 20, full_at: 20 }             # s = 1 - min(direct / full_at, 1)
+    price_spread:        { points: 10, full_spread: 0.5 }        # s = min(spread / full_spread, 1)
+    offer_weaknesses:    { points: 15 }                          # share of key offer features missing among direct
+    creative_gaps:       { points: 10 }                          # s = 1 - advertiser share
+    store_quality_gaps:  { points: 10 }                          # s = 1 - mean store quality / 100
+    supplier_economics:  { points: 15, full_margin: 0.6 }        # s = min((median price - landed) / median / full_margin, 1)
+  key_offer_features: [free_shipping, bundle_offer, quantity_breaks, guarantee, returns_messaging]
+  demand_caps:                              # demand s below max_demand_s -> opportunity capped at cap
+    - { max_demand_s: 0.2, cap: 30 }
+    - { max_demand_s: 0.4, cap: 50 }
+  require_demand: true                      # no demand evidence -> opportunity N/A (never rewarded)
+
+# ----------------------------------------------------------------------------- Competitor Confidence (Stage 12)
+confidence:
+  min_sample: 5                             # competitors observed for full count evidence
+  components:
+    product_matching:   { points: 25 }      # mean match of DIRECT competitors / 100
+    competitor_count:   { points: 15 }      # min(observed / min_sample, 1)
+    pricing:            { points: 15 }      # share of direct with a price
+    ad_activity:        { points: 15 }      # share of direct with meta_ads_present known
+    offer_details:      { points: 10 }      # share of direct with any offer field known
+    platform:           { points: 10 }      # share of direct with platform != UNKNOWN
+    traffic_sales:      { points: 10 }      # share of direct with traffic or legitimately sourced sales
+  levels: { VERY_HIGH: 90, HIGH: 75, MODERATE: 60, LOW: 40, VERY_LOW: 0 }
+
+# ----------------------------------------------------------------------------- Store Quality (Stage 15)
+# ONLY observable yes/no criteria (recorded by the researcher). Never inferred from looks or sales.
+store_quality:
+  min_available_points: 40
+  criteria:
+    clear_branding:        { points: 15 }
+    mobile_friendly:       { points: 15 }
+    product_page_complete: { points: 15 }
+    trust_elements:        { points: 10 }
+    reviews_visible:       { points: 15 }
+    shipping_clarity:      { points: 10 }
+    returns_clarity:       { points: 10 }
+    offer_structure_clear: { points: 10 }
+
+# ----------------------------------------------------------------------------- red flags (Stage 13)
+flags:
+  EXTREME_DIRECT_COMPETITION:  { direct_at_least: 15 }
+  META_AD_SATURATION:          { advertiser_share_at_least: 0.6, min_direct: 3 }
+  PRICE_COMPRESSION:           { spread_below: 0.15 }
+  DOMINANT_BRAND:              { top_share_at_least: 0.6 }
+  IDENTICAL_OFFERS:            { similarity_at_least: 0.8 }
+  LONG_RUNNING_COMPETITOR_ADS: { ad_age_days_above: 90 }
+  LOW_DIFFERENTIATION:         { min_direct: 3 }
+  UNRELIABLE_COMPETITOR_MATCHES: { unreliable_share_at_least: 0.5 }
+  INSUFFICIENT_COMPETITOR_DATA:  { confidence_below: 50 }
+
+# ----------------------------------------------------------------------------- differentiation (Stage 14)
+differentiation:
+  min_direct: 2                             # fewer direct competitors -> gaps N/A (not enough evidence)
+  gap_if_share_below: 0.5                   # a feature offered by < 50 % of direct competitors = gap
+  creative_gap_advertiser_share_below: 0.3
+  store_quality_gap_below: 60
+  review_gap_median_reviews_below: 50
+
+# ----------------------------------------------------------------------------- history / calibration
+history:
+  min_snapshots_for_velocity: 2             # competition_velocity never from one observation
+
+competitor_calibration:
+  enabled: false
+  max_products: 3
+  max_competitors_per_product: 10
+
+production_meta:
+  config_version: production-v1
+  created_at: '2026-09-30T23:02:25.179040+00:00'
+  source_calibration_report: reports/production-calibration.md (generated 2026-09-30T22:42:01.668504+00:00,
+    sha256 e636f1101c61153c, result MORE_CALIBRATION_REQUIRED)
+  change_summary:
+  - no change vs development config
