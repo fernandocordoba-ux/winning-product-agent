@@ -101,7 +101,12 @@ def response_error(resp):
         return "empty_response"
     if resp.get("success") is False:
         return resp.get("error_category") or "provider_error"
-    status = (resp.get("data") or {}).get("status")
+    data = resp.get("data") or {}
+    status = data.get("status")
+    if status == "completed" and str(data.get("message_id")) == "0":
+        # Step U finding: KaloPilot pauses on a plan restriction ("not included in your current plan")
+        # and waits for a click in the web UI; the API then says "completed" with no final message.
+        return "paused_by_provider_plan_restriction"
     return None if status == "completed" else f"task_status_{status}"
 
 
@@ -170,6 +175,10 @@ class KaloClient:
 
     def wait(self, task_id):
         return self.KC.wait(task_id)
+
+    def result(self, task_id):
+        """FREE: current state of an existing task (no new query)."""
+        return self.KC.result(task_id)
 
 
 # ====================================================================== profile
@@ -260,6 +269,7 @@ class Runner:
         self.client = client
         self.max_products_arg = max_products
         self.continue_task = None                  # Step U: follow-up on an unfinished discovery task
+        self.from_task = None                      # Step U: import a task finished in the web UI (FREE fetch)
         self.preflight_fn = preflight_fn
         self.input_fn = input_fn or input
         self.isatty = sys.stdin.isatty() if isatty is None else isatty
@@ -318,6 +328,12 @@ class Runner:
 
     def discovery_queries(self):
         qp, lim = self.eff["query_plan"], self.limits
+        if self.from_task:
+            p, e = self.followup_source(self.from_task)
+            if not p:
+                raise ValueError(f"no saved LIVE discovery answer for task {self.from_task}")
+            return [{"category_key": e["category_key"], "query": e.get("query") or "", "fetch_task": self.from_task,
+                     "source_raw": str(p)}]
         if self.continue_task:
             p, e = self.followup_source(self.continue_task)
             if not p:
@@ -369,7 +385,7 @@ class Runner:
         """Planned paid queries BEFORE execution. Unknown costs stay UNKNOWN."""
         qp, lim = self.eff["query_plan"], self.limits
         dq = self.discovery_queries()
-        cached = [q["category_key"] for q in dq if self.find_cached_discovery(q["query"], env, now)]
+        cached = [q["category_key"] for q in dq if q.get("fetch_task") or self.find_cached_discovery(q["query"], env, now)]
         deep_n = min(lim["deep_analysis_max_products"], lim["discovery_max_products"])
         deep_q = math.ceil(deep_n / qp.get("deep_batch_size", 1))
         amz_n = min(lim["amazon_validation_max_products"], deep_n)
@@ -424,7 +440,8 @@ class Runner:
         self.query_log, self.stop_paid, self.provider_down = [], None, None
         self.balance_start = self.balance_now = None
         self.spent_known = 0.0
-        self.counts = {s: {"LIVE_QUERY": 0, "CACHE_HIT": 0, "BLOCKED": 0, "FAILED": 0} for s in PAID_STAGES}
+        self.counts = {s: {"LIVE_QUERY": 0, "CACHE_HIT": 0, "FETCHED_RESULT": 0, "BLOCKED": 0, "FAILED": 0}
+                       for s in PAID_STAGES}
         old = _read_json(self.run_dir / "manifest.json") if resume_id else None
         self.manifest = old or {
             "run_id": self.run_id, "started_at": (self.now or now_utc()).isoformat(), "completed_at": None,
@@ -566,6 +583,8 @@ class Runner:
             except Exception as e:  # noqa: BLE001
                 out["warnings"].append(f"balance check failed: {safety.redact(str(e), self.secrets)}")
         out["balance"] = balance if balance is not None else safety.UNKNOWN
+        if self.from_task and self.client is None:
+            self.client = KaloClient()
         out["discovery_preview"] = self._discovery_preview(env_for_cache, now) if budget else None
         out["plan"] = self._planned_stages(budget)
         for s in STAGES[1:]:
@@ -589,10 +608,47 @@ class Runner:
         import preflight as PF
         return PF.preflight(self.root)
 
+    def _fetch_discovery(self, q, h):
+        """FREE: read the finished answer of an existing task (no new query, no new credits)."""
+        self.budget.record("cached")
+        try:
+            resp = self.client.result(q["fetch_task"])
+        except Exception as e:  # noqa: BLE001
+            resp = {"success": False, "error_category": "provider_unavailable",
+                    "message": safety.redact(str(e), self.secrets)}
+        err = response_error(resp)
+        if not err and not D.extract_records({"response": resp})[0]:
+            err = "no_product_json_in_answer"
+        charged = credits_consumed(resp)
+        ts = now_utc()
+        meta = {"category_key": q["category_key"], "query": q["query"], "query_sha256": h, "task_id": q["fetch_task"],
+                "market": self.eff["runtime"]["market"], "currency": self.filters["market"]["currency"],
+                "fetched_at": ts.strftime("%Y%m%dT%H%M%SZ"), "observation_date": ts.strftime("%Y-%m-%d"),
+                "data_environment": self.env, "run_id": self.run_id, "fetched_via": "result_endpoint (free)",
+                "source_raw": q.get("source_raw"), "credits_consumed_by_task": charged,
+                "note": "task finished after the user continued it in the KaloData web UI; credits were charged "
+                        "then, not by this run"}
+        path = D.save_raw(resp, meta, self.raw)
+        self._qlog("discovery", "FAILED" if err else "FETCHED_RESULT", "discovery_result", [q["category_key"]],
+                   task_id=q["fetch_task"], credits=charged, error_category=err)
+        self.manifest["credits_charged_before_run"] = charged
+        return {"category_key": q["category_key"], "query_sha256": h, "raw_file": None if err else str(path),
+                "failed_raw_file": str(path) if err else None, "action": "FETCHED_RESULT", "error": err}
+
     def _discovery_preview(self, env, now):
         """If Discovery would be a CACHE HIT, show exactly which products Deep Analysis would get."""
         dq = self.discovery_queries()
-        paths = [self.find_cached_discovery(q["query"], env, now) for q in dq]
+        if self.from_task and self.client is not None:
+            import tempfile
+            resp = self.client.result(self.from_task)                  # FREE
+            if response_error(resp) or not D.extract_records({"response": resp})[0]:
+                return {"available": False, "note": f"task {self.from_task} has no finished product JSON yet"}
+            tmp = Path(tempfile.mkdtemp()) / "preview.json"
+            tmp.write_text(json.dumps({"category_key": dq[0]["category_key"], "fetched_at": now.strftime("%Y%m%dT%H%M%SZ"),
+                                       "market": "US", "response": resp}))
+            paths = [tmp]
+        else:
+            paths = [self.find_cached_discovery(q["query"], env, now) for q in dq]
         if not all(paths):
             return {"available": False,
                     "note": "Discovery needs a paid query: the candidates are only known after it runs"}
@@ -823,6 +879,10 @@ class Runner:
         for q in queries:
             h = sha(q["query"])
             self.budget.plan(1)
+            if q.get("fetch_task") and h not in done:
+                rows.append(self._fetch_discovery(q, h))
+                self._checkpoint("discovery", {"status": RUNNING, "queries": rows})
+                continue
             if h in done:
                 rows.append({"category_key": q["category_key"], "query_sha256": h, "raw_file": done[h],
                              "action": "CHECKPOINT"})

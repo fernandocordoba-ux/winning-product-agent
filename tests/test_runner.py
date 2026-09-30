@@ -659,3 +659,44 @@ class FollowUp(Base):
         r.continue_task = "nope"
         with self.assertRaises(ValueError):
             r.discovery_queries()
+
+
+# ============================================================ Step U: plan-restriction pause + free import
+class PlanRestriction(Base):
+    def test_paused_answer_detected(self):
+        self.assertEqual(R.response_error({"success": True, "data": {"status": "completed", "message_id": "0",
+                                                                      "text": "plan..."}}),
+                         "paused_by_provider_plan_restriction")
+        self.assertIsNone(R.response_error({"success": True, "data": {"status": "completed", "message_id": "697424"}}))
+
+    def test_from_task_imports_finished_answer_without_paid_query(self):
+        import discovery as D
+        raw = self.tmp / "data" / "raw"
+        D.save_raw({"success": True, "data": {"status": "completed", "task_id": "abc", "message_id": "0"}},
+                   {"category_key": "beauty_personal_care", "task_id": "abc", "query": "orig q", "market": "US",
+                    "fetched_at": "20260930T041358Z", "data_environment": "LIVE"}, raw)
+
+        class F(FakeProvider):
+            def result(self, task_id):
+                self.kinds.append("discovery")
+                self.submits.append("find up to")            # reuse the discovery answer builder
+                r = FakeProvider.wait(self, task_id)
+                self.submits.pop()
+                self.kinds.pop()
+                self.balance += self.cost                     # already charged before the run
+                r["data"].update({"message_id": "697424", "credits_consumed": 1.67})
+                return r
+        fake = F(env="LIVE")
+        r = self.runner(fake, isatty=False)
+        r.from_task = "abc"
+        b = r.dry_run()["query_budget"]
+        self.assertEqual(b["stages"]["discovery"]["expected_paid_max"], 0)
+        s = self.runner(fake, isatty=False)
+        s.from_task = "abc"
+        out = s.live(confirm_value=PHRASE)
+        self.assertNotIn("discovery", fake.kinds)             # no discovery query was submitted
+        self.assertEqual(out["queries"]["by_stage"]["discovery"]["FETCHED_RESULT"], 1)
+        self.assertEqual(s.stages["discovery"]["status"], "COMPLETED")
+        self.assertEqual(out["products"]["deep_analyzed_ok"], 5)
+        m = json.loads((s.run_dir / "manifest.json").read_text())
+        self.assertEqual(m["credits_charged_before_run"], 1.67)

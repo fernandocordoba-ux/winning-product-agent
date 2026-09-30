@@ -21,6 +21,7 @@ Selection (discovery only, keep it lightweight):
 - Prefer products where creator participation and video activity are increasing, when that data is available.
 
 Do not run deep analysis, video script extraction, review/comment analysis, or per-creator/per-video breakdowns.
+Do not use the Category Overview module (it is not included in this account's plan). If any value is only available from a module the plan does not include, do not pause or ask for confirmation: skip it and use null for that value.
 Do not estimate or invent missing values. Use null for any value that is not available. A real zero must be returned as 0, not null.
 
 Return the result as ONE fenced JSON code block (```json ... ```), an array of objects with exactly these keys:

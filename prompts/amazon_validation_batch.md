@@ -12,7 +12,8 @@ Search Amazon US (amazon.com) for products that are the same as, or the closest 
 
 For EACH product return up to {max_candidates} Amazon US listings as candidates, most similar first. Do not choose or judge the best match; return the raw listing data only. If nothing similar exists on Amazon US, return an empty candidates array for that product.
 
-Only report values you actually found on Amazon or in a data source you can cite. Do not estimate or invent any value. Use null for anything not available. A real zero must be 0, not null. Numbers must be plain numbers (no "$", no "k").
+Only report values you actually found on Amazon or in a data source you can cite. Do not use the Category Overview module (it is not included in this account's plan). If any value is only available from a module the plan does not include, do not pause or ask for confirmation: skip it and use null for that value.
+Do not estimate or invent any value. Use null for anything not available. A real zero must be 0, not null. Numbers must be plain numbers (no "$", no "k").
 
 Return ONE fenced JSON code block (```json ... ```) with an ARRAY containing ONE object per product ("product_id" exactly as given):
 [

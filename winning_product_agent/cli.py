@@ -6,6 +6,7 @@
   python -m winning_product_agent run --live --profile config/runtime_first_live.yaml --max-products 5
         [--confirm-live "CONFIRM LIVE RUN"]   # only for non-interactive sessions
         [--resume RUN_ID]                     # continue a stopped run without re-buying queries
+        [--from-task TASK_ID]                 # Discovery = FREE import of a task finished in the web UI
         [--continue-task TASK_ID]             # Discovery = follow-up asking an unfinished task for its JSON
   python -m winning_product_agent status [RUN_ID]
   python -m winning_product_agent report [RUN_ID]
@@ -126,6 +127,8 @@ def cmd_run(a):
     run = R.Runner(profile_path=a.profile, max_products=a.max_products)
     if a.continue_task:
         run.continue_task = a.continue_task
+    if a.from_task:
+        run.from_task = a.from_task
     if not a.live:                                    # default: DRY RUN, never paid
         r = run.dry_run(check_balance=a.check_balance)
         print_dry(r)
@@ -196,6 +199,8 @@ def build_parser():
     r.add_argument("--check-balance", action="store_true", help="dry run: FREE balance check")
     r.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.CONFIRMATION_PHRASE}"')
     r.add_argument("--resume", help="resume a stopped live run by run id")
+    r.add_argument("--from-task", help="Discovery = FREE import of a KaloPilot task already finished (e.g. continued "
+                                       "in the web UI after a plan-restriction pause); no new discovery query")
     r.add_argument("--continue-task", help="Discovery = ONE follow-up on an unfinished KaloPilot task (same "
                                            "conversation) asking only for the final JSON")
     st = sub.add_parser("status")
