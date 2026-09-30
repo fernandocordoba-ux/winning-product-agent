@@ -1,0 +1,47 @@
+# CLAUDE.md — winning-product-agent
+
+Instructions for Claude when working in this project.
+
+## What this project does
+
+Finds winning TikTok Shop products using KaloData's KaloPilot API, then validates, scores and reports on them. Runs in the Claude (Cowork) cloud workspace, not on the user's computer.
+
+## Pipeline
+
+1. **Discovery**: `prompts/discovery.md` → KaloPilot → raw JSON in `data/raw/`
+2. **Validation**: `scripts/validate_data.py` (rules in `prompts/validation.md`) → `data/processed/`
+3. **Deep analysis**: `prompts/deep_analysis.md` → KaloPilot, for shortlisted products
+4. **Scoring**: `scripts/score_products.py` using `config/scoring.yaml` (NOT implemented yet)
+5. **Report**: `scripts/generate_report.py` → `reports/`
+6. **History**: snapshots in `data/history/` to track products over time
+
+## Rules (always)
+
+- **Credits:** before any KaloPilot query that spends credits, show the current balance (`bash scripts/credits.sh`, free), the estimated cost and the exact question, then wait for the user's OK. After it runs, report credits consumed and the new balance.
+- **No invented data:** never estimate or fill in missing values; mark them `N/A`.
+- Never answer TikTok Shop data questions from memory; always query KaloPilot.
+- Never print or commit the token. Secrets live in `~/.kalopilot/token` or env vars (`KALOPILOT_TOKEN`, `KALODATA_API_KEY`).
+- Do not implement or change the scoring logic until the user asks.
+- Do not push to GitHub until the user says the project is finished.
+
+## Useful commands
+
+```bash
+bash scripts/setup-token.sh      # save/check token (free)
+bash scripts/credits.sh          # credit balance (free)
+bash scripts/ask.sh "<question>" # run a KaloPilot query (spends credits)
+```
+
+## Layout
+
+| Path | Purpose |
+|---|---|
+| `config/` | Scoring weights, filters, target categories (YAML) |
+| `prompts/` | Question templates sent to KaloPilot |
+| `scripts/` | Python/bash tools for the pipeline |
+| `data/raw/` | Unmodified API responses (git-ignored) |
+| `data/processed/` | Validated, normalized data |
+| `data/history/` | Dated snapshots for trend tracking |
+| `reports/` | Generated reports |
+| `tests/` | Tests for the scripts |
+| `kalopilot/` | Official KaloPilot skill (MIT), vendored |

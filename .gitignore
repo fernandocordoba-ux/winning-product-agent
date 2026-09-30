@@ -1,6 +1,19 @@
-# Never commit secrets
+# Secrets
+.env
+.env.*
+secrets/
 .kalopilot/
 token
 *.token
-.env
-reports/
+
+# Raw API data (can contain large/unfiltered payloads)
+data/raw/
+
+# Generated reports (keep folder)
+reports/*
+!reports/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/

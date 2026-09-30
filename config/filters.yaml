@@ -1,0 +1,20 @@
+# Filters applied to discovered products before analysis.
+# Values are placeholders (null = no filter) — set them when defining the strategy.
+
+region: US
+currency: USD
+time_window_days: 30
+
+price:
+  min: null
+  max: null
+
+gmv_min: null
+units_sold_min: null
+growth_min_pct: null
+creators_min: null
+videos_min: null
+commission_min_pct: null
+
+exclude_categories: []
+exclude_keywords: []

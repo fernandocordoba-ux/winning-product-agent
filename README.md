@@ -41,6 +41,15 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `scripts/setup-token.sh` | Saves token to `~/.kalopilot/token` and runs a free connectivity check |
 | `scripts/credits.sh` | Free credit balance check (no credits used) |
 | `scripts/ask.sh` | Submit a question, poll until done, print + save the answer to `reports/` |
+| `scripts/validate_data.py` | Validate raw data → `data/processed/` (skeleton) |
+| `scripts/score_products.py` | Score products with `config/scoring.yaml` (not implemented yet) |
+| `scripts/generate_report.py` | Build reports in `reports/` (skeleton) |
+| `config/` | `scoring.yaml`, `filters.yaml`, `categories.yaml` |
+| `prompts/` | `discovery.md`, `deep_analysis.md`, `validation.md` |
+| `data/raw/` | Raw API responses (git-ignored) |
+| `data/processed/`, `data/history/` | Validated data and dated snapshots |
+| `reports/`, `tests/` | Generated reports, tests |
+| `CLAUDE.md` | Rules Claude follows in this project |
 | `kalopilot/` | Official KaloPilot skill by Kalodata (MIT), vendored |
 
-The token is **never** committed (see `.gitignore`).
+The token and secrets are **never** committed (see `.gitignore`: `.env`, `.env.*`, `secrets/`, `data/raw/`).

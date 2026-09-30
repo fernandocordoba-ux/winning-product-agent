@@ -1,0 +1,9 @@
+# Scoring configuration — NOT IMPLEMENTED YET.
+# Placeholder structure only; weights and formulas will be defined later.
+
+version: 0
+enabled: false
+
+# metrics: {}      # e.g. gmv, units_sold, growth, creators, videos, commission
+# weights: {}      # metric -> weight
+# thresholds: {}   # score bands (e.g. winner / watch / skip)

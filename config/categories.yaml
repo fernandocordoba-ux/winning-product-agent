@@ -1,0 +1,6 @@
+# Target categories for discovery. Empty = all categories.
+# Use KaloData category names (and IDs when known), e.g.:
+#   - name: Beauty & Personal Care
+#     kalodata_id: 601450
+
+categories: []
