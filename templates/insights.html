@@ -1,0 +1,271 @@
+<title>¿Qué quieres saber hoy?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an analyst's desk — question board on top, one answer sheet below; values read left, the "why" opens under each. */
+:root {
+  --bg: #eef1ee; --panel: #fbfcfa; --ink: #1c2626; --muted: #5b6966; --line: #d3dbd6;
+  --accent: #1f5c4a; --accent-soft: #dcebe4; --chip: #e3e9e5;
+  --good: #1e7a4c; --good-bg: #dff1e6; --warn: #9a6a06; --warn-bg: #f7ecd0;
+  --bad: #b3372b; --bad-bg: #f8dfdb; --na: #6b7672; --na-bg: #e7ebe9;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121817; --panel: #1a2220; --ink: #e5ece8; --muted: #9baba5; --line: #2c3834;
+  --accent: #7fcfb0; --accent-soft: #1f3a31; --chip: #222c29;
+  --good: #7fd6a3; --good-bg: #183327; --warn: #e7c46b; --warn-bg: #3a3017; --bad: #f09a8f; --bad-bg: #3d1f1b;
+  --na: #a3afab; --na-bg: #242d2a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121817; --panel: #1a2220; --ink: #e5ece8; --muted: #9baba5; --line: #2c3834;
+  --accent: #7fcfb0; --accent-soft: #1f3a31; --chip: #222c29;
+  --good: #7fd6a3; --good-bg: #183327; --warn: #e7c46b; --warn-bg: #3a3017; --bad: #f09a8f; --bad-bg: #3d1f1b;
+  --na: #a3afab; --na-bg: #242d2a; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 16px/1.5 var(--body); }
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 56px; display: grid; gap: 22px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 700 clamp(28px, 5vw, 44px)/1.05 var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font: 700 22px/1.2 var(--display); margin: 0; text-wrap: balance; }
+h3 { font: 600 17px/1.3 var(--body); margin: 0; }
+.source { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: 14px; color: var(--muted); }
+.banner { border-left: 4px solid var(--warn); background: var(--warn-bg); color: var(--ink); padding: 10px 14px; border-radius: 6px; font-size: 14.5px; }
+.banner.prod { border-color: var(--good); background: var(--good-bg); }
+.ask { display: flex; gap: 8px; flex-wrap: wrap; }
+.ask input { flex: 1 1 260px; min-width: 0; font: 16px var(--body); padding: 11px 14px; border-radius: var(--r);
+  border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+.ask button, .chip, .pill-btn { font: 600 15px var(--body); cursor: pointer; border-radius: var(--r); }
+.ask button { padding: 11px 18px; border: 0; background: var(--accent); color: var(--panel); }
+.questions { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+.chip { text-align: left; padding: 12px 14px; border: 1px solid var(--line); background: var(--chip); color: var(--ink); line-height: 1.3; }
+.chip small { display: block; font: 400 13px var(--body); color: var(--muted); margin-top: 3px; }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.chip:focus-visible, .pill-btn:focus-visible, .ask button:focus-visible, .ask input:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sheet { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px clamp(16px, 3vw, 28px); display: grid; gap: 18px; min-width: 0; }
+.lead { font-size: 18px; max-width: 65ch; margin: 0; }
+.products { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill-btn { padding: 7px 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); font-weight: 500; font-size: 14px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pill-btn[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.rows { display: grid; gap: 0; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 12px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.row:first-child { border-top: 0; }
+.row .label { font-weight: 600; min-width: 0; }
+.row .val { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.row details { grid-column: 1 / -1; }
+summary { cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600; width: fit-content; }
+details p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; max-width: 70ch; }
+.tag { display: inline-flex; align-items: center; gap: 6px; font: 600 12.5px var(--body); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.good { color: var(--good); background: var(--good-bg); } .warn { color: var(--warn); background: var(--warn-bg); }
+.bad { color: var(--bad); background: var(--bad-bg); } .muted { color: var(--na); background: var(--na-bg); }
+.bar { height: 8px; background: var(--na-bg); border-radius: 99px; overflow: hidden; margin-top: 6px; grid-column: 1 / -1; }
+.bar i { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.stat { border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; display: grid; gap: 2px; }
+.stat b { font: 700 26px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13.5px; color: var(--muted); }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; max-width: 70ch; }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72ch; }
+.note { font-size: 13.5px; color: var(--muted); max-width: 72ch; margin: 0; }
+code { font: 13.5px var(--mono); background: var(--chip); padding: 2px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+.copy { font: 600 13px var(--body); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; margin-left: 6px; }
+@media (max-width: 520px) { .row { grid-template-columns: 1fr; } .row .val { text-align: left; } }
+@media (prefers-reduced-motion: no-preference) { .sheet { animation: rise .25s ease-out; } @keyframes rise { from { transform: translateY(4px); } to { transform: none; } } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Winning Product Agent · TikTok Shop US</div>
+    <h1>¿Qué quieres saber hoy?</h1>
+    <div class="source" id="source"></div>
+    <div id="banner"></div>
+  </header>
+
+  <form class="ask" id="ask" autocomplete="off">
+    <label for="q" class="eyebrow" style="flex-basis:100%">Escribe tu pregunta o elige una abajo</label>
+    <input id="q" name="q" placeholder="Ej.: ¿cuánto he gastado?, ¿por qué Laura Geller tiene 52?">
+    <button type="submit">Preguntar</button>
+  </form>
+
+  <nav class="questions" id="questions" aria-label="Preguntas"></nav>
+
+  <section class="sheet" id="answer" aria-live="polite"></section>
+
+  <p class="note" id="foot"></p>
+</div>
+
+<script>
+const DATA = /*__INSIGHTS_DATA__*/null;
+
+const Q = [
+  { id: "ready", t: "¿Hay algún producto listo para probar?", s: "Shortlist y puerta de lanzamiento", k: ["listo", "lanzar", "probar", "shortlist", "ganador", "ready"] },
+  { id: "list", t: "¿Cómo quedaron los productos?", s: "Estado de cada producto", k: ["productos", "quedaron", "estado", "lista", "todos"] },
+  { id: "score", t: "¿Por qué este producto tiene ese puntaje?", s: "WPS explicado punto por punto", k: ["por qué", "porque", "puntaje", "wps", "score", "puntos"], p: true },
+  { id: "gaps", t: "¿Qué le falta a un producto?", s: "Dimensiones, alertas y siguientes pasos", k: ["falta", "faltan", "alerta", "riesgo", "dimension", "flag"], p: true },
+  { id: "cost", t: "¿Cuánto he gastado?", s: "Créditos por corrida y saldo", k: ["gast", "crédit", "credit", "costo", "saldo", "dinero"] },
+  { id: "quality", t: "¿Qué tan confiables son los datos?", s: "Qué campos llegan y cuáles no", k: ["confiab", "datos", "calidad", "campos", "disponib"] },
+  { id: "health", t: "¿Está todo funcionando?", s: "Sistema, config y proveedores", k: ["funciona", "sistema", "salud", "error", "config"] },
+  { id: "next", t: "¿Qué hago ahora?", s: "Próximos pasos en orden", k: ["hago", "siguiente", "ahora", "paso", "próximo", "proximo"] },
+];
+
+const $ = (s) => document.querySelector(s);
+const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const num = (v, d = 2, u = "") => v === null || v === undefined || Number.isNaN(v) ? "N/A" :
+  (Math.abs(v) >= 1000 ? Math.round(v).toLocaleString("es") : (+v).toLocaleString("es", { maximumFractionDigits: d })) + u;
+const tag = (text, tone) => `<span class="tag ${tone}">${esc(text)}</span>`;
+const why = (text, label = "¿Por qué?") => text ? `<details><summary>${label}</summary><p>${esc(text)}</p></details>` : "";
+const row = (label, val, explain, extra = "") => `<div class="row"><div class="label">${label}</div><div class="val">${val}</div>${extra}${why(explain)}</div>`;
+
+let current = "ready";
+let product = null;
+
+function wpsTone(w) { return w === null || w === undefined ? "muted" : w >= 70 ? "good" : w >= 55 ? "warn" : "bad"; }
+
+function header() {
+  const d = DATA;
+  $("#source").innerHTML = `<span>Fuente: <b>${esc(d.source_label)}</b></span>` +
+    `<span>Config ${esc(d.config_version || "N/A")}</span>` +
+    `<span>Saldo KaloPilot: <b>${num(d.balance)}</b> créditos</span>` +
+    `<span>Actualizado ${esc(new Date(d.generated_at).toLocaleString("es"))}</span>`;
+  $("#banner").innerHTML = d.production_pending
+    ? `<div class="banner">Aún no hay corrida de producción. Lo que ves son los datos de calibración re-evaluados con las reglas de producción. Cuando corras producción, esta página se actualiza con los datos nuevos.</div>`
+    : `<div class="banner prod">Datos de la corrida de producción <code>${esc(d.run_id)}</code>.</div>`;
+  $("#foot").textContent = "Esta página solo muestra datos. No hace consultas pagadas, no pide muestras, no contacta proveedores y no gasta en anuncios.";
+}
+
+function questions() {
+  $("#questions").innerHTML = Q.map((q) =>
+    `<button class="chip" data-q="${q.id}" aria-pressed="${q.id === current}">${esc(q.t)}<small>${esc(q.s)}</small></button>`).join("");
+  document.querySelectorAll(".chip").forEach((b) => b.addEventListener("click", () => show(b.dataset.q)));
+}
+
+function productPicker() {
+  const ps = DATA.products;
+  if (!product && ps.length) product = ps[0].id;
+  return `<div class="products" role="group" aria-label="Producto">` + ps.map((p) =>
+    `<button class="pill-btn" data-p="${esc(p.id)}" aria-pressed="${p.id === product}" title="${esc(p.name)}">${esc(p.name.slice(0, 38))}</button>`).join("") + `</div>`;
+}
+
+const R = {
+  ready() {
+    const d = DATA, ps = d.products;
+    const ready = ps.filter((p) => p.state === "READY_FOR_PRODUCT_VALIDATION");
+    const counts = Object.entries(d.counts).map(([k, v]) => `<div class="stat"><b>${v}</b><span>${esc(k)}</span></div>`).join("");
+    const lead = ready.length
+      ? `Sí: <b>${ready.length}</b> producto(s) pasaron todas las reglas y están listos para la validación manual.`
+      : `Todavía no. Ningún producto llegó a <b>Listo para validar</b>.`;
+    const reason = ready.length ? "" :
+      "Para llegar a ese estado un producto necesita, además de buena demanda en TikTok, costo real de proveedor (para calcular el margen), investigación de competidores y creativos clasificados. Hoy esas tres fuentes no tienen datos importados, así que el sistema no puede aprobar ninguno. No es que los productos sean malos: es que falta evidencia, y el sistema nunca la inventa.";
+    const fv = d.final_validation.length ? `<h3>Puerta de lanzamiento</h3><div class="rows">` + d.final_validation.map((r) =>
+      row(esc(r.name), tag(r.state, r.state === "LAUNCH_TEST_READY" ? "good" : r.state === "REJECT" ? "bad" : "warn"),
+        "Pendiente: " + (r.missing.join("; ") || "nada"))).join("") + `</div>` : "";
+    return `<h2>${Q[0].t}</h2><p class="lead">${lead}</p>${why(reason, "¿Por qué no hay ninguno?")}<div class="stats">${counts}</div>${fv}`;
+  },
+  list() {
+    const rows = DATA.products.map((p) => `<tr><td>${esc(p.name)}</td><td>${tag(p.state_es, p.tone)}</td>` +
+      `<td class="num">${num(p.wps)}</td><td class="num">${num(p.decision_confidence)}</td><td>${esc(p.state_why)}</td></tr>`).join("");
+    return `<h2>${Q[1].t}</h2><p class="lead">${DATA.products.length} productos evaluados. El <b>WPS</b> (0–100) mide qué tan fuerte se ve en TikTok; la <b>confianza de la decisión</b> mide cuánta evidencia hay detrás, no qué tan bueno es.</p>` +
+      `<div class="table-wrap"><table><thead><tr><th>Producto</th><th>Estado</th><th>WPS</th><th>Confianza decisión</th><th>Qué significa</th></tr></thead><tbody>${rows}</tbody></table></div>` +
+      why("Estados: Listo para validar → pasó todo; Prometedor → buena demanda pero faltan datos; En observación → una dimensión débil; Descartado → evidencia negativa clara; Datos insuficientes → falta información para decidir.", "¿Qué significa cada estado?");
+  },
+  score() {
+    const p = DATA.products.find((x) => x.id === product) || DATA.products[0];
+    if (!p) return `<h2>${Q[2].t}</h2><p class="lead">No hay productos.</p>`;
+    const comps = p.wps_components.map((c) => {
+      const pct = c.points === null ? 0 : Math.max(0, Math.min(100, c.points / c.max * 100));
+      const val = c.points === null ? "N/A" : `${num(c.points)} / ${num(c.max)}`;
+      return row(`${esc(c.metric)} <span class="note">(${c.tier === "CORE" ? "principal" : "de apoyo"})</span>`, val, c.why, `<div class="bar"><i style="width:${pct}%"></i></div>`);
+    }).join("");
+    return `<h2>${esc(p.name)}</h2>${productPicker()}` +
+      `<p class="lead">WPS <b>${num(p.wps)}</b> ${tag(p.wps >= 70 ? "Fuerte" : p.wps >= 55 ? "Aceptable" : "Débil", wpsTone(p.wps))} con confianza de datos <b>${num(p.wps_confidence)}</b>.</p>` +
+      why("El WPS suma 11 componentes. Cada uno toma un dato real de KaloPilot y lo pasa por una escala fija (abajo ves la escala de cada uno). El total se normaliza a 0–100. Para la decisión, 55 es aceptable y 70 es fuerte.", "¿Cómo se calcula el WPS?") +
+      `<div class="stats"><div class="stat"><b>${num(p.gmv, 0)}</b><span>Ventas 30 días (USD)</span></div><div class="stat"><b>${num(p.units, 0)}</b><span>Unidades 30 días</span></div><div class="stat"><b>${num(p.price)}</b><span>Precio promedio (USD)</span></div><div class="stat"><b>${num(p.creators, 0)} / ${num(p.videos, 0)}</b><span>Creadores / videos</span></div></div>` +
+      `<div class="rows">${comps}</div>`;
+  },
+  gaps() {
+    const p = DATA.products.find((x) => x.id === product) || DATA.products[0];
+    if (!p) return `<h2>${Q[3].t}</h2><p class="lead">No hay productos.</p>`;
+    const dims = p.dimensions.map((d) => row(esc(d.dimension), tag(d.status, d.tone), d.why + (d.technical ? `  (detalle técnico: ${d.technical})` : ""))).join("");
+    const flags = p.flags.length ? `<h3>Alertas</h3><ul class="plain">${p.flags.map((f) => `<li><b>${esc(f.code.replace(/_/g, " ").toLowerCase())}</b>: ${esc(f.es)}</li>`).join("")}</ul>` : "";
+    const next = p.next_actions.length ? `<h3>Siguientes pasos</h3><ol class="steps">${p.next_actions.map((a) => `<li>${esc(a)}</li>`).join("")}</ol>` : "";
+    return `<h2>${esc(p.name)}</h2>${productPicker()}<p class="lead">Estado: ${tag(p.state_es, p.tone)} · confianza de la decisión <b>${num(p.decision_confidence)}</b></p>${why(p.state_why + " " + p.dc_why)}` +
+      `<h3>Las 6 dimensiones de la decisión</h3><div class="rows">${dims}</div>${flags}${next}`;
+  },
+  cost() {
+    const c = DATA.costs;
+    const total = c.reduce((s, r) => s + (r.creditos || 0), 0);
+    const deep = c.filter((r) => r.por_analisis_profundo && r.consultas_pagadas > 1).map((r) => r.por_analisis_profundo);
+    const avg = deep.length ? deep.reduce((a, b) => a + b, 0) / deep.length : null;
+    const rows = c.map((r) => `<tr><td>${esc(r.fecha)}</td><td>${esc(r.tipo)}</td><td>${esc(r.estado)}</td><td class="num">${r.consultas_pagadas}</td><td class="num">${num(r.creditos)}</td><td class="num">${num(r.saldo_fin)}</td></tr>`).join("");
+    return `<h2>${Q[4].t}</h2><div class="stats"><div class="stat"><b>${num(DATA.balance)}</b><span>Saldo actual</span></div><div class="stat"><b>${num(total)}</b><span>Créditos gastados en corridas registradas</span></div><div class="stat"><b>${num(avg)}</b><span>Promedio por análisis profundo</span></div></div>` +
+      why("Los créditos se miden con el saldo gratuito de KaloPilot antes y después de cada consulta. Las corridas que marcan 0 fueron bloqueadas o importaron resultados ya pagados. Aparte hubo ~5.6 créditos gastados en discovery antes de que existiera el runner (no aparecen en esta tabla).") +
+      `<div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Resultado</th><th>Consultas pagadas</th><th>Créditos</th><th>Saldo final</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  },
+  quality() {
+    const q = DATA.data_quality;
+    const tone = { RELIABLE: "good", USABLE: "warn", SPARSE: "bad", UNRELIABLE: "bad" };
+    const es = { RELIABLE: "Confiable", USABLE: "Usable", SPARSE: "Escaso", UNRELIABLE: "No confiable" };
+    const rows = q.map((r) => row(esc(r.campo.replace("Deep · ", "Análisis · ").replace("Discovery · ", "Descubrimiento · ")),
+      `${r.disponible}/${r.total} ${tag(es[r.estado] || r.estado, tone[r.estado] || "muted")}`, null,
+      `<div class="bar"><i style="width:${r.total ? r.disponible / r.total * 100 : 0}%"></i></div>`)).join("");
+    return `<h2>${Q[5].t}</h2><p class="lead">Cuántas veces llegó cada dato en las respuestas reales de KaloPilot.</p>` +
+      why("Confiable = llega en 90 % o más de las respuestas; Usable = 70–89 %; Escaso = 30–69 %; No confiable = menos de 30 % o con problemas de mapeo. Los campos escasos nunca se usan como datos principales. Amazon, proveedores y competidores no aparecen porque todavía no hay datos reales de esas fuentes.", "¿Cómo se clasifica?") +
+      `<div class="rows">${rows}</div>`;
+  },
+  health() {
+    const h = DATA.health;
+    const comps = Object.entries(h.components || {}).map(([k, v]) => row(esc(k), tag(v === "READY" ? "Listo" : v, v === "READY" ? "good" : "bad"))).join("");
+    return `<h2>${Q[6].t}</h2><p class="lead">Chequeo previo: ${tag(h.preflight === "READY_FOR_DRY_RUN" ? "Todo listo" : h.preflight, h.preflight === "READY_FOR_DRY_RUN" ? "good" : "bad")} · configuración ${esc(h.config.version || "N/A")} ${tag(h.config.hashes_ok ? "sin cambios" : "modificada", h.config.hashes_ok ? "good" : "bad")}</p>` +
+      why("La configuración de producción está sellada con huellas digitales (hashes). Si alguien cambia un archivo, el sistema lo detecta y bloquea la corrida. El chequeo previo revisa configuración, rutas, módulos y la compuerta de seguridad que impide consultas pagadas sin tu confirmación.") +
+      `<div class="rows">${comps}</div>`;
+  },
+  next() {
+    const d = DATA, steps = [];
+    if (d.production_pending) steps.push("Correr la primera corrida de producción: escribe exactamente CONFIRM PRODUCTION LIVE RUN en el chat (unos 4–22 créditos, tope 25).");
+    steps.push("Importar ofertas reales de proveedor (costo + envío) de los productos con mejor WPS: sin eso ningún producto puede llegar a Listo para validar.");
+    steps.push("Importar investigación de competidores directos (tiendas, precios, anuncios).");
+    steps.push("Importar creativos clasificados (hooks y ángulos) de esos productos.");
+    steps.push("Correr la validación final: python -m winning_product_agent final-validation --latest");
+    d.final_validation.forEach((r) => r.actions.slice(0, 3).forEach((a) => steps.push(`${r.name}: ${a}`)));
+    return `<h2>${Q[7].t}</h2><ol class="steps">${steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>` +
+      why("El orden sigue las dependencias: primero datos reales de producción, después las fuentes que desbloquean el margen y la competencia, y al final la puerta de lanzamiento. Ningún paso gasta dinero sin tu confirmación.") +
+      `<p class="note">Comando para la validación final <code id="cmd">python -m winning_product_agent final-validation --latest</code><button class="copy" id="copy" type="button">Copiar</button></p>`;
+  },
+};
+
+function show(id) {
+  current = id;
+  $("#answer").innerHTML = R[id]();
+  document.querySelectorAll(".chip").forEach((b) => b.setAttribute("aria-pressed", b.dataset.q === id));
+  document.querySelectorAll(".pill-btn").forEach((b) => b.addEventListener("click", () => { product = b.dataset.p; show(current); }));
+  const cp = $("#copy");
+  if (cp) cp.addEventListener("click", () => {
+    const t = $("#cmd").textContent;
+    navigator.clipboard?.writeText(t).then(() => { cp.textContent = "Copiado"; }, () => {
+      const r = document.createRange(); r.selectNodeContents($("#cmd")); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    });
+  });
+}
+
+$("#ask").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const text = $("#q").value.toLowerCase();
+  const hit = DATA.products.find((p) => p.name.toLowerCase().split(/\s+/).slice(0, 2).some((w) => w.length > 3 && text.includes(w)));
+  if (hit) product = hit.id;
+  let best = null, score = 0;
+  Q.forEach((q) => { const s = q.k.filter((k) => text.includes(k)).length; if (s > score) { score = s; best = q; } });
+  if (!best && hit) best = Q.find((q) => q.id === "gaps");
+  if (best) show(best.id);
+  else $("#answer").innerHTML = `<h2>No entendí la pregunta</h2><p class="lead">Prueba con una de estas:</p><ul class="plain">${Q.map((q) => `<li>${esc(q.t)}</li>`).join("")}</ul>`;
+});
+
+header(); questions(); show(current);
+</script>

@@ -466,6 +466,14 @@ def cmd_final_validation(a):
     return 0
 
 
+def cmd_insights(a):
+    """Daily '¿Qué quieres saber hoy?' snapshot (read-only; the only network call is the FREE balance check)."""
+    import insights_export as IE
+    r = IE.write(with_balance=not a.no_balance)
+    _p(f"Insights: {r['html']}\nJSON: {r['json']}\nSource: {r['data']['source_label']}")
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="python -m winning_product_agent", description="winning-product-agent master runner")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -520,6 +528,8 @@ def build_parser():
     fv.add_argument("--latest", action="store_true", help="use the latest production run (default)")
     fv.add_argument("--product-id", help="validate one product of the latest production run")
     fv.add_argument("--report-only", action="store_true", help="default behaviour: reports only, no paid action")
+    ins = sub.add_parser("insights", help="build the '¿Qué quieres saber hoy?' page data (read-only)")
+    ins.add_argument("--no-balance", action="store_true", help="skip the free credit-balance check")
     sub.add_parser("calibrate", help="Step AB production calibration (offline, LIVE evidence only, writes proposals)")
     au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
     au.add_argument("run_id", nargs="?")
@@ -532,7 +542,7 @@ def main(argv=None):
             "suppliers": cmd_suppliers, "competitors": cmd_competitors,
             "creatives": cmd_creatives, "decide": cmd_decide, "calibrate": cmd_calibrate,
             "production-run": cmd_production_run, "production-config": cmd_production_config,
-            "final-validation": cmd_final_validation}[a.cmd](a)
+            "final-validation": cmd_final_validation, "insights": cmd_insights}[a.cmd](a)
 
 
 if __name__ == "__main__":
