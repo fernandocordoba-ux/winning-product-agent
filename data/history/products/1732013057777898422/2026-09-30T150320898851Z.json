@@ -1,0 +1,79 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 36.99,
+    "gmv": 105077.3,
+    "units": 2960,
+    "growth": 5.82,
+    "creator_count": 164,
+    "selling_creator_count": 100,
+    "video_count": 251,
+    "selling_video_count": 98,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 7241
+  },
+  "concentration": {
+    "top_creator_revenue_share": 57.07,
+    "top_video_revenue_share": 22.24
+  },
+  "scores": {
+    "wps": 23.29,
+    "confidence": 87.17
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/processed/deep_analysis/deep_20260930T151034924977Z.json",
+    "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T150320898851Z_1732013057777898422_deep_product.json",
+    "task_id": "b11af0cbc01d4875a7b4df77fe02f65b",
+    "report_url": null
+  },
+  "product_id": "1732013057777898422",
+  "identity_key": "1732013057777898422",
+  "key_type": "product_id",
+  "product_name": "BellaVita Luxury Honey Oud & Vanilla Perfume Combo | Unisex Eau De Parfum Gift Set | Long Lasting Floral, Spicy & Musky Fragrances | 2 x 100ml | Premium, Elegant & Cruelty-Free Perfume Duo",
+  "category": "Beauty & Personal Care > Fragrance > Unisex Fragrance",
+  "shop": "BellaVitashop",
+  "market": "US",
+  "observation_timestamp": "2026-09-30T15:03:20.898851+00:00",
+  "observation_date": "2026-09-30",
+  "source_stage": "deep_analysis",
+  "data_environment": "LIVE",
+  "provider_observation_timestamp": "2026-09-29",
+  "retrieved_at": "2026-09-30T15:03:20.898851+00:00",
+  "source_snapshot_hash": "537c8e5790a82e51f99c28dccec8a1e14502d0a2c9b7537343095ad70035ffd2",
+  "run_id": "20260930T144516Z_e4f12d",
+  "written_at": "2026-09-30T15:10:35.087777+00:00",
+  "imported_at": "2026-09-30T15:10:35.087777+00:00"
+}

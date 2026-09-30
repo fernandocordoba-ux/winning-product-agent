@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 32.28,
+    "gmv": 52275.79,
+    "units": 2053,
+    "growth": 1479.33,
+    "creator_count": null,
+    "selling_creator_count": 87,
+    "video_count": 230,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "low_base_or_seasonal"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/processed/discovery_20260930T145058Z.json",
+    "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+    "task_id": "e6539a31f0704fc78c43bece930dfc32",
+    "report_url": null,
+    "record_index": 8
+  },
+  "product_id": "1732254992691663610",
+  "identity_key": "1732254992691663610",
+  "key_type": "product_id",
+  "product_name": "Bodyrefresh Birthday Gifts for Women, Christmas Self Care Gift Basket for Her, Spa Gifts, Get Well Soon Gift, Thinking of You Care Package for Women, Graduation Gift for Her, Gift Box for Best Friend Sister",
+  "category": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+  "shop": "Bodyrefresh US",
+  "market": "US",
+  "observation_timestamp": "2026-09-30T14:50:58+00:00",
+  "observation_date": "2026-09-30",
+  "source_stage": "discovery",
+  "data_environment": "LIVE",
+  "discovery_status": "REVIEW",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-09-30T14:50:58+00:00",
+  "source_snapshot_hash": "0a8136ac03069b16819d32631535957379212302e3112d90c41b768d0ce35fc7",
+  "run_id": "20260930T144516Z_e4f12d",
+  "written_at": "2026-09-30T15:10:35.080218+00:00",
+  "imported_at": "2026-09-30T15:10:35.080218+00:00"
+}

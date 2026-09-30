@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 39.9,
+    "gmv": 171600.4,
+    "units": 4601,
+    "growth": 1199.02,
+    "creator_count": null,
+    "selling_creator_count": 178,
+    "video_count": 109,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "low_base_or_seasonal"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/processed/discovery_20260930T145058Z.json",
+    "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+    "task_id": "e6539a31f0704fc78c43bece930dfc32",
+    "report_url": null,
+    "record_index": 9
+  },
+  "product_id": "1729409301014090551",
+  "identity_key": "1729409301014090551",
+  "key_type": "product_id",
+  "product_name": "ONE/SIZE Cheek Clapper 3D Blush Trio Palette - Multi-Formula, Pigmented Blush Trio | Cream, Powder & Blush Highlighter for Ultra-Intense Color & Radiant Cheeks, how to apply blush",
+  "category": "Beauty & Personal Care > Makeup > Blush",
+  "shop": "ONE SIZE BEAUTY",
+  "market": "US",
+  "observation_timestamp": "2026-09-30T14:50:58+00:00",
+  "observation_date": "2026-09-30",
+  "source_stage": "discovery",
+  "data_environment": "LIVE",
+  "discovery_status": "REVIEW",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-09-30T14:50:58+00:00",
+  "source_snapshot_hash": "d7cefb470b2fb7b2e9ca49e31c717cebbf816d62b44fcc2258f81c01d8e1189f",
+  "run_id": "20260930T144516Z_e4f12d",
+  "written_at": "2026-09-30T15:10:35.081458+00:00",
+  "imported_at": "2026-09-30T15:10:35.081458+00:00"
+}

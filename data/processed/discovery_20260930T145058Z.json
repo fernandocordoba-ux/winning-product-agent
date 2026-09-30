@@ -1,0 +1,3453 @@
+{
+  "pipeline": "discovery-v1",
+  "config_versions": {
+    "filters": "filters-v1",
+    "categories": "categories-v1",
+    "confidence": "confidence-v1"
+  },
+  "market": {
+    "region": "US",
+    "currency": "USD",
+    "period_days": 30
+  },
+  "raw_files": [
+    "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json"
+  ],
+  "summary": {
+    "records": 15,
+    "unique": 15,
+    "duplicates_removed": 0,
+    "malformed": 0,
+    "PASS": 0,
+    "REVIEW": 14,
+    "FAIL": 1,
+    "returned_candidates": 14,
+    "over_limit": 0
+  },
+  "candidates": [
+    {
+      "key": "1732506646693253928",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732506646693253928",
+        "product_name": "Blue Boomshampoo",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732506646693253928&language=en-US&currency=USD&region=US",
+        "shop_id": "7494939370774301480",
+        "shop_name": "Blue.Skin.Care.",
+        "category": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+        "category_id": "601493",
+        "price_min": 52.0,
+        "price_max": 52.0,
+        "gmv_30d": 42570.0,
+        "gmv_prev_30d": 16101.0,
+        "units_30d": 886,
+        "growth_30d": 164.39,
+        "creator_count": null,
+        "selling_creator_count": 4,
+        "creator_growth_pct": null,
+        "video_count": 3,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-22",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 164.39,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 11,
+        "original_record": {
+          "product_id": "1732506646693253928",
+          "product_name": "Blue Boomshampoo",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732506646693253928&language=en-US&currency=USD&region=US",
+          "shop_id": "7494939370774301480",
+          "shop_name": "Blue.Skin.Care.",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+          "category_id": "601493",
+          "price_min": 52.0,
+          "price_max": 52.0,
+          "gmv_30d": 42570.0,
+          "units_30d": 886,
+          "gmv_prev_30d": 16101.0,
+          "growth_30d_pct": 164.39,
+          "creator_count": null,
+          "selling_creator_count": 4,
+          "creator_growth_pct": null,
+          "video_count": 3,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-22",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 52.0,
+        "price_basis": "avg",
+        "product_age_days": 70,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "selling_creator_count_below_preferred",
+            "action": "flag",
+            "value": 4,
+            "preferred_min": 5
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 52.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 52.0,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 42570.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 16101.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 886,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 164.39,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 3,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732085052798177429",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732085052798177429",
+        "product_name": "Byennwa Glow Body Cream | Exfoliate Gently",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732085052798177429&language=en-US&currency=USD&region=US",
+        "shop_id": "7495847068856780949",
+        "shop_name": "Byenblan",
+        "category": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+        "category_id": "601492",
+        "price_min": 55.0,
+        "price_max": 55.0,
+        "gmv_30d": 80890.0,
+        "gmv_prev_30d": 39490.0,
+        "units_30d": 1617,
+        "growth_30d": 104.84,
+        "creator_count": null,
+        "selling_creator_count": 1,
+        "creator_growth_pct": null,
+        "video_count": 0,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-11-25",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 104.84,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 12,
+        "original_record": {
+          "product_id": "1732085052798177429",
+          "product_name": "Byennwa  Glow Body Cream | Exfoliate Gently",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732085052798177429&language=en-US&currency=USD&region=US",
+          "shop_id": "7495847068856780949",
+          "shop_name": "Byenblan",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+          "category_id": "601492",
+          "price_min": 55.0,
+          "price_max": 55.0,
+          "gmv_30d": 80890.0,
+          "units_30d": 1617,
+          "gmv_prev_30d": 39490.0,
+          "growth_30d_pct": 104.84,
+          "creator_count": null,
+          "selling_creator_count": 1,
+          "creator_growth_pct": null,
+          "video_count": 0,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-11-25",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 55.0,
+        "price_basis": "avg",
+        "product_age_days": 309,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "selling_creator_count_below_preferred",
+            "action": "flag",
+            "value": 1,
+            "preferred_min": 5
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 55.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 55.0,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 80890.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 39490.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1617,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 104.84,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 0,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732013057777898422",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732013057777898422",
+        "product_name": "BellaVita Luxury Honey Oud & Vanilla Perfume Combo | Unisex Eau De Parfum Gift Set | Long Lasting Floral, Spicy & Musky Fragrances | 2 x 100ml | Premium, Elegant & Cruelty-Free Perfume Duo",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732013057777898422&language=en-US&currency=USD&region=US",
+        "shop_id": "7495282456746691510",
+        "shop_name": "BellaVitashop",
+        "category": "Beauty & Personal Care > Fragrance > Unisex Fragrance",
+        "category_id": "855824",
+        "price_min": 36.99,
+        "price_max": 36.99,
+        "gmv_30d": 103187.84,
+        "gmv_prev_30d": 99296.0,
+        "units_30d": 2906,
+        "growth_30d": 3.92,
+        "creator_count": null,
+        "selling_creator_count": 129,
+        "creator_growth_pct": null,
+        "video_count": 181,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-11-13",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 3.92,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 13,
+        "original_record": {
+          "product_id": "1732013057777898422",
+          "product_name": "BellaVita Luxury Honey Oud & Vanilla Perfume Combo | Unisex Eau De Parfum Gift Set | Long Lasting Floral, Spicy & Musky Fragrances | 2 x 100ml | Premium, Elegant & Cruelty-Free Perfume Duo",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732013057777898422&language=en-US&currency=USD&region=US",
+          "shop_id": "7495282456746691510",
+          "shop_name": "BellaVitashop",
+          "category_path": "Beauty & Personal Care > Fragrance > Unisex Fragrance",
+          "category_id": "855824",
+          "price_min": 36.99,
+          "price_max": 36.99,
+          "gmv_30d": 103187.84,
+          "units_30d": 2906,
+          "gmv_prev_30d": 99296.0,
+          "growth_30d_pct": 3.92,
+          "creator_count": null,
+          "selling_creator_count": 129,
+          "creator_growth_pct": null,
+          "video_count": 181,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-11-13",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 36.99,
+        "price_basis": "avg",
+        "product_age_days": 321,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 3.92,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 36.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 36.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 103187.84,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 99296.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2906,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 3.92,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 181,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732530555618759155",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732530555618759155",
+        "product_name": "Laura Geller Fresh-Faced Favorites Kit (3PC)",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732530555618759155&language=en-US&currency=USD&region=US",
+        "shop_id": "7495061274772343283",
+        "shop_name": "Laura Geller Beauty",
+        "category": "Beauty & Personal Care > Makeup > Makeup Sets",
+        "category_id": "601529",
+        "price_min": 76.7,
+        "price_max": 76.7,
+        "gmv_30d": 90184.8,
+        "gmv_prev_30d": 1534.0,
+        "units_30d": 1524,
+        "growth_30d": 5779.06,
+        "creator_count": null,
+        "selling_creator_count": 77,
+        "creator_growth_pct": null,
+        "video_count": 151,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-08-03",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 5779.06,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732530555618759155",
+          "product_name": "Laura Geller Fresh-Faced Favorites Kit (3PC)",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732530555618759155&language=en-US&currency=USD&region=US",
+          "shop_id": "7495061274772343283",
+          "shop_name": "Laura Geller Beauty",
+          "category_path": "Beauty & Personal Care > Makeup > Makeup Sets",
+          "category_id": "601529",
+          "price_min": 76.7,
+          "price_max": 76.7,
+          "gmv_30d": 90184.8,
+          "units_30d": 1524,
+          "gmv_prev_30d": 1534.0,
+          "growth_30d_pct": 5779.06,
+          "creator_count": null,
+          "selling_creator_count": 77,
+          "creator_growth_pct": null,
+          "video_count": 151,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-08-03",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 76.7,
+        "price_basis": "avg",
+        "product_age_days": 58,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 5779.06,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 76.7,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 76.7,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 90184.8,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 1534.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1524,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 5779.06,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 151,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732483552324456649",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732483552324456649",
+        "product_name": "Rechargeable Motorized Electric Shower Back Scrubber - Long Handle IPX Waterproof PVC Spin Bath Brush with 5 Replaceable Heads, 3 Speed Modes, Exfoliating Massager for Adults Sensitive Skin, USB, Full Body (Shoulders, Calves Care, Great Gift Option)",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732483552324456649&language=en-US&currency=USD&region=US",
+        "shop_id": "7495969704918091977",
+        "shop_name": "YXIANG",
+        "category": "Beauty & Personal Care > Bath & Body Care > Bathing Accessories",
+        "category_id": "853512",
+        "price_min": 29.99,
+        "price_max": 29.99,
+        "gmv_30d": 57731.48,
+        "gmv_prev_30d": 1227.0,
+        "units_30d": 2582,
+        "growth_30d": 4605.09,
+        "creator_count": null,
+        "selling_creator_count": 67,
+        "creator_growth_pct": null,
+        "video_count": 93,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-10",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 4605.09,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1732483552324456649",
+          "product_name": "Rechargeable Motorized Electric Shower Back Scrubber - Long Handle IPX Waterproof PVC Spin Bath Brush with 5 Replaceable Heads, 3 Speed Modes, Exfoliating Massager for Adults Sensitive Skin, USB, Full Body (Shoulders, Calves Care, Great Gift Option)",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732483552324456649&language=en-US&currency=USD&region=US",
+          "shop_id": "7495969704918091977",
+          "shop_name": "YXIANG",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Bathing Accessories",
+          "category_id": "853512",
+          "price_min": 29.99,
+          "price_max": 29.99,
+          "gmv_30d": 57731.48,
+          "units_30d": 2582,
+          "gmv_prev_30d": 1227.0,
+          "growth_30d_pct": 4605.09,
+          "creator_count": null,
+          "selling_creator_count": 67,
+          "creator_growth_pct": null,
+          "video_count": 93,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-10",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 29.99,
+        "price_basis": "avg",
+        "product_age_days": 82,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 4605.09,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 29.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 29.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 57731.48,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 1227.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2582,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 4605.09,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 93,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1729469028834644892",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1729469028834644892",
+        "product_name": "HAUS LABS PhD Hybrid Lip Glaze | Plumping Hydrating Sheer Lip Gloss",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729469028834644892&language=en-US&currency=USD&region=US",
+        "shop_id": "7495559495993494428",
+        "shop_name": "Haus Labs",
+        "category": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+        "category_id": "601534",
+        "price_min": 31.95,
+        "price_max": 33.8,
+        "gmv_30d": 28718.01,
+        "gmv_prev_30d": 630.0,
+        "units_30d": 1104,
+        "growth_30d": 4458.41,
+        "creator_count": null,
+        "selling_creator_count": 128,
+        "creator_growth_pct": null,
+        "video_count": 133,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2024-05-01",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 4458.41,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1729469028834644892",
+          "product_name": "HAUS LABS PhD Hybrid Lip Glaze | Plumping Hydrating Sheer Lip Gloss",
+          "product_url": "https://www.kalodata.com/product/detail?id=1729469028834644892&language=en-US&currency=USD&region=US",
+          "shop_id": "7495559495993494428",
+          "shop_name": "Haus Labs",
+          "category_path": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+          "category_id": "601534",
+          "price_min": 31.95,
+          "price_max": 33.8,
+          "gmv_30d": 28718.01,
+          "units_30d": 1104,
+          "gmv_prev_30d": 630.0,
+          "growth_30d_pct": 4458.41,
+          "creator_count": null,
+          "selling_creator_count": 128,
+          "creator_growth_pct": null,
+          "video_count": 133,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2024-05-01",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 32.875,
+        "price_basis": "avg",
+        "product_age_days": 882,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 4458.41,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 31.95,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 33.8,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 28718.01,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 630.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1104,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 4458.41,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 133,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732362839287501028",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732362839287501028",
+        "product_name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732362839287501028&language=en-US&currency=USD&region=US",
+        "shop_id": "7495713071595161828",
+        "shop_name": "Plouise USA",
+        "category": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+        "category_id": "601534",
+        "price_min": 21.0,
+        "price_max": 33.0,
+        "gmv_30d": 35748.96,
+        "gmv_prev_30d": 795.0,
+        "units_30d": 1231,
+        "growth_30d": 4396.72,
+        "creator_count": null,
+        "selling_creator_count": 42,
+        "creator_growth_pct": null,
+        "video_count": 73,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-04-24",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 4396.72,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 3,
+        "original_record": {
+          "product_id": "1732362839287501028",
+          "product_name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732362839287501028&language=en-US&currency=USD&region=US",
+          "shop_id": "7495713071595161828",
+          "shop_name": "Plouise USA",
+          "category_path": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+          "category_id": "601534",
+          "price_min": 21.0,
+          "price_max": 33.0,
+          "gmv_30d": 35748.96,
+          "units_30d": 1231,
+          "gmv_prev_30d": 795.0,
+          "growth_30d_pct": 4396.72,
+          "creator_count": null,
+          "selling_creator_count": 42,
+          "creator_growth_pct": null,
+          "video_count": 73,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-04-24",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 27.0,
+        "price_basis": "avg",
+        "product_age_days": 159,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 4396.72,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 21.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 33.0,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 35748.96,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 795.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1231,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 4396.72,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 73,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1731896601518248227",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1731896601518248227",
+        "product_name": "Best & Obsessed Skincare Kit",
+        "product_url": "https://www.kalodata.com/product/detail?id=1731896601518248227&language=en-US&currency=USD&region=US",
+        "shop_id": "7494913857786775843",
+        "shop_name": "e.l.f. Cosmetics",
+        "category": "Beauty & Personal Care > Skincare > Skin Care Kits",
+        "category_id": "601611",
+        "price_min": 32.5,
+        "price_max": 32.5,
+        "gmv_30d": 31950.0,
+        "gmv_prev_30d": 1050.0,
+        "units_30d": 1260,
+        "growth_30d": 2942.86,
+        "creator_count": null,
+        "selling_creator_count": 1263,
+        "creator_growth_pct": null,
+        "video_count": 33,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-10-09",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 2942.86,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 4,
+        "original_record": {
+          "product_id": "1731896601518248227",
+          "product_name": "Best & Obsessed Skincare Kit",
+          "product_url": "https://www.kalodata.com/product/detail?id=1731896601518248227&language=en-US&currency=USD&region=US",
+          "shop_id": "7494913857786775843",
+          "shop_name": "e.l.f. Cosmetics",
+          "category_path": "Beauty & Personal Care > Skincare > Skin Care Kits",
+          "category_id": "601611",
+          "price_min": 32.5,
+          "price_max": 32.5,
+          "gmv_30d": 31950.0,
+          "units_30d": 1260,
+          "gmv_prev_30d": 1050.0,
+          "growth_30d_pct": 2942.86,
+          "creator_count": null,
+          "selling_creator_count": 1263,
+          "creator_growth_pct": null,
+          "video_count": 33,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-10-09",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 32.5,
+        "price_basis": "avg",
+        "product_age_days": 356,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 2942.86,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 32.5,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 32.5,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 31950.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 1050.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1260,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 2942.86,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 33,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732386290307535513",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732386290307535513",
+        "product_name": "MAC Skinfinish Colourstruck Blush",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732386290307535513&language=en-US&currency=USD&region=US",
+        "shop_id": "7495993271965420185",
+        "shop_name": "M.A.C Cosmetics Store",
+        "category": "Beauty & Personal Care > Makeup > Blush",
+        "category_id": "601560",
+        "price_min": 44.2,
+        "price_max": 44.2,
+        "gmv_30d": 162915.76,
+        "gmv_prev_30d": 8115.0,
+        "units_30d": 4794,
+        "growth_30d": 1907.59,
+        "creator_count": null,
+        "selling_creator_count": 158,
+        "creator_growth_pct": null,
+        "video_count": 234,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-07",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 1907.59,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 6,
+        "original_record": {
+          "product_id": "1732386290307535513",
+          "product_name": "MAC Skinfinish Colourstruck Blush",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732386290307535513&language=en-US&currency=USD&region=US",
+          "shop_id": "7495993271965420185",
+          "shop_name": "M.A.C Cosmetics Store",
+          "category_path": "Beauty & Personal Care > Makeup > Blush",
+          "category_id": "601560",
+          "price_min": 44.2,
+          "price_max": 44.2,
+          "gmv_30d": 162915.76,
+          "units_30d": 4794,
+          "gmv_prev_30d": 8115.0,
+          "growth_30d_pct": 1907.59,
+          "creator_count": null,
+          "selling_creator_count": 158,
+          "creator_growth_pct": null,
+          "video_count": 234,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-05-07",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 44.2,
+        "price_basis": "avg",
+        "product_age_days": 146,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1907.59,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 44.2,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 44.2,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 162915.76,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 8115.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 4794,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1907.59,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 234,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732504597553255078",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732504597553255078",
+        "product_name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732504597553255078&language=en-US&currency=USD&region=US",
+        "shop_id": "7495481687074114214",
+        "shop_name": "AriaMist",
+        "category": "Beauty & Personal Care > Makeup > False Eyelashes & Adhesives",
+        "category_id": "824720",
+        "price_min": 29.89,
+        "price_max": 129.99,
+        "gmv_30d": 35596.8,
+        "gmv_prev_30d": 2062.0,
+        "units_30d": 1657,
+        "growth_30d": 1626.32,
+        "creator_count": null,
+        "selling_creator_count": 2,
+        "creator_growth_pct": null,
+        "video_count": 1,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-22",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 1626.32,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 7,
+        "original_record": {
+          "product_id": "1732504597553255078",
+          "product_name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732504597553255078&language=en-US&currency=USD&region=US",
+          "shop_id": "7495481687074114214",
+          "shop_name": "AriaMist",
+          "category_path": "Beauty & Personal Care > Makeup > False Eyelashes & Adhesives",
+          "category_id": "824720",
+          "price_min": 29.89,
+          "price_max": 129.99,
+          "gmv_30d": 35596.8,
+          "units_30d": 1657,
+          "gmv_prev_30d": 2062.0,
+          "growth_30d_pct": 1626.32,
+          "creator_count": null,
+          "selling_creator_count": 2,
+          "creator_growth_pct": null,
+          "video_count": 1,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-22",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 79.94,
+        "price_basis": "avg",
+        "product_age_days": 70,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "selling_creator_count_below_preferred",
+            "action": "flag",
+            "value": 2,
+            "preferred_min": 5
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1626.32,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 29.89,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 129.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 35596.8,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 2062.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1657,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1626.32,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 1,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732254992691663610",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732254992691663610",
+        "product_name": "Bodyrefresh Birthday Gifts for Women, Christmas Self Care Gift Basket for Her, Spa Gifts, Get Well Soon Gift, Thinking of You Care Package for Women, Graduation Gift for Her, Gift Box for Best Friend Sister",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732254992691663610&language=en-US&currency=USD&region=US",
+        "shop_id": "7496248783888157434",
+        "shop_name": "Bodyrefresh US",
+        "category": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+        "category_id": "601493",
+        "price_min": 28.58,
+        "price_max": 35.98,
+        "gmv_30d": 52275.79,
+        "gmv_prev_30d": 3310.0,
+        "units_30d": 2053,
+        "growth_30d": 1479.33,
+        "creator_count": null,
+        "selling_creator_count": 87,
+        "creator_growth_pct": null,
+        "video_count": 230,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-01-23",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 1479.33,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 8,
+        "original_record": {
+          "product_id": "1732254992691663610",
+          "product_name": "Bodyrefresh Birthday Gifts for Women, Christmas Self Care Gift Basket for Her, Spa Gifts, Get Well Soon Gift, Thinking of You Care Package for Women, Graduation Gift for Her, Gift Box for Best Friend Sister",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732254992691663610&language=en-US&currency=USD&region=US",
+          "shop_id": "7496248783888157434",
+          "shop_name": "Bodyrefresh US",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+          "category_id": "601493",
+          "price_min": 28.58,
+          "price_max": 35.98,
+          "gmv_30d": 52275.79,
+          "units_30d": 2053,
+          "gmv_prev_30d": 3310.0,
+          "growth_30d_pct": 1479.33,
+          "creator_count": null,
+          "selling_creator_count": 87,
+          "creator_growth_pct": null,
+          "video_count": 230,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-01-23",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 32.28,
+        "price_basis": "avg",
+        "product_age_days": 250,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1479.33,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 28.58,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 35.98,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 52275.79,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 3310.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2053,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1479.33,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 230,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1729409301014090551",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1729409301014090551",
+        "product_name": "ONE/SIZE Cheek Clapper 3D Blush Trio Palette - Multi-Formula, Pigmented Blush Trio | Cream, Powder & Blush Highlighter for Ultra-Intense Color & Radiant Cheeks, how to apply blush",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729409301014090551&language=en-US&currency=USD&region=US",
+        "shop_id": "7495075892729449271",
+        "shop_name": "ONE SIZE BEAUTY",
+        "category": "Beauty & Personal Care > Makeup > Blush",
+        "category_id": "601560",
+        "price_min": 30.4,
+        "price_max": 49.4,
+        "gmv_30d": 171600.4,
+        "gmv_prev_30d": 13210.0,
+        "units_30d": 4601,
+        "growth_30d": 1199.02,
+        "creator_count": null,
+        "selling_creator_count": 178,
+        "creator_growth_pct": null,
+        "video_count": 109,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2023-11-24",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 1199.02,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 9,
+        "original_record": {
+          "product_id": "1729409301014090551",
+          "product_name": "ONE/SIZE Cheek Clapper 3D Blush Trio Palette - Multi-Formula, Pigmented  Blush Trio | Cream, Powder & Blush Highlighter for Ultra-Intense Color & Radiant Cheeks, how to apply blush",
+          "product_url": "https://www.kalodata.com/product/detail?id=1729409301014090551&language=en-US&currency=USD&region=US",
+          "shop_id": "7495075892729449271",
+          "shop_name": "ONE SIZE BEAUTY",
+          "category_path": "Beauty & Personal Care > Makeup > Blush",
+          "category_id": "601560",
+          "price_min": 30.4,
+          "price_max": 49.4,
+          "gmv_30d": 171600.4,
+          "units_30d": 4601,
+          "gmv_prev_30d": 13210.0,
+          "growth_30d_pct": 1199.02,
+          "creator_count": null,
+          "selling_creator_count": 178,
+          "creator_growth_pct": null,
+          "video_count": 109,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2023-11-24",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 39.9,
+        "price_basis": "avg",
+        "product_age_days": 1041,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1199.02,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 30.4,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 49.4,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 171600.4,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 13210.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 4601,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1199.02,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 109,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732421662338158894",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732421662338158894",
+        "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732421662338158894&language=en-US&currency=USD&region=US",
+        "shop_id": "7494600907353326894",
+        "shop_name": "DR.RERDIA",
+        "category": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+        "category_id": "601694",
+        "price_min": 24.7,
+        "price_max": 63.7,
+        "gmv_30d": 26452.4,
+        "gmv_prev_30d": 2070.0,
+        "units_30d": 960,
+        "growth_30d": 1177.89,
+        "creator_count": null,
+        "selling_creator_count": 2,
+        "creator_growth_pct": null,
+        "video_count": 8,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-06-01",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 1177.89,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 10,
+        "original_record": {
+          "product_id": "1732421662338158894",
+          "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732421662338158894&language=en-US&currency=USD&region=US",
+          "shop_id": "7494600907353326894",
+          "shop_name": "DR.RERDIA",
+          "category_path": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+          "category_id": "601694",
+          "price_min": 24.7,
+          "price_max": 63.7,
+          "gmv_30d": 26452.4,
+          "units_30d": 960,
+          "gmv_prev_30d": 2070.0,
+          "growth_30d_pct": 1177.89,
+          "creator_count": null,
+          "selling_creator_count": 2,
+          "creator_growth_pct": null,
+          "video_count": 8,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-06-01",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 44.2,
+        "price_basis": "avg",
+        "product_age_days": 121,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "selling_creator_count_below_preferred",
+            "action": "flag",
+            "value": 2,
+            "preferred_min": 5
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1177.89,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 24.7,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 63.7,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 26452.4,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 2070.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 960,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1177.89,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 8,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732614733114479489",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732614733114479489",
+        "product_name": "BTArtboxnails Square Almond and Stiletto press on nails with 5 desgins, 32 pcs Each",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732614733114479489&language=en-US&currency=USD&region=US",
+        "shop_id": "7495317961883487105",
+        "shop_name": "BTArtboxnails",
+        "category": "Beauty & Personal Care > Nail Art Decoration & Accessories",
+        "category_id": "852112",
+        "price_min": 57.0,
+        "price_max": 64.99,
+        "gmv_30d": 61805.85,
+        "gmv_prev_30d": 0.0,
+        "units_30d": 1257,
+        "growth_30d": null,
+        "creator_count": null,
+        "selling_creator_count": 153,
+        "creator_growth_pct": null,
+        "video_count": 310,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-09-04",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": null,
+        "growth_source": "no_previous_revenue"
+      },
+      "missing_fields": [
+        "growth_30d",
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 14,
+        "original_record": {
+          "product_id": "1732614733114479489",
+          "product_name": "BTArtboxnails Square Almond and Stiletto press on nails with 5 desgins, 32 pcs Each",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732614733114479489&language=en-US&currency=USD&region=US",
+          "shop_id": "7495317961883487105",
+          "shop_name": "BTArtboxnails",
+          "category_path": "Beauty & Personal Care > Nail Art Decoration & Accessories",
+          "category_id": "852112",
+          "price_min": 57.0,
+          "price_max": 64.99,
+          "gmv_30d": 61805.85,
+          "units_30d": 1257,
+          "gmv_prev_30d": 0.0,
+          "growth_30d_pct": null,
+          "creator_count": null,
+          "selling_creator_count": 153,
+          "creator_growth_pct": null,
+          "video_count": 310,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-09-04",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 60.995,
+        "price_basis": "avg",
+        "product_age_days": 26,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "growth_30d"
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "product_age_days",
+            "value": 26,
+            "condition": "< 30"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "collapsing_sales:revenue_growth_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "growth_30d",
+          "low_base_or_seasonal:revenue_growth_pct"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_long_term",
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 32.5,
+          "level": "VERY_LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 0.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 57.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 64.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 61805.85,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 0.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1257,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 310,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    }
+  ],
+  "failed": [
+    {
+      "key": "1732073898874933711",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732073898874933711",
+        "product_name": "Premium CRÈME DE LA CRÈME: CANVAS BEAUTY Glossy Nourishing Moisturizing Cream",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732073898874933711&language=en-US&currency=USD&region=US",
+        "shop_id": "7495185597363620303",
+        "shop_name": "CANVAS BEAUTY BRAND",
+        "category": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+        "category_id": "601492",
+        "price_min": 95.0,
+        "price_max": 123.5,
+        "gmv_30d": 117540.0,
+        "gmv_prev_30d": 5770.0,
+        "units_30d": 1272,
+        "growth_30d": 1937.09,
+        "creator_count": null,
+        "selling_creator_count": 37,
+        "creator_growth_pct": null,
+        "video_count": 17,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-11-20",
+        "data_window_end": "2026-09-30",
+        "growth_30d_provider": 1937.09,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+        "task_id": "e6539a31f0704fc78c43bece930dfc32",
+        "report_url": null,
+        "fetched_at": "20260930T145058Z",
+        "record_index": 5,
+        "original_record": {
+          "product_id": "1732073898874933711",
+          "product_name": "Premium CRÈME DE LA CRÈME: CANVAS BEAUTY Glossy Nourishing Moisturizing Cream",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732073898874933711&language=en-US&currency=USD&region=US",
+          "shop_id": "7495185597363620303",
+          "shop_name": "CANVAS BEAUTY BRAND",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+          "category_id": "601492",
+          "price_min": 95.0,
+          "price_max": 123.5,
+          "gmv_30d": 117540.0,
+          "units_30d": 1272,
+          "gmv_prev_30d": 5770.0,
+          "growth_30d_pct": 1937.09,
+          "creator_count": null,
+          "selling_creator_count": 37,
+          "creator_growth_pct": null,
+          "video_count": 17,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-11-20",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 109.25,
+        "price_basis": "avg",
+        "product_age_days": 314,
+        "filter_status": "FAIL",
+        "filter_reasons": [
+          {
+            "rule": "price_range",
+            "action": "reject",
+            "value": 109.25,
+            "basis": "avg",
+            "min": 20,
+            "max": 100
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1937.09,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_reach",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 42.5,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 0.0,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 95.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 123.5,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 117540.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 5770.0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1272,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1937.09,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 17,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-30",
+          "retrieved_at": "20260930T145058Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "LIVE"
+    }
+  ],
+  "over_limit_keys": [],
+  "duplicates": [],
+  "malformed": [],
+  "data_environment": "LIVE",
+  "run_id": "20260930T144516Z_e4f12d"
+}

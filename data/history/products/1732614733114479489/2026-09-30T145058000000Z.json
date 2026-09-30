@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 60.995,
+    "gmv": 61805.85,
+    "units": 1257,
+    "growth": null,
+    "creator_count": null,
+    "selling_creator_count": 153,
+    "video_count": 310,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "low_base_or_seasonal",
+      "missing_optional_data"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "growth_30d",
+    "creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/processed/discovery_20260930T145058Z.json",
+    "raw_file": "/root/winning-product-agent/data/raw/20260930T145058Z_beauty_personal_care_e6539a31f0704fc78c43bece930dfc32.json",
+    "task_id": "e6539a31f0704fc78c43bece930dfc32",
+    "report_url": null,
+    "record_index": 14
+  },
+  "product_id": "1732614733114479489",
+  "identity_key": "1732614733114479489",
+  "key_type": "product_id",
+  "product_name": "BTArtboxnails Square Almond and Stiletto press on nails with 5 desgins, 32 pcs Each",
+  "category": "Beauty & Personal Care > Nail Art Decoration & Accessories",
+  "shop": "BTArtboxnails",
+  "market": "US",
+  "observation_timestamp": "2026-09-30T14:50:58+00:00",
+  "observation_date": "2026-09-30",
+  "source_stage": "discovery",
+  "data_environment": "LIVE",
+  "discovery_status": "REVIEW",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-09-30T14:50:58+00:00",
+  "source_snapshot_hash": "99d7fefea8fc9a577777560059fbdb49adcb8475c280990ebd5a1cc69fd8b7d6",
+  "run_id": "20260930T144516Z_e4f12d",
+  "written_at": "2026-09-30T15:10:35.083835+00:00",
+  "imported_at": "2026-09-30T15:10:35.083835+00:00"
+}

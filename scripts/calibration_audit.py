@@ -149,8 +149,8 @@ def mapping_checks(rec, disc_rec):
             if d is not None and d > 0.5:
                 issues.append(f"Discovery vs Deep {dk}: {fmt(dv)} vs {fmt(nv)} ({d:.0%} apart)")
     gr = _num(_get(rec, ("growth", "growth_30d_pct")))
-    if gr is not None and gr > 1000:
-        issues.append(f"growth_30d_pct {gr:.0f}% (very low prior base or wrong field)")
+    if gr is not None and gr > 1000 and _get(rec, ("growth", "growth_source")) != "calculated":
+        issues.append(f"growth_30d_pct {gr:.0f}% (very low prior base or wrong field)")   # verified growth = low base, not mapping
     return rows, issues
 
 
@@ -346,13 +346,19 @@ def audit(run_id=None, root=ROOT, write=True, secrets=None, data_root=None):
             seen_raw.add(rf)
             data = ((_read(rf) or {}).get("response") or {}).get("data") or {}
             if data.get("status") == "completed" and not data.get("text") and not data.get("report"):
+                pid = str(r.get("product_id"))
+                for k in errors:                          # keep only this (more detailed) entry for the product
+                    errors[k] = [x for x in errors[k] if pid not in x]
                 out_tok = (data.get("token_usage") or {}).get("output_tokens")
                 errors["empty"].append(f"{Path(rf).name}: completed with EMPTY text/report, output_tokens {out_tok}, "
                                        f"credits_consumed {data.get('credits_consumed')}"
                                        + (" — answer likely cut at the provider's ~8k output-token limit"
                                           if isinstance(out_tok, int) and out_tok >= 7900 else ""))
+    already = " ".join(sum(errors.values(), []))
     for r in deep + list(amz.values()):
         if r.get("status") in ("failed", "malformed"):
+            if str(r.get("product_id")) in already:
+                continue                                          # same failure already listed above
             e = r.get("error_category") or r.get("status")
             key = "malformed" if r.get("status") == "malformed" else ("timeouts" if "timeout" in str(e) else "other")
             errors[key].append(f"product {r.get('product_id')}: {e} {r.get('errors') or ''}".strip())
