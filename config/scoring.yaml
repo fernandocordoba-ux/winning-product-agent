@@ -1,9 +1,186 @@
-# Scoring configuration — NOT IMPLEMENTED YET.
-# Placeholder structure only; weights and formulas will be defined later.
+# =============================================================================
+# Winning Product Score (WPS) — Version 1
+# =============================================================================
+# Deterministic scoring config. The engine (scripts/score_products.py) must
+# compute every score ONLY from the numeric rules below.
+#
+#   - Claude must NOT assign, adjust or "judge" any score subjectively.
+#   - Same input data + same config  =>  exactly the same output, always.
+#   - Missing input  =>  metric = "N/A" (never estimated, never defaulted),
+#                        metric contributes 0 points, Confidence Score drops.
+#   - Raw input values are preserved unchanged in the output for audit.
+# =============================================================================
 
-version: 0
-enabled: false
+version: "wps-v1"
+total_points: 100
 
-# metrics: {}      # e.g. gmv, units_sold, growth, creators, videos, commission
-# weights: {}      # metric -> weight
-# thresholds: {}   # score bands (e.g. winner / watch / skip)
+# -----------------------------------------------------------------------------
+# Scale functions (all deterministic). Result "s" is always clamped to [0, 1].
+#
+#   linear:          s = (x - zero_at) / (full_at - zero_at)
+#   log10:           s = (log10(x) - log10(zero_at)) / (log10(full_at) - log10(zero_at))
+#                    (x <= 0 -> s = 0)
+#   ratio:           s = count_matching / count_total      (count_total > 0)
+#
+# "zero_at" = value that scores 0, "full_at" = value that scores full points.
+# If zero_at > full_at the scale is inverted (lower is better).
+#
+# Component score  = s * component_weight
+# Metric score     = metric_points * sum(component scores)
+# -----------------------------------------------------------------------------
+
+metrics:
+
+  # 1) GROWTH MOMENTUM — is revenue accelerating?
+  growth_momentum:
+    points: 25
+    components:
+      revenue_growth:
+        weight: 1.0
+        input: revenue_growth_pct          # product GMV growth vs. prior equal window (%)
+        scale: linear
+        zero_at: 0                          # flat or declining -> 0
+        full_at: 100                        # +100% or more -> full points
+
+  # 2) DEMAND — how much is actually selling?
+  demand:
+    points: 15
+    components:
+      units_sold:
+        weight: 1.0
+        input: units_sold                   # units sold in the time window
+        scale: log10
+        zero_at: 1000
+        full_at: 100000
+
+  # 3) VIDEO MOMENTUM — is short-video content driving sales?
+  video_momentum:
+    points: 15
+    components:
+      video_count:
+        weight: 0.5
+        input: videos_count                 # videos promoting the product
+        scale: log10
+        zero_at: 100
+        full_at: 10000
+      video_sales_share:
+        weight: 0.5
+        input: video_sales_share_pct        # % of product sales coming from videos
+        scale: linear
+        zero_at: 50
+        full_at: 95
+
+  # 4) CREATOR MOMENTUM — are creators joining and growing with it?
+  creator_momentum:
+    points: 15
+    components:
+      creator_count:
+        weight: 0.6
+        input: creators_count               # creators promoting the product
+        scale: log10
+        zero_at: 100
+        full_at: 5000
+      top_creators_growing:
+        weight: 0.4
+        input: top_creators_growth_pct      # list: growth % of each top creator returned
+        scale: ratio
+        match: "> 0"                        # share of top creators with positive growth
+        min_items: 3                        # fewer than 3 creators returned -> N/A
+
+  # 5) COMPETITION — room to enter (higher score = LESS competition)
+  competition:
+    points: 15
+    components:
+      category_growth:
+        weight: 0.5
+        input: category_growth_pct          # category GMV growth vs. prior window (%)
+        scale: linear
+        zero_at: -20
+        full_at: 50
+      category_saturation:
+        weight: 0.5
+        input: category_product_count       # products selling in the same category
+        scale: log10
+        zero_at: 50000                      # inverted: more products -> lower score
+        full_at: 500
+
+  # 6) MARGIN POTENTIAL — price room for profit (seller perspective)
+  margin_potential:
+    points: 10
+    components:
+      price_level:
+        weight: 0.6
+        input: price_avg                    # (price_min + price_max) / 2, USD
+        scale: linear
+        zero_at: 10
+        full_at: 60
+      commission_cost:
+        weight: 0.4
+        input: commission_pct               # affiliate commission paid by seller (%)
+        scale: linear
+        zero_at: 25                         # inverted: higher commission -> lower margin
+        full_at: 5
+
+  # 7) TREND STABILITY — are daily sales steady rather than spiky?
+  trend_stability:
+    points: 5
+    components:
+      sales_volatility:
+        weight: 1.0
+        input: daily_sales_series           # daily sales values for the window
+        derive: coefficient_of_variation    # CV = population std dev / mean
+        min_items: 14                       # fewer than 14 days -> N/A; mean = 0 -> N/A
+        scale: linear
+        zero_at: 1.0                        # inverted: CV >= 1.0 -> 0
+        full_at: 0.2                        # CV <= 0.2 -> full points
+
+# -----------------------------------------------------------------------------
+# Missing data (N/A) rules
+# -----------------------------------------------------------------------------
+missing_data:
+  # A value is missing if: absent, null, "", "N/A", non-numeric, or fails
+  # validation (prompts/validation.md). It is NEVER estimated or defaulted.
+  component_missing: "N/A"
+  # If ANY component of a metric is N/A, the whole metric is N/A
+  # (no partial or re-weighted metrics).
+  metric_rule: all_components_required
+  na_metric_points: 0
+  preserve_raw: true                        # raw inputs copied unchanged into output
+
+# -----------------------------------------------------------------------------
+# Confidence Score (0–100): share of the WPS that was computed from real data
+#   confidence = sum(points of metrics that are NOT N/A)
+#   e.g. competition N/A (15 pts) -> confidence = 85
+# -----------------------------------------------------------------------------
+confidence:
+  formula: sum_available_metric_points
+  bands:
+    high: 85                                # >= 85
+    medium: 60                              # 60–84
+    low: 0                                  # < 60
+  # Below this, the product gets no verdict (label "insufficient_data").
+  min_for_verdict: 60
+
+# -----------------------------------------------------------------------------
+# Final score
+#   wps = sum of metric scores (N/A metrics = 0). Max 100.
+#   Always report wps TOGETHER with confidence; never rescale N/A away.
+# -----------------------------------------------------------------------------
+output:
+  rounding: 2                               # decimals, round half up (final values only)
+  verdict_bands:                            # applied to wps when confidence >= min_for_verdict
+    winner: 75                              # >= 75
+    watch: 55                               # 55–74.99
+    skip: 0                                 # < 55
+  fields:
+    - product_id
+    - product_name
+    - wps
+    - confidence
+    - confidence_band
+    - verdict
+    - metric_scores                         # per metric: points, or "N/A"
+    - na_metrics                            # list of metrics that were N/A and why
+    - raw_inputs                            # unchanged source values
+    - source                                # task_id, report_url, fetched_at
+    - config_version                        # "wps-v1"

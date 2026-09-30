@@ -11,7 +11,7 @@ Finds winning TikTok Shop products using KaloData's KaloPilot API, then validate
 1. **Discovery**: `prompts/discovery.md` → KaloPilot → raw JSON in `data/raw/`
 2. **Validation**: `scripts/validate_data.py` (rules in `prompts/validation.md`) → `data/processed/`
 3. **Deep analysis**: `prompts/deep_analysis.md` → KaloPilot, for shortlisted products
-4. **Scoring**: `scripts/score_products.py` using `config/scoring.yaml` (NOT implemented yet)
+4. **Scoring**: `scripts/score_products.py` using `config/scoring.yaml` (WPS v1 rules defined; engine not implemented yet)
 5. **Report**: `scripts/generate_report.py` → `reports/`
 6. **History**: snapshots in `data/history/` to track products over time
 
@@ -21,7 +21,7 @@ Finds winning TikTok Shop products using KaloData's KaloPilot API, then validate
 - **No invented data:** never estimate or fill in missing values; mark them `N/A`.
 - Never answer TikTok Shop data questions from memory; always query KaloPilot.
 - Never print or commit the token. Secrets live in `~/.kalopilot/token` or env vars (`KALOPILOT_TOKEN`, `KALODATA_API_KEY`).
-- Do not implement or change the scoring logic until the user asks.
+- **Scoring (WPS v1, `config/scoring.yaml`):** every score is calculated only from the numeric rules in that file. Claude never assigns, adjusts or judges a score subjectively. Missing data → metric `N/A`, 0 points, lower Confidence Score, raw data preserved. Do not change weights or rules unless the user asks.
 - Do not push to GitHub until the user says the project is finished.
 
 ## Useful commands
