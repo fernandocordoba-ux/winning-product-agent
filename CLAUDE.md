@@ -22,6 +22,7 @@ Finds winning TikTok Shop products using KaloData's KaloPilot API, then validate
 ## Rules (always)
 
 - **Credits:** before any KaloPilot query that spends credits, show the current balance (`bash scripts/credits.sh`, free), the estimated cost and the exact question, then wait for the user's OK. After it runs, report credits consumed and the new balance.
+- **No hardcoded thresholds:** all filter and scoring numbers live in `config/*.yaml` (experimental v1); Python only reads them.
 - **No invented data:** never estimate or fill in missing values; mark them `N/A`.
 - Never answer TikTok Shop data questions from memory; always query KaloPilot.
 - Never print or commit the token. Secrets live in `~/.kalopilot/token` or env vars (`KALOPILOT_TOKEN`, `KALODATA_API_KEY`).

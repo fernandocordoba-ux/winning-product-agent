@@ -1,20 +1,181 @@
-# Filters applied to discovered products before analysis.
-# Values are placeholders (null = no filter) — set them when defining the strategy.
+# =============================================================================
+# Discovery filters — Version 1 (EXPERIMENTAL thresholds)
+# =============================================================================
+# All thresholds live HERE, never hardcoded in Python. Change a number here
+# (e.g. gmv_30d.min 25000 -> 50000) and the pipeline uses it on the next run.
+#
+# Deterministic rules only: every check is a numeric comparison or an exact
+# keyword/category match. Claude does not decide pass/reject/flag by judgment.
+#
+# Actions:
+#   reject -> product removed from the shortlist (kept in data/raw + log)
+#   flag   -> product kept, warning attached for human review
+# Missing input for a check -> check result "N/A" (never estimated);
+# see insufficient_data below.
+# =============================================================================
 
-region: US
-currency: USD
-time_window_days: 30
+version: "filters-v1"
+status: experimental
 
-price:
-  min: null
-  max: null
+market:
+  region: US
+  currency: USD
+  period_days: 30
 
-gmv_min: null
-units_sold_min: null
-growth_min_pct: null
-creators_min: null
-videos_min: null
-commission_min_pct: null
+# -----------------------------------------------------------------------------
+# 1) Initial discovery filters
+#    min/max  -> hard filter (reject if outside)
+#    preferred_min -> soft filter (flag if below, not rejected)
+# -----------------------------------------------------------------------------
+discovery:
+  price:
+    basis: avg            # avg = (price_min + price_max) / 2 ; options: avg | min | max
+    min: 20
+    max: 100
+    action: reject
 
-exclude_categories: []
-exclude_keywords: []
+  gmv_30d:
+    min: 25000            # USD
+    action: reject
+
+  units_30d:
+    min: 500
+    action: reject
+
+  growth_30d:
+    preferred_min: 30     # % revenue growth vs. prior 30 days
+    action: flag
+
+  selling_creators:
+    preferred_min: 5      # creators with sales for the product in the period
+    action: flag
+
+# -----------------------------------------------------------------------------
+# 2) Reject / flag rules
+# -----------------------------------------------------------------------------
+risk_rules:
+
+  collapsing_sales:
+    description: Sales falling sharply.
+    checks:
+      - input: revenue_growth_pct           # vs. prior 30 days
+        condition: "<= -30"
+        action: reject
+      - input: last7_vs_first7_sales_pct    # avg daily sales, last 7 vs first 7 days of window
+        condition: "<= -50"
+        action: flag
+
+  extreme_seller_saturation:
+    description: Too many sellers offering the same/similar product.
+    checks:
+      - input: similar_listings_count       # competing listings of the same product
+        condition: ">= 200"
+        action: flag
+      - input: category_product_count       # products selling in the same category
+        condition: ">= 50000"
+        action: flag
+
+  single_creator_dependency:
+    description: One creator drives most of the sales.
+    checks:
+      - input: top_creator_gmv_share_pct    # top creator GMV / product GMV * 100
+        condition: ">= 50"
+        action: flag
+      - input: top_creator_gmv_share_pct
+        condition: ">= 80"
+        action: reject
+
+  single_video_dependency:
+    description: One video drives most of the sales.
+    checks:
+      - input: top_video_gmv_share_pct      # top video GMV / product GMV * 100
+        condition: ">= 40"
+        action: flag
+      - input: top_video_gmv_share_pct
+        condition: ">= 70"
+        action: reject
+
+  trademark_ip_risk:
+    description: Brand names, licensed characters or copy/dupe language in the title.
+    match_field: product_name               # case-insensitive whole-word match
+    action: flag
+    keywords:
+      - disney
+      - marvel
+      - pokemon
+      - nintendo
+      - barbie
+      - hello kitty
+      - nike
+      - adidas
+      - apple
+      - stanley
+      - lululemon
+      - dupe
+      - replica
+      - inspired by
+      - "1:1"
+      - knockoff
+
+  highly_regulated:
+    description: Products needing licenses, approvals or restricted handling.
+    action: flag                            # change to reject to exclude outright
+    match_field: [product_name, category]
+    keywords:
+      - supplement
+      - vitamin
+      - gummies
+      - cbd
+      - hemp
+      - nicotine
+      - vape
+      - medical device
+      - hearing aid
+      - contact lens
+      - pesticide
+      - infant formula
+      - weight loss
+      - knife
+      - firearm
+      - ammo
+
+  shipping_problems:
+    description: Hazmat, fragile or oversized items.
+    action: flag
+    match_field: [product_name, category]
+    keywords:
+      - lithium
+      - battery
+      - aerosol
+      - flammable
+      - glass
+      - ceramic
+      - liquid
+      - mattress
+      - furniture
+      - oversized
+
+  insufficient_data:
+    description: Not enough real data to evaluate (nothing is estimated).
+    required_fields:                        # missing any of these -> reject
+      - product_id
+      - product_name
+      - price_min
+      - gmv_30d
+      - units_30d
+    missing_required_action: reject
+    low_confidence:
+      below: 60                             # WPS confidence (config/scoring.yaml)
+      action: flag
+
+# -----------------------------------------------------------------------------
+# Output: every product keeps its filter log
+# -----------------------------------------------------------------------------
+output:
+  keep_rejected_in_log: true                # rejected products saved with reasons
+  fields:
+    - product_id
+    - filter_status                         # pass | flagged | rejected
+    - reasons                               # rule + input value + threshold
+    - na_checks                             # checks skipped because data was missing
+    - config_version                        # "filters-v1"
