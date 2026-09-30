@@ -22,7 +22,7 @@ Revenue values must be the revenue generated for THIS product in the period, in 
 Return the result as ONE fenced JSON code block (```json ... ```) containing ONE object with exactly these keys:
 "product_id", "product_name", "product_url", "category_path", "category_id", "shop_id", "shop_name",
 "price_min", "price_max", "price_history" (array of {{"date": "YYYY-MM-DD", "price": number}} if available, else null),
-"gmv_30d", "units_30d", "growth_30d_pct" (revenue growth vs. prior {period_days} days, %), "category_growth_pct",
+"gmv_30d", "units_30d", "gmv_prev_30d" (exact revenue of this product in the previous {period_days} days, before this window), "growth_30d_pct" (= (gmv_30d - gmv_prev_30d) / gmv_prev_30d x 100; null if gmv_prev_30d is 0 or unknown), "category_growth_pct",
 "launch_date" (YYYY-MM-DD, first seen / listing date), "data_window_end" (YYYY-MM-DD), "commission_pct",
 "daily_gmv" (array of {period_days} daily revenue values, oldest first; null for days without data),
 "daily_units" (same, units),
@@ -30,5 +30,5 @@ Return the result as ONE fenced JSON code block (```json ... ```) containing ONE
 "top_creators" (up to {top_creators} objects, highest revenue first: {{"creator_id", "name", "revenue", "growth_pct"}}),
 "video_count", "selling_video_count", "video_growth_pct", "video_sales_share_pct" (% of product revenue from videos), "daily_video_count" (array oldest first, or null),
 "top_videos" (up to {top_videos} objects, highest revenue first: {{"video_id", "creator", "revenue", "views"}}),
-"shop_count" (shops selling this product), "similar_listings_count", "category_product_count" (products selling in the same category).
+"shop_count" (shops selling this product), "similar_listings_count", "category_product_count" (number of products selling in the product's LEAF category, i.e. the LAST level of category_path — not a parent category), "category_product_count_level" (exact name of the category that count refers to).
 ===

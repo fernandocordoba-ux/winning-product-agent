@@ -217,7 +217,8 @@ discovery_mode:
   # Deterministic order of returned candidates. Momentum first, NOT total GMV.
   sort_by:
     - { field: filter_status, order: [PASS, REVIEW] }
-    - { field: growth_30d, direction: desc }        # N/A sorts last
+    - { field: risk_flag, rule: low_base_or_seasonal }   # Step U: near-zero-base / spike products go last
+    - { field: growth_30d, direction: desc }        # N/A sorts last (growth is CALCULATED from gmv_prev_30d when given)
     - { field: units_30d, direction: desc }
     - { field: key, direction: asc }                # final tie-breaker
   dedupe:

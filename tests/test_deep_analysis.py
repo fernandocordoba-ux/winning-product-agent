@@ -51,7 +51,8 @@ def deep_obj(pid="1", **kw):
          "daily_video_count": None,
          "top_videos": [{"video_id": str(i), "creator": "c", "revenue": r, "views": 1000}
                         for i, r in enumerate([12000, 9000, 7000])],
-         "shop_count": 5, "similar_listings_count": 20, "category_product_count": 8000}
+         "shop_count": 5, "similar_listings_count": 20, "category_product_count": 8000,
+         "category_product_count_level": "Storage"}
     o.update(kw)
     return o
 

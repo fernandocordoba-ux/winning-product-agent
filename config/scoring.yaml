@@ -12,7 +12,7 @@
 #   - Raw input values are preserved unchanged in the output for audit.
 # =============================================================================
 
-version: "wps-v1"
+version: "wps-v1.1"               # v1.1 (Step U calibration): growth_momentum trend_cap
 total_points: 100
 
 # -----------------------------------------------------------------------------
@@ -35,6 +35,13 @@ metrics:
   # 1) GROWTH MOMENTUM — is revenue accelerating?
   growth_momentum:
     points: 25
+    # v1.1 (Step U live calibration): 30-day growth can be +100 % while the product's own daily
+    # sales are already falling (peak passed). If the daily-sales trend (deep analysis) is
+    # DECLINING, this metric can earn at most max_fraction of its points. Editable here.
+    trend_cap:
+      input: recent_trend                  # deep_analysis trend_metrics.label (daily GMV velocity)
+      when: [DECLINING]
+      max_fraction: 0.5
     components:
       revenue_growth:
         weight: 1.0

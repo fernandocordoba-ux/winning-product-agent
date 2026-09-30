@@ -99,9 +99,16 @@ def mapping_checks(rec, disc_rec):
         parsed, prob = D.parse_value(raw.get(field), kind)
         norm = _get(rec, path)
         ok = (parsed == norm) or (_num(parsed) is not None and _num(norm) is not None and abs(parsed - norm) < 1e-9)
+        status = "OK" if ok else MAP
+        if not ok and field == "category_product_count" and _get(rec, ("competition_metrics",
+                                                                       "category_count_verified")) is False:
+            ok, status = True, "N/A (count not for the leaf category)"
+        if not ok and field == "growth_30d_pct" and _get(rec, ("growth", "growth_source")) in (
+                "calculated", "no_previous_revenue"):
+            ok, status = True, f"CALCULATED ({_get(rec, ('growth', 'growth_source'))})"
         dv = (disc_rec or {}).get("facts", {}).get({"growth_30d_pct": "growth_30d"}.get(field, field)) if disc_rec else None
         rows.append({"field": field, "raw": raw.get(field), "parsed": parsed, "normalized": norm, "discovery": dv,
-                     "status": "OK" if ok else MAP})
+                     "status": status})
         if not ok:
             issues.append(f"{field}: raw {fmt(raw.get(field))} -> stored {fmt(norm)}")
         if prob:
@@ -151,7 +158,7 @@ def wps_recompute(rec, disc_rec, scoring_cfg):
     obj = rec.get("original_record") or {}
     ctx = disc_rec or {"facts": {}}
     f, _, _ = DA.normalize_deep(obj, ctx)
-    inp = DA.scoring_input(f, 0)
+    inp = DA.scoring_input(f, 0, DA.trend_metrics(f, DA.load_cfg())["label"])
     b = wps_breakdown(inp, scoring_cfg)
     stored = rec.get("wps_breakdown") or {}
     mism = [k for k, m in b["metrics"].items() if (stored.get(k) or {}).get("points") != m["points"]]

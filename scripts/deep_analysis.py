@@ -171,7 +171,8 @@ SCALARS = [("product_id", "id"), ("product_name", "str"), ("product_url", "str")
            ("commission_pct", "num"), ("creator_count", "count"), ("selling_creator_count", "count"),
            ("creator_growth_pct", "pct"), ("video_count", "count"), ("selling_video_count", "count"),
            ("video_growth_pct", "pct"), ("video_sales_share_pct", "num"), ("shop_count", "count"),
-           ("similar_listings_count", "count"), ("category_product_count", "count")]
+           ("similar_listings_count", "count"), ("category_product_count", "count"),
+           ("gmv_prev_30d", "num"), ("category_product_count_level", "str")]
 SERIES = [("daily_gmv", "num"), ("daily_units", "count"), ("daily_creator_count", "count"),
           ("daily_video_count", "count")]
 
@@ -229,12 +230,36 @@ def normalize_deep(obj, context):
                     w.append(f"{lst}[{i}].{k}: {prob}")
             items.append(item)
         f[lst] = items
+    verify_growth(f, w)
+    verify_category_level(f, w)
     # fall back to the Discovery identifier only for identity (not metrics)
     if f["product_id"] is None and context["facts"].get("product_id"):
         f["product_id"] = context["facts"]["product_id"]
         w.append("product_id: taken from Discovery record")
-    missing = [k for k, v in f.items() if v is None]
+    missing = [k for k, v in f.items() if v is None and k not in AUX_FIELDS]
     return f, missing, w
+
+
+# ============================================================ Step U calibration: verification
+AUX_FIELDS = {"gmv_prev_30d", "category_product_count_level", "growth_30d_provider", "growth_source",
+              "category_count_verified", "growth_mismatch"}
+verify_growth = disc.verify_growth                     # shared with Discovery (one definition)
+
+
+def verify_category_level(f, w):
+    """category_product_count must count the product's own LEAF category (last category_path level)."""
+    cnt, level, path = f.get("category_product_count"), f.get("category_product_count_level"), f.get("category_path")
+    leaf = path.split(">")[-1].strip().lower() if path else None
+    if cnt is None:
+        f["category_count_verified"] = None
+        return
+    if level and leaf and level.split(">")[-1].strip().lower() == leaf:
+        f["category_count_verified"] = True
+        return
+    f["category_count_verified"] = False
+    w.append(f"category_product_count {cnt} set to N/A: counted level "
+             f"'{level or 'not stated'}' is not the product's leaf category '{leaf or 'unknown'}'")
+    f["category_product_count"] = None
 
 
 # ============================================================ Stage 5 — trend
@@ -297,7 +322,7 @@ def concentration_metrics(f, filters_cfg):
     return concentration.analyze(prod, filters_cfg["concentration"])
 
 
-def scoring_input(f, history_snapshots):
+def scoring_input(f, history_snapshots, trend_label=None):
     pmin, pmax = f["price_min"], f["price_max"]
     launch_days = None
     if f["launch_date"] and f["data_window_end"]:
@@ -306,6 +331,7 @@ def scoring_input(f, history_snapshots):
     creators = f["top_creators"]
     return {
         "product_id": f["product_id"], "product_name": f["product_name"],
+        "recent_trend": trend_label,                       # wps-v1.1 growth_momentum trend_cap
         # WPS inputs (config/scoring.yaml metrics)
         "revenue_growth_pct": f["growth_30d_pct"], "units_sold": f["units_30d"],
         "videos_count": f["video_count"], "video_sales_share_pct": f["video_sales_share_pct"],
@@ -336,6 +362,10 @@ def red_flags(f, trend, conc, conf_score, filters_cfg, cfg):
     sd = rf["SALES_DECLINING"]
     if trend["label"] == sd["trend_label"] or (f["growth_30d_pct"] is not None and f["growth_30d_pct"] <= sd["growth_30d_max"]):
         add("SALES_DECLINING", trend=trend["label"], growth_30d_pct=f["growth_30d_pct"])
+    if f.get("growth_source") == "provider_unverified":
+        add("GROWTH_UNVERIFIED", note="provider growth without previous-period revenue; not recalculated")
+    if f.get("growth_mismatch"):
+        add("GROWTH_MISMATCH", **f["growth_mismatch"], note="calculated growth used")
     inputs = {"similar_listings_count": f["similar_listings_count"], "category_product_count": f["category_product_count"]}
     for chk in filters_cfg["risk_rules"]["extreme_seller_saturation"]["checks"]:
         v = inputs.get(chk["input"])
@@ -398,7 +428,7 @@ def analyze(envelope, raw_path, context, cfgs, history_snapshots=0, cache_hit=Fa
     f, missing, warnings = normalize_deep(obj, context)
     trend = trend_metrics(f, cfg)
     conc = concentration_metrics(f, filters_cfg)
-    scored = score_product(scoring_input(f, history_snapshots), scoring_cfg["confidence"], scoring_cfg)
+    scored = score_product(scoring_input(f, history_snapshots, trend["label"]), scoring_cfg["confidence"], scoring_cfg)
     wps, conf = scored["wps"], scored["confidence"]
     pmin, pmax = f["price_min"], f["price_max"]
     return {
@@ -409,7 +439,9 @@ def analyze(envelope, raw_path, context, cfgs, history_snapshots=0, cache_hit=Fa
         "price": {"min": pmin, "max": pmax, "avg": (pmin + pmax) / 2 if None not in (pmin, pmax) else None,
                   "history": f["price_history"]},
         "gmv": f["gmv_30d"], "units": f["units_30d"],
-        "growth": {"growth_30d_pct": f["growth_30d_pct"], "category_growth_pct": f["category_growth_pct"]},
+        "growth": {"growth_30d_pct": f["growth_30d_pct"], "category_growth_pct": f["category_growth_pct"],
+                   "gmv_prev_30d": f.get("gmv_prev_30d"), "growth_30d_provider": f.get("growth_30d_provider"),
+                   "growth_source": f.get("growth_source")},
         "launch_date": f["launch_date"], "data_window_end": f["data_window_end"], "commission_pct": f["commission_pct"],
         "creator_metrics": {"total": f["creator_count"], "selling": f["selling_creator_count"],
                             "growth_pct": f["creator_growth_pct"], "top_creators": f["top_creators"],
@@ -418,7 +450,9 @@ def analyze(envelope, raw_path, context, cfgs, history_snapshots=0, cache_hit=Fa
                           "growth_pct": f["video_growth_pct"], "sales_share_pct": f["video_sales_share_pct"],
                           "top_videos": f["top_videos"], "daily_count": f["daily_video_count"]},
         "competition_metrics": {"shop_count": f["shop_count"], "similar_listings_count": f["similar_listings_count"],
-                                "category_product_count": f["category_product_count"]},
+                                "category_product_count": f["category_product_count"],
+                                "category_product_count_level": f.get("category_product_count_level"),
+                                "category_count_verified": f.get("category_count_verified")},
         "sales_history": {"daily_gmv": f["daily_gmv"], "daily_units": f["daily_units"]},
         "trend_metrics": trend,
         "concentration_metrics": conc,

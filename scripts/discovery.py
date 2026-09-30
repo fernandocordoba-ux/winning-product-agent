@@ -45,7 +45,7 @@ FACT_FIELDS = [
     ("shop_id", "id"), ("shop_name", "str"),
     ("category", "str"), ("category_id", "id"),
     ("price_min", "num"), ("price_max", "num"),
-    ("gmv_30d", "num"), ("units_30d", "count"), ("growth_30d", "pct"),
+    ("gmv_30d", "num"), ("gmv_prev_30d", "num"), ("units_30d", "count"), ("growth_30d", "pct"),
     ("creator_count", "count"), ("selling_creator_count", "count"), ("creator_growth_pct", "pct"),
     ("video_count", "count"), ("video_growth_pct", "pct"), ("shop_count", "count"),
     ("launch_date", "date"), ("data_window_end", "date"),
@@ -62,6 +62,7 @@ ALIASES = {
     "price_min": ["price_min", "min_price", "price"],
     "price_max": ["price_max", "max_price", "price"],
     "gmv_30d": ["gmv_30d", "gmv", "revenue", "sales"],
+    "gmv_prev_30d": ["gmv_prev_30d", "gmv_previous_30d", "previous_gmv"],
     "units_30d": ["units_30d", "units", "units_sold"],
     "growth_30d": ["growth_30d_pct", "growth_30d", "revenue_growth_pct", "growth"],
     "creator_count": ["creator_count", "creators"],
@@ -187,6 +188,33 @@ def extract_records(raw_envelope):
     return [], errors
 
 
+# --------------------------------------------------------------------------- growth (Step U)
+GROWTH_TOLERANCE_PCT = 5.0          # provider growth vs our calculation (percentage points, or 5 % relative)
+
+def verify_growth(f, w, gmv_key="gmv_30d", growth_key="growth_30d_pct"):
+    """The CODE calculates growth = (gmv - gmv_prev) / gmv_prev * 100 from the two revenue facts.
+    Provider growth is kept as growth_30d_provider. prev = 0 -> growth N/A (new, no base).
+    No gmv_prev -> provider growth kept but labeled unverified."""
+    gmv, prev, prov = f.get(gmv_key), f.get("gmv_prev_30d"), f.get(growth_key)
+    f["growth_30d_provider"] = prov
+    if gmv is not None and prev is not None:
+        if prev > 0:
+            calc = round((gmv - prev) / prev * 100, 2)
+            if prov is not None and abs(prov - calc) > max(GROWTH_TOLERANCE_PCT, abs(calc) * 0.05):
+                f["growth_mismatch"] = {"provider": prov, "calculated": calc}
+                w.append(f"GROWTH_MISMATCH: provider growth {prov} vs calculated {calc} "
+                         f"(gmv {gmv}, previous {prev}); calculated value used")
+            f[growth_key], f["growth_source"] = calc, "calculated"
+        else:
+            if prov is not None:
+                w.append(f"growth: previous-period revenue is 0 -> growth N/A (provider said {prov})")
+            f[growth_key], f["growth_source"] = None, "no_previous_revenue"
+    else:
+        f["growth_source"] = "provider_unverified" if prov is not None else None
+        if prov is not None:
+            w.append("GROWTH_UNVERIFIED: no previous-period revenue returned; provider growth kept as reported")
+
+
 # --------------------------------------------------------------------------- normalize
 def fallback_key(facts):
     name = " ".join((facts.get("product_name") or "").lower().split())
@@ -210,6 +238,7 @@ def normalize(record, meta, index):
     if facts["product_id"] is not None and not re.fullmatch(r"\d+", facts["product_id"]):
         problems.append(f"product_id: non-numeric id '{facts['product_id']}' ignored")
         facts["product_id"] = None
+    verify_growth(facts, problems, "gmv_30d", "growth_30d")    # Step U: the code calculates growth
     if not facts["product_name"] and facts["product_id"] is None:
         return None, f"record {index} has neither product_id nor product_name"
 
@@ -414,6 +443,8 @@ def select(products, dcfg):
                 key.append(order.get(p["calculated"]["filter_status"], 99))
             elif s["field"] == "key":
                 key.append(p["key"])
+            elif s["field"] == "risk_flag":             # flagged products sort after unflagged ones
+                key.append(any(r.get("rule") == s["rule"] for r in p["calculated"].get("filter_reasons") or []))
             else:
                 v = f.get(s["field"])
                 key += [v is None, 0 if v is None else (-v if s.get("direction") == "desc" else v)]

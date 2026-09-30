@@ -159,10 +159,28 @@ class EnvStore(HIST.HistoryStore):
         self.env = env
 
     def observations(self, identity):
-        return [o for o in super().observations(identity) if o.get("data_environment") == self.env]
+        """Same environment only; the same provider answer (stage + task_id) counts once (earliest kept).
+        Step U: one Discovery answer imported twice was stored at two fetch times."""
+        out, seen = [], set()
+        for o in super().observations(identity):
+            if o.get("data_environment") != self.env:
+                continue
+            key = source_key(o)
+            if key and key in seen:
+                continue
+            seen.add(key)
+            out.append(o)
+        return out
 
     def identities(self):
         return [i for i in super().identities() if self.observations(i)]
+
+
+def source_key(obs):
+    """(stage, provider task_id, record index) — identifies one provider answer about one product."""
+    src = obs.get("source") or {}
+    tid = src.get("task_id")
+    return (obs.get("source_stage"), tid, src.get("record_index")) if tid else None
 
 
 class KaloClient:
@@ -381,9 +399,20 @@ class Runner:
                 best = p
         return best
 
+    @staticmethod
+    def prompt_version(query_type):
+        """sha of the prompt files a cached answer must have been asked with (Step U: a changed
+        question -> old answers are NOT reused, e.g. new gmv_prev_30d / category level fields)."""
+        files = {"deep_product": ["deep_analysis.md", "deep_analysis_batch.md"]}.get(
+            query_type, ["amazon_validation.md", "amazon_validation_batch.md"])
+        return sha("".join((ROOT / "prompts" / f).read_text() for f in files))[:16]
+
     def find_cached_product(self, pid, query_type, ttl, now, raw_dir, env):
         p = DA.find_cached(pid, query_type, ttl, now, raw_dir)
-        if p and raw_env_ok(_read_json(p) or {}, env):
+        if not p:
+            return None
+        e = _read_json(p) or {}
+        if raw_env_ok(e, env) and e.get("prompt_version") == self.prompt_version(query_type):
             return p
         return None
 
@@ -1044,6 +1073,7 @@ class Runner:
                 break
             obs = now_utc().isoformat()
             base = {"observation_timestamp": obs, "market": market.get("region", "US"), "query": query,
+                    "prompt_version": self.prompt_version("deep_product"),
                     "task_id": task_id, "data_environment": self.env, "run_id": self.run_id}
             err = response_error(resp)
             if len(batch) == 1:
@@ -1166,6 +1196,7 @@ class Runner:
                 stop = f"provider failure: {e.message}"
                 break
             base = {"observation_timestamp": now_utc().isoformat(), "market": "US", "query": query, "task_id": task_id,
+                    "prompt_version": self.prompt_version(qt),
                     "provider": cfg["provider"], "data_environment": self.env, "run_id": self.run_id}
             err = response_error(resp)
             if len(batch) == 1:
@@ -1233,10 +1264,15 @@ class Runner:
         obs += [HIST.from_deep(d, ctx["deep_file"], amz.get(str(d["product_id"])), bvs.get(str(d["product_id"])))
                 for d in self._ok_deep(ctx)]
         written, dup, paths = 0, 0, []
+        view = EnvStore(self.history_dir, self.env)
         for o in obs:
             if not o:
                 continue
             o["data_environment"], o["run_id"] = self.env, self.run_id
+            key = source_key(o)
+            if key and any(source_key(x) == key for x in view.observations(o["identity_key"])):
+                dup += 1                                       # same provider answer already stored
+                continue
             action, path = store.append(o)
             written += action == "written"
             dup += action == "duplicate"

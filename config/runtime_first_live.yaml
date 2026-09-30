@@ -39,5 +39,5 @@ query_plan:
   max_credits_for_run: 25                    # hard stop for this run (balance measured with the FREE endpoint)
   estimated_credits:
     discovery: 4.0                           # observed 3.98 (15-product Home discovery)
-    deep_analysis: 1.0                       # per 1-product query; observed 0.44 for one 8k-token answer
+    deep_analysis: 2.5                       # per 1-product query; observed 1.69–2.48 (2026-09-30)
     amazon_validation: 4.0                   # not observed yet -> actual may differ

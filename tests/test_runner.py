@@ -211,7 +211,7 @@ class DryRunDefaults(Base):
         self.assertEqual(b["stages"]["deep_analysis"]["expected_paid_max"], 5)  # 5 products, 1 per query
         self.assertEqual(b["stages"]["amazon_validation"]["expected_paid_min"], 0)
         self.assertEqual((b["expected_paid_queries_min"], b["expected_paid_queries_max"]), (1, 9))
-        self.assertEqual(b["estimated_credits_max"], 4.0 + 5 * 1.0 + 3 * 4.0)
+        self.assertEqual(b["estimated_credits_max"], 4.0 + 5 * 2.5 + 3 * 4.0)
         self.assertEqual(b["max_credits_for_run"], 25)
 
     def test_unknown_estimate_stays_unknown(self):

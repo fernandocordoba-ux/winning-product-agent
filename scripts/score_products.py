@@ -105,9 +105,17 @@ def wps_breakdown(product, cfg=None):
             metrics[name] = {"points": NA, "max": m["points"], "missing_components": missing, "components": comps}
             na.append(name)
         else:
+            cap = m.get("trend_cap")                  # wps-v1.1: e.g. full growth score but DECLINING daily sales
+            capped = None
+            if cap and product.get(cap["input"]) in cap["when"] and frac > cap["max_fraction"]:
+                capped = {"input": cap["input"], "value": product.get(cap["input"]),
+                          "uncapped_points": _round(m["points"] * frac, places), "max_fraction": cap["max_fraction"]}
+                frac = cap["max_fraction"]
             pts = m["points"] * frac
             total += pts
             metrics[name] = {"points": _round(pts, places), "max": m["points"], "components": comps}
+            if capped:
+                metrics[name]["trend_cap_applied"] = capped
     return {"score": _round(total, places), "complete": not na, "metrics": metrics,
             "na_metrics": na, "version": cfg.get("version")}
 

@@ -123,6 +123,20 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
   records of the run's environment (a SYNTHETIC record BLOCKS a LIVE report); cache and history views never cross environments.
   Raw files saved before Step T are untagged and count as LIVE (all were real KaloPilot answers).
 
+## Step U calibration (first live runs, 2026-09-29/30)
+
+- KaloPilot pauses on plan restrictions ("Category Overview not included in Professional plan") and the API returns
+  "completed" with no data (message_id 0). Prompts forbid Category Overview; the runner flags the pause; a task continued
+  in the web UI is imported for free with `--from-task TASK_ID`.
+- One answer holds ~8k output tokens: Deep Analysis is 1 product per query (~1.7–2.5 credits each, observed).
+- Growth is CALCULATED by the code from `gmv_30d` and `gmv_prev_30d` (provider value kept as growth_30d_provider;
+  GROWTH_MISMATCH / GROWTH_UNVERIFIED flags). Discovery's provider growth was wrong by ~100x on 2026-09-29.
+- `category_product_count` is used only when `category_product_count_level` is the product's leaf category, else N/A.
+- WPS v1.1: growth_momentum capped at 50 % when the daily-sales trend is DECLINING (scoring.yaml trend_cap).
+- Discovery order puts low-base / spike products last. History counts one provider answer once (append-only kept).
+- Cached answers are reused only if asked with the current prompt version.
+- `python -m winning_product_agent audit [RUN_ID]` = calibration audit (read-only).
+
 ## Useful commands
 
 ```bash
