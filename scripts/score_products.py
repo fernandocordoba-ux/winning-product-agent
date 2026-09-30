@@ -139,13 +139,23 @@ def confidence_adjustments(product, wps, cfg):
     """Confidence reductions for data the WPS could not use (never changes WPS)."""
     dr = cfg.get("data_requirements") or {}
     adj = dr.get("confidence_adjustments") or {}
+    # Optional (AB proposal): a missing value already scored by a Confidence component check is not
+    # subtracted a second time. Absent in the production config -> behaviour unchanged.
+    counted = dr.get("counted_in_confidence") or {}
+    checked = {c.get("field") for comp in ((cfg.get("confidence") or {}).get("components") or {}).values()
+               for c in comp.get("checks") or []}
     out = []
+
+    def already(name):
+        return bool(counted.get(name)) and all(f in checked for f in counted[name])
     for name in wps["missing_by_tier"].get("SUPPORTING", []) + wps["missing_by_tier"].get("ENHANCEMENT", []):
+        if already(name):
+            continue
         out.append({"reason": f"SUPPORTING/ENHANCEMENT metric not available: {name}",
                     "points": -adj.get("missing_supporting_metric", 0)})
     for field in dr.get("enhancement_fields") or []:
         v = product.get(field)
-        if v is None or (isinstance(v, list) and not [x for x in v if x is not None]):
+        if (v is None or (isinstance(v, list) and not [x for x in v if x is not None])) and not already(field):
             out.append({"reason": f"ENHANCEMENT field missing: {field}", "points": -adj.get("missing_enhancement_field", 0)})
     return [a for a in out if a["points"]]
 

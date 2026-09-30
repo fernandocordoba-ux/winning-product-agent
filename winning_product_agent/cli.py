@@ -340,6 +340,12 @@ def cmd_decide(a):
     return 0
 
 
+def cmd_calibrate(a):
+    """Step AB: offline production calibration from saved LIVE data (no query, configs not applied)."""
+    import production_calibration as PC
+    return PC.main([])
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="python -m winning_product_agent", description="winning-product-agent master runner")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -377,6 +383,7 @@ def build_parser():
     de = sub.add_parser("decide", help="Step Z final decision (offline): show / --rebuild / --explain <product_id>")
     de.add_argument("--rebuild", action="store_true", help="recompute from saved LIVE data (no query, no credits)")
     de.add_argument("--explain", help="print the full decision path of one product")
+    sub.add_parser("calibrate", help="Step AB production calibration (offline, LIVE evidence only, writes proposals)")
     au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
     au.add_argument("run_id", nargs="?")
     return p
@@ -386,7 +393,7 @@ def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit,
             "suppliers": cmd_suppliers, "competitors": cmd_competitors,
-            "creatives": cmd_creatives, "decide": cmd_decide}[a.cmd](a)
+            "creatives": cmd_creatives, "decide": cmd_decide, "calibrate": cmd_calibrate}[a.cmd](a)
 
 
 if __name__ == "__main__":

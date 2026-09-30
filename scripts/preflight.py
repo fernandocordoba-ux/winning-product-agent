@@ -43,6 +43,8 @@ COMPONENTS = {
     "Creative Layer": {"modules": ["creatives"], "configs": ["creatives.yaml"], "tests": ["test_creatives"]},
     "Decision Engine": {"modules": ["decision_engine"], "configs": ["decision.yaml"], "tests": ["test_decision"]},
     "AA End-to-End": {"modules": ["aa_live"], "configs": ["runtime.yaml"], "tests": ["test_aa_live"]},
+    "Production Calibration": {"modules": ["production_calibration"], "configs": ["scoring.yaml"],
+                               "tests": ["test_production_calibration"]},
     "Master Runner": {"modules": ["winning_product_agent.runner"], "configs": ["runtime.yaml"],
                       "tests": ["test_runner", "test_e2e"]},
 }

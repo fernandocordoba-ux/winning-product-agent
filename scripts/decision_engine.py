@@ -493,8 +493,15 @@ def hard_gates(ev, dims, cfg, checklist=None):
         r = g[name]
         hit = [f for f in r[flag_key] if f in flags]
         n = v(ev, count_key)
-        fired = bool(hit) and n is not None and n <= r[max_key] and xp not in (STRONG, ACCEPTABLE)
-        add(name, "FIRED" if fired else "PASSED", {"flags": hit, count_key: n, "cross_platform_demand": xp})
+        narrow = bool(hit) and n is not None and n <= r[max_key]
+        weak_statuses = r.get("broader_weak_statuses", [WEAK, UNKNOWN])   # Z-v1: UNKNOWN counted as weak
+        if narrow and xp in weak_statuses:
+            add(name, "FIRED", {"flags": hit, count_key: n, "cross_platform_demand": xp})
+        elif narrow and xp == UNKNOWN and r.get("when_broader_unknown"):
+            add(name, "FIRED", {"flags": hit, count_key: n, "cross_platform_demand": xp,
+                                "note": "broader evidence missing (not negative)"}, r["when_broader_unknown"])
+        else:
+            add(name, "PASSED", {"flags": hit, count_key: n, "cross_platform_demand": xp})
     sup = ev["flags"].get("VERY_SLOW_DELIVERY")
     sup_hit = bool(sup) and "supplier_layer.supplier_flags" in sup["sources"] or \
         (bool(sup) and "business_viability.commercial_red_flags" in sup["sources"])
@@ -689,6 +696,7 @@ def decide(ev, cfg, manual=None):
                    for k in DIMENSIONS if st[k] in (WEAK, UNKNOWN)]
 
     pending = [k for k, x in cl.items() if x["status"] == "PENDING"]
+    explanation = evidence_explanation(ev, dims, gates)
 
     out = {"product_id": ev["product_id"], "name": ev["name"], "category": ev["category"], "url": ev["url"],
            "decision_state": state, "decision_path": path,
@@ -696,7 +704,7 @@ def decide(ev, cfg, manual=None):
            "decision_confidence": dconf,
            "why_it_passed": passed, "why_it_did_not_pass": not_passed,
            "missing_validation": [t["task"] for t in tasks] + [f"manual checklist: {k}" for k in pending],
-           "manual_checklist": cl, "data_trust": trust, "evidence": ev}
+           "manual_checklist": cl, "data_trust": trust, "explanation": explanation, "evidence": ev}
     if state == PROMISING:
         out["validation_tasks"] = tasks
     if state == WATCH:
@@ -711,6 +719,29 @@ def decide(ev, cfg, manual=None):
         out["missing_fields"], out["missing_sources"], out["required_next_queries"] = f, s, q
     out["next_actions"] = next_actions(out, tasks, pending)
     return out
+
+
+def evidence_explanation(ev, dims, gates):
+    """AB Stage 7: separate what the data SHOWS (negative evidence) from what the data LACKS (missing evidence).
+
+    NEGATIVE_EVIDENCE: a fired gate with its measured values, or a WEAK dimension computed from real values.
+    MISSING_EVIDENCE : an UNKNOWN dimension, a gate that could not be evaluated, or a gate fired only because
+                       broader evidence is missing."""
+    neg, miss = [], []
+    for k in DIMENSIONS:
+        d = dims[k]
+        if d["status"] == WEAK and k != "evidence_quality":
+            neg.append({"source": f"dimension:{k}", "reason": d["reason"], "evidence": d["inputs"]})
+        elif d["status"] == UNKNOWN or (d["status"] == WEAK and k == "evidence_quality"):   # low confidence = thin data
+            miss.append({"source": f"dimension:{k}", "reason": d["reason"]})
+    for g in gates:
+        if g["status"] == "FIRED":
+            (miss if g["evidence"].get("note", "").startswith("broader evidence missing") else neg).append(
+                {"source": f"gate:{g['gate']}", "action": g["action"], "evidence": g["evidence"]})
+        elif g["status"] == "NOT_EVALUATED":
+            miss.append({"source": f"gate:{g['gate']}", "reason": f"gate {g['gate']} not evaluable (inputs missing)"})
+    primary = "NEGATIVE_EVIDENCE" if neg else ("MISSING_EVIDENCE" if miss else "NONE")
+    return {"primary": primary, "NEGATIVE_EVIDENCE": neg, "MISSING_EVIDENCE": miss}
 
 
 def next_actions(dec, tasks, pending):
