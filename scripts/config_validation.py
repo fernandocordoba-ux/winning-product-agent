@@ -12,7 +12,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_FILES = ["runtime.yaml", "scoring.yaml", "filters.yaml", "categories.yaml", "deep_analysis.yaml",
                 "amazon_validation.yaml", "business_viability.yaml", "report.yaml", "history.yaml", "emerging.yaml",
-                "calibration_lane.yaml", "provider_capabilities.yaml"]
+                "calibration_lane.yaml", "provider_capabilities.yaml", "suppliers.yaml"]
 
 
 def load_all(config_dir=ROOT / "config"):
@@ -111,6 +111,22 @@ def validate(cfgs):
     for name, m in (sc.get("metrics") or {}).items():
         if m.get("tier", "CORE") not in ("CORE", "SUPPORTING", "ENHANCEMENT"):
             e.append(f"scoring.yaml metric {name}: tier must be CORE, SUPPORTING or ENHANCEMENT")
+
+    sp = cfgs.get("suppliers.yaml") or {}
+    if sp:
+        for sect, key in (("matching", "components"), ("quality", "components"), ("confidence", "components")):
+            _total(e, f"suppliers.yaml {sect}", list(((sp.get(sect) or {}).get(key) or {}).values()), "points")
+        tiers = [t.get("max_days") for t in (sp.get("delivery") or {}).get("tiers") or []]
+        nums = [t for t in tiers if t is not None]
+        if nums != sorted(nums) or (tiers and tiers[-1] is not None):
+            e.append("suppliers.yaml: delivery tiers must be ascending and end with max_days: null")
+        el = ((sp.get("ranking") or {}).get("eligibility") or {}).get("min_match_confidence")
+        if not _num(el) or not 0 <= el <= 100:
+            e.append("suppliers.yaml: ranking.eligibility.min_match_confidence must be 0-100")
+        if (sp.get("ranking") or {}).get("rank_by", [None])[0] == "landed_cost":
+            e.append("suppliers.yaml: ranking must not be price-first (cheapest supplier is never auto-selected)")
+        _pos_int(e, "suppliers.yaml supplier_calibration.max_offers_per_product",
+                 (sp.get("supplier_calibration") or {}).get("max_offers_per_product"))
 
     # ---------------------------------------------------------------- filters
     f = cfgs.get("filters.yaml") or {}

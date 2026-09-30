@@ -119,7 +119,8 @@ def economics(sell, comm, cfg):
     plat = e["platform_fee"]
     payment_fee = sell * pay["percent"] / 100 + pay["fixed"] if sell is not None else None
     platform_fee = sell * plat["percent"] / 100 + plat["fixed"] if sell is not None else None
-    landed = pc + ship if None not in (pc, ship) else None
+    duty = num(comm.get("import_duty_per_order"))            # Step W: ONLY when explicitly provided
+    landed = pc + ship + (duty or 0.0) if None not in (pc, ship) else None
     gross = sell - landed - payment_fee - platform_fee if None not in (sell, landed) else None
     gross_pct = gross / sell * 100 if gross is not None and sell else None
     refund_cost = refund_rate / 100 * sell if None not in (refund_rate, sell) else None
@@ -128,7 +129,10 @@ def economics(sell, comm, cfg):
     contrib_pct = contrib / sell * 100 if contrib is not None and sell else None
     return {
         "selling_price": rnd(sell), "product_cost": rnd(pc), "supplier_shipping_cost": rnd(ship),
-        "landed_cost": rnd(landed), "payment_processing_fee": rnd(payment_fee), "platform_fee": rnd(platform_fee),
+        "landed_cost": rnd(landed), "import_duty_per_order": rnd(duty),
+        "landed_cost_note": (None if landed is None else "includes explicit import duty" if duty is not None
+                             else "excludes unknown import duties (never estimated)"),
+        "payment_processing_fee": rnd(payment_fee), "platform_fee": rnd(platform_fee),
         "estimated_ad_cost_per_order": rnd(ad_cost), "estimated_refund_rate_pct": refund_rate,
         "estimated_chargeback_rate_pct": cb_rate, "expected_refund_cost": rnd(refund_cost),
         "expected_chargeback_cost": rnd(cb_cost), "gross_profit_before_ads": rnd(gross),
@@ -222,7 +226,10 @@ def supplier_component(comm, cfg):
     p.add("price_consistency", band(cv, c["parts"]["price_consistency"]["bands"]), value=rnd(cv))
 
     primary = None
-    if sups:
+    sel = comm.get("selected_supplier_index")
+    if sups and isinstance(sel, int) and 0 <= sel < len(sups):
+        primary = sups[sel]                        # Step W: the ranked, selected offer (never "cheapest")
+    elif sups:                                     # legacy manual supplier_data files (pre Step W)
         priced = [(num(s.get("price")), i) for i, s in enumerate(sups) if num(s.get("price")) is not None]
         primary = sups[min(priced)[1]] if priced else sups[0]
     g = (lambda k: num(primary.get(k)) if primary else None)
@@ -435,6 +442,9 @@ def evaluate(deep, amz, comm, cfg, filters_cfg, comm_source=None):
     conf, conf_level, conf_bd = bvs_confidence(econ, sh_m, sp_m, co_m, rr_m, ad_m, ci_m, cfg)
 
     flags = gm_flags + sh_flags + sp_flags + co_flags + rr_flags + ci_flags
+    layer = comm.get("supplier_layer") or {}
+    have = {f["flag"] for f in flags}               # Step W supplier flags (evidence-based), no duplicates
+    flags += [{**f, "source": "supplier_layer"} for f in layer.get("supplier_flags") or [] if f["flag"] not in have]
     missing_req = [k for k in cfg["insufficient_supplier_data"]["required"] if econ.get(k) is None]
     if missing_req:
         flags.append({"flag": "INSUFFICIENT_SUPPLIER_DATA", "missing": missing_req})
@@ -445,7 +455,8 @@ def evaluate(deep, amz, comm, cfg, filters_cfg, comm_source=None):
     if bvs >= rw["bvs_min"] and conf < rw["bvs_confidence_below"]:
         warning = f"HIGH BVS ({bvs}) WITH LOW BVS CONFIDENCE ({conf}): commercial evidence incomplete"
 
-    econ_keys = ["selling_price", "product_cost", "supplier_shipping_cost", "landed_cost", "payment_processing_fee",
+    econ_keys = ["selling_price", "product_cost", "supplier_shipping_cost", "import_duty_per_order", "landed_cost",
+                 "landed_cost_note", "payment_processing_fee",
                  "platform_fee", "estimated_ad_cost_per_order", "expected_refund_cost", "expected_chargeback_cost",
                  "gross_profit_before_ads", "gross_margin_percent", "contribution_profit", "contribution_margin_percent"]
     return {
@@ -467,6 +478,9 @@ def evaluate(deep, amz, comm, cfg, filters_cfg, comm_source=None):
         "source": {"deep_analysis_file": deep.get("_file"), "amazon_file": (amz or {}).get("_file"),
                    "commercial_data_file": comm_source, "supplier_provider": cfg["supplier_source"]["provider"]},
         "config_version": cfg["version"],
+        "selected_supplier_offer_id": layer.get("selected_supplier_offer_id"),
+        "supplier_viability": layer.get("supplier_viability", NA if not comm.get("suppliers") else "LEGACY_INPUT"),
+        "supplier_layer": layer or None,
     }
 
 
@@ -512,7 +526,8 @@ def latest(dir_, pattern):
     return files[-1] if files else None
 
 
-def run(deep_path=None, amazon_path=None, raw_dir=RAW_DIR, out_dir=OUT_DIR, cfg=None, filters_cfg=None, save=True):
+def run(deep_path=None, amazon_path=None, raw_dir=RAW_DIR, out_dir=OUT_DIR, cfg=None, filters_cfg=None, save=True,
+        suppliers_dir=None):
     cfg = cfg or load_cfg()
     filters_cfg = filters_cfg or disc.load_yaml("filters.yaml")
     deep_path = deep_path or latest(DEEP_DIR, "deep_*.json")
@@ -526,8 +541,14 @@ def run(deep_path=None, amazon_path=None, raw_dir=RAW_DIR, out_dir=OUT_DIR, cfg=
             amz_by_id[a.get("product_id")] = {**a, "_file": str(amazon_path)}
     rows, excluded = eligible([{**r, "_file": str(deep_path)} for r in deep.get("results", [])], cfg)
     results = []
+    import suppliers as SUP
+    suppliers_dir = suppliers_dir or SUP.PROCESSED_DIR
     for d in rows:
-        comm, src = load_commercial_data(d["product_id"], raw_dir)
+        # Step W: real supplier offers (ranked, selected) first; legacy manual supplier_data file as fallback
+        sell, _ = selling_price(d, {}, cfg)
+        comm, src = SUP.commercial_data_for(d, suppliers_dir, selling_price=sell)
+        if comm is None:
+            comm, src = load_commercial_data(d["product_id"], raw_dir)
         results.append(evaluate(d, amz_by_id.get(d["product_id"]), comm, cfg, filters_cfg, src))
     report = {"deep_file": str(deep_path), "amazon_file": str(amazon_path) if amazon_path else None,
               "eligible": len(rows), "excluded": excluded, "results": results}

@@ -145,6 +145,20 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 - Cached answers are reused only if asked with the current prompt version.
 - `python -m winning_product_agent audit [RUN_ID]` = calibration audit (read-only).
 
+## Supplier Data Integration (Step W)
+
+- `scripts/suppliers.py` + `config/suppliers.yaml`. NO orders, NO supplier contact, NO invented prices/shipping/duties.
+- SupplierProvider interface (search_product / get_offer_details / get_shipping_quote / normalize_offer). Only
+  `manual_import` (CSV/JSON) is implemented; AliExpress, CJ, Alibaba, Zendrop, AutoDS, KaloPilot raise
+  ProviderNotIntegrated until real access exists.
+- Independent scores: Supplier Match Confidence, Supplier Quality Score, Supplier Confidence (never combined).
+- Selection for BVS = highest-ranked ELIGIBLE offer (match >= 75, product + shipping cost present, not out of stock);
+  rank = eligible > delivery tier > quality > landed cost > confidence > offer_id. Never "cheapest first".
+- Landed cost = product + shipping (+ import duty only when explicitly provided; otherwise disclosed as excluded).
+- Contribution margin stays N/A while ad cost / refund / chargeback assumptions are null (never invented).
+- Storage: data/raw/suppliers (read-only), data/processed/suppliers/<pid>/, data/history/suppliers/<offer_id>/ (append-only).
+- `python -m winning_product_agent suppliers import <file.csv|json>` / `suppliers show <product_id>`.
+
 ## Useful commands
 
 ```bash

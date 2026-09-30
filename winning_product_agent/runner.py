@@ -1309,14 +1309,19 @@ class Runner:
         cfg = B.load_cfg()
         cfg["eligibility"]["max_products"] = self.limits["bvs_max_products"]
         r = B.run(deep_path=ctx["deep_file"], amazon_path=ctx.get("amazon_file"),
-                  raw_dir=self.raw / "business_viability", cfg=cfg, filters_cfg=self.filters, save=False)
+                  raw_dir=self.raw / "business_viability", cfg=cfg, filters_cfg=self.filters, save=False,
+                  suppliers_dir=self.processed / "suppliers")
         results = [{**x, "data_environment": self.env, "run_id": self.run_id, "calibration_only": False}
                    for x in r.get("results", [])]
         cal_amz = {str(a["product_id"]): a for a in ctx.get("amazon") or [] if a.get("calibration_only")}
         if cal_amz:                                  # calibration lane: BVS plumbing, never ranked
             for d in self._ok_deep(ctx):
                 if str(d["product_id"]) in cal_amz and str(d["product_id"]) not in {str(x["product_id"]) for x in results}:
-                    comm, src = B.load_commercial_data(d["product_id"], self.raw / "business_viability")
+                    import suppliers as SUP
+                    sell, _ = B.selling_price(d, {}, cfg)
+                    comm, src = SUP.commercial_data_for(d, self.processed / "suppliers", selling_price=sell)
+                    if comm is None:
+                        comm, src = B.load_commercial_data(d["product_id"], self.raw / "business_viability")
                     x = B.evaluate({**d, "_file": ctx["deep_file"]}, cal_amz[str(d["product_id"])], comm, cfg,
                                    self.filters, src)
                     results.append({**x, "data_environment": self.env, "run_id": self.run_id, "calibration_only": True})

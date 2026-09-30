@@ -177,6 +177,39 @@ def cmd_report(a):
     return 0
 
 
+def cmd_suppliers(a):
+    """Step W: manual supplier offers (no orders, no supplier contact, no paid query)."""
+    import suppliers as SUP
+    rt = R.safety.load_runtime()
+    p = rt["paths"]
+    dirs = dict(raw_dir=R.ROOT / p["raw"] / "suppliers", processed_dir=R.ROOT / p["processed"] / "suppliers",
+                hist_dir=R.ROOT / p["history"] / "suppliers")
+    if a.action == "import":
+        try:
+            r = SUP.import_file(a.target, **dirs)
+        except SUP.MalformedSupplierInput as e:
+            _p(f"REJECTED FILE: {e}")
+            return 1
+        _p(f"Rows {r['rows']} | accepted {r['accepted']} | rejected {len(r['rejected'])} | products {r['products']}")
+        for x in r["rejected"]:
+            _p(f"  row {x['row']}: {'; '.join(x['errors'])}")
+        _p(f"History: {r['history']} | raw: {r['raw_file']}")
+        return 0 if r["accepted"] else 1
+    offers = SUP.load_offers(a.target, dirs["processed_dir"])
+    if not offers:
+        _p(f"No supplier offers imported for {a.target}.")
+        return 1
+    deep = next((x for x in __import__("history").HistoryStore(R.ROOT / p["history"]).observations(a.target)[::-1]
+                 if x.get("product_name")), {})
+    ev = SUP.evaluate_product(a.target, {"name": deep.get("product_name")}, offers)
+    for o in ev["offers"]:
+        _p(f"  #{o['supplier_offer_rank']} {o['supplier_name']:<24} match {o['match_confidence_calc']} "
+           f"landed {o['landed_cost']} eff.days {o['effective_delivery_days']} ({o['delivery_tier']}) "
+           f"quality {o['supplier_quality']} conf {o['supplier_confidence']} eligible {o['eligible_for_economics']}")
+    _p(f"Selected: {ev['selected_supplier_offer_id']} | flags: {[f['flag'] for f in ev['supplier_flags']]}")
+    return 0
+
+
 def cmd_audit(a):
     import calibration_audit as CA
     r = CA.audit(a.run_id)
@@ -211,6 +244,9 @@ def build_parser():
     st.add_argument("run_id", nargs="?")
     rp = sub.add_parser("report")
     rp.add_argument("run_id", nargs="?")
+    su = sub.add_parser("suppliers", help="manual supplier offers: import <csv|json> / show <product_id>")
+    su.add_argument("action", choices=["import", "show"])
+    su.add_argument("target")
     au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
     au.add_argument("run_id", nargs="?")
     return p
@@ -218,7 +254,8 @@ def build_parser():
 
 def main(argv=None):
     a = build_parser().parse_args(argv)
-    return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit}[a.cmd](a)
+    return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit,
+            "suppliers": cmd_suppliers}[a.cmd](a)
 
 
 if __name__ == "__main__":

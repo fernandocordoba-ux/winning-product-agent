@@ -605,6 +605,64 @@ def history_block(p, rows, cfg):
     return L + [""]
 
 
+def supplier_rows(r):
+    """Step W: every reported product that has supplier-layer data (selected offer + all offers)."""
+    out = []
+    for p in r["top"] + r["watch"] + r["rejected"]:
+        b = p.get("bvs_record") or {}
+        layer = b.get("supplier_layer")
+        if layer:
+            out.append({"product_id": p.get("product_id"), "name": p.get("name"), "layer": layer,
+                        "bvs": b.get("bvs"), "bvs_confidence": b.get("bvs_confidence"),
+                        "economics": b.get("economics") or {}})
+    return out
+
+
+def supplier_section(r):
+    rows = supplier_rows(r)
+    L = ["", "## Supplier validation", "",
+         "_Real supplier offers only (manual import / integrated sources). No orders placed, no supplier contacted. "
+         "Selected offer = highest-ranked ELIGIBLE offer, not the cheapest. Missing values are N/A._", ""]
+    if not rows:
+        return L + ["No supplier offers imported yet: supplier viability N/A, economics partial, BVS Confidence reduced.", ""]
+
+    def v(x, suffix=""):
+        return NA if x is None or x == NA else f"{x}{suffix}"
+    for s in rows:
+        lay, sel = s["layer"], s["layer"].get("selected") or {}
+        e = s["economics"]
+        L += [f"### {s['name']} ({s['product_id']})", "",
+              f"- Qualified supplier offers: {lay['qualified_offers']} of {lay['offer_count']}",
+              f"- Selected supplier: {v(sel.get('supplier_name'))} (offer {v(lay.get('selected_supplier_offer_id'))}, "
+              f"rank {v(sel.get('supplier_offer_rank'))})",
+              f"- Supplier match confidence: {v(sel.get('match_confidence_calc'))} ({v(sel.get('match_class'))})",
+              f"- Product cost: {v(sel.get('product_cost'), ' USD')} · Shipping: {v(sel.get('shipping_cost'), ' USD')} · "
+              f"Landed cost: {v(sel.get('landed_cost'), ' USD')} ({v(sel.get('landed_cost_note'))})",
+              f"- Delivery estimate: {v(sel.get('estimated_delivery_min_days'))}–{v(sel.get('estimated_delivery_max_days'))} "
+              f"days (effective {v(sel.get('effective_delivery_days'))}, tier {v(sel.get('delivery_tier'))})",
+              f"- US warehouse: {v(sel.get('us_warehouse_available'))} · Tracking: {v(sel.get('tracking_available'))} · "
+              f"MOQ: {v(sel.get('minimum_order_quantity'))}",
+              f"- Supplier Quality Score: {v(sel.get('supplier_quality'))} · Supplier Confidence: "
+              f"{v(sel.get('supplier_confidence'))} ({v(sel.get('supplier_confidence_level'))})",
+              f"- Supplier red flags: {', '.join(f['flag'] for f in lay.get('supplier_flags') or []) or 'none'}",
+              f"- Gross margin: {v(e.get('gross_margin_percent'), '%')} · Contribution margin: "
+              f"{v(e.get('contribution_margin_percent'), '%')} (N/A while ad cost / refund rate are unknown)",
+              f"- **Updated BVS: {v(s['bvs'])} · BVS Confidence: {v(s['bvs_confidence'])}**", ""]
+        if lay["offer_count"] > 1:
+            L += ["| Rank | Supplier | Match | Product | Shipping | Landed | Delivery (eff.) | Rating | Orders | US WH "
+                  "| Tracking | MOQ | Quality | Confidence | Eligible |",
+                  "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+            for o in lay["offers"]:
+                L.append(f"| {o['supplier_offer_rank']} | {o['supplier_name']} | {v(o['match_confidence_calc'])} | "
+                         f"{v(o['product_cost'])} | {v(o['shipping_cost'])} | {v(o['landed_cost'])} | "
+                         f"{v(o['effective_delivery_days'])} ({v(o['delivery_tier'])}) | {v(o['supplier_rating'])} | "
+                         f"{v(o['supplier_order_count'])} | {v(o['us_warehouse_available'])} | "
+                         f"{v(o['tracking_available'])} | {v(o['minimum_order_quantity'])} | {v(o['supplier_quality'])} | "
+                         f"{v(o['supplier_confidence'])} | {'yes' if o['eligible_for_economics'] else 'no'} |")
+            L += ["", f"_Order: {lay['selection_rule']}_", ""]
+    return L
+
+
 def render_markdown(r, cfg):
     s = r["summary"]
     L = [f"# Winning Product Research — {s['research_date']}", "",
@@ -688,6 +746,7 @@ def render_markdown(r, cfg):
     else:
         L.append("None.")
     dq = r["data_quality"]
+    L += supplier_section(r)
     L += ["", "## Data quality", "", f"Base: {dq['products_with_wps']} product(s) with WPS.", "",
           "| Measure | % of products |", "|---|---|",
           f"| Complete TikTok data | {fmt(dq['pct_complete_tiktok_data'], 'pct')} |",
@@ -736,7 +795,12 @@ def build_json(r, cfg):
             "watchlist": [product_json(p) for p in r["watch"]],
             "watchlist_not_shown": r["watch_more"],
             "rejected_products": [product_json(p) for p in r["rejected"]],
-            "data_quality": r["data_quality"]}
+            "data_quality": r["data_quality"],
+            "supplier_validation": [{k: v for k, v in s.items() if k != "economics"} | {
+                "landed_cost": s["economics"].get("landed_cost"),
+                "gross_margin_percent": s["economics"].get("gross_margin_percent"),
+                "contribution_margin_percent": s["economics"].get("contribution_margin_percent")}
+                for s in supplier_rows(r)]}
 
 
 # ================================================================== writing
