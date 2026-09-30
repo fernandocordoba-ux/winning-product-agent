@@ -1,0 +1,78 @@
+# =============================================================================
+# FINAL STEP — Product Validation & Launch Gate (go / no-go for a real Shopify TEST)
+# =============================================================================
+# python -m winning_product_agent final-validation --latest
+#
+# * Uses ONLY the outputs of the latest production run (no new research score, no provider query).
+# * Never orders a sample, never contacts a supplier, never spends advertising money, never launches.
+# * Every rule below is deterministic and editable. Values left null are NOT assumed: they must be set by
+#   the user before the rule can pass.
+# * Manual evidence (sample status, final quotes, reviews, Shopify price) is entered per product in
+#   data/production/final_validation/inputs/{product_id}.json (a template is created on the first run).
+# =============================================================================
+version: "final-validation-v1"
+
+candidates:
+  max_products: 3
+  launch_source_state: READY_FOR_PRODUCT_VALIDATION           # only these can become LAUNCH_TEST_READY
+  fallback_source_state: PROMISING_NEEDS_VALIDATION           # validation only, never launch
+
+sample:
+  states: [NOT_ORDERED, ORDERED, RECEIVED, REJECTED, APPROVED]
+  required_for_launch: APPROVED
+  checklist:
+    - product matches listing
+    - build quality acceptable
+    - packaging acceptable
+    - product functions correctly
+    - no obvious defects
+    - delivery time acceptable
+    - product looks good on camera
+    - demo can be created
+    - perceived value supports target price
+
+supplier:
+  reliable_match_classes: [STRONG, VERY_STRONG]
+  require_final_quote_confirmed: true       # manual: the final cost + shipping quote was confirmed by the user
+  require_tracking: true
+  max_delivery_days: 14                     # = SLOW_DELIVERY threshold in suppliers.yaml (acceptable shipping)
+  reject_delivery_days_above: 20            # = VERY_SLOW_DELIVERY threshold in suppliers.yaml
+
+economics:
+  # fees come from business_viability.yaml (payment_processing / platform_fee) of the run's config
+  refund_allowance: from_config_only        # business_viability estimated_refund_rate_pct; null -> N/A (never assumed)
+  cac_scenarios_pct_of_price: [25, 30, 35, 40, 45]
+  min_gross_margin_percent: 30              # = BVS ACCEPTABLE gross margin in decision rules
+  hold_gross_margin_below: 40               # positive but thin -> HOLD (= BVS STRONG gross margin)
+
+market:
+  min_decision_confidence: 60               # minimum Decision Confidence for LAUNCH_TEST_READY
+  hold_on_trend: [DECLINING]
+  launch_dimensions_required:               # decision-engine dimension statuses required for launch
+    market_momentum: [STRONG, ACCEPTABLE]
+    competitive_environment: [STRONG, ACCEPTABLE]
+    creative_opportunity: [STRONG, ACCEPTABLE]
+  hold_if_weak: [market_momentum, commercial_viability, competitive_environment]
+
+risk:
+  manual_reviews: [ip_trademark, ad_policy]   # each PASSED / FAILED / PENDING in the input file
+  severe_flags: [REGULATED_PRODUCT, COUNTERFEIT_REVIEW_REQUIRED, IP_REVIEW_REQUIRED, REGULATED_REVIEW_REQUIRED,
+                 AD_POLICY_REVIEW_REQUIRED]
+  shipping_flags: [VERY_SLOW_DELIVERY, SLOW_DELIVERY, SLOW_SHIPPING, NO_TRACKING, HIGH_SHIPPING_COST]
+  return_flags: [HIGH_RETURN_RISK]
+  quality_flags: [LOW_SUPPLIER_RATING, LOW_ORDER_HISTORY]
+
+# ----------------------------------------------------------------------------- test controls (stop-loss)
+# Nothing is spent by this system. A test plan stays BLOCKED until the user sets every value below.
+test_controls:
+  max_test_budget: null                     # USD, total
+  max_daily_budget: null                    # USD
+  max_test_days: null
+  stop_loss_thresholds:                     # user-defined; no benchmark is assumed
+    max_cac: null
+    min_ctr_pct: null
+    max_cpc: null
+    min_add_to_cart_rate_pct: null
+    min_conversion_rate_pct: null
+    max_refund_rate_pct: null
+metrics_to_observe: [CTR, CPC, add_to_cart_rate, checkout_initiated, conversion_rate, CAC, revenue, refunds]

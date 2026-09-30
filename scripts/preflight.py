@@ -49,6 +49,8 @@ COMPONENTS = {
                          "tests": ["test_production"]},
     "Production Runner": {"modules": ["winning_product_agent.production", "production_audit"],
                           "configs": ["runtime.yaml"], "tests": ["test_production"]},
+    "Final Validation Gate": {"modules": ["final_validation"], "configs": ["runtime.yaml"],
+                              "tests": ["test_final_validation"]},
     "Master Runner": {"modules": ["winning_product_agent.runner"], "configs": ["runtime.yaml"],
                       "tests": ["test_runner", "test_e2e"]},
 }

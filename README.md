@@ -98,3 +98,16 @@ The token and secrets are **never** committed (see `.gitignore`: `.env`, `.env.*
 
 Production data: `data/production/`, runs: `runs/production/`, reports: `reports/production/`.
 
+## Final step — Product Validation & Launch Gate
+
+`python -m winning_product_agent final-validation --latest` (optionally `--product-id ID`; always report-only)
+
+* Candidates: up to 3 READY_FOR_PRODUCT_VALIDATION products of the latest production run (PROMISING only for extra
+  validation, never for launch).
+* States: LAUNCH_TEST_READY / VALIDATE_MORE / HOLD / REJECT — rules in `config/final_validation.yaml`.
+* Manual evidence per product: `data/production/final_validation/inputs/{product_id}.json` (sample status + checklist,
+  final quote, Shopify price, IP / ad-policy reviews). LAUNCH_TEST_READY requires `sample_status: APPROVED`.
+* Outputs: `reports/production/final-validation/{product_id}.md`, `reports/production/FINAL-DASHBOARD.md`.
+* The system never orders samples, contacts suppliers, spends ad money or launches a product. Test budgets and
+  stop-loss thresholds stay unset until the user sets them.
+

@@ -445,6 +445,27 @@ def cmd_production_run(a):
     return 0 if s["final_status"] in ("COMPLETED", "PARTIAL") else 1
 
 
+def cmd_final_validation(a):
+    """FINAL STEP: product validation & launch gate (report-only: no order, no supplier contact, no ad spend)."""
+    import final_validation as FV
+    r = FV.run(product_id=a.product_id)
+    m = r["run"]
+    if not m:
+        _p("No production live run with a final decision yet: run `python -m winning_product_agent production-run "
+           "--live` first. Dashboard written (0 candidates).")
+    else:
+        _p(f"Run {m['run_id']} · config {m['config_version']} · {len(r['results'])} candidate(s)")
+    for x in r["results"]:
+        _p(f"  {x['state']:<18} {x['name']}  ({x['source_state']})")
+        for i, act in enumerate(x["action_queue"][:5], 1):
+            _p(f"      {i}. {act}")
+    _p(f"Dashboard: {r['dashboard']}")
+    for pid, p in r["packs"].items():
+        _p(f"Pack {pid}: {p}")
+    _p("No order placed, no supplier contacted, no advertising money spent, nothing launched.")
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="python -m winning_product_agent", description="winning-product-agent master runner")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -495,6 +516,10 @@ def build_parser():
     pc = sub.add_parser("production-config", help="review | promote | verify [v] | list | activate v")
     pc.add_argument("action", choices=["review", "promote", "verify", "list", "activate"])
     pc.add_argument("version", nargs="?")
+    fv = sub.add_parser("final-validation", help="product validation & launch gate (report-only, no paid action)")
+    fv.add_argument("--latest", action="store_true", help="use the latest production run (default)")
+    fv.add_argument("--product-id", help="validate one product of the latest production run")
+    fv.add_argument("--report-only", action="store_true", help="default behaviour: reports only, no paid action")
     sub.add_parser("calibrate", help="Step AB production calibration (offline, LIVE evidence only, writes proposals)")
     au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
     au.add_argument("run_id", nargs="?")
@@ -506,7 +531,8 @@ def main(argv=None):
     return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit,
             "suppliers": cmd_suppliers, "competitors": cmd_competitors,
             "creatives": cmd_creatives, "decide": cmd_decide, "calibrate": cmd_calibrate,
-            "production-run": cmd_production_run, "production-config": cmd_production_config}[a.cmd](a)
+            "production-run": cmd_production_run, "production-config": cmd_production_config,
+            "final-validation": cmd_final_validation}[a.cmd](a)
 
 
 if __name__ == "__main__":
