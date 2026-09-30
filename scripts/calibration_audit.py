@@ -336,6 +336,12 @@ def audit(run_id=None, root=ROOT, write=True, secrets=None, data_root=None):
             e = r.get("error_category") or r.get("status")
             key = "malformed" if r.get("status") == "malformed" else ("timeouts" if "timeout" in str(e) else "other")
             errors[key].append(f"product {r.get('product_id')}: {e} {r.get('errors') or ''}".strip())
+    for mf in disc.get("malformed") or []:                  # provider answer without a parseable JSON block
+        env_raw = _read(mf.get("raw_file")) or {}
+        data = (env_raw.get("response") or {}).get("data") or {}
+        note = (f"status '{data.get('status')}' but no JSON product block (text {len(data.get('text') or '')} chars, "
+                f"credits_consumed {data.get('credits_consumed')}) — provider ended the task before finishing")
+        errors["malformed"].append(f"discovery {Path(mf.get('raw_file') or '').name}: {mf.get('error')}; {note}")
     ok_deep = [r for r in deep if r.get("status") == "ok"]
     unsupported = sorted(k for k, path, _ in DEEP_FIELDS if ok_deep and all(_get(r, path) is None for r in ok_deep))
     series_missing = sorted(k for k in ("daily_gmv", "daily_units") if ok_deep and all(
@@ -387,6 +393,9 @@ def audit(run_id=None, root=ROOT, write=True, secrets=None, data_root=None):
         reasons.append("reports not generated")
     if contamination:
         reasons.append(f"{len(contamination)} non-LIVE record(s)")
+    if errors["malformed"] or errors["empty"] or errors["timeouts"]:
+        reasons.append(f"{len(errors['malformed']) + len(errors['empty']) + len(errors['timeouts'])} provider answer(s) "
+                       "unusable (see provider error audit)")
     if not ok_deep:
         reasons.append("no product was deep-analyzed successfully")
     decision = "LIVE_RUN_VALIDATED" if not reasons else "CALIBRATION_REQUIRED"

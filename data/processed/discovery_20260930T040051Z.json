@@ -1,0 +1,39 @@
+{
+  "pipeline": "discovery-v1",
+  "config_versions": {
+    "filters": "filters-v1",
+    "categories": "categories-v1",
+    "confidence": "confidence-v1"
+  },
+  "market": {
+    "region": "US",
+    "currency": "USD",
+    "period_days": 30
+  },
+  "raw_files": [
+    "/root/winning-product-agent/data/raw/20260930T040051Z_combined_0fefd3e3c2624e42af498fd31f13b683.json"
+  ],
+  "summary": {
+    "records": 0,
+    "unique": 0,
+    "duplicates_removed": 0,
+    "malformed": 1,
+    "PASS": 0,
+    "REVIEW": 0,
+    "FAIL": 0,
+    "returned_candidates": 0,
+    "over_limit": 0
+  },
+  "candidates": [],
+  "failed": [],
+  "over_limit_keys": [],
+  "duplicates": [],
+  "malformed": [
+    {
+      "raw_file": "/root/winning-product-agent/data/raw/20260930T040051Z_combined_0fefd3e3c2624e42af498fd31f13b683.json",
+      "error": "no parseable ```json product array found in report/text"
+    }
+  ],
+  "data_environment": "LIVE",
+  "run_id": "20260930T035745Z_01f866"
+}
