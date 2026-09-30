@@ -6,8 +6,9 @@ Nothing is written to data/ or reports/; only runs/{run_id}/manifest.json and
 runs/{run_id}/log.jsonl are created (redacted, no secrets).
 
 CLI:
-  python3 scripts/pipeline.py dry-run                  # no network at all
-  python3 scripts/pipeline.py dry-run --check-balance  # + FREE KaloPilot balance check
+  Superseded (Step T) by the master runner: python -m winning_product_agent run --dry-run
+  python3 scripts/pipeline.py dry-run          # forwards to the master runner
+  dry_run() stays importable (used by tests/test_e2e.py).
 """
 import json
 import sys
@@ -165,7 +166,13 @@ def dry_run(root=ROOT, check_balance=False, balance_fn=None, now=None, write_man
 
 
 def main(argv):
+    # Step T: the master runner is the ONE canonical entry point; this CLI only forwards to it.
     if len(argv) >= 2 and argv[1] == "dry-run":
+        sys.path.insert(0, str(ROOT))
+        from winning_product_agent import cli
+        print("NOTE: scripts/pipeline.py is superseded by `python -m winning_product_agent run --dry-run`.\n")
+        return cli.main(["run", "--dry-run"] + (["--check-balance"] if "--check-balance" in argv else []))
+    if len(argv) >= 2 and argv[1] == "legacy-dry-run":
         r = dry_run(check_balance="--check-balance" in argv)
         print(f"RUN {r['run_id']}  MODE {r['mode']}  market {r['market']}")
         print(f"Pre-flight: {r['preflight']['status']}")

@@ -28,6 +28,16 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 
 `setup-token.sh` also picks the token up automatically from a `KALOPILOT_TOKEN` or `KALODATA_API_KEY` environment variable.
 
+## Master runner (Step T)
+
+```bash
+python -m winning_product_agent preflight --tests
+python -m winning_product_agent run --dry-run --profile config/runtime_first_live.yaml --check-balance   # free
+python -m winning_product_agent run --live --profile config/runtime_first_live.yaml --max-products 5    # PAID: type CONFIRM LIVE RUN
+python -m winning_product_agent status        # last run: stages, queries, credits
+python -m winning_product_agent report        # where the last live report is
+```
+
 ## Requirements
 
 - `www.kalodata.com` in Claude **Settings → Capabilities → Additional allowed domains**.
@@ -49,7 +59,8 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `scripts/emerging.py` | Emerging Product Detector (Step R): Momentum Score, Momentum Confidence, Emerging Status, flags, priority list (tested) |
 | `scripts/safety.py` | Live Query Safety Gate, query budget, secret redaction, run logs, manifests (Step S) |
 | `scripts/preflight.py` | Pre-flight: READY_FOR_DRY_RUN / BLOCKED + SYSTEM STATUS (`--tests` runs the suite) |
-| `scripts/pipeline.py` | `dry-run`: previews every stage without paid queries; writes runs/{id}/manifest.json |
+| `winning_product_agent/` | **Master runner** (Step T): preflight / run (dry-run default, confirmed live) / status / report; checkpoints, resume, query budget, data_environment |
+| `scripts/pipeline.py` | Legacy dry-run (forwards to the master runner) |
 | `scripts/config_validation.py` | Config schema validation (weights, totals, ranges, limit conflicts) |
 | `scripts/concentration.py` | Creator/video revenue concentration + dependency flags (tested) |
 | `scripts/validate_data.py` | Validate raw data → `data/processed/` (skeleton) |

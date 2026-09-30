@@ -21,6 +21,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(1, str(ROOT))
 import config_validation as CV  # noqa: E402
 import safety  # noqa: E402
 
@@ -37,6 +38,8 @@ COMPONENTS = {
     "Emerging Detector": {"modules": ["emerging"], "configs": ["emerging.yaml"], "tests": ["test_emerging"]},
     "Live Query Safety Gate": {"modules": ["safety", "kalopilot_client"], "configs": ["runtime.yaml"],
                                "tests": ["test_safety"]},
+    "Master Runner": {"modules": ["winning_product_agent.runner"], "configs": ["runtime.yaml"],
+                      "tests": ["test_runner", "test_e2e"]},
 }
 
 

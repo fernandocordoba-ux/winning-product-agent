@@ -1,0 +1,41 @@
+# =============================================================================
+# Run profile — FIRST CONTROLLED LIVE RUN (Step T)
+# =============================================================================
+# Used ONLY with:
+#   python -m winning_product_agent run --live --profile config/runtime_first_live.yaml --max-products 5
+#
+# - live_mode/dry_run below only say this profile MAY run live. Nothing paid runs
+#   until the operator types exactly: CONFIRM LIVE RUN  (explicit_live_confirmation
+#   is set IN MEMORY for that run only; it is never stored as true in any file).
+# - config/runtime.yaml stays the canonical file with safe defaults; this profile
+#   only overrides runtime/limits/query_plan for one run. Safety, provider and
+#   paths always come from runtime.yaml.
+# - Credit-saving plan (vs. canonical 9 discovery + 1 query per product):
+#     Discovery        : 1 combined query for all enabled categories (max 20 products)
+#     Deep Analysis    : 5 products in 1 batched query
+#     Amazon Validation: only WPS >= 70 and Confidence >= 60 products, max 5, in 1 batched query
+#   => 2 paid queries, 3 at most. Cached answers (< 24 h) are reused, never re-bought.
+# =============================================================================
+profile: first_live
+
+runtime:
+  market: US
+  live_mode: true
+  dry_run: false
+  explicit_live_confirmation: false          # set in memory only, by typing CONFIRM LIVE RUN
+
+limits:
+  discovery_max_products: 20
+  deep_analysis_max_products: 5
+  amazon_validation_max_products: 5
+  bvs_max_products: 5
+
+query_plan:
+  discovery_mode: combined
+  deep_batch_size: 5
+  amazon_batch_size: 5
+  max_credits_for_run: 25                    # hard stop for this run (balance measured with the FREE endpoint)
+  estimated_credits:
+    discovery: 4.0                           # observed 3.98 (15-product Home discovery)
+    deep_analysis: 4.0                       # 5-product batch: not observed yet -> actual may differ
+    amazon_validation: 4.0                   # not observed yet -> actual may differ

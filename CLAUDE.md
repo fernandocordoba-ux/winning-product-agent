@@ -99,15 +99,37 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 
 - `config/runtime.yaml` is the **canonical** source for run mode, limits and safety. It must keep the safe defaults (`live_mode: false`, `dry_run: true`, `explicit_live_confirmation: false`); pre-flight BLOCKS otherwise. Stage-level limit keys must equal runtime.yaml (pre-flight blocks on conflicts).
 - **Live Query Safety Gate** (`scripts/safety.py`) runs inside `kalopilot_client.submit()`, the single chokepoint for paid queries: live_mode AND not dry_run AND explicit_live_confirmation AND credentials AND balance − estimate ≥ reserve. Live flags are set only IN MEMORY for one run (`safety.set_run_overrides`) after the user's explicit OK — never by editing runtime.yaml.
-- `python3 scripts/preflight.py [--tests]` → READY_FOR_DRY_RUN or BLOCKED (never READY_FOR_LIVE). `python3 scripts/pipeline.py dry-run [--check-balance]` previews every stage, writes only `runs/{run_id}/manifest.json` + `log.jsonl` (redacted).
+- `python3 scripts/preflight.py [--tests]` → READY_FOR_DRY_RUN or BLOCKED (never READY_FOR_LIVE). `python -m winning_product_agent run --dry-run` (Step T; `scripts/pipeline.py dry-run` forwards to it) previews every stage, writes only `runs/{run_id}/manifest.json` + `log.jsonl` (redacted).
 - Query budget: estimates are labeled as configured estimates; unknown costs stay UNKNOWN. Logs/manifests/reports are redacted.
 - `python3 scripts/config_validation.py` validates weights (WPS/AVS/BVS/Momentum/confidences = 100), ranges and limits.
+
+## Master Runner (Step T) — the ONE way to run the pipeline
+
+- `python -m winning_product_agent preflight | run [--dry-run] | run --live ... | status | report` (from the project root).
+  Stage CLIs (`scripts/deep_analysis.py --live`, `kalopilot_client.py discover`, ...) can never spend credits on their own:
+  the gate blocks them because only the master runner sets the in-memory live overrides.
+- Stage order: PRE-FLIGHT → DISCOVERY → FILTERING → DEEP ANALYSIS → WPS → WPS CONFIDENCE → AMAZON (eligible only) → BVS →
+  HISTORICAL STORAGE → EMERGING → FINAL REPORT → RUN SUMMARY. Stage status: PENDING/RUNNING/COMPLETED/PARTIAL/FAILED/SKIPPED/BLOCKED.
+- `run` with no flag = DRY RUN (never paid). Live needs a profile with live_mode true + dry_run false, pre-flight READY, valid limits,
+  credentials, credit check AND the exact typed phrase `CONFIRM LIVE RUN` (non-interactive: `--confirm-live "CONFIRM LIVE RUN"`).
+  yes/y/ok/continue are rejected. Anything missing BLOCKS (never downgraded). In Cowork, Claude passes `--confirm-live` ONLY after
+  the user has written exactly `CONFIRM LIVE RUN` in the chat, after seeing the query budget.
+- Profiles (`config/runtime_first_live.yaml`) may override only runtime / limits / query_plan and never exceed runtime.yaml limits.
+- Credit saving (`query_plan`): combined discovery (1 query instead of 9), deep/amazon batches (5 products per query),
+  `max_credits_for_run` hard cap, cache (< 24 h) checked before EVERY paid query; batched answers are split by product_id only.
+- Every paid query: cache → run cap → Live Query Safety Gate → submit; recorded as LIVE_QUERY / CACHE_HIT / BLOCKED / FAILED in
+  `runs/{run_id}/manifest.json`. Checkpoints in `runs/{run_id}/checkpoints/`; `--resume RUN_ID` never re-buys completed work.
+- `data_environment`: every stored record is `LIVE` (real provider) or `SYNTHETIC` (fake providers in tests). A report only uses
+  records of the run's environment (a SYNTHETIC record BLOCKS a LIVE report); cache and history views never cross environments.
+  Raw files saved before Step T are untagged and count as LIVE (all were real KaloPilot answers).
 
 ## Useful commands
 
 ```bash
-python3 scripts/preflight.py --tests   # READY_FOR_DRY_RUN / BLOCKED
-python3 scripts/pipeline.py dry-run    # full preview, no paid queries
+python -m winning_product_agent preflight --tests       # READY_FOR_DRY_RUN / BLOCKED
+python -m winning_product_agent run --dry-run --profile config/runtime_first_live.yaml --check-balance
+python -m winning_product_agent run --live --profile config/runtime_first_live.yaml --max-products 5   # PAID, asks CONFIRM LIVE RUN
+python -m winning_product_agent status | report
 bash scripts/setup-token.sh      # save/check token (free)
 bash scripts/credits.sh          # credit balance (free)
 bash scripts/ask.sh "<question>" # run a KaloPilot query (spends credits)

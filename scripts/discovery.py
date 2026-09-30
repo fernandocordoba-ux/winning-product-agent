@@ -222,7 +222,8 @@ def normalize(record, meta, index):
         "currency": meta.get("currency", "USD"),
         "period_days": meta.get("period_days", 30),
         "observation_date": meta.get("observation_date"),
-        "category_key": meta.get("category_key"),
+        "category_key": (record.get("category_key") if meta.get("category_key") == "combined"
+                         and isinstance(record.get("category_key"), str) else meta.get("category_key")),
         "facts": facts,                                   # SOURCE values only
         "missing_fields": [f for f, _ in FACT_FIELDS if facts[f] is None],
         "parse_warnings": problems,

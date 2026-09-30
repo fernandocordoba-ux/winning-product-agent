@@ -136,7 +136,7 @@ def from_discovery(rec, processed_file, market="US"):
               "key_type": rec.get("key_type"), "product_name": f.get("product_name"), "category": f.get("category"),
               "shop": f.get("shop_name"), "market": rec.get("market", market),
               "observation_timestamp": iso(ts), "observation_date": ts.date().isoformat(),
-              "source_stage": "discovery"})
+              "source_stage": "discovery", "data_environment": rec.get("data_environment")})
     o["tiktok"].update({"price": price, "gmv": f.get("gmv_30d"), "units": f.get("units_30d"),
                         "growth": f.get("growth_30d"), "creator_count": f.get("creator_count"),
                         "selling_creator_count": f.get("selling_creator_count"), "video_count": f.get("video_count"),
@@ -160,7 +160,7 @@ def from_deep(d, processed_file, amazon=None, bvs=None):
               "product_name": d.get("product_name"), "category": d.get("category"),
               "shop": (d.get("shop") or {}).get("shop_name"), "market": d.get("market") or "US",
               "observation_timestamp": iso(ts), "observation_date": ts.date().isoformat(),
-              "source_stage": "deep_analysis"})
+              "source_stage": "deep_analysis", "data_environment": d.get("data_environment")})
     o["tiktok"].update({"price": (d.get("price") or {}).get("avg"), "gmv": d.get("gmv"), "units": d.get("units"),
                         "growth": (d.get("growth") or {}).get("growth_30d_pct"), "creator_count": cm.get("total"),
                         "selling_creator_count": cm.get("selling"), "video_count": vm.get("total"),

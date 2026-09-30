@@ -40,6 +40,25 @@ safety:
   min_balance_reserve: 5.0                  # credits that must remain after a query
   estimated_credits_per_query: 4.0          # CONFIGURED estimate (observed 2.78 / 3.98); labeled as estimate, never as actual
 
+# -----------------------------------------------------------------------------
+# Query plan (Step T) — how many PAID queries a run makes. Used by the master
+# runner (python -m winning_product_agent). Profiles may override it.
+#   discovery_mode: per_category (1 query per enabled category) | combined (1 query total)
+#   deep_batch_size / amazon_batch_size: products per paid query (1 = one query per product)
+#   max_credits_for_run: hard cap; no new paid query once reached (null = no cap)
+#   estimated_credits: CONFIGURED estimates per paid query (not provider quotes).
+#     null = UNKNOWN (shown as UNKNOWN, never invented).
+# -----------------------------------------------------------------------------
+query_plan:
+  discovery_mode: per_category
+  deep_batch_size: 5
+  amazon_batch_size: 5
+  max_credits_for_run: 100
+  estimated_credits:
+    discovery: 4.0                          # observed 3.98 (Home, 15 products)
+    deep_analysis: 4.0                      # per batch query; batched cost not observed yet
+    amazon_validation: 4.0                  # per batch query; not observed yet
+
 allowed_markets: [US]
 
 provider:
