@@ -1,0 +1,2485 @@
+{
+  "mode": "live",
+  "run_id": "20260930T134127Z_547f9f",
+  "data_environment": "LIVE",
+  "discovery_file": "/root/winning-product-agent/data/processed/discovery_20260930T134129Z.json",
+  "selected": 5,
+  "skipped": [
+    {
+      "key": "1729469028834644892",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732614733114479489",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732530555618759155",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732483552324456649",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732386290307535513",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1731896601518248227",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1730934287349420233",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1729409301014090551",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732421662338158894",
+      "reason": "over deep_analysis_max_products (5)"
+    }
+  ],
+  "not_run": [],
+  "stopped": null,
+  "results": [
+    {
+      "status": "ok",
+      "product_id": "1732506646693253928",
+      "product_name": "Blue Boomshampoo",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732506646693253928&language=en-US&currency=USD&region=US",
+      "category": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+      "category_id": "601450",
+      "shop": {
+        "shop_id": "7494939370774301480",
+        "shop_name": "Blue.Skin.Care."
+      },
+      "price": {
+        "min": 52,
+        "max": 52,
+        "avg": 52.0,
+        "history": null
+      },
+      "gmv": 42570,
+      "units": 886,
+      "growth": {
+        "growth_30d_pct": 164.39,
+        "category_growth_pct": 5.48
+      },
+      "launch_date": "2026-07-22",
+      "data_window_end": "2026-09-30",
+      "commission_pct": 4,
+      "creator_metrics": {
+        "total": 4,
+        "selling": 4,
+        "growth_pct": 100,
+        "top_creators": [
+          {
+            "creator_id": "7222212098948318250",
+            "name": "Blue.Skin.Care.",
+            "revenue": 30522,
+            "growth_pct": 21917.39
+          },
+          {
+            "creator_id": "6799994929840063493",
+            "name": "María Elena 🩷 ketobendecido",
+            "revenue": 384,
+            "growth_pct": 0
+          },
+          {
+            "creator_id": "6816062227981517829",
+            "name": "🇭🇳💞GLO💕🇭🇳",
+            "revenue": 144,
+            "growth_pct": 0
+          },
+          {
+            "creator_id": "7488329305240372270",
+            "name": "Lucky dealsss💕",
+            "revenue": 96,
+            "growth_pct": 0
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 3,
+        "selling": 3,
+        "growth_pct": 50,
+        "sales_share_pct": 11.15,
+        "top_videos": [
+          {
+            "video_id": "7665538223728381198",
+            "creator": "blue.skin.care",
+            "revenue": 4506,
+            "views": 46752
+          },
+          {
+            "video_id": "7667321665365314847",
+            "creator": "christkingglory",
+            "revenue": 144,
+            "views": 853
+          },
+          {
+            "video_id": "7688282843549535519",
+            "creator": "user41662702756193",
+            "revenue": 96,
+            "views": 537
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 211238
+      },
+      "sales_history": {
+        "daily_gmv": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          138,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          7968,
+          3936,
+          16416,
+          5856,
+          4176,
+          0,
+          0,
+          0,
+          2640,
+          1440
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -50.17,
+          "prior_velocity_pct": null,
+          "points": 31
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "DECLINING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732506646693253928",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 71.7,
+            "reason": null,
+            "inputs": {
+              "gmv": 42570,
+              "creators_count": 4,
+              "items_returned": 4,
+              "top_revenue_sum": 30522.0
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 72.94,
+            "reason": null,
+            "inputs": {
+              "gmv": 42570,
+              "creators_count": 4,
+              "items_returned": 4,
+              "top_revenue_sum": 31050.0
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 10.58,
+            "reason": null,
+            "inputs": {
+              "gmv": 42570,
+              "videos_count": 3,
+              "items_returned": 3,
+              "top_revenue_sum": 4506.0
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 11.15,
+            "reason": null,
+            "inputs": {
+              "gmv": 42570,
+              "videos_count": 3,
+              "items_returned": 3,
+              "top_revenue_sum": 4746.0
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "FLAGGED",
+            "action": "flag",
+            "value": 71.7,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 10.58,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 38.27,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_momentum": {
+          "points": 25.0,
+          "max": 25
+        },
+        "demand": {
+          "points": 0.0,
+          "max": 15
+        },
+        "video_momentum": {
+          "points": 0.0,
+          "max": 15
+        },
+        "creator_momentum": {
+          "points": 1.5,
+          "max": 15
+        },
+        "competition": {
+          "points": 2.73,
+          "max": 15
+        },
+        "margin_potential": {
+          "points": 9.04,
+          "max": 10
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5
+        }
+      },
+      "wps_na_metrics": [],
+      "confidence": 95.42,
+      "confidence_level": "VERY_HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 6.67,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 3.75,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "CREATOR_DEPENDENCY",
+          "value": 71.7,
+          "condition": "> 70"
+        },
+        {
+          "flag": "SALES_DECLINING",
+          "trend": "DECLINING",
+          "growth_30d_pct": 164.39
+        },
+        {
+          "flag": "EXTREME_SATURATION",
+          "input": "category_product_count",
+          "value": 211238,
+          "condition": ">= 50000"
+        }
+      ],
+      "missing_data": [
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732506646693253928",
+        "product_name": "Blue Boomshampoo",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732506646693253928&language=en-US&currency=USD&region=US",
+        "category_path": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+        "category_id": "601450",
+        "shop_id": "7494939370774301480",
+        "shop_name": "Blue.Skin.Care.",
+        "price_min": 52,
+        "price_max": 52,
+        "price_history": null,
+        "gmv_30d": 42570,
+        "units_30d": 886,
+        "growth_30d_pct": 164.39,
+        "category_growth_pct": 5.48,
+        "launch_date": "2026-07-22",
+        "data_window_end": "2026-09-30",
+        "commission_pct": 4,
+        "daily_gmv": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          138,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          7968,
+          3936,
+          16416,
+          5856,
+          4176,
+          0,
+          0,
+          0,
+          2640,
+          1440
+        ],
+        "daily_units": null,
+        "creator_count": 4,
+        "selling_creator_count": 4,
+        "creator_growth_pct": 100,
+        "daily_creator_count": null,
+        "top_creators": [
+          {
+            "creator_id": "7222212098948318250",
+            "name": "Blue.Skin.Care.",
+            "revenue": 30522,
+            "growth_pct": 21917.39
+          },
+          {
+            "creator_id": "6799994929840063493",
+            "name": "María Elena 🩷 ketobendecido",
+            "revenue": 384,
+            "growth_pct": 0
+          },
+          {
+            "creator_id": "6816062227981517829",
+            "name": "🇭🇳💞GLO💕🇭🇳",
+            "revenue": 144,
+            "growth_pct": 0
+          },
+          {
+            "creator_id": "7488329305240372270",
+            "name": "Lucky dealsss💕",
+            "revenue": 96,
+            "growth_pct": 0
+          }
+        ],
+        "video_count": 3,
+        "selling_video_count": 3,
+        "video_growth_pct": 50,
+        "video_sales_share_pct": 11.15,
+        "daily_video_count": null,
+        "top_videos": [
+          {
+            "video_id": "7665538223728381198",
+            "creator": "blue.skin.care",
+            "revenue": 4506,
+            "views": 46752
+          },
+          {
+            "video_id": "7667321665365314847",
+            "creator": "christkingglory",
+            "revenue": 144,
+            "views": 853
+          },
+          {
+            "video_id": "7688282843549535519",
+            "creator": "user41662702756193",
+            "revenue": 96,
+            "views": 537
+          }
+        ],
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 211238
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-09-30T13:46:07.522629+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T134607522629Z_1732506646693253928_deep_product.json",
+        "task_id": "8fbfff6234c9457097d2968e51221479",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732506646693253928",
+        "discovery_status": "REVIEW"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T134127Z_547f9f",
+      "_pid": "1732506646693253928"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732085052798177429",
+      "product_name": "Byennwa Glow Body Cream | Exfoliate Gently",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732085052798177429&language=en-US&currency=USD&region=US",
+      "category": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+      "category_id": "601492",
+      "shop": {
+        "shop_id": "7495847068856780949",
+        "shop_name": "Byenblan"
+      },
+      "price": {
+        "min": 55.0,
+        "max": 55.0,
+        "avg": 55.0,
+        "history": null
+      },
+      "gmv": 80890.0,
+      "units": 1617,
+      "growth": {
+        "growth_30d_pct": 104.8367,
+        "category_growth_pct": 12.14
+      },
+      "launch_date": "2025-11-25",
+      "data_window_end": "2026-09-30",
+      "commission_pct": 0.0,
+      "creator_metrics": {
+        "total": 1,
+        "selling": 1,
+        "growth_pct": 0.0,
+        "top_creators": [
+          {
+            "creator_id": "6677756329987228678",
+            "name": "Byenblan",
+            "revenue": 80890.0,
+            "growth_pct": 28792.83
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 0,
+        "selling": 0,
+        "growth_pct": null,
+        "sales_share_pct": 0.0,
+        "top_videos": [],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 5883
+      },
+      "sales_history": {
+        "daily_gmv": [
+          0,
+          0,
+          0,
+          0,
+          56,
+          0,
+          59,
+          0,
+          0,
+          0,
+          56,
+          108,
+          0,
+          0,
+          0,
+          0,
+          55,
+          56,
+          0,
+          0,
+          0,
+          0,
+          80300,
+          100,
+          0,
+          100,
+          0,
+          0,
+          0,
+          0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -99.75,
+          "prior_velocity_pct": 48931.1,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "DECLINING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732085052798177429",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 100.0,
+            "reason": null,
+            "inputs": {
+              "gmv": 80890.0,
+              "creators_count": 1,
+              "items_returned": 1,
+              "top_revenue_sum": 80890.0
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 100.0,
+            "reason": null,
+            "inputs": {
+              "gmv": 80890.0,
+              "creators_count": 1,
+              "items_returned": 1,
+              "top_revenue_sum": 80890.0
+            }
+          },
+          "top_video_revenue_share": {
+            "value": "N/A",
+            "reason": "no videos revenue data returned",
+            "inputs": {
+              "gmv": 80890.0,
+              "videos_count": 0,
+              "items_returned": 0
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": "N/A",
+            "reason": "no videos revenue data returned",
+            "inputs": {
+              "gmv": 80890.0,
+              "videos_count": 0,
+              "items_returned": 0
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "FLAGGED",
+            "action": "flag",
+            "value": 100.0,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "N/A",
+            "reason": "no videos revenue data returned"
+          }
+        }
+      },
+      "wps": 42.89,
+      "wps_complete": false,
+      "wps_breakdown": {
+        "growth_momentum": {
+          "points": 25.0,
+          "max": 25
+        },
+        "demand": {
+          "points": 1.57,
+          "max": 15
+        },
+        "video_momentum": {
+          "points": 0.0,
+          "max": 15
+        },
+        "creator_momentum": {
+          "points": "N/A",
+          "max": 15
+        },
+        "competition": {
+          "points": 6.93,
+          "max": 15
+        },
+        "margin_potential": {
+          "points": 9.4,
+          "max": 10
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5
+        }
+      },
+      "wps_na_metrics": [
+        "creator_momentum"
+      ],
+      "confidence": 82.92,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 10.0,
+          "max": 15,
+          "status": "partial"
+        },
+        "video_data": {
+          "earned": 7.5,
+          "max": 15,
+          "status": "partial"
+        },
+        "competition_shop_data": {
+          "earned": 6.67,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 3.75,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "CREATOR_DEPENDENCY",
+          "value": 100.0,
+          "condition": "> 70"
+        },
+        {
+          "flag": "SALES_DECLINING",
+          "trend": "DECLINING",
+          "growth_30d_pct": 104.8367
+        }
+      ],
+      "missing_data": [
+        "video_growth_pct",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732085052798177429",
+        "product_name": "Byennwa  Glow Body Cream | Exfoliate Gently",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732085052798177429&language=en-US&currency=USD&region=US",
+        "category_path": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+        "category_id": "601492",
+        "shop_id": "7495847068856780949",
+        "shop_name": "Byenblan",
+        "price_min": 55.0,
+        "price_max": 55.0,
+        "price_history": null,
+        "gmv_30d": 80890.0,
+        "units_30d": 1617,
+        "growth_30d_pct": 104.8367,
+        "category_growth_pct": 12.14,
+        "launch_date": "2025-11-25",
+        "data_window_end": "2026-09-30",
+        "commission_pct": 0.0,
+        "daily_gmv": [
+          0,
+          0,
+          0,
+          0,
+          56,
+          0,
+          59,
+          0,
+          0,
+          0,
+          56,
+          108,
+          0,
+          0,
+          0,
+          0,
+          55,
+          56,
+          0,
+          0,
+          0,
+          0,
+          80300,
+          100,
+          0,
+          100,
+          0,
+          0,
+          0,
+          0
+        ],
+        "daily_units": null,
+        "creator_count": 1,
+        "selling_creator_count": 1,
+        "creator_growth_pct": 0.0,
+        "daily_creator_count": null,
+        "top_creators": [
+          {
+            "creator_id": "6677756329987228678",
+            "name": "Byenblan",
+            "revenue": 80890.0,
+            "growth_pct": 28792.83
+          }
+        ],
+        "video_count": 0,
+        "selling_video_count": 0,
+        "video_growth_pct": null,
+        "video_sales_share_pct": 0.0,
+        "daily_video_count": null,
+        "top_videos": [],
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 5883
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-09-30T13:50:52.028452+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T135052028452Z_1732085052798177429_deep_product.json",
+        "task_id": "43f1583e0e7a4d749f858eb38f38a988",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732085052798177429",
+        "discovery_status": "REVIEW"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T134127Z_547f9f",
+      "_pid": "1732085052798177429"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732421747771085102",
+      "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732421747771085102&language=en-US&currency=USD&region=US",
+      "category": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+      "category_id": "601694",
+      "shop": {
+        "shop_id": "7494600907353326894",
+        "shop_name": "DR.RERDIA"
+      },
+      "price": {
+        "min": 24.7,
+        "max": 63.7,
+        "avg": 44.2,
+        "history": null
+      },
+      "gmv": 42153.5,
+      "units": 2253,
+      "growth": {
+        "growth_30d_pct": 218.48,
+        "category_growth_pct": -3.08
+      },
+      "launch_date": "2026-06-01",
+      "data_window_end": "2026-09-30",
+      "commission_pct": 5.0,
+      "creator_metrics": {
+        "total": 12,
+        "selling": 5,
+        "growth_pct": null,
+        "top_creators": [
+          {
+            "creator_id": "6834135099819967494",
+            "name": "kkaazty",
+            "revenue": 8507.3,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7645933158359663630",
+            "name": "lucysoso",
+            "revenue": 1482.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7659557954425799693",
+            "name": "Abigail 💖",
+            "revenue": 114.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6799664003776152581",
+            "name": "shub",
+            "revenue": 104.0,
+            "growth_pct": -100.0
+          },
+          {
+            "creator_id": "7241857499240891435",
+            "name": "highlightdiscovery",
+            "revenue": 43.0,
+            "growth_pct": -100.0
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 9,
+        "selling": 8,
+        "growth_pct": null,
+        "sales_share_pct": 23.7,
+        "top_videos": [
+          {
+            "video_id": "7689123270272011533",
+            "creator": "lucysoso3",
+            "revenue": 1482.0,
+            "views": 3047
+          },
+          {
+            "video_id": "7685628544545803534",
+            "creator": "kkaazty",
+            "revenue": 1478.3,
+            "views": 3152
+          },
+          {
+            "video_id": "7686315922990075149",
+            "creator": "kkaazty",
+            "revenue": 1367.0,
+            "views": 2933
+          },
+          {
+            "video_id": "7687272562115562766",
+            "creator": "kkaazty",
+            "revenue": 1349.0,
+            "views": 2936
+          },
+          {
+            "video_id": "7690301630327147789",
+            "creator": "kkaazty",
+            "revenue": 1235.0,
+            "views": 2530
+          },
+          {
+            "video_id": "7687672498057448717",
+            "creator": "kkaazty",
+            "revenue": 1121.0,
+            "views": 2365
+          },
+          {
+            "video_id": "7688968187681049869",
+            "creator": "kkaazty",
+            "revenue": 1102.0,
+            "views": 2278
+          },
+          {
+            "video_id": "7687673078372928782",
+            "creator": "kkaazty",
+            "revenue": 855.0,
+            "views": 1839
+          },
+          {
+            "video_id": "7686460955798146318",
+            "creator": "chbssss1",
+            "revenue": 0.0,
+            "views": 3
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 467
+      },
+      "sales_history": {
+        "daily_gmv": [
+          22.0,
+          19.0,
+          44.0,
+          0.0,
+          42.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          20.0,
+          0.0,
+          0.0,
+          0.0,
+          3828.0,
+          4686.0,
+          2442.0,
+          3956.0,
+          4864.0,
+          5738.0,
+          3021.0,
+          1140.0,
+          1501.0,
+          1159.0,
+          2128.0,
+          2489.0,
+          1577.0,
+          2470.0,
+          1007.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -52.29,
+          "prior_velocity_pct": 571.7,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "DECLINING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732421747771085102",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 20.18,
+            "reason": null,
+            "inputs": {
+              "gmv": 42153.5,
+              "creators_count": 12,
+              "items_returned": 5,
+              "top_revenue_sum": 8507.3
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 23.97,
+            "reason": null,
+            "inputs": {
+              "gmv": 42153.5,
+              "creators_count": 12,
+              "items_returned": 5,
+              "top_revenue_sum": 10103.3
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 3.52,
+            "reason": null,
+            "inputs": {
+              "gmv": 42153.5,
+              "videos_count": 9,
+              "items_returned": 9,
+              "top_revenue_sum": 1482.0
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 10.27,
+            "reason": null,
+            "inputs": {
+              "gmv": 42153.5,
+              "videos_count": 9,
+              "items_returned": 9,
+              "top_revenue_sum": 4327.3
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 20.18,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 3.52,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 45.06,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_momentum": {
+          "points": 25.0,
+          "max": 25
+        },
+        "demand": {
+          "points": 2.65,
+          "max": 15
+        },
+        "video_momentum": {
+          "points": 0.0,
+          "max": 15
+        },
+        "creator_momentum": {
+          "points": 0.0,
+          "max": 15
+        },
+        "competition": {
+          "points": 9.31,
+          "max": 15
+        },
+        "margin_potential": {
+          "points": 8.1,
+          "max": 10
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5
+        }
+      },
+      "wps_na_metrics": [],
+      "confidence": 95.42,
+      "confidence_level": "VERY_HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 6.67,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 3.75,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "SALES_DECLINING",
+          "trend": "DECLINING",
+          "growth_30d_pct": 218.48
+        }
+      ],
+      "missing_data": [
+        "creator_growth_pct",
+        "video_growth_pct",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732421747771085102",
+        "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732421747771085102&language=en-US&currency=USD&region=US",
+        "category_path": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+        "category_id": "601694",
+        "shop_id": "7494600907353326894",
+        "shop_name": "DR.RERDIA",
+        "price_min": 24.7,
+        "price_max": 63.7,
+        "price_history": null,
+        "gmv_30d": 42153.5,
+        "units_30d": 2253,
+        "growth_30d_pct": 218.48,
+        "category_growth_pct": -3.08,
+        "launch_date": "2026-06-01",
+        "data_window_end": "2026-09-30",
+        "commission_pct": 5.0,
+        "daily_gmv": [
+          22.0,
+          19.0,
+          44.0,
+          0.0,
+          42.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          20.0,
+          0.0,
+          0.0,
+          0.0,
+          3828.0,
+          4686.0,
+          2442.0,
+          3956.0,
+          4864.0,
+          5738.0,
+          3021.0,
+          1140.0,
+          1501.0,
+          1159.0,
+          2128.0,
+          2489.0,
+          1577.0,
+          2470.0,
+          1007.0
+        ],
+        "daily_units": null,
+        "creator_count": 12,
+        "selling_creator_count": 5,
+        "creator_growth_pct": null,
+        "daily_creator_count": null,
+        "top_creators": [
+          {
+            "creator_id": "6834135099819967494",
+            "name": "kkaazty",
+            "revenue": 8507.3,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7645933158359663630",
+            "name": "lucysoso",
+            "revenue": 1482.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7659557954425799693",
+            "name": "Abigail 💖",
+            "revenue": 114.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6799664003776152581",
+            "name": "shub",
+            "revenue": 104.0,
+            "growth_pct": -100.0
+          },
+          {
+            "creator_id": "7241857499240891435",
+            "name": "highlightdiscovery",
+            "revenue": 43.0,
+            "growth_pct": -100.0
+          }
+        ],
+        "video_count": 9,
+        "selling_video_count": 8,
+        "video_growth_pct": null,
+        "video_sales_share_pct": 23.7,
+        "daily_video_count": null,
+        "top_videos": [
+          {
+            "video_id": "7689123270272011533",
+            "creator": "lucysoso3",
+            "revenue": 1482.0,
+            "views": 3047
+          },
+          {
+            "video_id": "7685628544545803534",
+            "creator": "kkaazty",
+            "revenue": 1478.3,
+            "views": 3152
+          },
+          {
+            "video_id": "7686315922990075149",
+            "creator": "kkaazty",
+            "revenue": 1367.0,
+            "views": 2933
+          },
+          {
+            "video_id": "7687272562115562766",
+            "creator": "kkaazty",
+            "revenue": 1349.0,
+            "views": 2936
+          },
+          {
+            "video_id": "7690301630327147789",
+            "creator": "kkaazty",
+            "revenue": 1235.0,
+            "views": 2530
+          },
+          {
+            "video_id": "7687672498057448717",
+            "creator": "kkaazty",
+            "revenue": 1121.0,
+            "views": 2365
+          },
+          {
+            "video_id": "7688968187681049869",
+            "creator": "kkaazty",
+            "revenue": 1102.0,
+            "views": 2278
+          },
+          {
+            "video_id": "7687673078372928782",
+            "creator": "kkaazty",
+            "revenue": 855.0,
+            "views": 1839
+          },
+          {
+            "video_id": "7686460955798146318",
+            "creator": "chbssss1",
+            "revenue": 0.0,
+            "views": 3
+          }
+        ],
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 467
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-09-30T13:54:59.438760+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T135459438760Z_1732421747771085102_deep_product.json",
+        "task_id": "a1cfbfb03e064b1692468bc52f687d71",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732421747771085102",
+        "discovery_status": "REVIEW"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T134127Z_547f9f",
+      "_pid": "1732421747771085102"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732362839287501028",
+      "product_name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732362839287501028&language=en-US&currency=USD&region=US",
+      "category": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+      "category_id": "601534",
+      "shop": {
+        "shop_id": "7495713071595161828",
+        "shop_name": "Plouise USA"
+      },
+      "price": {
+        "min": 21.0,
+        "max": 33.0,
+        "avg": 27.0,
+        "history": null
+      },
+      "gmv": 35748.96,
+      "units": 1231,
+      "growth": {
+        "growth_30d_pct": 4710.14,
+        "category_growth_pct": 4.02
+      },
+      "launch_date": "2026-04-24",
+      "data_window_end": "2026-09-30",
+      "commission_pct": 10.0,
+      "creator_metrics": {
+        "total": 42,
+        "selling": 18,
+        "growth_pct": 260.0,
+        "top_creators": [
+          {
+            "creator_id": "7616172560341877774",
+            "name": "Chicken sleepyhead",
+            "revenue": 8729.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7520226916218946582",
+            "name": "Plouise USA",
+            "revenue": 5916.0,
+            "growth_pct": 20200.0
+          },
+          {
+            "creator_id": "7067693992050951215",
+            "name": "MariaSoto_Cruzfam",
+            "revenue": 1479.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6694720798886593541",
+            "name": "Meghan Leigh 🤍",
+            "revenue": 1450.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6810360750525219846",
+            "name": "jerseyjenbb",
+            "revenue": 696.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7012340023740777477",
+            "name": "Jessica R|TTS|UCG|Wife|Mom⚡️",
+            "revenue": 497.0,
+            "growth_pct": 1306.06
+          },
+          {
+            "creator_id": "7423373834390881322",
+            "name": "Tracy’s Unfiltered Life",
+            "revenue": 348.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6783750029138363398",
+            "name": "🐍Alyssa Markell🐍",
+            "revenue": 319.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7403316562570953770",
+            "name": "Marni Gold-Boujie Beauty Besti",
+            "revenue": 290.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6953482696208008198",
+            "name": "Jenn.G.UGC.Beauty",
+            "revenue": 261.0,
+            "growth_pct": 0.0
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 73,
+        "selling": 29,
+        "growth_pct": 2800.0,
+        "sales_share_pct": 37.82,
+        "top_videos": [
+          {
+            "video_id": "7689469810643619102",
+            "creator": "chickensleepyhead",
+            "revenue": 8729.0,
+            "views": 23978
+          },
+          {
+            "video_id": "7689223074834697485",
+            "creator": "omgmeghanleigh",
+            "revenue": 1073.0,
+            "views": 4141
+          },
+          {
+            "video_id": "7689178162109959455",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 377.0,
+            "views": 880
+          },
+          {
+            "video_id": "7689170408297221389",
+            "creator": "omgmeghanleigh",
+            "revenue": 377.0,
+            "views": 1465
+          },
+          {
+            "video_id": "7689691234012630302",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 348.0,
+            "views": 813
+          },
+          {
+            "video_id": "7688868872992197901",
+            "creator": "p.louiseusa",
+            "revenue": 348.0,
+            "views": 1100
+          },
+          {
+            "video_id": "7689188189113699614",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 348.0,
+            "views": 1389
+          },
+          {
+            "video_id": "7689914360939990286",
+            "creator": "jerseyjenbb",
+            "revenue": 232.0,
+            "views": 510
+          },
+          {
+            "video_id": "7689642923939482910",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 203.0,
+            "views": 552
+          },
+          {
+            "video_id": "7690319625220918542",
+            "creator": "jenn.g.ugc.beauty",
+            "revenue": 145.0,
+            "views": 612
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 6093
+      },
+      "sales_history": {
+        "daily_gmv": [
+          0.0,
+          0.0,
+          0.0,
+          68.0,
+          0.0,
+          29.0,
+          0.0,
+          0.0,
+          0.0,
+          66.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          148.0,
+          0.0,
+          116.0,
+          0.0,
+          464.0,
+          2436.0,
+          6989.0,
+          6902.0,
+          14848.0,
+          3045.0,
+          638.0,
+          0.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": 4688.19,
+          "prior_velocity_pct": 1003.03,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "ACCELERATING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732362839287501028",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 24.42,
+            "reason": null,
+            "inputs": {
+              "gmv": 35748.96,
+              "creators_count": 42,
+              "items_returned": 10,
+              "top_revenue_sum": 8729.0
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 45.1,
+            "reason": null,
+            "inputs": {
+              "gmv": 35748.96,
+              "creators_count": 42,
+              "items_returned": 10,
+              "top_revenue_sum": 16124.0
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 24.42,
+            "reason": null,
+            "inputs": {
+              "gmv": 35748.96,
+              "videos_count": 73,
+              "items_returned": 10,
+              "top_revenue_sum": 8729.0
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 28.47,
+            "reason": null,
+            "inputs": {
+              "gmv": 35748.96,
+              "videos_count": 73,
+              "items_returned": 10,
+              "top_revenue_sum": 10179.0
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 24.42,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 24.42,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 37.92,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_momentum": {
+          "points": 25.0,
+          "max": 25
+        },
+        "demand": {
+          "points": 0.68,
+          "max": 15
+        },
+        "video_momentum": {
+          "points": 0.0,
+          "max": 15
+        },
+        "creator_momentum": {
+          "points": 1.2,
+          "max": 15
+        },
+        "competition": {
+          "points": 6.0,
+          "max": 15
+        },
+        "margin_potential": {
+          "points": 5.04,
+          "max": 10
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5
+        }
+      },
+      "wps_na_metrics": [],
+      "confidence": 92.08,
+      "confidence_level": "VERY_HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 3.33,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 3.75,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [],
+      "missing_data": [
+        "shop_count",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732362839287501028",
+        "product_name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732362839287501028&language=en-US&currency=USD&region=US",
+        "category_path": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+        "category_id": "601534",
+        "shop_id": "7495713071595161828",
+        "shop_name": "Plouise USA",
+        "price_min": 21.0,
+        "price_max": 33.0,
+        "price_history": null,
+        "gmv_30d": 35748.96,
+        "units_30d": 1231,
+        "growth_30d_pct": 4710.14,
+        "category_growth_pct": 4.02,
+        "launch_date": "2026-04-24",
+        "data_window_end": "2026-09-30",
+        "commission_pct": 10.0,
+        "daily_gmv": [
+          0.0,
+          0.0,
+          0.0,
+          68.0,
+          0.0,
+          29.0,
+          0.0,
+          0.0,
+          0.0,
+          66.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          148.0,
+          0.0,
+          116.0,
+          0.0,
+          464.0,
+          2436.0,
+          6989.0,
+          6902.0,
+          14848.0,
+          3045.0,
+          638.0,
+          0.0
+        ],
+        "daily_units": null,
+        "creator_count": 42,
+        "selling_creator_count": 18,
+        "creator_growth_pct": 260.0,
+        "daily_creator_count": null,
+        "top_creators": [
+          {
+            "creator_id": "7616172560341877774",
+            "name": "Chicken sleepyhead",
+            "revenue": 8729.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7520226916218946582",
+            "name": "Plouise USA",
+            "revenue": 5916.0,
+            "growth_pct": 20200.0
+          },
+          {
+            "creator_id": "7067693992050951215",
+            "name": "MariaSoto_Cruzfam",
+            "revenue": 1479.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6694720798886593541",
+            "name": "Meghan Leigh 🤍",
+            "revenue": 1450.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6810360750525219846",
+            "name": "jerseyjenbb",
+            "revenue": 696.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7012340023740777477",
+            "name": "Jessica R|TTS|UCG|Wife|Mom⚡️",
+            "revenue": 497.0,
+            "growth_pct": 1306.06
+          },
+          {
+            "creator_id": "7423373834390881322",
+            "name": "Tracy’s Unfiltered Life",
+            "revenue": 348.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6783750029138363398",
+            "name": "🐍Alyssa Markell🐍",
+            "revenue": 319.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7403316562570953770",
+            "name": "Marni Gold-Boujie Beauty Besti",
+            "revenue": 290.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6953482696208008198",
+            "name": "Jenn.G.UGC.Beauty",
+            "revenue": 261.0,
+            "growth_pct": 0.0
+          }
+        ],
+        "video_count": 73,
+        "selling_video_count": 29,
+        "video_growth_pct": 2800.0,
+        "video_sales_share_pct": 37.82,
+        "daily_video_count": null,
+        "top_videos": [
+          {
+            "video_id": "7689469810643619102",
+            "creator": "chickensleepyhead",
+            "revenue": 8729.0,
+            "views": 23978
+          },
+          {
+            "video_id": "7689223074834697485",
+            "creator": "omgmeghanleigh",
+            "revenue": 1073.0,
+            "views": 4141
+          },
+          {
+            "video_id": "7689178162109959455",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 377.0,
+            "views": 880
+          },
+          {
+            "video_id": "7689170408297221389",
+            "creator": "omgmeghanleigh",
+            "revenue": 377.0,
+            "views": 1465
+          },
+          {
+            "video_id": "7689691234012630302",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 348.0,
+            "views": 813
+          },
+          {
+            "video_id": "7688868872992197901",
+            "creator": "p.louiseusa",
+            "revenue": 348.0,
+            "views": 1100
+          },
+          {
+            "video_id": "7689188189113699614",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 348.0,
+            "views": 1389
+          },
+          {
+            "video_id": "7689914360939990286",
+            "creator": "jerseyjenbb",
+            "revenue": 232.0,
+            "views": 510
+          },
+          {
+            "video_id": "7689642923939482910",
+            "creator": "mariasoto_cruzfam",
+            "revenue": 203.0,
+            "views": 552
+          },
+          {
+            "video_id": "7690319625220918542",
+            "creator": "jenn.g.ugc.beauty",
+            "revenue": 145.0,
+            "views": 612
+          }
+        ],
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 6093
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-09-30T13:59:07.820568+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T135907820568Z_1732362839287501028_deep_product.json",
+        "task_id": "52fc229cafa8485592d27c1666352783",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732362839287501028",
+        "discovery_status": "REVIEW"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T134127Z_547f9f",
+      "_pid": "1732362839287501028"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732504597553255078",
+      "product_name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732504597553255078&language=en-US&currency=USD&region=US",
+      "category": "Beauty & Personal Care > Makeup > False Eyelashes & Adhesives",
+      "category_id": "824720",
+      "shop": {
+        "shop_id": "7495481687074114214",
+        "shop_name": "AriaMist"
+      },
+      "price": {
+        "min": 29.89,
+        "max": 129.99,
+        "avg": 79.94,
+        "history": null
+      },
+      "gmv": 35596.8,
+      "units": 1657,
+      "growth": {
+        "growth_30d_pct": null,
+        "category_growth_pct": -7.4
+      },
+      "launch_date": "2026-07-22",
+      "data_window_end": "2026-09-30",
+      "commission_pct": 0,
+      "creator_metrics": {
+        "total": 2,
+        "selling": 2,
+        "growth_pct": null,
+        "top_creators": [
+          {
+            "creator_id": "7528340830190289934",
+            "name": "Aria ✖️Cofier",
+            "revenue": 23854.85,
+            "growth_pct": 89954.38
+          },
+          {
+            "creator_id": "7275675294567531563",
+            "name": "AriaMist",
+            "revenue": 11521.95,
+            "growth_pct": 14436.62
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 1,
+        "selling": 0,
+        "growth_pct": null,
+        "sales_share_pct": 0,
+        "top_videos": [
+          {
+            "video_id": "7688585421248335135",
+            "creator": "wearcofier",
+            "revenue": 0.0,
+            "views": 1663
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 8347
+      },
+      "sales_history": {
+        "daily_gmv": [
+          0.0,
+          0.0,
+          26.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          26.0,
+          0.0,
+          0.0,
+          27.0,
+          0.0,
+          26.0,
+          0.0,
+          0.0,
+          2488.0,
+          2552.0,
+          987.0,
+          2735.0,
+          2376.0,
+          2464.0,
+          3696.0,
+          2398.0,
+          2882.0,
+          2992.0,
+          3366.0,
+          220.0,
+          132.0,
+          3476.0,
+          2728.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -8.21,
+          "prior_velocity_pct": 577.21,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "STABLE",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732504597553255078",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 67.01,
+            "reason": null,
+            "inputs": {
+              "gmv": 35596.8,
+              "creators_count": 2,
+              "items_returned": 2,
+              "top_revenue_sum": 23854.85
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 99.38,
+            "reason": null,
+            "inputs": {
+              "gmv": 35596.8,
+              "creators_count": 2,
+              "items_returned": 2,
+              "top_revenue_sum": 35376.8
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 0.0,
+            "reason": null,
+            "inputs": {
+              "gmv": 35596.8,
+              "videos_count": 1,
+              "items_returned": 1,
+              "top_revenue_sum": 0.0
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 0.0,
+            "reason": null,
+            "inputs": {
+              "gmv": 35596.8,
+              "videos_count": 1,
+              "items_returned": 1,
+              "top_revenue_sum": 0.0
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 67.01,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 0.0,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 15.91,
+      "wps_complete": false,
+      "wps_breakdown": {
+        "growth_momentum": {
+          "points": "N/A",
+          "max": 25
+        },
+        "demand": {
+          "points": 1.64,
+          "max": 15
+        },
+        "video_momentum": {
+          "points": 0.0,
+          "max": 15
+        },
+        "creator_momentum": {
+          "points": "N/A",
+          "max": 15
+        },
+        "competition": {
+          "points": 4.27,
+          "max": 15
+        },
+        "margin_potential": {
+          "points": 10.0,
+          "max": 10
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5
+        }
+      },
+      "wps_na_metrics": [
+        "growth_momentum",
+        "creator_momentum"
+      ],
+      "confidence": 74.58,
+      "confidence_level": "MODERATE",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 5.0,
+          "max": 15,
+          "status": "partial"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 12.5,
+          "max": 15,
+          "status": "partial"
+        },
+        "video_data": {
+          "earned": 10.0,
+          "max": 15,
+          "status": "partial"
+        },
+        "competition_shop_data": {
+          "earned": 3.33,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 3.75,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [],
+      "missing_data": [
+        "growth_30d_pct",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732504597553255078",
+        "product_name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732504597553255078&language=en-US&currency=USD&region=US",
+        "category_path": "Beauty & Personal Care > Makeup > False Eyelashes & Adhesives",
+        "category_id": "824720",
+        "shop_id": "7495481687074114214",
+        "shop_name": "AriaMist",
+        "price_min": 29.89,
+        "price_max": 129.99,
+        "price_history": null,
+        "gmv_30d": 35596.8,
+        "units_30d": 1657,
+        "growth_30d_pct": null,
+        "category_growth_pct": -7.4,
+        "launch_date": "2026-07-22",
+        "data_window_end": "2026-09-30",
+        "commission_pct": 0,
+        "daily_gmv": [
+          0.0,
+          0.0,
+          26.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          26.0,
+          0.0,
+          0.0,
+          27.0,
+          0.0,
+          26.0,
+          0.0,
+          0.0,
+          2488.0,
+          2552.0,
+          987.0,
+          2735.0,
+          2376.0,
+          2464.0,
+          3696.0,
+          2398.0,
+          2882.0,
+          2992.0,
+          3366.0,
+          220.0,
+          132.0,
+          3476.0,
+          2728.0
+        ],
+        "daily_units": null,
+        "creator_count": 2,
+        "selling_creator_count": 2,
+        "creator_growth_pct": null,
+        "daily_creator_count": null,
+        "top_creators": [
+          {
+            "creator_id": "7528340830190289934",
+            "name": "Aria ✖️Cofier",
+            "revenue": 23854.85,
+            "growth_pct": 89954.38
+          },
+          {
+            "creator_id": "7275675294567531563",
+            "name": "AriaMist",
+            "revenue": 11521.95,
+            "growth_pct": 14436.62
+          }
+        ],
+        "video_count": 1,
+        "selling_video_count": 0,
+        "video_growth_pct": null,
+        "video_sales_share_pct": 0,
+        "daily_video_count": null,
+        "top_videos": [
+          {
+            "video_id": "7688585421248335135",
+            "creator": "wearcofier",
+            "revenue": 0.0,
+            "views": 1663
+          }
+        ],
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 8347
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-09-30T14:02:44.804833+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T140244804833Z_1732504597553255078_deep_product.json",
+        "task_id": "f21b26cc481e48098dfffe61f6692ac5",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732504597553255078",
+        "discovery_status": "REVIEW"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T134127Z_547f9f",
+      "_pid": "1732504597553255078"
+    }
+  ]
+}

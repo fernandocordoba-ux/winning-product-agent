@@ -1,0 +1,77 @@
+{
+  "schema_version": "history-v1.1",
+  "tiktok": {
+    "price": 55.0,
+    "gmv": 80890.0,
+    "units": 1617,
+    "growth": 104.8367,
+    "creator_count": 1,
+    "selling_creator_count": 1,
+    "video_count": 0,
+    "selling_video_count": 0,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 5883
+  },
+  "concentration": {
+    "top_creator_revenue_share": 100.0,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": 42.89,
+    "confidence": 82.92
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "CREATOR_DEPENDENCY",
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "video_growth_pct",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/processed/deep_analysis/deep_20260930T140244815307Z.json",
+    "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T135052028452Z_1732085052798177429_deep_product.json",
+    "task_id": "43f1583e0e7a4d749f858eb38f38a988",
+    "report_url": null
+  },
+  "product_id": "1732085052798177429",
+  "identity_key": "1732085052798177429",
+  "key_type": "product_id",
+  "product_name": "Byennwa Glow Body Cream | Exfoliate Gently",
+  "category": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+  "shop": "Byenblan",
+  "market": "US",
+  "observation_timestamp": "2026-09-30T13:50:52.028452+00:00",
+  "observation_date": "2026-09-30",
+  "source_stage": "deep_analysis",
+  "data_environment": "LIVE",
+  "run_id": "20260930T134127Z_547f9f",
+  "written_at": "2026-09-30T14:02:44.899604+00:00"
+}
