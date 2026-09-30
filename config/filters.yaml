@@ -75,25 +75,7 @@ risk_rules:
         condition: ">= 50000"
         action: flag
 
-  single_creator_dependency:
-    description: One creator drives most of the sales.
-    checks:
-      - input: top_creator_gmv_share_pct    # top creator GMV / product GMV * 100
-        condition: ">= 50"
-        action: flag
-      - input: top_creator_gmv_share_pct
-        condition: ">= 80"
-        action: reject
-
-  single_video_dependency:
-    description: One video drives most of the sales.
-    checks:
-      - input: top_video_gmv_share_pct      # top video GMV / product GMV * 100
-        condition: ">= 40"
-        action: flag
-      - input: top_video_gmv_share_pct
-        condition: ">= 70"
-        action: reject
+  # Creator / video dependency -> see `concentration` section below.
 
   trademark_ip_risk:
     description: Brand names, licensed characters or copy/dupe language in the title.
@@ -167,6 +149,40 @@ risk_rules:
     low_confidence:
       below: 60                             # WPS confidence (config/scoring.yaml)
       action: flag
+
+# -----------------------------------------------------------------------------
+# 3) Concentration analysis — avoid false positives
+#    (e.g. $500K GMV where $400K came from one viral creator)
+#    Calculated by scripts/concentration.py, only when source data allows it.
+#
+#    share = sum(revenue of top N creators|videos for THIS product, same period)
+#            / product GMV for the period * 100
+#
+#    N/A (no flag, no penalty) when:
+#      - product GMV missing or <= 0
+#      - creator/video revenue for the product missing or non-numeric
+#      - fewer than N items returned AND the product's total count is unknown
+#        or larger than the items returned (can't know the true top N)
+#      - result > 100% (inconsistent data -> validation warning)
+# -----------------------------------------------------------------------------
+concentration:
+  enabled: true
+  metrics:
+    top_creator_revenue_share:  { source: creators, top_n: 1 }
+    top3_creator_revenue_share: { source: creators, top_n: 3 }
+    top_video_revenue_share:    { source: videos,   top_n: 1 }
+    top3_video_revenue_share:   { source: videos,   top_n: 3 }
+  flags:
+    CREATOR_DEPENDENCY:
+      metric: top_creator_revenue_share
+      condition: "> 70"                     # % of measurable product revenue
+      action: flag
+    VIDEO_DEPENDENCY:
+      metric: top_video_revenue_share
+      condition: "> 70"
+      action: flag
+  max_valid_share_pct: 100                  # above this -> N/A + warning
+  rounding: 2
 
 # -----------------------------------------------------------------------------
 # Output: every product keeps its filter log

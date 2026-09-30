@@ -86,6 +86,7 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 2. **Validation**: `scripts/validate_data.py` (rules in `prompts/validation.md`) → `data/processed/`
 3. **Filters**: `config/filters.yaml` (+ category overrides) → pass / flagged / rejected, with reasons
 4. **Deep analysis**: `prompts/deep_analysis.md` → KaloPilot, for shortlisted products
+   - **Concentration**: `scripts/concentration.py` → Top 1 / Top 3 creator and video revenue share; flags `CREATOR_DEPENDENCY` / `VIDEO_DEPENDENCY` (thresholds in `filters.yaml`). Missing data → N/A, no flag, no penalty.
 5. **Scoring**: `scripts/score_products.py` + `config/scoring.yaml` (WPS v1 rules defined; engine not implemented yet)
 6. **Report**: `scripts/generate_report.py` → `reports/` (FACT / CALCULATION / INFERENCE / MISSING DATA)
 7. **History**: dated snapshots in `data/history/` to track momentum over time

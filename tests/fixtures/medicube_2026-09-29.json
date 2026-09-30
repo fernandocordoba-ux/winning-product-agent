@@ -1,0 +1,22 @@
+{
+  "_source": "KaloPilot task_id 24988984e38e49079b9e2c689218d24c, US, last 30 days ending 2026-09-29. Creator revenues exact; video revenues as returned in report (rounded to $0.1k).",
+  "product_id": "1732052189676081387",
+  "product_name": "medicube Smooth & Clear Body Care Set",
+  "gmv": 4206171,
+  "creators_count": 3807,
+  "creators": [
+    {"name": "Esthetician Nikki", "revenue": 432695},
+    {"name": "JILLIAN FELICE", "revenue": 361282},
+    {"name": "milennialmags", "revenue": 310163},
+    {"name": "Amelia Rose", "revenue": 299792},
+    {"name": "storie", "revenue": 211349}
+  ],
+  "videos_count": 8516,
+  "videos": [
+    {"id": "7593821224778665230", "revenue": 313800},
+    {"id": "7683708195407269150", "revenue": 257600},
+    {"id": "7685559267243330846", "revenue": 183500},
+    {"id": "7687417450186460446", "revenue": 136200},
+    {"id": "7681108572981202190", "revenue": 132100}
+  ]
+}

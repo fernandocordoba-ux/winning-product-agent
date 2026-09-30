@@ -41,6 +41,7 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `scripts/setup-token.sh` | Saves token to `~/.kalopilot/token` and runs a free connectivity check |
 | `scripts/credits.sh` | Free credit balance check (no credits used) |
 | `scripts/ask.sh` | Submit a question, poll until done, print the answer, save raw response to `data/raw/` |
+| `scripts/concentration.py` | Creator/video revenue concentration + dependency flags (tested) |
 | `scripts/validate_data.py` | Validate raw data → `data/processed/` (skeleton) |
 | `scripts/score_products.py` | Score products with `config/scoring.yaml` (not implemented yet) |
 | `scripts/generate_report.py` | Build reports in `reports/` (skeleton) |
@@ -48,7 +49,8 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `prompts/` | `discovery.md`, `deep_analysis.md`, `validation.md` |
 | `data/raw/` | Raw API responses (git-ignored) |
 | `data/processed/`, `data/history/` | Validated data and dated snapshots |
-| `reports/`, `tests/` | Generated reports, tests |
+| `reports/` | Generated reports |
+| `tests/` | `python3 -m unittest discover tests` |
 | `CLAUDE.md` | Rules Claude follows in this project |
 | `kalopilot/` | Official KaloPilot skill by Kalodata (MIT), vendored |
 
