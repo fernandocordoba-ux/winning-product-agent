@@ -159,6 +159,19 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 - Storage: data/raw/suppliers (read-only), data/processed/suppliers/<pid>/, data/history/suppliers/<offer_id>/ (append-only).
 - `python -m winning_product_agent suppliers import <file.csv|json>` / `suppliers show <product_id>`.
 
+## Competitor Intelligence (Step X)
+
+- `scripts/competitors.py` + `config/competitors.yaml`. NOT combined with WPS / AVS / BVS (BVS adapter `bvs_inputs()`
+  prepared, not wired). No scraping or ToS-violating access; only `manual_import` is implemented (Meta Ad Library,
+  Google, Minea, Dropship.io, Similarweb, BuiltWith raise ProviderNotIntegrated).
+- DIRECT (match >= 75) / ADJACENT (>= 60) / CATEGORY / UNRELATED — never mixed; imports may downgrade, never upgrade.
+- Independent scores: Competitor Saturation (30/25/15/15/15), Competitive Opportunity (demand-gated, not the
+  inverse), Competitor Confidence, Store Quality (observable yes/no only). Ad spend / sales / traffic never estimated;
+  ad longevity = persistence, not profitability. Differentiation opportunities require evidence facts.
+- Storage: data/raw/competitors (read-only), data/processed/competitors/<pid>/, data/history/competitors/<pid>/ snapshots;
+  competition_velocity only from >= 2 snapshots on different days.
+- `python -m winning_product_agent competitors import <file.csv|json>` / `competitors show <product_id>`.
+
 ## Useful commands
 
 ```bash

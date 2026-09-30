@@ -12,7 +12,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_FILES = ["runtime.yaml", "scoring.yaml", "filters.yaml", "categories.yaml", "deep_analysis.yaml",
                 "amazon_validation.yaml", "business_viability.yaml", "report.yaml", "history.yaml", "emerging.yaml",
-                "calibration_lane.yaml", "provider_capabilities.yaml", "suppliers.yaml"]
+                "calibration_lane.yaml", "provider_capabilities.yaml", "suppliers.yaml", "competitors.yaml"]
 
 
 def load_all(config_dir=ROOT / "config"):
@@ -127,6 +127,22 @@ def validate(cfgs):
             e.append("suppliers.yaml: ranking must not be price-first (cheapest supplier is never auto-selected)")
         _pos_int(e, "suppliers.yaml supplier_calibration.max_offers_per_product",
                  (sp.get("supplier_calibration") or {}).get("max_offers_per_product"))
+
+    cp = cfgs.get("competitors.yaml") or {}
+    if cp:
+        for sect, key in (("saturation", "components"), ("opportunity", "components"), ("confidence", "components"),
+                          ("store_quality", "criteria"), ("matching", "components")):
+            _total(e, f"competitors.yaml {sect}", list(((cp.get(sect) or {}).get(key) or {}).values()), "points")
+        sc = (cp.get("saturation") or {}).get("components") or {}
+        expect = {"direct_competitor_count": 30, "advertising_density": 25, "offer_similarity": 15,
+                  "price_compression": 15, "store_dominance": 15}
+        if {k: (sc.get(k) or {}).get("points") for k in expect} != expect:
+            e.append("competitors.yaml: saturation components must be 30/25/15/15/15 (Step X spec)")
+        rel = cp.get("relationships") or {}
+        if not (_num(rel.get("adjacent_min")) and _num(rel.get("direct_min")) and rel["adjacent_min"] < rel["direct_min"]):
+            e.append("competitors.yaml: relationships.adjacent_min must be < direct_min")
+        _pos_int(e, "competitors.yaml competitor_calibration.max_competitors_per_product",
+                 (cp.get("competitor_calibration") or {}).get("max_competitors_per_product"))
 
     # ---------------------------------------------------------------- filters
     f = cfgs.get("filters.yaml") or {}

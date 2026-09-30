@@ -55,6 +55,7 @@ python -m winning_product_agent report        # where the last live report is
 | `scripts/kalopilot_client.py` | KaloPilot client: free balance check; `discover` runs one query per category (spends credits) |
 | `scripts/amazon_validation.py` | Amazon Validation (Step N): match confidence, AVS, Amazon Confidence, signals, flags; dry-run default (tested) |
 | `scripts/suppliers.py` | Supplier Data Integration (Step W): manual CSV/JSON offers, match confidence, Supplier Quality / Confidence, ranking, selected offer for BVS, price history (no orders, no supplier contact) |
+| `scripts/competitors.py` | Competitor Intelligence (Step X): manual research import, direct/adjacent/category, prices, Meta ads, offers, Saturation / Opportunity / Confidence, differentiation (not combined with scores) |
 | `scripts/business_viability.py` | Business Viability Score (Step O): economics, BVS + breakdown, BVS Confidence, commercial flags; `add-supplier` stores supplier data (tested) |
 | `scripts/history.py` | Historical tracking (Step Q): append-only observations, index, deltas, velocity, trends, volatility, migration (dry-run default) (tested) |
 | `scripts/emerging.py` | Emerging Product Detector (Step R): Momentum Score, Momentum Confidence, Emerging Status, flags, priority list (tested) |

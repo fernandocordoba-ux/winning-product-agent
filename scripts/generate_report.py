@@ -663,6 +663,51 @@ def supplier_section(r):
     return L
 
 
+def competitor_section(r):
+    """Step X: competitor intelligence (separate from WPS / AVS / BVS; never a verdict on its own)."""
+    rows = r.get("competitor_intelligence")
+    L = ["", "## Competitor intelligence", "",
+         "_From imported competitor research only (no scraping). Not combined with WPS / AVS / BVS. "
+         "Competitor data alone never makes a product good or bad. Ad longevity = persistence, not profitability; "
+         "ad spend is never estimated._", ""]
+    if not rows:
+        return L + ["No competitor research imported yet.", ""]
+
+    def v(x, suffix=""):
+        return NA if x is None or x == NA else f"{x}{suffix}"
+    for row in rows:
+        a = row["analysis"]
+        pr, ads = a["prices"], a["ads"]
+        L += [f"### {row['name']} ({row['product_id']})", "",
+              f"- Qualified direct competitors: {a['direct_competitors']} · adjacent {a['adjacent_competitors']} · "
+              f"category {a['category_competitors']} (never mixed) · duplicates removed {a['duplicates_removed']}",
+              f"- Competitor Saturation Score: {v(a['saturation']['score'])} · Competitive Opportunity Score: "
+              f"{v(a['opportunity']['score'])}"
+              + (f" (capped at {a['opportunity']['demand_cap_applied']} by low demand)"
+                 if a['opportunity'].get('demand_cap_applied') and a['opportunity']['score'] == a['opportunity']['demand_cap_applied'] else "")
+              + f" · Competitor Confidence: {a['confidence']['score']} ({a['confidence']['level']})",
+              f"- Median competitor price: {v(pr['median_price'], ' USD')} · range {v(pr['lowest_price'])}–"
+              f"{v(pr['highest_price'])} · our target {v(pr['our_target_price'])} ({v(pr['price_position'])})",
+              f"- Active Meta advertisers: {ads['active_meta_advertisers']}/{ads['direct_with_ad_data']} with ad data · "
+              f"active ads {v(ads['total_active_ads'])} · spend: not estimated",
+              f"- Ad longevity: {ads['longevity_counts'] or 'N/A'} (oldest {v(ads['oldest_ad_age_days'], ' days')}) — "
+              "persistence only, not proof of profitability",
+              f"- Offer patterns (direct): {a['offer_patterns'] or 'none observed'}",
+              "- Differentiation opportunities: " + ("; ".join(f"{o['gap']}: {o['evidence']}" for o in
+                                                             a['differentiation'].get('opportunities', []))
+                                                   or a['differentiation'].get('note', 'none supported by evidence')),
+              f"- Competitor red flags: {', '.join(f['flag'] for f in a['red_flags']) or 'none'}", "",
+              "| Competitor | Relation | Match | Platform | Price | Compare-at | Meta ads | Ads | Ad age | Offer | Reviews | Store Q |",
+              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+        for c in row["competitors"]:
+            L.append(f"| {c['competitor_name']} | {c['relationship']} | {v(c['match_confidence_calc'])} | {c['platform']} | "
+                     f"{v(c['selling_price'])} | {v(c['compare_at_price'])} | {v(c['meta_ads_present'])} | "
+                     f"{v(c['active_ads_count'])} | {v(c['ad_age_days'])} | {', '.join(c['offer_features']) or '-'} | "
+                     f"{v(c['review_count'])} | {v(c['store_quality_score'])} |")
+        L.append("")
+    return L
+
+
 def render_markdown(r, cfg):
     s = r["summary"]
     L = [f"# Winning Product Research — {s['research_date']}", "",
@@ -747,6 +792,7 @@ def render_markdown(r, cfg):
         L.append("None.")
     dq = r["data_quality"]
     L += supplier_section(r)
+    L += competitor_section(r)
     L += ["", "## Data quality", "", f"Base: {dq['products_with_wps']} product(s) with WPS.", "",
           "| Measure | % of products |", "|---|---|",
           f"| Complete TikTok data | {fmt(dq['pct_complete_tiktok_data'], 'pct')} |",
@@ -800,7 +846,8 @@ def build_json(r, cfg):
                 "landed_cost": s["economics"].get("landed_cost"),
                 "gross_margin_percent": s["economics"].get("gross_margin_percent"),
                 "contribution_margin_percent": s["economics"].get("contribution_margin_percent")}
-                for s in supplier_rows(r)]}
+                for s in supplier_rows(r)],
+            "competitor_intelligence": r.get("competitor_intelligence") or []}
 
 
 # ================================================================== writing

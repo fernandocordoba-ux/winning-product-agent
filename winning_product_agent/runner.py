@@ -1415,6 +1415,10 @@ class Runner:
         cfg = GR.load_cfg()
         view = EnvStore(self.history_dir, self.env)
         rep = GR.build_report(inputs, cfg, now, view if view.identities() else None)
+        import competitors as CI                      # Step X: read-only intelligence, not combined with scores
+        rep["competitor_intelligence"] = CI.report_rows(rep["top"] + rep["watch"] + rep["rejected"],
+                                                        self.processed / "competitors",
+                                                        self.history_dir / "competitors")
         pats = [p.lower() for p in cfg["secret_key_patterns"]]
         md = GR.render_markdown(rep, cfg)
         banner = (f"\n> Data environment: **{self.env}** · Run `{self.run_id}` · profile `{self.eff['profile_path']}` · "
