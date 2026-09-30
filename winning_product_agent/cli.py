@@ -8,6 +8,7 @@
         [--resume RUN_ID]                     # continue a stopped run without re-buying queries
   python -m winning_product_agent status [RUN_ID]
   python -m winning_product_agent report [RUN_ID]
+  python -m winning_product_agent audit [RUN_ID]           # Step U calibration audit (read-only)
 """
 import argparse
 import json
@@ -168,6 +169,16 @@ def cmd_report(a):
     return 0
 
 
+def cmd_audit(a):
+    import calibration_audit as CA
+    r = CA.audit(a.run_id)
+    _p(f"Calibration audit: {r['paths']['markdown']}")
+    for x in r["decision_reasons"]:
+        _p(f"  - {x}")
+    _p(r["decision"])
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="python -m winning_product_agent", description="winning-product-agent master runner")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -186,12 +197,14 @@ def build_parser():
     st.add_argument("run_id", nargs="?")
     rp = sub.add_parser("report")
     rp.add_argument("run_id", nargs="?")
+    au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
+    au.add_argument("run_id", nargs="?")
     return p
 
 
 def main(argv=None):
     a = build_parser().parse_args(argv)
-    return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report}[a.cmd](a)
+    return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit}[a.cmd](a)
 
 
 if __name__ == "__main__":

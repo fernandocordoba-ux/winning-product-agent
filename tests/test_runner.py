@@ -54,8 +54,9 @@ def tearDownModule():
 class FakeProvider:
     """Answers discovery (combined), deep (batch/single) and amazon (batch/single) queries."""
 
-    def __init__(self, balance=200.0, cost=3.0, missing=(), down=None, env=None, leak=False):
+    def __init__(self, balance=200.0, cost=3.0, missing=(), down=None, env=None, leak=False, consistent=False):
         self.balance, self.cost, self.missing, self.down, self.leak = balance, cost, set(missing), down, leak
+        self.consistent = consistent        # GMV / units / daily series internally consistent (audit tests)
         self.submits, self.kinds = [], []
         if env:
             self.data_environment = env
@@ -90,6 +91,8 @@ class FakeProvider:
             for pid in DISC_PIDS:
                 r = {kk: v for kk, v in E.disc_record(pid).items() if kk != "_pid"}
                 r["category_key"] = "home"
+                if self.consistent:
+                    r["units_30d"] = 3000
                 recs.append(r)
             body = recs
         elif k == "deep":
@@ -99,6 +102,10 @@ class FakeProvider:
                     continue
                 o = copy.deepcopy(E.DEEP[E.BY_NUM[num]])
                 o["product_id"] = num
+                if self.consistent:
+                    o["units_30d"] = 3000
+                    if o.get("daily_gmv") is not None:
+                        o["daily_gmv"], o["daily_units"] = [5000] * 30, [100] * 30
                 body.append(o)
             if "Name: " in q and not self.ids(q):
                 pass
@@ -518,3 +525,62 @@ class Prompts(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ============================================================ Step U calibration audit (synthetic)
+class CalibrationAudit(Base):
+    def audit(self, fake):
+        import calibration_audit as CA
+        r, s = self.live(fake)
+        m = json.loads((r.run_dir / "manifest.json").read_text())
+        m["mode"] = "LIVE"
+        return CA, r, CA.audit(r.run_id, data_root=self.tmp, secrets=[FAKE])
+
+    def test_audit_clean_run_maps_fields_and_reproduces_wps(self):
+        CA, r, a = self.audit(FakeProvider(consistent=True))
+        self.assertEqual(a["mapping_issues"], [])
+        self.assertEqual(a["secret_leaks"], [])
+        self.assertEqual(a["limit_issues"], [])
+        self.assertEqual(a["raw_problems"], [])
+        self.assertTrue(a["reports_generated"])
+        for p in a["products"]:
+            self.assertEqual(p["wps_mismatch"], [])
+            self.assertTrue(all(row["status"] == "OK" for row in p["mapping"]))
+        # SYNTHETIC run -> contamination listed -> never validated as a LIVE run
+        self.assertEqual(a["decision"], "CALIBRATION_REQUIRED")
+        self.assertTrue(any("non-LIVE" in x for x in a["decision_reasons"]))
+        self.assertTrue(Path(a["paths"]["markdown"]).exists())
+        self.assertEqual(a["credit_audit"]["executed"], a["credit_audit"]["planned"] - a["credit_audit"]["cached"])
+
+    def test_audit_live_env_run_validates(self):
+        CA, r, a = self.audit(FakeProvider(env="LIVE", consistent=True))
+        self.assertEqual(a["contamination"], [])
+        self.assertEqual(a["anomalies"], [])
+        self.assertEqual(a["decision"], "LIVE_RUN_VALIDATED", a["decision_reasons"])
+
+    def test_inconsistent_provider_data_flagged(self):
+        CA, r, a = self.audit(FakeProvider(env="LIVE"))          # GMV 150000 / 40000 units = 3.75 USD at price 50
+        self.assertTrue(any("GMV/units" in i for i in a["mapping_issues"]))
+        self.assertEqual(a["decision"], "CALIBRATION_REQUIRED")
+
+    def test_mapping_problem_flagged(self):
+        import calibration_audit as CA
+        rec = {"original_record": {"gmv_30d": 100000, "units_30d": 10, "price_min": 20, "price_max": 30},
+               "gmv": 100000, "units": 10, "price": {"min": 20, "max": 30}}
+        rows, issues = CA.mapping_checks(rec, None)
+        self.assertTrue(any("GMV/units" in i for i in issues))
+        rec["gmv"] = 5
+        rows, issues = CA.mapping_checks(rec, None)
+        self.assertTrue(any(r["status"] == CA.MAP for r in rows))
+
+    def test_sanity_detects_anomalies(self):
+        import calibration_audit as CA
+        rec = {"growth": {"growth_30d_pct": -20}, "wps_breakdown": {"growth_momentum": {"points": 20, "max": 25},
+                                                                   "creator_momentum": {"points": 5, "max": 15}},
+               "creator_metrics": {"total": None}, "red_flags": [],
+               "concentration_metrics": {"flags": {"CREATOR_DEPENDENCY": {"status": "CLEAR", "value": 80,
+                                                                          "condition": "> 70"}}}}
+        out = CA.sanity(rec, {"status": "ok", "amazon_match_status": "NO_RELIABLE_MATCH", "amazon_confidence": 70},
+                        {"economics": {"product_cost": "N/A"}, "bvs_confidence": 75},
+                        {"emerging_status": "EMERGING", "observation_count": 1}, None)
+        self.assertEqual(len(out), 6)
