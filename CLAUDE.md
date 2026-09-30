@@ -15,6 +15,10 @@ Finds winning TikTok Shop products using KaloData's KaloPilot API, then validate
 5. **Report**: `scripts/generate_report.py` → `reports/`
 6. **History**: snapshots in `data/history/` to track products over time
 
+## Core principle
+
+**Claude interprets; the code calculates.** The same product with the same data must always get the same score (never 82 today and 74 tomorrow). Scores come only from `scripts/score_products.py` + `config/scoring.yaml`. Claude may explain, summarize and recommend based on those results, but never produces, rounds, "adjusts" or overrides a number itself.
+
 ## Rules (always)
 
 - **Credits:** before any KaloPilot query that spends credits, show the current balance (`bash scripts/credits.sh`, free), the estimated cost and the exact question, then wait for the user's OK. After it runs, report credits consumed and the new balance.
