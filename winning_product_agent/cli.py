@@ -390,6 +390,14 @@ def print_production_dry(r):
     _p("\nDEGRADED-MODE DECISIONS")
     for d in r["degraded_mode_decisions"] or [{"provider": "-", "status": "-", "action": "none", "effect": ""}]:
         _p(f"  {d['provider']:<11} {d['status']:<12} -> {d['action']}  {d.get('effect') or ''}")
+    if r.get("degraded_effects"):
+        _p("\nDEGRADED-MODE EFFECTS")
+        for k, v2 in r["degraded_effects"].items():
+            _p(f"  {k:<42} {v2}")
+    if r.get("run_caps"):
+        _p("\nRUN CAPS (effective = min(production config, cap); never raised)")
+        for k, v2 in r["run_caps"].items():
+            _p(f"  {k:<42} production {v2['production']} | cap {v2['cap']} | effective {v2['effective']}")
     _p("\nPLANNED STAGES")
     for i, s in enumerate(r["plan"], 1):
         _p(f"  {i:>2}. {s['stage']:<24} {s['does']}" + (f"  [paid queries <= {s['paid']}]" if s["paid"] else ""))

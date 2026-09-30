@@ -274,7 +274,7 @@ class Runner(ConfigRoot):
                 self.assertIn(tag, t)
         self.assertTrue(list(rep.glob("20*-winning-products.md")))
         self.assertTrue(list(rep.glob("20*-final-decision.md")))
-        self.assertTrue(list(rep.glob("20*-post-run-audit.md")))
+        self.assertTrue(list(rep.glob("20*-run-audit.md")))
 
     def test_cost_cap_partial_run(self):
         fake = T.FakeProvider(consistent=True)
@@ -364,11 +364,80 @@ class PostRunAudit(ConfigRoot):
         r, s = self.live(T.FakeProvider(consistent=True))
         ck = json.loads((r.run_dir / "checkpoints" / "post_run_audit.json").read_text())
         names = {c["check"] for c in ck["checks"]}
-        for n in ("config lock", "data separation", "score sanity", "mapping", "provenance", "cost / guardrails",
-                  "secrets", "decision"):
+        for n in ("config lock", "data separation", "score sanity", "mapping (critical fields)", "provenance",
+                  "cost / guardrails", "secrets", "decision", "query limits", "confidence behavior",
+                  "competition taxonomy (scope / comparability)", "history deduplication", "reports generated",
+                  "supplier economics never fabricated", "no synthetic/live contamination"):
             self.assertIn(n, names)
         self.assertEqual(ck["result"], P.RUN_VALIDATED, ck["issues"])          # clean synthetic run validates
         self.assertEqual(next(c for c in ck["checks"] if c["check"] == "secrets")["status"], "OK")
+
+
+class FirstProductionRun(ConfigRoot):
+    """Step AD additions: run caps, manifest copy, health details, validation packs, run audit."""
+    AD = ROOT / "config" / "run_profiles" / "ad_first_production.yaml"
+
+    def setUp(self):
+        super().setUp()
+        self.promote()
+
+    def test_caps_never_raise_production_limits(self):
+        r = self.runner(profile_path=str(self.AD))
+        self.assertEqual(r.profile_errors, [])
+        prod = PROMO._yaml(PROMO.active_dir(self.root) / "runtime.yaml")
+        for k, v in prod["limits"].items():
+            self.assertLessEqual(r.limits[k], v)
+        self.assertEqual(r.eff["limits"]["discovery_max_products"], min(30, prod["limits"]["discovery_max_products"]))
+        self.assertEqual(r.eff["run_caps"]["limits.deep_analysis_max_products"]["effective"],
+                         min(10, prod["limits"]["deep_analysis_max_products"]))
+        self.assertTrue(r.e2e["first_production_run"])
+
+    def test_health_details_and_degraded_effects(self):
+        d = self.runner(T.FakeProvider(), profile_path=str(self.AD)).dry_run()
+        kp = d["provider_health"]["kalopilot"]
+        self.assertEqual(kp["authentication"], "AUTHENTICATED")
+        for k in ("capability", "last_successful_query"):
+            self.assertIn(k, kp)
+        for k in ("WPS", "AVS", "BVS", "Competitor Intelligence", "Creative Intelligence", "Decision Confidence",
+                  "READY_FOR_PRODUCT_VALIDATION eligibility"):
+            self.assertIn(k, d["degraded_effects"])
+        self.assertIn("run-audit", d["report_destinations"]["run_audit"])
+
+    def test_first_run_manifest_audit_and_reports(self):
+        r, s = self.live(T.FakeProvider(consistent=True), profile_path=str(self.AD))
+        mirror = self.data / "data" / "production" / "runs" / r.run_id / "manifest.json"
+        m = json.loads(mirror.read_text())
+        for k in ("run_id", "started_at", "config_version", "config_hashes_at_start", "market", "data_environment",
+                  "provider_health", "limits", "query_budget", "runtime_mode"):
+            self.assertIn(k, m)
+        self.assertNotIn(T.FAKE, mirror.read_text())
+        ck = json.loads((r.run_dir / "checkpoints" / "post_run_audit.json").read_text())
+        self.assertIn(ck["first_production_run_status"], ("FIRST_PRODUCTION_RUN_VALIDATED", "PRODUCTION_RUN_REVIEW_REQUIRED"))
+        for k in ("Discovered", "PASS", "Deep Analyzed", "Shortlisted", DE.READY, DE.INSUFFICIENT):
+            self.assertIn(k, ck["distribution"])
+        for k in ("GMV", "supplier cost", "creative intelligence"):
+            self.assertIn(k, ck["data_quality"]["fields"])
+        self.assertIn("cost_per_deep_analysis", ck["cost_audit"])
+        rep = self.data / "reports" / "production"
+        for pat in ("20*-winning-products.md", "20*-winning-products.json", "20*-final-decision.md", "20*-run-audit.md"):
+            self.assertTrue(list(rep.glob(pat)), pat)
+
+    def test_validation_pack_for_ready_product(self):
+        import test_decision as TD
+        import validation_pack as VP
+        r = self.runner()
+        r.run_id, r.env, r.secrets = "RUN1", "PRODUCTION", [T.FAKE]
+        p = TD.product(env="PRODUCTION")
+        d = DE.decide(DE.build_evidence(p, TD.comp(), TD.crea(), "PRODUCTION"), DE.load_cfg())
+        self.assertEqual(d["decision_state"], DE.READY)
+        path = VP.write(r, d, p, {"competitor": {}, "creative": {}})
+        t = path.read_text()
+        self.assertTrue(path.name.endswith("-validation-pack.md"))
+        self.assertEqual(path.parent.parent, r.reports_dir)
+        for h in ("Product overview", "TikTok evidence", "Amazon evidence", "Supplier comparison", "Product economics",
+                  "Competitor intelligence", "Creative intelligence", "Historical momentum", "Decision matrix",
+                  "Risk checklist", "Manual validation checklist", "CONFIG VERSION", "RUN ID", "DATA ENVIRONMENT"):
+            self.assertIn(h, t)
 
 
 if __name__ == "__main__":

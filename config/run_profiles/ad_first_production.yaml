@@ -1,0 +1,26 @@
+# =============================================================================
+# Step AD — First Production Live Run: conservative MAXIMUMS for this run only
+# =============================================================================
+# Used with:  python -m winning_product_agent production-run --profile config/run_profiles/ad_first_production.yaml
+#
+# `caps` are ceilings: the effective limit is min(production config, cap). A cap can never raise a limit
+# above the promoted production config (config/production/v1); raising a limit requires a new promoted
+# version (v2) with live evidence. The production config itself is not changed by this file.
+# =============================================================================
+name: AD first production run
+note: "first production validation run; conservative; no auto-scaling afterwards"
+e2e:
+  first_production_run: true
+caps:
+  limits:
+    discovery_max_products: 30
+    deep_analysis_max_products: 10
+    amazon_validation_max_products: 5
+  e2e:
+    supplier_products_max: 5
+    supplier_offers_per_product_max: 5
+    competitor_products_max: 5
+    competitors_per_product_max: 10
+    creative_products_max: 5
+    creatives_per_product_max: 20
+    final_decision_max_products: 10

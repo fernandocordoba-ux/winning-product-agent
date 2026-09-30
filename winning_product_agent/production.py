@@ -27,13 +27,14 @@ import promotion as PROMO  # noqa: E402
 import safety  # noqa: E402
 
 PRODUCTION = "PRODUCTION"
+NOT_MEASURED = "NOT_MEASURED"
 AVAILABLE, DEGRADED, UNAVAILABLE = "AVAILABLE", "DEGRADED", "UNAVAILABLE"
 RUN_VALIDATED, RUN_REVIEW = "RUN_VALIDATED", "RUN_REVIEW_REQUIRED"
 PRODUCTION_STAGES = ["preflight", "provider_health", "discovery", "filtering", "deep_analysis", "wps", "wps_confidence",
                      "amazon_validation", "supplier_research", "bvs", "competitor_intelligence", "creative_intelligence",
                      "historical_storage", "emerging_detector", "final_report", "final_decision",
-                     "production_history", "post_run_audit", "run_summary"]
-R.CHECKPOINTS.update({"provider_health": "provider_health.json", "production_history": "production_history.json",
+                     "validation_packs", "production_history", "post_run_audit", "run_summary"]
+R.CHECKPOINTS.update({"validation_packs": "validation_packs.json", "provider_health": "provider_health.json", "production_history": "production_history.json",
                       "post_run_audit": "post_run_audit.json"})
 
 
@@ -85,11 +86,21 @@ class ProductionRunner(R.Runner):
             for k in ("limits", "e2e"):
                 for kk, v in (prof.get(k) or {}).items():
                     cur = (eff.get(k) or {}).get(kk)
-                    if isinstance(cur, int) and isinstance(v, int) and v > cur:
+                    if isinstance(cur, int) and not isinstance(cur, bool) and isinstance(v, int) and v > cur:
                         errors.append(f"profile {k}.{kk}={v} exceeds production {cur}")
-                    elif kk in (eff.get(k) or {}):
+                    elif kk in (eff.get(k) or {}) or kk == "first_production_run":
                         eff[k][kk] = v
-            eff["profile_path"] = str(p)
+            # caps: maximums for THIS run; the effective value is min(production config, cap) - never raised
+            applied = {}
+            for k in ("limits", "e2e"):
+                for kk, cap in ((prof.get("caps") or {}).get(k) or {}).items():
+                    cur = (eff.get(k) or {}).get(kk)
+                    if isinstance(cur, int) and isinstance(cap, int):
+                        eff[k][kk] = min(cur, cap)
+                        applied[f"{k}.{kk}"] = {"production": cur, "cap": cap, "effective": eff[k][kk]}
+            eff["run_caps"] = applied
+            eff["run_profile"] = {"path": str(p), "name": prof.get("name"), "note": prof.get("note")}
+            eff["profile_path"] = str(rel.relative_to(self.root)) if str(rel).startswith(str(self.root)) else str(rel)
         errors += R.validate_effective(rt, eff)
         return eff, errors
 
@@ -120,9 +131,18 @@ class ProductionRunner(R.Runner):
             return f"CONFIG_DRIFT: production config changed after the run started ({changed}); run invalid"
         return None
 
+    def _save_manifest(self):
+        path = super()._save_manifest()
+        if getattr(self, "mode", None) and self.mode != "DRY_RUN":      # Stage AD-7: data/production/runs/{run_id}
+            R.write_json_atomic(self.data_root / "data" / "production" / "runs" / self.run_id / "manifest.json",
+                                {**self.manifest, "manifest_copy_of": str(path)}, self.secrets)
+        return path
+
     def _init_run(self, mode, env, resume_id=None):
         super()._init_run(mode, env, resume_id)
         self.manifest.update({"config_version": self.config_version, "config_dir": str(self.config_dir),
+                              "runtime_mode": mode, "run_caps": self.eff.get("run_caps"),
+                              "run_profile": self.eff.get("run_profile"),
                               "config_manifest_hashes": self.config_manifest["files"],
                               "config_hashes_at_start": self.lock_hashes,
                               "production_data_paths": self.rt["paths"]})
@@ -147,6 +167,10 @@ class ProductionRunner(R.Runner):
             except Exception as e:  # noqa: BLE001
                 kp = {"status": UNAVAILABLE, "detail": safety.redact(f"credit endpoint failed: {e.__class__.__name__}",
                                                                      self.secrets if hasattr(self, "secrets") else [])}
+        kp["authentication"] = ("AUTHENTICATED" if kp["status"] != UNAVAILABLE else
+                                 "CREDENTIALS_PRESENT_NOT_VERIFIED" if creds else "NO_CREDENTIALS")
+        kp["capability"] = "discovery + deep analysis + Amazon validation (provider_capabilities.yaml)"
+        kp["last_successful_query"] = self.last_successful_query()
         out["kalopilot"] = kp
         with CR.active(self.config_dir):
             amz = yaml.safe_load(Path(CR.path("amazon_validation.yaml")).read_text()) or {}
@@ -175,6 +199,13 @@ class ProductionRunner(R.Runner):
         out["creative"] = ({"status": AVAILABLE, "sources": cimpl, "detail": "saved KaloPilot top videos + imports"}
                            if kp["status"] != UNAVAILABLE and "kalopilot_saved" in cimpl else
                            {"status": DEGRADED if cimpl else UNAVAILABLE, "sources": cimpl})
+        for k in ("amazon", "supplier", "competitor", "creative"):
+            out[k].setdefault("authentication", "via KaloPilot" if k in ("amazon", "creative") else "not required (manual)")
+            out[k].setdefault("capability", {"amazon": "KaloPilot Amazon prompt (never measured live)",
+                                             "supplier": "manual_import only", "competitor": "manual_import only",
+                                             "creative": "saved KaloPilot top_videos (no hooks / angles / dates) + "
+                                                         "manual_import"}[k])
+            out[k].setdefault("last_successful_query", NOT_MEASURED if k == "amazon" else "N/A (no paid query)")
         decisions, blocks = [], []
         for prov, h in out.items():
             rule = dm.get(prov) or {}
@@ -194,7 +225,44 @@ class ProductionRunner(R.Runner):
         if out["supplier"]["status"] == UNAVAILABLE and not dec_rules["decision"]["ready"].get("require_supplier_economics"):
             blocks.append("supplier UNAVAILABLE but decision rules do not require supplier economics for READY")
         return {"providers": out, "degraded_mode_decisions": decisions, "blocks": blocks,
+                "degraded_effects": self.degraded_effects(out),
                 "checked_at": datetime.now(timezone.utc).isoformat()}
+
+    def last_successful_query(self):
+        """Most recent usable paid answer: production runs first; calibration runs labelled as such."""
+        best = None
+        for base, label in ((self.runs_dir, "production"), (self.root / "runs", "calibration (LIVE)")):
+            for mf in base.glob("*/manifest.json") if base.exists() else []:
+                m = R._read_json(mf) or {}
+                if m.get("mode") != "LIVE":
+                    continue
+                for q in m.get("query_log") or []:
+                    if q.get("action") == "LIVE_QUERY" and not q.get("error_category"):
+                        ts = q.get("timestamp")
+                        if ts and (best is None or ts > best[0]):
+                            best = (ts, label, q.get("stage"))
+        return {"timestamp": best[0], "source": best[1], "stage": best[2]} if best else "none recorded"
+
+    def degraded_effects(self, prov):
+        st = {k: v["status"] for k, v in prov.items()}
+        pen = ((self.rt.get("degraded_mode") or {}).get("competitor") or {}).get("decision_confidence_penalty", 0)
+        return {
+            "WPS": "unaffected (TikTok data only)" if st["kalopilot"] == AVAILABLE else "BLOCKED: KaloPilot unavailable",
+            "AVS": ("computed only for eligible products (WPS >= 70, Confidence >= 60); Amazon never measured live, "
+                    "matches are not forced" if st["amazon"] != UNAVAILABLE else "N/A -> Cross-Platform Demand UNKNOWN"),
+            "BVS": ("partial: real supplier economics only for products with imported offers; otherwise "
+                    "INSUFFICIENT_SUPPLIER_DATA (never estimated)" if st["supplier"] != AVAILABLE else "full inputs"),
+            "Competitor Intelligence": ("only for products with imported competitor research; otherwise Competitive "
+                                        "Environment UNKNOWN" if st["competitor"] != AVAILABLE else "available"),
+            "Creative Intelligence": "saved KaloPilot top videos (free) + imports; without hook / angle / date the "
+                                     "creative confidence stays <= 60 < minimum 65 -> Creative Opportunity UNKNOWN",
+            "Decision Confidence": (f"-{pen} for every product without competitor evidence (competitor provider "
+                                    f"{st['competitor']})" if st["competitor"] != AVAILABLE and pen else "no penalty"),
+            "READY_FOR_PRODUCT_VALIDATION eligibility": (
+                "requires supplier economics (imported offers), competitor evidence and classified creative evidence; "
+                "with the current sources NO product can reach READY unless those are imported before the run"
+                if st["supplier"] != AVAILABLE or st["competitor"] != AVAILABLE else "normal rules"),
+        }
 
     def extra_live_blocks(self):
         b = []
@@ -229,7 +297,8 @@ class ProductionRunner(R.Runner):
     # ------------------------------------------------------------------ steps
     def e2e_steps(self):
         steps = [s for s in super().e2e_steps() if s[0] != "aa_validation"]
-        return steps + [("production_history", self.s_production_history), ("post_run_audit", self.s_post_run_audit)]
+        return steps + [("validation_packs", self.s_validation_packs), ("production_history", self.s_production_history),
+                        ("post_run_audit", self.s_post_run_audit)]
 
     def _readiness(self, pf, budget, balance):
         r = super()._readiness(pf, budget, balance)
@@ -244,10 +313,26 @@ class ProductionRunner(R.Runner):
         rows.insert(1, {"stage": "provider_health", "does": "KaloPilot / Amazon / supplier / competitor / creative "
                                                             "health + degraded-mode rules", "paid": 0})
         i = [r["stage"] for r in rows].index("final_decision") + 1
-        rows[i:i] = [{"stage": "production_history", "does": "append decision observations (append-only)", "paid": 0},
+        rows[i:i] = [{"stage": "validation_packs", "does": "validation-pack.md for every shortlisted product", "paid": 0},
+                     {"stage": "production_history", "does": "append decision observations (append-only)", "paid": 0},
                      {"stage": "post_run_audit", "does": "score / mapping / provenance / cost / secret / decision audit",
                       "paid": 0}]
         return rows
+
+    def s_validation_packs(self, ctx, now):
+        import validation_pack as VP
+        res = ctx.get("decision")
+        if not res or not res["shortlist"]:
+            self._checkpoint("validation_packs", {"status": R.SKIPPED, "packs": []})
+            return R.SKIPPED, {"summary": "no READY_FOR_PRODUCT_VALIDATION product: no validation pack"}
+        prods = {str(p.get("product_id")): p for p in (ctx.get("rep") or {}).get("all_products") or []}
+        paths = []
+        for s_ in res["shortlist"]:
+            d = next(x for x in res["decisions"] if x["product_id"] == s_["product_id"])
+            paths.append(str(VP.write(self, d, prods.get(d["product_id"]) or {}, ctx, now)))
+        ctx.setdefault("outputs", {}).update({f"validation_pack_{i + 1}": p for i, p in enumerate(paths)})
+        self._checkpoint("validation_packs", {"status": R.COMPLETED, "packs": paths})
+        return R.COMPLETED, {"summary": f"{len(paths)} validation pack(s)", "packs": paths}
 
     def s_production_history(self, ctx, now):
         res = ctx.get("decision")
@@ -289,7 +374,9 @@ class ProductionRunner(R.Runner):
         self._save_manifest()
         out = PA.audit(self, ctx, now)
         ctx.setdefault("outputs", {}).update(out["paths"])
-        self.manifest["post_run_audit"] = {"result": out["result"], "issues": out["issues"]}
+        self.manifest["post_run_audit"] = {"result": out["result"], "issues": out["issues"],
+                                           "first_production_run_status": out.get("first_production_run_status"),
+                                           "critical_issues": out.get("critical_issues")}
         self._checkpoint("post_run_audit", {"status": R.COMPLETED, **out})
         return R.COMPLETED, {"summary": out["result"] + (f" — {len(out['issues'])} issue(s)" if out["issues"] else ""),
                              **out["paths"]}
@@ -325,6 +412,7 @@ class ProductionRunner(R.Runner):
         out.update({"config_version": self.config_version, "config_dir": str(self.config_dir),
                     "config_hash_verification": self.lock_verify, "provider_health": self.health["providers"],
                     "degraded_mode_decisions": self.health["degraded_mode_decisions"],
+                    "degraded_effects": self.health["degraded_effects"], "run_caps": self.eff.get("run_caps"),
                     "health_blocks": self.health["blocks"],
                     "balance": self.health["providers"]["kalopilot"].get("balance", out.get("balance")),
                     "product_limits": {**self.limits, **{k: v for k, v in self.e2e.items() if k.endswith("_max")}},
@@ -334,7 +422,11 @@ class ProductionRunner(R.Runner):
                         "final_decision": str(self.reports_dir / "YYYY-MM-DD-final-decision.md"),
                         "latest": [str(self.reports_dir / "latest-winning-products.md"),
                                    str(self.reports_dir / "latest-final-decision.md")],
-                        "post_run_audit": str(self.reports_dir / "YYYY-MM-DD-post-run-audit.md")},
+                        "run_audit": str(self.reports_dir / "YYYY-MM-DD-run-audit.md"),
+                        "winning_products_json": str(self.reports_dir / "YYYY-MM-DD-winning-products.json"),
+                        "validation_packs": str(self.reports_dir / "YYYY-MM-DD" / "<product_id>-validation-pack.md"),
+                        "run_manifest": str(self.data_root / "data" / "production" / "runs" / "<run_id>" /
+                                            "manifest.json")},
                     "data_paths": self.rt["paths"]})
         if not self.lock_verify["ok"]:
             out["blocking_issues"].append("production config hash verification failed")

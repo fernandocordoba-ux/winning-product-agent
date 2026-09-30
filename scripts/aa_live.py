@@ -101,19 +101,24 @@ def _check(name, status, detail, flag=None, items=None):
             "items": items or []}
 
 
-def validation_audit(r, ctx):
+def validation_audit(r, ctx, run_audit=True):
+    """run_audit=False (production): the run-level calibration audit is replaced by the caller's own mapping and
+    score checks; only the layer / decision / history checks below are returned."""
     checks = []
-    try:
-        ca = CA.audit(r.run_id, root=r.root, write=False, secrets=r.secrets, data_root=r.data_root)
-    except Exception as e:  # noqa: BLE001
-        ca = {"mapping_issues": [f"calibration audit failed: {e.__class__.__name__}: {e}"], "anomalies": [],
-              "provider_errors": {}, "raw_problems": []}
-    mi = ca.get("mapping_issues") or []
-    checks.append(_check("provider field mappings", FLAG if mi else OK,
-                         f"{len(mi)} mapping issue(s) (raw -> normalized, discovery vs deep, internal consistency)",
-                         MAP, mi))
-    an = ca.get("anomalies") or []
-    checks.append(_check("score anomalies (formulas unchanged)", FLAG if an else OK, f"{len(an)} anomaly(ies)", SCO, an))
+    ca = {"provider_errors": {}, "raw_problems": []}
+    if run_audit:
+        try:
+            ca = CA.audit(r.run_id, root=r.root, write=False, secrets=r.secrets, data_root=r.data_root)
+        except Exception as e:  # noqa: BLE001
+            ca = {"mapping_issues": [f"calibration audit failed: {e.__class__.__name__}: {e}"], "anomalies": [],
+                  "provider_errors": {}, "raw_problems": []}
+        mi = ca.get("mapping_issues") or []
+        checks.append(_check("provider field mappings", FLAG if mi else OK,
+                             f"{len(mi)} mapping issue(s) (raw -> normalized, discovery vs deep, internal consistency)",
+                             MAP, mi))
+        an = ca.get("anomalies") or []
+        checks.append(_check("score anomalies (formulas unchanged)", FLAG if an else OK, f"{len(an)} anomaly(ies)",
+                             SCO, an))
     ok_deep = r._ok_deep(ctx)
 
     # competition taxonomy
@@ -174,7 +179,8 @@ def validation_audit(r, ctx):
 
     # Amazon matching
     amz = [a for a in ctx.get("amazon") or [] if a.get("status") == "ok"]
-    thr = (yaml.safe_load((r.root / "config" / "amazon_validation.yaml").read_text()) or {}).get(
+    import config_resolver as _CR
+    thr = (yaml.safe_load(Path(_CR.path("amazon_validation.yaml")).read_text()) or {}).get(
         "amazon_validation", {}).get("matching", {}).get("min_reliable_match", 60)
     bad = [f"{a['product_id']}: MATCHED with match confidence {a.get('amazon_match_confidence')} < {thr}"
            for a in amz if a.get("amazon_match_status") == "MATCHED" and (_num(a.get("amazon_match_confidence")) or 0) < thr]
@@ -184,7 +190,7 @@ def validation_audit(r, ctx):
 
     # competitor matching
     comp = ctx.get("competitor") or {}
-    dmin = (yaml.safe_load((r.root / "config" / "competitors.yaml").read_text()) or {}).get(
+    dmin = (yaml.safe_load(Path(_CR.path("competitors.yaml")).read_text()) or {}).get(
         "relationships", {}).get("direct_min", 75)
     bad = []
     for pid, a in comp.items():
@@ -235,8 +241,9 @@ def validation_audit(r, ctx):
                 ev["values"][k]["value"] = 100.0 - ev["values"][k]["value"]
         dims = DE.dimensions(ev, cfg)
         known_same = [k for k in DE.DIMENSIONS if (dims[k]["status"] == DE.UNKNOWN) == (d["dimension_status"][k] == DE.UNKNOWN)]
+        pen = abs(d["decision_confidence"].get("components", {}).get("degraded_mode_penalty") or 0)
         if len(known_same) == len(DE.DIMENSIONS) and \
-                DE.decision_confidence(ev, dims, cfg)["score"] != d["decision_confidence"]["score"]:
+                round(max(0.0, DE.decision_confidence(ev, dims, cfg)["score"] - pen), 2) != d["decision_confidence"]["score"]:
             bad.append(f"{d['product_id']}: Decision Confidence moved with product performance")
         for k in ("wps_confidence", "amazon_confidence", "bvs_confidence", "competitor_confidence", "creative_confidence"):
             x = DE.v(d["evidence"], k)
