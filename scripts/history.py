@@ -33,7 +33,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 NA = "N/A"
 NEW_GROWTH = "NEW_GROWTH"
-SCHEMA_VERSION = "history-v1"
+SCHEMA_VERSION = "history-v1.1"   # v1.1 (Step R): + selling_video_count, competition, concentration (additive)
 SECRET_PATTERNS = ("token", "api_key", "apikey", "authorization", "secret", "password", "bearer")
 
 # metric -> (section, field) inside an observation
@@ -42,6 +42,12 @@ METRICS = {
     "gmv": ("tiktok", "gmv"), "units": ("tiktok", "units"), "creators": ("tiktok", "creator_count"),
     "videos": ("tiktok", "video_count"), "price": ("tiktok", "price"),
     "avs": ("amazon", "avs"), "bvs": ("business", "bvs"),
+    # added in history-v1.1 for Step R (absent in older observations -> None / N/A)
+    "selling_creators": ("tiktok", "selling_creator_count"), "selling_videos": ("tiktok", "selling_video_count"),
+    "shop_count": ("tiktok", "shop_count"), "similar_listings": ("competition", "similar_listings_count"),
+    "category_products": ("competition", "category_product_count"),
+    "top_creator_share": ("concentration", "top_creator_revenue_share"),
+    "top_video_share": ("concentration", "top_video_revenue_share"),
 }
 DELTA_METRICS = ["wps", "gmv", "units", "creators", "videos", "price", "avs", "bvs"]
 PCT_METRICS = ["gmv", "units", "creators", "videos", "price"]
@@ -104,7 +110,9 @@ def _flags(v):
 def empty_observation():
     return {"schema_version": SCHEMA_VERSION,
             "tiktok": {k: None for k in ("price", "gmv", "units", "growth", "creator_count", "selling_creator_count",
-                                         "video_count", "shop_count")},
+                                         "video_count", "selling_video_count", "shop_count")},
+            "competition": {"similar_listings_count": None, "category_product_count": None},
+            "concentration": {"top_creator_revenue_share": None, "top_video_revenue_share": None},
             "scores": {"wps": None, "confidence": None},
             "amazon": {k: None for k in ("avs", "amazon_confidence", "amazon_match_confidence", "amazon_price",
                                          "amazon_competition", "observation_timestamp")},
@@ -156,7 +164,14 @@ def from_deep(d, processed_file, amazon=None, bvs=None):
     o["tiktok"].update({"price": (d.get("price") or {}).get("avg"), "gmv": d.get("gmv"), "units": d.get("units"),
                         "growth": (d.get("growth") or {}).get("growth_30d_pct"), "creator_count": cm.get("total"),
                         "selling_creator_count": cm.get("selling"), "video_count": vm.get("total"),
+                        "selling_video_count": vm.get("selling"),
                         "shop_count": (d.get("competition_metrics") or {}).get("shop_count")})
+    comp = d.get("competition_metrics") or {}
+    o["competition"] = {"similar_listings_count": comp.get("similar_listings_count"),
+                        "category_product_count": comp.get("category_product_count")}
+    conc = ((d.get("concentration_metrics") or {}).get("metrics") or {})
+    o["concentration"] = {"top_creator_revenue_share": num((conc.get("top_creator_revenue_share") or {}).get("value")),
+                          "top_video_revenue_share": num((conc.get("top_video_revenue_share") or {}).get("value"))}
     o["scores"] = {"wps": num(d.get("wps")), "confidence": num(d.get("confidence"))}
     o["flags"]["red_flags"] = _flags(d.get("red_flags"))
     o["missing_data"] = list(d.get("missing_data") or [])
@@ -298,6 +313,36 @@ def latest_value(obs, name):
 def _last_two(obs, name):
     pts = [(parse_ts(o["observation_timestamp"]), metric(o, name)) for o in obs if metric(o, name) is not None]
     return pts[-2:] if len(pts) >= 2 else None
+
+
+# ================================================================== generic series helpers (Step R)
+def series(obs, name):
+    """[(timestamp, value)] of valid values, oldest first. A real 0 is kept."""
+    return [(parse_ts(o["observation_timestamp"]), metric(o, name)) for o in obs if metric(o, name) is not None]
+
+
+def velocity_for(obs, name):
+    """Per-day velocity between the last two valid points using REAL elapsed time (None if unavailable)."""
+    pts = series(obs, name)
+    if len(pts) < 2:
+        return None
+    (t0, v0), (t1, v1) = pts[-2:]
+    days = (t1 - t0).total_seconds() / 86400
+    return None if days <= 0 else (v1 - v0) / days
+
+
+def acceleration_for(obs, name):
+    """Needs 3 valid points: prev_vel=(v2-v1)/dt1, cur_vel=(v3-v2)/dt2, acceleration=cur_vel-prev_vel."""
+    pts = series(obs, name)
+    if len(pts) < 3:
+        return None
+    (t1, v1), (t2, v2), (t3, v3) = pts[-3:]
+    dt1, dt2 = (t2 - t1).total_seconds() / 86400, (t3 - t2).total_seconds() / 86400
+    if dt1 <= 0 or dt2 <= 0:
+        return None
+    prev_v, cur_v = (v2 - v1) / dt1, (v3 - v2) / dt2
+    return {"previous_velocity": prev_v, "current_velocity": cur_v, "acceleration": cur_v - prev_v,
+            "values": [v1, v2, v3], "elapsed_days": [dt1, dt2]}
 
 
 # ================================================================== deltas / velocity

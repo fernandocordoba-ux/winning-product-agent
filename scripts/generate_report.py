@@ -32,6 +32,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 import history as HIST  # noqa: E402  (Step Q: append-only product history)
+import emerging as EM  # noqa: E402  (Step R: Emerging Product Detector)
 NA = "N/A"
 PROCESSED = ROOT / "data" / "processed"
 
@@ -360,24 +361,13 @@ def watch_reasons(p, cfg):
     return r
 
 
-def emerging(products, cfg):
-    e, out = cfg["emerging"], []
-    for p in products:
-        rows = p["history"]
-        if len(rows) < e["min_observations"] or p.get("section") == "REJECTED":
-            continue
-        dw, dg = change(rows, "wps"), change(rows, "gmv", pct=True)
-        if dw is None or dg is None:
-            continue
-        if dw >= e["wps_change_min_points"] and dg >= e["gmv_change_min_pct"] and p["trend"] in e["trend_labels"] \
-                and (p["confidence"] or 0) >= e["minimum_confidence"]:
-            wps_vals = [r["wps"] for r in rows if r["wps"] is not None]
-            out.append({"id": p["id"], "product_id": p["product_id"], "name": p["name"], "current_wps": wps_vals[-1],
-                        "previous_wps": wps_vals[-2], "wps_change": dw, "gmv_change_pct": dg,
-                        "creator_change": change(rows, "creators"), "video_change": change(rows, "videos"),
-                        "trend": p["trend"], "confidence": p["confidence"], "observations": len(rows)})
-    return sorted(out, key=lambda x: (-x["wps_change"], str(x["id"])))
-
+def emerging_section(store, now=None):
+    """Step R detector output: priority list (EMERGING_STRONG > EMERGING > EMERGING_REVIEW) with details."""
+    if store is None:
+        return [], {}
+    det = EM.detect_all(store, now=now)
+    by_id = {str(r["product_id"]): r for r in det.get("results", [])}
+    return [{**e, "detail": by_id[str(e["product_id"])]} for e in det.get("priority_list", [])], by_id
 
 # ================================================================== interpretation (evidence only)
 def interpret(p, cfg):
@@ -492,7 +482,9 @@ def build_report(inputs, cfg, now=None, store=None):
     top, watch, watch_more, rejected = classify(products, cfg)
     for p in top:
         p["interpretation"] = interpret(p, cfg)
-    em = emerging(products, cfg)
+    em, em_by_id = emerging_section(store, now)
+    for p in products:
+        p["emerging"] = em_by_id.get(str(p["product_id"])) if p["product_id"] else None
     ds = (inputs["discovery"] or {}).get("summary") or {}
     summary = {
         "research_date": local.strftime("%Y-%m-%d"), "generated_at": now.isoformat(), "market": cfg["market"],
@@ -503,7 +495,8 @@ def build_report(inputs, cfg, now=None, store=None):
         "products_with_bvs": len({str(r["product_id"]) for r in inputs["bvs"]}),
         "top_count": len(top),
         "high_confidence_candidates": [p["name"] for p in top if p["tier"] == "HIGH-CONFIDENCE CANDIDATE"],
-        "emerging_candidates": [e["name"] for e in em],
+        "emerging_candidates": [e["product_name"] for e in em if e["emerging_status"] in ("EMERGING_STRONG", "EMERGING")],
+        "emerging_detector": "Step R" if store is not None else "not run (no history store)",
         "watchlist_count": len(watch) + watch_more, "rejected_count": len(rejected),
         "identity_conflicts": conflicts,
     }
@@ -598,6 +591,10 @@ def history_block(p, rows, cfg):
           f"{direction(rows, 'creators', cfg)} |",
           f"| Videos | {cell('latest_videos')} | {cell('previous_videos')} | {cell('video_change')} | "
           f"{direction(rows, 'videos', cfg)} |", ""]
+    em = p.get("emerging")
+    if em and em.get("emerging_status"):
+        L += [f"Emerging status (Step R): **{em['emerging_status']}** · Momentum {fmt(em.get('momentum_score'))} "
+              f"· Momentum Confidence {fmt(em.get('momentum_confidence'))}", ""]
     if snap:
         L += [f"Trend (GMV): 7D {snap['short_trend']} · 14D {snap['medium_trend']} · 30D {snap['long_trend']} · "
               f"Volatility: {snap['volatility_level']}", ""]
@@ -625,7 +622,7 @@ def render_markdown(r, cfg):
          f"| With BVS | {s['products_with_bvs']} |",
          f"| Top section | {s['top_count']} |", "",
          f"- **HIGH-CONFIDENCE CANDIDATES:** {', '.join(s['high_confidence_candidates']) or 'none'}",
-         f"- **EMERGING CANDIDATES:** {', '.join(s['emerging_candidates']) or 'none (needs ≥ 2 observations per product)'}",
+         f"- **EMERGING CANDIDATES:** {', '.join(s['emerging_candidates']) or 'none (Step R: needs EMERGING_STRONG or EMERGING status)'}",
          f"- **WATCHLIST:** {s['watchlist_count']}",
          f"- **REJECTED / HIGH-RISK:** {s['rejected_count']}", ""]
     if s["identity_conflicts"]:
@@ -644,16 +641,36 @@ def render_markdown(r, cfg):
             L += top_card(p, cfg)
     else:
         L += ["No product currently meets the Top criteria.", ""]
-    L += ["## Emerging products", ""]
+    L += ["## Emerging products", "",
+          "_Step R detector: Momentum Score and Momentum Confidence are separate from WPS/AVS/BVS. Priority: "
+          "EMERGING_STRONG > EMERGING > EMERGING_REVIEW, then Momentum Score, Momentum Confidence, WPS, WPS Confidence._", ""]
     if r["emerging"]:
-        L += ["| Product | WPS | Prev. WPS | Δ WPS | Δ GMV | Δ creators | Δ videos | Trend | Confidence |",
-              "|---|---|---|---|---|---|---|---|---|"]
-        L += [f"| {e['name']} | {fmt(e['current_wps'])} | {fmt(e['previous_wps'])} | {fmt(e['wps_change'])} | "
-              f"{fmt(e['gmv_change_pct'], 'pct')} | {fmt(e['creator_change'])} | {fmt(e['video_change'])} | "
-              f"{e['trend']} | {fmt(e['confidence'])} |" for e in r["emerging"]]
+        L += ["| # | Product | Status | Momentum | Mom. Conf. | WPS | WPS Conf. | GMV trend | Creator trend | "
+              "Video trend | Competition | Key flags |", "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+        for e in r["emerging"]:
+            d = e["detail"]
+            L.append(f"| {e['priority']} | {e['product_name'] or NA} | {e['emerging_status']} | {fmt(e['momentum_score'])} | "
+                     f"{fmt(e['momentum_confidence'])} | {fmt(e['current_wps'])} | {fmt(e['current_wps_confidence'])} | "
+                     f"{d['trends']['gmv']} | {d['creator_momentum']} | {d['video_momentum']} | {d['competition_status']} | "
+                     f"{', '.join(d['emerging_flags'][:4]) or 'none'} |")
+        L.append("")
+        mo = cfg["history"]["min_observations"]
+        for e in r["emerging"]:
+            d = e["detail"]
+            ok = d.get("observation_count", 0) >= mo
+
+            def arrow(prev, cur):
+                if not ok or num(prev) is None or num(cur) is None:
+                    return ""
+                return " ↑" if cur > prev else (" ↓" if cur < prev else " →")
+            L.append(f"- **{e['product_name']}** — WPS {fmt(d['previous_wps'])} → {fmt(d['current_wps'])}"
+                     f"{arrow(d['previous_wps'], d['current_wps'])} · GMV {fmt(d['previous_gmv'], 'money')} → "
+                     f"{fmt(d['current_gmv'], 'money')}{arrow(d['previous_gmv'], d['current_gmv'])} · "
+                     f"{d['observation_count']} observations over {d['observation_days']} days · {d['status_reason']}")
     else:
-        L.append(f"None. Emerging status requires at least {cfg['emerging']['min_observations']} observations of the "
-                 "same product (never inferred from one snapshot).")
+        L.append("None. Emerging status needs the Step R detector with enough history "
+                 f"(≥ {EM.load_cfg()['minimum_observations']} observations on ≥ {EM.load_cfg()['minimum_observation_days']} "
+                 "days per product); it is never inferred from one snapshot.")
     L += ["", "## Watchlist", ""]
     if r["watch"]:
         L += ["| Product | WPS | Confidence | Why it is on watch |", "|---|---|---|---|"]
@@ -709,7 +726,13 @@ def build_json(r, cfg):
     return {"report_metadata": {**r["summary"], "report_version": cfg["version"],
                                 "ranking_logic": r["ranking_logic"], "scores_combined": False},
             "top_products": [product_json(p) for p in r["top"]],
-            "emerging_products": r["emerging"],
+            "emerging_products": [{k: v for k, v in e.items() if k != "detail"} | {
+                "status_reason": e["detail"].get("status_reason"), "emerging_flags": e["detail"].get("emerging_flags"),
+                "demand_momentum": e["detail"].get("demand_momentum"), "creator_momentum": e["detail"].get("creator_momentum"),
+                "video_momentum": e["detail"].get("video_momentum"),
+                "competition_status": e["detail"].get("competition_status"),
+                "previous_wps": e["detail"].get("previous_wps"), "previous_gmv": e["detail"].get("previous_gmv"),
+                "current_gmv": e["detail"].get("current_gmv")} for e in r["emerging"]],
             "watchlist": [product_json(p) for p in r["watch"]],
             "watchlist_not_shown": r["watch_more"],
             "rejected_products": [product_json(p) for p in r["rejected"]],

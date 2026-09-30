@@ -69,16 +69,9 @@ report:
     direction_threshold_pct: 5              # change > +5% -> ↑, < -5% -> ↓, else →
     wps_direction_threshold_points: 2       # WPS uses points, not %
 
-  # ---------------------------------------------------------------- emerging (V1)
-  # No Emerging Product Detector existed before Step P; these are the minimal V1
-  # rules (Step Q Historical Tracking may replace them). All must hold, and they
-  # need >= history.min_observations real observations:
-  emerging:
-    min_observations: 2
-    wps_change_min_points: 5                # latest WPS - previous WPS
-    gmv_change_min_pct: 10                  # latest GMV vs previous
-    trend_labels: [ACCELERATING, GROWING]
-    minimum_confidence: 60
+  # ---------------------------------------------------------------- emerging
+  # The EMERGING PRODUCTS section uses the Step R detector (scripts/emerging.py,
+  # rules in config/emerging.yaml). The temporary Step P V1 rules were removed.
 
   # ---------------------------------------------------------------- data quality
   data_quality:

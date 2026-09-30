@@ -181,7 +181,7 @@ class Missing(Base):
         standard(self.env)
         md = self.env.gen()["markdown"].read_text()
         self.assertIn("INSUFFICIENT_HISTORY (1 observation(s); no change or direction is inferred)", md)
-        self.assertIn("None. Emerging status requires at least 2 observations", md)
+        self.assertIn("None. Emerging status needs the Step R detector with enough history", md)
 
     def test_na_handling(self):
         self.assertEqual(G.fmt(None), "N/A")
@@ -193,19 +193,37 @@ class Missing(Base):
 
 class Sections(Base):
     def test_emerging_products_section(self):
-        self.env.write(discovery=[disc_rec("M")],
-                       deep=[[deep_rec("M", 72, 70, ts="2026-09-23T00:00:00+00:00", gmv=80000, creators=300, videos=700)],
-                             [deep_rec("M", 80, 72, ts="2026-09-30T00:00:00+00:00", gmv=100000, creators=380, videos=900,
-                                       trend="ACCELERATING")]])
-        r = self.env.gen()["report"]
-        self.assertEqual(len(r["emerging"]), 1)
-        e = r["emerging"][0]
-        self.assertEqual((e["previous_wps"], e["current_wps"], e["wps_change"]), (72.0, 80.0, 8.0))
-        self.assertEqual(e["gmv_change_pct"], 25.0)
-        self.assertEqual((e["creator_change"], e["video_change"]), (80.0, 200.0))
-        md = self.env.gen()["markdown"].read_text()
-        self.assertIn("| WPS | 80 | 72 | 8 | ↑ |", md)               # no store: computed from Deep Analysis files
-        self.assertIn("25.00% ↑", md)
+        # Step R detector on a synthetic history store: 7 accelerating observations -> EMERGING_STRONG
+        import history as H
+        from datetime import timedelta
+        store = H.HistoryStore(self.env.root / "history")
+        base = datetime(2026, 9, 18, 12, 0, tzinfo=timezone.utc)
+        rows = [(72, 40000, 1300, 300, 80, 500, 120, 10), (73, 43000, 1400, 320, 90, 540, 135, 10),
+                (74, 47000, 1520, 345, 102, 590, 152, 11), (76, 53000, 1700, 380, 118, 660, 175, 11),
+                (78, 62000, 1980, 430, 140, 760, 205, 12), (81, 75000, 2400, 500, 170, 900, 250, 12)]
+        for i, (w, g, u, c, sc, v, sv, sh) in enumerate(rows):
+            ts = base + timedelta(days=2 * i)
+            o = H.empty_observation()
+            o.update({"product_id": "M", "identity_key": "M", "product_name": "SYNTHETIC product M",
+                      "observation_timestamp": H.iso(ts), "observation_date": ts.date().isoformat()})
+            o["scores"].update(wps=w, confidence=80)
+            o["tiktok"].update(gmv=g, units=u, creator_count=c, selling_creator_count=sc, video_count=v,
+                               selling_video_count=sv, shop_count=sh)
+            o["concentration"].update(top_creator_revenue_share=20, top_video_revenue_share=10)
+            store.append(o)
+        self.env.write(discovery=[disc_rec("M")], deep=[[deep_rec("M", 81, 80)]])
+        r = self.env.gen()
+        em = r["report"]["emerging"]
+        self.assertEqual([e["emerging_status"] for e in em], ["EMERGING_STRONG"])
+        self.assertEqual(r["report"]["summary"]["emerging_candidates"], ["SYNTHETIC product M"])
+        md = r["markdown"].read_text()
+        sec = md.split("## Emerging products")[1].split("## Watchlist")[0]
+        self.assertIn("| 1 | SYNTHETIC product M | EMERGING_STRONG |", sec)
+        self.assertIn("WPS 78 → 81 ↑", sec)
+        self.assertIn("GMV $62,000.00 → $75,000.00 ↑", sec)
+        self.assertIn("Emerging status (Step R): **EMERGING_STRONG**", md)
+        js = json.loads(r["json"].read_text())
+        self.assertEqual(js["emerging_products"][0]["emerging_status"], "EMERGING_STRONG")
 
     def test_single_observation_never_emerging(self):
         self.env.write(discovery=[disc_rec("S")], deep=[[deep_rec("S", 95, 95, trend="ACCELERATING")]])
