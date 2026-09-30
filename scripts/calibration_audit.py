@@ -301,7 +301,7 @@ def audit(run_id=None, root=ROOT, write=True, secrets=None, data_root=None):
     hist_paths = ck["history"].get("paths") or []
     contamination += [f"history {p}" for p in hist_paths if (_read(p) or {}).get("data_environment") != "LIVE"]
     rep_json = _read((ck["report"].get("outputs") or {}).get("report_json")) or {}
-    if (rep_json.get("report_metadata") or {}).get("data_environment") != "LIVE":
+    if rep_json and (rep_json.get("report_metadata") or {}).get("data_environment") != "LIVE":
         contamination.append("report JSON not marked LIVE")
     # secrets
     secrets = safety.known_secret_values(rt) if secrets is None else secrets
@@ -336,6 +336,13 @@ def audit(run_id=None, root=ROOT, write=True, secrets=None, data_root=None):
             e = r.get("error_category") or r.get("status")
             key = "malformed" if r.get("status") == "malformed" else ("timeouts" if "timeout" in str(e) else "other")
             errors[key].append(f"product {r.get('product_id')}: {e} {r.get('errors') or ''}".strip())
+    for q in ck["discovery"].get("queries") or []:          # answers rejected before filtering (Step U fix)
+        if q.get("error") and q.get("failed_raw_file"):
+            data = ((_read(q["failed_raw_file"]) or {}).get("response") or {}).get("data") or {}
+            errors["malformed" if q["error"] == "no_product_json_in_answer" else "other"].append(
+                f"discovery {q.get('category_key')}: {q['error']} — status '{data.get('status')}', message_id "
+                f"{data.get('message_id')}, text {len(data.get('text') or '')} chars, credits_consumed "
+                f"{data.get('credits_consumed')} (provider ended the task before delivering results)")
     for mf in disc.get("malformed") or []:                  # provider answer without a parseable JSON block
         env_raw = _read(mf.get("raw_file")) or {}
         data = (env_raw.get("response") or {}).get("data") or {}
