@@ -325,6 +325,23 @@ def build(root=ROOT, now=None, with_balance=True):
             "production_pending": snap["source"] != "PRODUCTION"}
 
 
+def font_faces(root=ROOT):
+    """DejaVu Sans / Sans Mono (free license, templates/fonts/LICENSE-DejaVu.txt) embedded as data URIs, so the
+    page looks the same on every device without loading fonts from the network."""
+    import base64
+    fd = Path(root) / "templates" / "fonts"
+    faces = [("WPA Sans", "DejaVuSans.woff", "400 500"), ("WPA Sans", "DejaVuSans-Bold.woff", "600 800"),
+             ("WPA Mono", "DejaVuSansMono.woff", "400 700")]
+    css = []
+    for fam, fn, w in faces:
+        p = fd / fn
+        if p.exists():
+            b64 = base64.b64encode(p.read_bytes()).decode()
+            css.append(f'@font-face {{ font-family: "{fam}"; src: url(data:font/woff;base64,{b64}) format("woff"); '
+                       f'font-weight: {w}; font-style: normal; font-display: swap; }}')
+    return "\n".join(css)
+
+
 def write(root=ROOT, template=None, out_dir=None, with_balance=True):
     data = build(root, with_balance=with_balance)
     out = Path(out_dir or root / "reports" / "insights")
@@ -332,7 +349,7 @@ def write(root=ROOT, template=None, out_dir=None, with_balance=True):
     (out / "insights.json").write_text(json.dumps(data, ensure_ascii=False, indent=2, default=str))
     tpl = Path(template or root / "templates" / "insights.html").read_text()
     payload = json.dumps(data, ensure_ascii=False, default=str).replace("</", "<\\/")
-    html = tpl.replace("/*__INSIGHTS_DATA__*/null", payload)
+    html = tpl.replace("/*__INSIGHTS_DATA__*/null", payload).replace("/*__FONTS__*/", font_faces(root))
     (out / "insights.html").write_text(html)
     return {"json": str(out / "insights.json"), "html": str(out / "insights.html"), "data": data}
 
