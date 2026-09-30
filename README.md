@@ -39,6 +39,7 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | Path | What |
 |---|---|
 | `scripts/setup-token.sh` | Saves token to `~/.kalopilot/token` and runs a free connectivity check |
+| `scripts/credits.sh` | Free credit balance check (no credits used) |
 | `scripts/ask.sh` | Submit a question, poll until done, print + save the answer to `reports/` |
 | `kalopilot/` | Official KaloPilot skill by Kalodata (MIT), vendored |
 
