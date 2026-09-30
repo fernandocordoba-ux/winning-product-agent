@@ -24,8 +24,8 @@ selection:
 queries:
   types: [deep_product]                     # prompt: prompts/deep_analysis.md
   period_days: 30
-  top_creators: 10
-  top_videos: 10
+  top_creators: 5                          # Step U: 10 -> 5 (answer-size limit); concentration uses top 1 / top 3
+  top_videos: 5
 
 # -----------------------------------------------------------------------------
 # Stage 10 — credit protection

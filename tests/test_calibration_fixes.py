@@ -426,3 +426,43 @@ class Prompts(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CompactDeepPrompt(unittest.TestCase):
+    """Step U: one single-product answer hit the ~8k output-token limit."""
+    def test_prompt_is_compact(self):
+        for f in ("deep_analysis.md", "deep_analysis_batch.md"):
+            t = __import__("re").split(r"^===\s*$", (ROOT / "prompts" / f).read_text(), flags=__import__("re").M)[1]
+            for gone in ('"daily_units"', '"daily_creator_count"', '"daily_video_count"'):
+                self.assertNotIn(gone, t, f)                       # never returned in 9 live answers
+            self.assertIn('"daily_gmv"', t)
+            self.assertIn("output ONLY the JSON block", t)
+        q = DA.load_cfg()["queries"]
+        self.assertEqual((q["top_creators"], q["top_videos"]), (5, 5))   # concentration needs top 1 / top 3 only
+
+
+class ResumeBudget(unittest.TestCase):
+    def test_resume_does_not_rebuy_done_stages(self):
+        import test_runner as T
+        from unittest import mock
+        import os
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            with mock.patch.dict(os.environ, {"KALOPILOT_TOKEN": T.FAKE}), \
+                    mock.patch("urllib.request.urlopen", T.no_network):
+                r = R.Runner(profile_path="config/runtime_first_live.yaml", data_root=tmp, client=T.FakeProvider(),
+                             max_products=5, preflight_fn=lambda: T.READY, isatty=False, out=lambda s="": None)
+                r.live(confirm_value=R.CONFIRMATION_PHRASE)
+                r2 = R.Runner(profile_path="config/runtime_first_live.yaml", data_root=tmp, client=T.FakeProvider(),
+                              max_products=5, preflight_fn=lambda: T.READY, isatty=False, out=lambda s="": None)
+                r2.cal_cfg = {**r2.cal_cfg, "enabled": True}
+                r2._init_run("LIVE", R.SYNTHETIC, r.run_id)
+                b = r2.resume_budget(r2.query_budget(R.SYNTHETIC, R.now_utc()))
+            self.assertEqual(b["stages"]["discovery"]["expected_paid_max"], 0)
+            self.assertEqual(b["stages"]["deep_analysis"]["expected_paid_max"], 0)
+            self.assertTrue(b["resume"])
+        finally:
+            __import__("safety").clear_run_overrides()
+            for p in tmp.rglob("*"):
+                p.chmod(0o755 if p.is_dir() else 0o644)
+            shutil.rmtree(tmp, ignore_errors=True)

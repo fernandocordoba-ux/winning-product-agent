@@ -12,6 +12,7 @@ Everything between the two `===` lines is sent to KaloPilot.
 Using real current TikTok Shop {region} data (currency {currency}), analyze each of these {n} products in depth for the last {period_days} days:
 {product_lines}
 
+Keep the answer compact (the answer size is limited): output ONLY the JSON block, no tables, commentary or explanations before or after it.
 Do not run video script extraction or review/comment analysis.
 Do not use the Category Overview module (it is not included in this account's plan). If any value is only available from a module the plan does not include, do not pause or ask for confirmation: skip it and use null for that value.
 Do not estimate or invent missing values. Use null for any value that is not available. A real zero must be returned as 0, not null.
@@ -23,10 +24,9 @@ Return the result as ONE fenced JSON code block (```json ... ```) containing an 
 "gmv_30d", "units_30d", "gmv_prev_30d" (exact revenue of this product in the previous {period_days} days, before this window), "growth_30d_pct" (= (gmv_30d - gmv_prev_30d) / gmv_prev_30d x 100; null if gmv_prev_30d is 0 or unknown), "category_growth_pct",
 "launch_date" (YYYY-MM-DD, first seen / listing date), "data_window_end" (YYYY-MM-DD), "commission_pct",
 "daily_gmv" (array of {period_days} daily revenue values, oldest first; null for days without data),
-"daily_units" (same, units),
-"creator_count", "selling_creator_count", "creator_growth_pct", "daily_creator_count" (array oldest first, or null),
+"creator_count", "selling_creator_count", "creator_growth_pct",
 "top_creators" (up to {top_creators} objects, highest revenue first: {{"creator_id", "name", "revenue", "growth_pct"}}),
-"video_count", "selling_video_count", "video_growth_pct", "video_sales_share_pct" (% of product revenue from videos), "daily_video_count" (array oldest first, or null),
+"video_count", "selling_video_count", "video_growth_pct", "video_sales_share_pct" (% of product revenue from videos),
 "top_videos" (up to {top_videos} objects, highest revenue first: {{"video_id", "creator", "revenue", "views"}}),
 "shop_count" (shops selling this product), "similar_listings_count", "category_product_count" (number of products selling in the product's LEAF category, i.e. the LAST level of category_path — not a parent category), "category_product_count_level" (exact name of the category that count refers to), "leaf_category_id" (KaloData ID of that leaf category).
 If a product cannot be found, still return its object with its "product_id" and null values.

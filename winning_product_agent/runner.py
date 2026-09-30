@@ -486,6 +486,7 @@ class Runner:
             "runtime_config": {"runtime": {**self.eff["runtime"]}, "query_plan": self.eff["query_plan"]},
             "config_hashes": safety.config_hashes(self.root / "config"),
             "limits": self.limits, "max_products_arg": self.max_products_arg,
+            "calibration_lane": bool((self.cal_cfg or {}).get("enabled")),
             "stages": {s: {"status": PENDING} for s in STAGES}, "final_status": PENDING}
         if resume_id:
             self.manifest.setdefault("resumed_at", []).append((self.now or now_utc()).isoformat())
@@ -815,6 +816,8 @@ class Runner:
         if not safety.credentials_present(self.rt):
             blocks.append("provider credentials not available")
         budget = self.query_budget(env, now) if not self.profile_errors else None
+        if budget and resume_id:
+            budget = self.resume_budget(budget)
         balance = None
         if not blocks:
             try:
@@ -1230,6 +1233,44 @@ class Runner:
         self._checkpoint("amazon_validation", {"status": status, "results": results, "saved": str(saved), "stopped": stop})
         return status, {"summary": f"{good}/{len(eligible)} validated" + (f" — stopped: {stop}" if stop else ""),
                         "eligible": len(eligible), "saved": str(saved)}
+
+    def resume_budget(self, b):
+        """Resume: completed stages / products already in checkpoints cost nothing again."""
+        import copy as _c
+        b = _c.deepcopy(b)
+        disc = self.stages.get("discovery", {}).get("status") == COMPLETED
+        deep_ck = self._load_checkpoint("deep_analysis") or {}
+        deep_left = len(deep_ck.get("not_run") or []) if deep_ck else None
+        for stage, zero in (("discovery", disc), ("deep_analysis", deep_left == 0)):
+            if zero:
+                r = b["stages"][stage]
+                r.update(expected_paid_min=0, expected_paid_max=0, estimated_credits_min=0.0, estimated_credits_max=0.0,
+                         note="resume: already done (checkpoint), nothing re-bought")
+        if self.stages.get("amazon_validation", {}).get("status") != COMPLETED:
+            r = b["stages"]["amazon_validation"]
+            extra = (self.cal_cfg or {}).get("max_products", 0) if (self.cal_cfg or {}).get("enabled") else 0
+            n = min(self.limits["amazon_validation_max_products"] + extra, 99)
+            if deep_left == 0:                          # deep finished: the Amazon candidates are known exactly
+                ok = [d for d in deep_ck.get("results") or [] if d.get("status") == "ok"]
+                cfg = AV.load_cfg()
+                cfg["max_products"] = self.limits["amazon_validation_max_products"]
+                elig, _ = AV.select_eligible(ok, cfg)
+                n = len(elig) + len(self.calibration_products(ok, elig, {}))
+            q = math.ceil(n / self.eff["query_plan"].get("amazon_batch_size", 1)) if n else 0
+            e = self.est("amazon_validation")
+            r.update(expected_paid_max=q, max_products=n, estimated_credits_max=round(q * e, 2) if e is not None
+                     else safety.UNKNOWN, expected_paid_min=q if deep_left == 0 else 0,
+                     estimated_credits_min=(round(q * e, 2) if e is not None else safety.UNKNOWN) if deep_left == 0
+                     else 0.0, note=f"{n} product(s): eligible (WPS>=70, Conf>=60) + calibration lane")
+        rows = b["stages"].values()
+        b["expected_paid_queries_min"] = sum(r["expected_paid_min"] for r in rows)
+        b["expected_paid_queries_max"] = sum(r["expected_paid_max"] for r in rows)
+        vals = [r["estimated_credits_max"] for r in rows]
+        b["estimated_credits_max"] = safety.UNKNOWN if safety.UNKNOWN in vals else round(sum(vals), 2)
+        vals = [r["estimated_credits_min"] for r in rows]
+        b["estimated_credits_min"] = safety.UNKNOWN if safety.UNKNOWN in vals else round(sum(vals), 2)
+        b["resume"] = True
+        return b
 
     # ---- calibration lane helpers
     def calibration_products(self, ok, eligible, ctx):

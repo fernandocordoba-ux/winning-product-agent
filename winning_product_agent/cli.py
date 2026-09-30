@@ -129,6 +129,8 @@ def cmd_run(a):
         run.continue_task = a.continue_task
     if a.from_task:
         run.from_task = a.from_task
+    if a.calibration_lane:
+        run.cal_cfg = {**run.cal_cfg, "enabled": True}         # this run only; config file stays disabled
     if not a.live:                                    # default: DRY RUN, never paid
         r = run.dry_run(check_balance=a.check_balance)
         print_dry(r)
@@ -199,6 +201,8 @@ def build_parser():
     r.add_argument("--check-balance", action="store_true", help="dry run: FREE balance check")
     r.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.CONFIRMATION_PHRASE}"')
     r.add_argument("--resume", help="resume a stopped live run by run id")
+    r.add_argument("--calibration-lane", action="store_true",
+                   help="enable the Amazon/BVS calibration lane for THIS run (calibration_only, never ranked)")
     r.add_argument("--from-task", help="Discovery = FREE import of a KaloPilot task already finished (e.g. continued "
                                        "in the web UI after a plan-restriction pause); no new discovery query")
     r.add_argument("--continue-task", help="Discovery = ONE follow-up on an unfinished KaloPilot task (same "
