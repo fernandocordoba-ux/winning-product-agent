@@ -47,18 +47,23 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `scripts/business_viability.py` | Business Viability Score (Step O): economics, BVS + breakdown, BVS Confidence, commercial flags; `add-supplier` stores supplier data (tested) |
 | `scripts/history.py` | Historical tracking (Step Q): append-only observations, index, deltas, velocity, trends, volatility, migration (dry-run default) (tested) |
 | `scripts/emerging.py` | Emerging Product Detector (Step R): Momentum Score, Momentum Confidence, Emerging Status, flags, priority list (tested) |
+| `scripts/safety.py` | Live Query Safety Gate, query budget, secret redaction, run logs, manifests (Step S) |
+| `scripts/preflight.py` | Pre-flight: READY_FOR_DRY_RUN / BLOCKED + SYSTEM STATUS (`--tests` runs the suite) |
+| `scripts/pipeline.py` | `dry-run`: previews every stage without paid queries; writes runs/{id}/manifest.json |
+| `scripts/config_validation.py` | Config schema validation (weights, totals, ranges, limit conflicts) |
 | `scripts/concentration.py` | Creator/video revenue concentration + dependency flags (tested) |
 | `scripts/validate_data.py` | Validate raw data → `data/processed/` (skeleton) |
 | `scripts/score_products.py` | Scoring engine: WPS (wps-v1, per metric breakdown) + Confidence Score (tested) |
 | `scripts/deep_analysis.py` | Deep Analysis (Step M): dry-run by default, credit protection, trend, concentration, WPS, Confidence, red flags (tested) |
 | `scripts/confidence.py` | Confidence Score: data completeness/quality, 0–100 + breakdown (tested) |
 | `scripts/generate_report.py` | Final report (Step P): Markdown + JSON, Top 10, emerging, watchlist, rejected, data quality (tested) |
-| `config/` | `scoring.yaml`, `filters.yaml`, `categories.yaml`, `deep_analysis.yaml`, `amazon_validation.yaml`, `business_viability.yaml`, `report.yaml`, `history.yaml`, `emerging.yaml` |
+| `config/` | `scoring.yaml`, `filters.yaml`, `categories.yaml`, `deep_analysis.yaml`, `amazon_validation.yaml`, `business_viability.yaml`, `report.yaml`, `history.yaml`, `emerging.yaml`, `runtime.yaml` (canonical run mode/limits/safety) |
 | `prompts/` | `discovery.md`, `deep_analysis.md`, `amazon_validation.md`, `validation.md` |
 | `data/raw/` | Raw API responses (git-ignored) |
 | `data/processed/` | Validated data |
 | `data/history/` | Append-only product observations + `history_index.json` |
 | `reports/` | Generated reports |
+| `runs/` | Per-run manifest + redacted structured log (git-ignored) |
 | `tests/` | `python3 -m unittest discover tests` |
 | `CLAUDE.md` | Rules Claude follows in this project |
 | `kalopilot/` | Official KaloPilot skill by Kalodata (MIT), vendored |

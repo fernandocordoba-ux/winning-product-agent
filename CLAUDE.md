@@ -95,9 +95,19 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 
 8. **Emerging detector (Step R)**: `python3 scripts/emerging.py` (free) — uses ONLY the Step Q history. Momentum Score (0–100: WPS trajectory 20, GMV 25, units 15, creators 15, videos 15, competition balance 10), Momentum Confidence (evidence quality only) and Emerging Status (EMERGING_STRONG / EMERGING / EMERGING_REVIEW / STABLE / LOSING_MOMENTUM / INSUFFICIENT_HISTORY; needs ≥ 3 observations on ≥ 3 days). Separate from WPS/Confidence/AVS/Amazon Confidence/BVS/BVS Confidence — never combined. Rising competition is not automatically bad: only competition growing faster than demand counts against a product. CREATOR/VIDEO_DEPENDENCY blocks EMERGING_STRONG. Outputs `data/processed/emerging/emerging_<ts>.json` (immutable) + `latest.json`. Thresholds in `config/emerging.yaml`. The report's Emerging section uses this detector (priority: STRONG > EMERGING > REVIEW, then Momentum, Momentum Confidence, WPS, WPS Confidence).
 
+## Live-run safety (Step S)
+
+- `config/runtime.yaml` is the **canonical** source for run mode, limits and safety. It must keep the safe defaults (`live_mode: false`, `dry_run: true`, `explicit_live_confirmation: false`); pre-flight BLOCKS otherwise. Stage-level limit keys must equal runtime.yaml (pre-flight blocks on conflicts).
+- **Live Query Safety Gate** (`scripts/safety.py`) runs inside `kalopilot_client.submit()`, the single chokepoint for paid queries: live_mode AND not dry_run AND explicit_live_confirmation AND credentials AND balance − estimate ≥ reserve. Live flags are set only IN MEMORY for one run (`safety.set_run_overrides`) after the user's explicit OK — never by editing runtime.yaml.
+- `python3 scripts/preflight.py [--tests]` → READY_FOR_DRY_RUN or BLOCKED (never READY_FOR_LIVE). `python3 scripts/pipeline.py dry-run [--check-balance]` previews every stage, writes only `runs/{run_id}/manifest.json` + `log.jsonl` (redacted).
+- Query budget: estimates are labeled as configured estimates; unknown costs stay UNKNOWN. Logs/manifests/reports are redacted.
+- `python3 scripts/config_validation.py` validates weights (WPS/AVS/BVS/Momentum/confidences = 100), ranges and limits.
+
 ## Useful commands
 
 ```bash
+python3 scripts/preflight.py --tests   # READY_FOR_DRY_RUN / BLOCKED
+python3 scripts/pipeline.py dry-run    # full preview, no paid queries
 bash scripts/setup-token.sh      # save/check token (free)
 bash scripts/credits.sh          # credit balance (free)
 bash scripts/ask.sh "<question>" # run a KaloPilot query (spends credits)

@@ -265,6 +265,8 @@ def evaluate(obs_all, cfg=None, hist_cfg=None, now=None):
     cfg = cfg or load_cfg()
     hist_cfg = hist_cfg or HIST.load_cfg()
     obs_all = sorted(obs_all, key=lambda o: HIST.parse_ts(o["observation_timestamp"]))
+    # Step S fix: Discovery + Deep of the same run (minutes apart) are ONE cycle for momentum
+    obs_all = HIST.collapse_same_cycle(obs_all, (hist_cfg.get("analysis") or {}).get("same_cycle_hours"))
     last = obs_all[-1] if obs_all else {}
     base = {"product_id": last.get("product_id") or last.get("identity_key"), "product_name": last.get("product_name"),
             "observation_timestamp": (now or datetime.now(timezone.utc)).isoformat(),

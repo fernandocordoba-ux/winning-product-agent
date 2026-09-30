@@ -17,6 +17,13 @@ history:
   version: "history-v1"
   base_dir: data/history
 
+  # ---------------------------------------------------------------- analysis view
+  # Discovery and Deep Analysis of the same run observe a product minutes apart.
+  # For deltas/velocity/trends those count as ONE cycle (most complete kept, tie -> later),
+  # otherwise "0 change in 1 hour" would look like deceleration. Storage is unaffected.
+  analysis:
+    same_cycle_hours: 12
+
   # ---------------------------------------------------------------- windows
   windows:
     short_window_days: 7

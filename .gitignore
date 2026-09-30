@@ -17,3 +17,7 @@ reports/*
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Run artifacts (manifests, logs)
+runs/*
+!runs/.gitkeep

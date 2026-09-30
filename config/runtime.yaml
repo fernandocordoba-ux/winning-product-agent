@@ -1,0 +1,57 @@
+# =============================================================================
+# Runtime configuration — Step S (CANONICAL source for run mode, limits, safety)
+# =============================================================================
+# SAFE DEFAULTS: nothing paid can run unless ALL of these are true for a run:
+#   live_mode: true  AND  dry_run: false  AND  explicit_live_confirmation: true
+#   AND provider credentials present  AND  credit/balance check passes
+# (enforced by scripts/safety.py LiveQueryGate inside kalopilot_client.submit(),
+#  the single chokepoint for every paid KaloPilot query).
+#
+# Keep these three at the safe values in this file. A future master command
+# (Step T) will set live overrides IN MEMORY for one run after an explicit
+# user confirmation; the file itself is never flipped to live.
+# =============================================================================
+
+runtime:
+  market: US
+  live_mode: false
+  dry_run: true
+  explicit_live_confirmation: false
+
+# -----------------------------------------------------------------------------
+# Limits — CANONICAL. These older per-stage keys must hold the SAME values
+# (pre-flight BLOCKS on any mismatch, so limits never silently conflict):
+#   discovery_max_products          == filters.yaml          discovery_mode.max_candidates
+#   deep_analysis_max_products      == deep_analysis.yaml    selection.deep_analysis_max_products
+#   amazon_validation_max_products  == amazon_validation.yaml amazon_validation.max_products
+#   bvs_max_products                == business_viability.yaml eligibility.max_products
+# -----------------------------------------------------------------------------
+limits:
+  discovery_max_products: 100
+  deep_analysis_max_products: 40
+  amazon_validation_max_products: 20
+  bvs_max_products: 40
+
+safety:
+  preserve_raw_data: true
+  append_only_history: true
+  block_secrets_in_outputs: true
+  require_credit_check: true
+  min_balance_reserve: 5.0                  # credits that must remain after a query
+  estimated_credits_per_query: 4.0          # CONFIGURED estimate (observed 2.78 / 3.98); labeled as estimate, never as actual
+
+allowed_markets: [US]
+
+provider:
+  name: kalopilot
+  credential_sources:                       # checked in order; values are NEVER printed or logged
+    env: [KALOPILOT_TOKEN, KALODATA_API_KEY]
+    file: ~/.kalopilot/token
+
+paths:                                      # must exist and be writable (pre-flight)
+  raw: data/raw
+  processed: data/processed
+  history: data/history
+  reports: reports
+  runs: runs
+  cache: data/raw                           # raw responses double as the query cache (deep / amazon)

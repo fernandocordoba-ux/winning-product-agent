@@ -33,7 +33,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from confidence import confidence_score, load_config as load_confidence_config  # noqa: E402
-from score_products import wps_score  # noqa: E402
+from score_products import load_scoring_config, wps_score  # noqa: E402
 
 NA = "N/A"
 NA_TOKENS = {"", "n/a", "na", "null", "none", "-", "--", "—", "not available", "unknown"}
@@ -385,8 +385,8 @@ def scoring_input(product):
     }
 
 
-def attach_scores(product, conf_cfg):
-    wps = wps_score(scoring_input(product))
+def attach_scores(product, conf_cfg, scoring_cfg=None):
+    wps = wps_score(scoring_input(product), scoring_cfg)          # Step S: config loaded once per run
     conf = confidence_score(scoring_input(product), conf_cfg)
     product["calculated"]["wps_if_calculable"] = (
         {"status": "pending", "score": NA, "reason": "insufficient data for a full WPS at discovery stage; deep analysis required", "na_metrics": wps.get("na_metrics")}
@@ -447,6 +447,7 @@ def run_discovery(raw_paths, filters_cfg=None, categories_cfg=None, conf_cfg=Non
     filters_cfg = filters_cfg or load_yaml("filters.yaml")
     categories_cfg = categories_cfg or load_yaml("categories.yaml")
     conf_cfg = conf_cfg or load_confidence_config()
+    scoring_cfg = load_scoring_config()
     products, malformed = [], []
     for path in raw_paths:
         with open(path) as fh:
@@ -472,7 +473,7 @@ def run_discovery(raw_paths, filters_cfg=None, categories_cfg=None, conf_cfg=Non
     unique, dup_log = dedupe(products)
     for p in unique:
         p["calculated"].update(evaluate(p, filters_for_category(filters_cfg, categories_cfg, p["category_key"])))
-        attach_scores(p, conf_cfg)
+        attach_scores(p, conf_cfg, scoring_cfg)
     candidates, over_limit = select(unique, filters_cfg["discovery_mode"])
     failed = sorted([p for p in unique if p["calculated"]["filter_status"] == "FAIL"], key=lambda p: p["key"])
     counts = {s: sum(p["calculated"]["filter_status"] == s for p in unique) for s in ("PASS", "REVIEW", "FAIL")}

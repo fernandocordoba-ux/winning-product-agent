@@ -315,6 +315,26 @@ def _last_two(obs, name):
     return pts[-2:] if len(pts) >= 2 else None
 
 
+# ================================================================== analysis view (Step S fix)
+def collapse_same_cycle(obs, hours):
+    """Analysis-only view: observations of the same product closer than `hours` belong to ONE
+    collection cycle (e.g. Discovery + Deep Analysis minutes apart). Keep the one with the most
+    non-null metrics; tie -> the later one. Stored history is NOT modified (append-only)."""
+    if not hours:
+        return list(obs)
+    def filled(o):
+        return sum(metric(o, m) is not None for m in METRICS)
+    out = []
+    for o in sorted(obs, key=lambda o: parse_ts(o["observation_timestamp"])):
+        t = parse_ts(o["observation_timestamp"])
+        if out and (t - parse_ts(out[-1]["observation_timestamp"])).total_seconds() < hours * 3600:
+            if filled(o) >= filled(out[-1]):
+                out[-1] = o
+            continue
+        out.append(o)
+    return out
+
+
 # ================================================================== generic series helpers (Step R)
 def series(obs, name):
     """[(timestamp, value)] of valid values, oldest first. A real 0 is kept."""
@@ -501,8 +521,10 @@ def tracking_age(obs):
 
 
 def snapshot_from(obs, cfg):
+    raw_obs = obs
+    obs = collapse_same_cycle(obs, (cfg.get("analysis") or {}).get("same_cycle_hours"))
     d, trends, vol = deltas_from(obs), trends_from(obs, cfg), volatility_from(obs, cfg)
-    age = tracking_age(obs)
+    age = tracking_age(raw_obs)
 
     def g(m, k):
         return d[m].get(k, NA)
