@@ -87,7 +87,7 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
 3. **Filters**: `config/filters.yaml` (+ category overrides) → pass / flagged / rejected, with reasons
 4. **Deep analysis**: `prompts/deep_analysis.md` → KaloPilot, for shortlisted products
    - **Concentration**: `scripts/concentration.py` → Top 1 / Top 3 creator and video revenue share; flags `CREATOR_DEPENDENCY` / `VIDEO_DEPENDENCY` (thresholds in `filters.yaml`). Missing data → N/A, no flag, no penalty.
-5. **Scoring**: `scripts/score_products.py` + `config/scoring.yaml` (WPS v1 rules defined; engine not implemented yet)
+5. **Scoring**: `scripts/score_products.py` + `config/scoring.yaml` → **WPS** (rules defined, engine NOT implemented yet → N/A) and **Confidence Score** (`scripts/confidence.py`, implemented). They are independent: Confidence measures data completeness only, never performance; it never raises or lowers WPS. Always report both: `WPS: X/100` and `Confidence: X/100 (LEVEL)` with the per-component breakdown.
 6. **Report**: `scripts/generate_report.py` → `reports/` (FACT / CALCULATION / INFERENCE / MISSING DATA)
 7. **History**: dated snapshots in `data/history/` to track momentum over time
 

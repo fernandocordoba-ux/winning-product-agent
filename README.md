@@ -43,7 +43,8 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `scripts/ask.sh` | Submit a question, poll until done, print the answer, save raw response to `data/raw/` |
 | `scripts/concentration.py` | Creator/video revenue concentration + dependency flags (tested) |
 | `scripts/validate_data.py` | Validate raw data → `data/processed/` (skeleton) |
-| `scripts/score_products.py` | Score products with `config/scoring.yaml` (not implemented yet) |
+| `scripts/score_products.py` | Scoring engine: WPS (not implemented yet → N/A) + Confidence Score |
+| `scripts/confidence.py` | Confidence Score: data completeness/quality, 0–100 + breakdown (tested) |
 | `scripts/generate_report.py` | Build reports in `reports/` (skeleton) |
 | `config/` | `scoring.yaml`, `filters.yaml`, `categories.yaml` |
 | `prompts/` | `discovery.md`, `deep_analysis.md`, `validation.md` |
