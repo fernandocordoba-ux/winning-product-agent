@@ -77,6 +77,18 @@ risk_rules:
 
   # Creator / video dependency -> see `concentration` section below.
 
+  low_base_or_seasonal:
+    description: >
+      Growth may be inflated by a near-zero prior period (new launch) or a
+      seasonal spike. Flag only: the product is kept for careful review.
+    checks:
+      - input: product_age_days             # data_window_end (or observation_date) - launch_date
+        condition: "< 30"
+        action: flag
+      - input: revenue_growth_pct           # % vs. prior 30 days
+        condition: "> 1000"
+        action: flag
+
   trademark_ip_risk:
     description: Brand names, licensed characters or copy/dupe language in the title.
     match_field: product_name               # case-insensitive whole-word match
@@ -197,9 +209,11 @@ discovery_mode:
   products_per_category: 15                 # asked from KaloPilot per category query
   max_candidates: 100                       # PASS + REVIEW returned (hard cap)
   # Missing any of these optional fields -> REVIEW (never FAIL by itself)
+  # (selling_creator_count removed 2026-09-30: KaloPilot discovery never returns it,
+  #  so it sent every product to REVIEW. It stays N/A when missing; the
+  #  selling_creators preferred_min filter still applies whenever it IS returned.)
   review_if_missing:
     - growth_30d
-    - selling_creator_count
   # Deterministic order of returned candidates. Momentum first, NOT total GMV.
   sort_by:
     - { field: filter_status, order: [PASS, REVIEW] }

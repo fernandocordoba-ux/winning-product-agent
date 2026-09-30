@@ -267,6 +267,19 @@ def _word_match(text, keyword):
     return re.search(r"(?<!\w)" + re.escape(keyword.lower()) + r"(?!\w)", text.lower()) is not None
 
 
+def product_age_days(product):
+    """CALCULATION: days between launch_date and data_window_end (else observation_date).
+    None if either date is missing or invalid (never estimated)."""
+    f = product["facts"]
+    end = f.get("data_window_end") or product.get("observation_date")
+    if not f.get("launch_date") or not end:
+        return None
+    try:
+        return (datetime.strptime(end, "%Y-%m-%d") - datetime.strptime(f["launch_date"], "%Y-%m-%d")).days
+    except (ValueError, TypeError):
+        return None
+
+
 def evaluate(product, fcfg):
     """Apply filters.yaml. Returns calculated dict with filter_status and reasons.
 
@@ -323,10 +336,14 @@ def evaluate(product, fcfg):
             rule("missing_optional_data", "flag", {"field": field})
 
     # 3) numeric risk rules (only inputs available in discovery)
-    for name in ("collapsing_sales", "extreme_seller_saturation"):
+    age = product_age_days(product)
+    inputs = {k: f.get(v) for k, v in RULE_INPUTS.items()}
+    inputs["product_age_days"] = age
+    for name in ("collapsing_sales", "extreme_seller_saturation", "low_base_or_seasonal"):
+        if name not in fcfg["risk_rules"]:
+            continue
         for chk in fcfg["risk_rules"][name]["checks"]:
-            field = RULE_INPUTS.get(chk["input"])
-            v = f.get(field) if field else None
+            v = inputs.get(chk["input"])
             if v is None:
                 na_checks.append(f"{name}:{chk['input']}")
             elif _cmp(v, chk["condition"]):
@@ -347,6 +364,7 @@ def evaluate(product, fcfg):
     return {
         "price": price,
         "price_basis": basis,
+        "product_age_days": age,
         "filter_status": status,
         "filter_reasons": fails + reviews,
         "na_checks": sorted(set(na_checks)),

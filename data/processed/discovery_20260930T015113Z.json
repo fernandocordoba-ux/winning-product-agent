@@ -1,0 +1,1670 @@
+{
+  "pipeline": "discovery-v1",
+  "config_versions": {
+    "filters": "filters-v1",
+    "categories": "categories-v1",
+    "confidence": "confidence-v1"
+  },
+  "market": {
+    "region": "US",
+    "currency": "USD",
+    "period_days": 30
+  },
+  "raw_files": [
+    "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json"
+  ],
+  "summary": {
+    "records": 15,
+    "unique": 15,
+    "duplicates_removed": 0,
+    "malformed": 0,
+    "PASS": 0,
+    "REVIEW": 12,
+    "FAIL": 3,
+    "returned_candidates": 12,
+    "over_limit": 0
+  },
+  "candidates": [
+    {
+      "key": "1732532755046568591",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732532755046568591",
+        "product_name": "3-in-1 Entryway Organizer: Rack with Coat Rack, 5-Tier Storage Stand with 8 Hooks, Freestanding Hall Tree for Living Room, Bedroom shoe organizer Adjustable Shelf Rack Closet Rack",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732532755046568591&language=en-US&currency=USD&region=US",
+        "shop_id": "7494801156502357647",
+        "shop_name": "Spacify Life",
+        "category": "Home Supplies > Home Organizers > Storage Holders & Racks",
+        "category_id": "852872",
+        "price_min": 26.8,
+        "price_max": 26.8,
+        "gmv_30d": 210664.6,
+        "units_30d": 8776,
+        "growth_30d": 83066.64,
+        "creator_count": 230,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 268,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-09-05",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732532755046568591",
+          "product_name": "3-in-1 Entryway Organizer:  Rack with Coat Rack, 5-Tier  Storage Stand with 8 Hooks, Freestanding Hall Tree for Living Room, Bedroom shoe organizer Adjustable Shelf Rack Closet Rack",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732532755046568591&language=en-US&currency=USD&region=US",
+          "shop_id": "7494801156502357647",
+          "shop_name": "Spacify Life",
+          "category_path": "Home Supplies > Home Organizers > Storage Holders & Racks",
+          "category_id": "852872",
+          "price_min": 26.8,
+          "price_max": 26.8,
+          "gmv_30d": 210664.6,
+          "units_30d": 8776,
+          "growth_30d_pct": 83066.64,
+          "creator_count": 230,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 268,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-09-05",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 26.8,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732491682604749463",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732491682604749463",
+        "product_name": "Onyx Silent Vibration Alarm Clock - Wrist-Worn Wake-Up Device for Heavy Sleepers, Avoids Disturbing Partners, 2 Intensity Levels, Up to 3 Alarms, 14+ Day Rechargeable Battery",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732491682604749463&language=en-US&currency=USD&region=US",
+        "shop_id": "7494764075006461591",
+        "shop_name": "histrips.",
+        "category": "Home Supplies > Home Decor > Clocks",
+        "category_id": "600321",
+        "price_min": 39.95,
+        "price_max": 39.95,
+        "gmv_30d": 149963.9,
+        "units_30d": 3879,
+        "growth_30d": 16619.26,
+        "creator_count": 338,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 882,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-09-04",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1732491682604749463",
+          "product_name": "Onyx Silent Vibration Alarm Clock - Wrist-Worn Wake-Up Device for Heavy Sleepers, Avoids Disturbing Partners, 2 Intensity Levels, Up to 3 Alarms, 14+ Day Rechargeable Battery",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732491682604749463&language=en-US&currency=USD&region=US",
+          "shop_id": "7494764075006461591",
+          "shop_name": "histrips.",
+          "category_path": "Home Supplies > Home Decor > Clocks",
+          "category_id": "600321",
+          "price_min": 39.95,
+          "price_max": 39.95,
+          "gmv_30d": 149963.9,
+          "units_30d": 3879,
+          "growth_30d_pct": 16619.26,
+          "creator_count": 338,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 882,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-09-04",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 39.95,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          },
+          {
+            "rule": "shipping_problems",
+            "action": "flag",
+            "keywords": [
+              "battery"
+            ]
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732502071354822887",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732502071354822887",
+        "product_name": "Handmade Crochet Flowers Bouquet Halloween Gift Pumpkin Ghost Bouquet Halloween Decor Gift for Her Friend Gift Forever Flowers Handmade Halloween Decoration",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732502071354822887&language=en-US&currency=USD&region=US",
+        "shop_id": "7495819049717565671",
+        "shop_name": "YouSeeCrochet",
+        "category": "Home Supplies > Home Decor > Decorative Flowers, Plants & Fruit",
+        "category_id": "700654",
+        "price_min": 28.59,
+        "price_max": 80.6,
+        "gmv_30d": 49680.63,
+        "units_30d": 1380,
+        "growth_30d": 2162.96,
+        "creator_count": 76,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 311,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-20",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1732502071354822887",
+          "product_name": "Handmade Crochet Flowers Bouquet Halloween Gift Pumpkin Ghost Bouquet Halloween Decor Gift for Her Friend Gift Forever Flowers Handmade Halloween Decoration",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732502071354822887&language=en-US&currency=USD&region=US",
+          "shop_id": "7495819049717565671",
+          "shop_name": "YouSeeCrochet",
+          "category_path": "Home Supplies > Home Decor > Decorative Flowers, Plants & Fruit",
+          "category_id": "700654",
+          "price_min": 28.59,
+          "price_max": 80.6,
+          "gmv_30d": 49680.63,
+          "units_30d": 1380,
+          "growth_30d_pct": 2162.96,
+          "creator_count": 76,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 311,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-20",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 54.595,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732546314958115740",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732546314958115740",
+        "product_name": "3Pack Ghost Family Halloween Decorations Outdoor, Light Up Standing Ghosts Set with Remote Control String Lights, Cute Spooky Indoor & Outdoor Decor for Porch, Yard, Lawn, Entryway & Window",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732546314958115740&language=en-US&currency=USD&region=US",
+        "shop_id": "7494320790118959004",
+        "shop_name": "MEADIN",
+        "category": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+        "category_id": "600009",
+        "price_min": 55.09,
+        "price_max": 61.09,
+        "gmv_30d": 32368.93,
+        "units_30d": 644,
+        "growth_30d": 1981.65,
+        "creator_count": 150,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 187,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-08-11",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 3,
+        "original_record": {
+          "product_id": "1732546314958115740",
+          "product_name": "3Pack Ghost Family Halloween Decorations Outdoor, Light Up Standing Ghosts Set with Remote Control String Lights, Cute Spooky Indoor & Outdoor Decor for Porch, Yard, Lawn, Entryway & Window",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732546314958115740&language=en-US&currency=USD&region=US",
+          "shop_id": "7494320790118959004",
+          "shop_name": "MEADIN",
+          "category_path": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+          "category_id": "600009",
+          "price_min": 55.09,
+          "price_max": 61.09,
+          "gmv_30d": 32368.93,
+          "units_30d": 644,
+          "growth_30d_pct": 1981.65,
+          "creator_count": 150,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 187,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-08-11",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 58.09,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732591467722084451",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732591467722084451",
+        "product_name": "2 Pack 1 Pack 6/9FT Christmas Cedar Garland with Lights Prelit Pine Garland Christmas Decor",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732591467722084451&language=en-US&currency=USD&region=US",
+        "shop_id": "7494566097034118243",
+        "shop_name": "Curious Finds",
+        "category": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+        "category_id": "600009",
+        "price_min": 27.35,
+        "price_max": 51.43,
+        "gmv_30d": 44466.61,
+        "units_30d": 1853,
+        "growth_30d": 798.26,
+        "creator_count": 51,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 111,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-08-26",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 5,
+        "original_record": {
+          "product_id": "1732591467722084451",
+          "product_name": "2 Pack 1 Pack 6/9FT Christmas Cedar Garland with Lights Prelit Pine Garland Christmas Decor",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732591467722084451&language=en-US&currency=USD&region=US",
+          "shop_id": "7494566097034118243",
+          "shop_name": "Curious Finds",
+          "category_path": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+          "category_id": "600009",
+          "price_min": 27.35,
+          "price_max": 51.43,
+          "gmv_30d": 44466.61,
+          "units_30d": 1853,
+          "growth_30d_pct": 798.26,
+          "creator_count": 51,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 111,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-08-26",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 39.39,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1729504019443521424",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1729504019443521424",
+        "product_name": "2 Pcs Autumn Pansy Artificial Hanging Flower Baskets - Includes 2 Hanging Pots, 24 Flowers - Aesthetic Home Decor, Outdoor Decor for Front Porch, Garden, Patio",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729504019443521424&language=en-US&currency=USD&region=US",
+        "shop_id": "7494459702349694864",
+        "shop_name": "LunaBloom",
+        "category": "Home Supplies > Home Decor > Decorative Flowers, Plants & Fruit",
+        "category_id": "700654",
+        "price_min": 35.09,
+        "price_max": 43.99,
+        "gmv_30d": 47091.84,
+        "units_30d": 1821,
+        "growth_30d": 768.93,
+        "creator_count": 40,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 45,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-03-12",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 6,
+        "original_record": {
+          "product_id": "1729504019443521424",
+          "product_name": "2 Pcs Autumn Pansy Artificial Hanging Flower Baskets - Includes 2 Hanging Pots, 24 Flowers - Aesthetic Home Decor, Outdoor Decor for Front Porch, Garden, Patio",
+          "product_url": "https://www.kalodata.com/product/detail?id=1729504019443521424&language=en-US&currency=USD&region=US",
+          "shop_id": "7494459702349694864",
+          "shop_name": "LunaBloom",
+          "category_path": "Home Supplies > Home Decor > Decorative Flowers, Plants & Fruit",
+          "category_id": "700654",
+          "price_min": 35.09,
+          "price_max": 43.99,
+          "gmv_30d": 47091.84,
+          "units_30d": 1821,
+          "growth_30d_pct": 768.93,
+          "creator_count": 40,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 45,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-03-12",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 39.540000000000006,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732516042489959204",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732516042489959204",
+        "product_name": "2 Pcs Artificial Christmas hanging flower basket featuring red berries and greenery; suitable for Christmas home decor on porches, patios, balconies, and in gardens.",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732516042489959204&language=en-US&currency=USD&region=US",
+        "shop_id": "7496170126504135460",
+        "shop_name": "Flower Sea Studio",
+        "category": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+        "category_id": "600009",
+        "price_min": 77.99,
+        "price_max": 77.99,
+        "gmv_30d": 37902.82,
+        "units_30d": 1038,
+        "growth_30d": 520.84,
+        "creator_count": 53,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 125,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-08-27",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 7,
+        "original_record": {
+          "product_id": "1732516042489959204",
+          "product_name": "2 Pcs Artificial Christmas hanging flower basket featuring red berries and greenery; suitable for Christmas home decor on porches, patios, balconies, and in gardens.",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732516042489959204&language=en-US&currency=USD&region=US",
+          "shop_id": "7496170126504135460",
+          "shop_name": "Flower Sea Studio",
+          "category_path": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+          "category_id": "600009",
+          "price_min": 77.99,
+          "price_max": 77.99,
+          "gmv_30d": 37902.82,
+          "units_30d": 1038,
+          "growth_30d_pct": 520.84,
+          "creator_count": 53,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 125,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-08-27",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 77.99,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732337518313247534",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732337518313247534",
+        "product_name": "The Pink Stuff Total Home Essential Bundle - Cleaning Paste 500g, Squeezable Cleaning Paste 300g, Multi Purpose Spray 750ml, Bathroom Foam Spray 750ml, Foaming Toilet Powder 2 Pack, SQeeZY Sponge for Full Home Coverage",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732337518313247534&language=en-US&currency=USD&region=US",
+        "shop_id": "7494458227123193646",
+        "shop_name": "The Pink Stuff USA",
+        "category": "Home Supplies > Home Care Supplies > Household Cleaners",
+        "category_id": "600812",
+        "price_min": 38.99,
+        "price_max": 38.99,
+        "gmv_30d": 177819.87,
+        "units_30d": 7032,
+        "growth_30d": 465.17,
+        "creator_count": 2695,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 3870,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-19",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 8,
+        "original_record": {
+          "product_id": "1732337518313247534",
+          "product_name": "The Pink Stuff Total Home Essential Bundle - Cleaning Paste 500g, Squeezable Cleaning Paste 300g, Multi Purpose Spray 750ml, Bathroom Foam Spray 750ml, Foaming Toilet Powder 2 Pack, SQeeZY Sponge for Full Home Coverage",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732337518313247534&language=en-US&currency=USD&region=US",
+          "shop_id": "7494458227123193646",
+          "shop_name": "The Pink Stuff USA",
+          "category_path": "Home Supplies > Home Care Supplies > Household Cleaners",
+          "category_id": "600812",
+          "price_min": 38.99,
+          "price_max": 38.99,
+          "gmv_30d": 177819.87,
+          "units_30d": 7032,
+          "growth_30d_pct": 465.17,
+          "creator_count": 2695,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 3870,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-05-19",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 38.99,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732511949556519836",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732511949556519836",
+        "product_name": "Halloween Decorations Outdoor - 5 FT Large Hanging Swing Ghost with Remote Controlled Warm LED Lights, Cute & Spooky Halloween Ornament for Tree, Yard, Front Porch, Garden",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732511949556519836&language=en-US&currency=USD&region=US",
+        "shop_id": "7494320790118959004",
+        "shop_name": "MEADIN",
+        "category": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+        "category_id": "600009",
+        "price_min": 32.4,
+        "price_max": 38.99,
+        "gmv_30d": 60023.79,
+        "units_30d": 2010,
+        "growth_30d": 442.32,
+        "creator_count": 263,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 385,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-27",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 10,
+        "original_record": {
+          "product_id": "1732511949556519836",
+          "product_name": "Halloween Decorations Outdoor - 5 FT Large Hanging Swing Ghost with Remote Controlled Warm LED Lights, Cute & Spooky Halloween Ornament for Tree, Yard, Front Porch, Garden",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732511949556519836&language=en-US&currency=USD&region=US",
+          "shop_id": "7494320790118959004",
+          "shop_name": "MEADIN",
+          "category_path": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+          "category_id": "600009",
+          "price_min": 32.4,
+          "price_max": 38.99,
+          "gmv_30d": 60023.79,
+          "units_30d": 2010,
+          "growth_30d_pct": 442.32,
+          "creator_count": 263,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 385,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-27",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 35.695,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732394478406832933",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732394478406832933",
+        "product_name": "Minimalist Rolling Storage Cart with Wheels, Multi-Layer Adjustable Freestanding Household Racks, Space-Saving Plastic Organizer, Portable Easy-Install Unit for Kitchen,Bathroom - Memorial Day Deals",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732394478406832933&language=en-US&currency=USD&region=US",
+        "shop_id": "7494511992295360293",
+        "shop_name": "WoveHome",
+        "category": "Home Supplies > Home Organizers > Storage Holders & Racks",
+        "category_id": "852872",
+        "price_min": 60.0,
+        "price_max": 60.0,
+        "gmv_30d": 66439.0,
+        "units_30d": 2089,
+        "growth_30d": 421.8,
+        "creator_count": 56,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 77,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-12",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 11,
+        "original_record": {
+          "product_id": "1732394478406832933",
+          "product_name": "Minimalist Rolling Storage Cart with Wheels, Multi-Layer Adjustable Freestanding Household Racks, Space-Saving Plastic Organizer, Portable Easy-Install Unit for Kitchen,Bathroom - Memorial Day Deals",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732394478406832933&language=en-US&currency=USD&region=US",
+          "shop_id": "7494511992295360293",
+          "shop_name": "WoveHome",
+          "category_path": "Home Supplies > Home Organizers > Storage Holders & Racks",
+          "category_id": "852872",
+          "price_min": 60.0,
+          "price_max": 60.0,
+          "gmv_30d": 66439.0,
+          "units_30d": 2089,
+          "growth_30d_pct": 421.8,
+          "creator_count": 56,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 77,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-05-12",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 60.0,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1729461927577227630",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1729461927577227630",
+        "product_name": "Mayicivo Mothers Day Selfcare Premium Gift Box - Festive & Party Supplies Basket with Flannel Blanket, Stainless Steel Insulated Tumbler - Birthday Relaxing Gift for Mom",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729461927577227630&language=en-US&currency=USD&region=US",
+        "shop_id": "7495561620596951406",
+        "shop_name": "MAYICIVO",
+        "category": "Home Supplies > Festive & Party Supplies > Party Bags & Gifts",
+        "category_id": "855944",
+        "price_min": 35.0,
+        "price_max": 64.99,
+        "gmv_30d": 97333.98,
+        "units_30d": 2586,
+        "growth_30d": 374.05,
+        "creator_count": 310,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 900,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2024-04-16",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 12,
+        "original_record": {
+          "product_id": "1729461927577227630",
+          "product_name": "Mayicivo Mothers Day Selfcare Premium Gift Box - Festive & Party Supplies Basket with Flannel Blanket, Stainless Steel Insulated Tumbler - Birthday Relaxing Gift for Mom",
+          "product_url": "https://www.kalodata.com/product/detail?id=1729461927577227630&language=en-US&currency=USD&region=US",
+          "shop_id": "7495561620596951406",
+          "shop_name": "MAYICIVO",
+          "category_path": "Home Supplies > Festive & Party Supplies > Party Bags & Gifts",
+          "category_id": "855944",
+          "price_min": 35.0,
+          "price_max": 64.99,
+          "gmv_30d": 97333.98,
+          "units_30d": 2586,
+          "growth_30d_pct": 374.05,
+          "creator_count": 310,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 900,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2024-04-16",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 49.995,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732441965952996161",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732441965952996161",
+        "product_name": "52 Roses Soap Flower Bouquet with LED Lights, Romantic Gift for Her, Valentine's Day & Anniversary Gift for Girlfriend, Long Lasting Decor Bouquet, Faux Rose Bouquet, Home Table Decor, Birthday Gift for Her, Wedding Party Decor",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732441965952996161&language=en-US&currency=USD&region=US",
+        "shop_id": "7494686409225373505",
+        "shop_name": "Solvess",
+        "category": "Home Supplies > Home Decor > Decorative Flowers, Plants & Fruit",
+        "category_id": "700654",
+        "price_min": 73.43,
+        "price_max": 73.43,
+        "gmv_30d": 34836.63,
+        "units_30d": 997,
+        "growth_30d": 338.74,
+        "creator_count": 25,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 213,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-06-27",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 14,
+        "original_record": {
+          "product_id": "1732441965952996161",
+          "product_name": "52 Roses Soap Flower Bouquet with LED Lights, Romantic Gift for Her, Valentine's Day & Anniversary Gift for Girlfriend, Long Lasting Decor Bouquet, Faux Rose Bouquet, Home Table Decor, Birthday Gift for Her, Wedding Party Decor",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732441965952996161&language=en-US&currency=USD&region=US",
+          "shop_id": "7494686409225373505",
+          "shop_name": "Solvess",
+          "category_path": "Home Supplies > Home Decor > Decorative Flowers, Plants & Fruit",
+          "category_id": "700654",
+          "price_min": 73.43,
+          "price_max": 73.43,
+          "gmv_30d": 34836.63,
+          "units_30d": 997,
+          "growth_30d_pct": 338.74,
+          "creator_count": 25,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 213,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-06-27",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 73.43,
+        "price_basis": "avg",
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "failed": [
+    {
+      "key": "1731779738035589858",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1731779738035589858",
+        "product_name": "Sweetcrispy Pre-Lit Snow-Flocked Artificial Christmas Tree - 250 Warm-Toned LED Christmas Lights, Foldable Base, Led Lighted Mood Lighting, Bedroom Use, Home Holiday Decor",
+        "product_url": "https://www.kalodata.com/product/detail?id=1731779738035589858&language=en-US&currency=USD&region=US",
+        "shop_id": "7495657286590434018",
+        "shop_name": "Sweetcrispy Official",
+        "category": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+        "category_id": "600009",
+        "price_min": 54.57,
+        "price_max": 224.87,
+        "gmv_30d": 34955.29,
+        "units_30d": 894,
+        "growth_30d": 371.08,
+        "creator_count": 213,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 297,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-09-16",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 13,
+        "original_record": {
+          "product_id": "1731779738035589858",
+          "product_name": "Sweetcrispy Pre-Lit Snow-Flocked Artificial Christmas Tree - 250 Warm-Toned LED Christmas Lights, Foldable Base, Led Lighted Mood Lighting, Bedroom Use, Home Holiday Decor",
+          "product_url": "https://www.kalodata.com/product/detail?id=1731779738035589858&language=en-US&currency=USD&region=US",
+          "shop_id": "7495657286590434018",
+          "shop_name": "Sweetcrispy Official",
+          "category_path": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+          "category_id": "600009",
+          "price_min": 54.57,
+          "price_max": 224.87,
+          "gmv_30d": 34955.29,
+          "units_30d": 894,
+          "growth_30d_pct": 371.08,
+          "creator_count": 213,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 297,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-09-16",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 139.72,
+        "price_basis": "avg",
+        "filter_status": "FAIL",
+        "filter_reasons": [
+          {
+            "rule": "price_range",
+            "action": "reject",
+            "value": 139.72,
+            "basis": "avg",
+            "min": 20,
+            "max": 100
+          },
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732433001029407431",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732433001029407431",
+        "product_name": "Hotel Collection | Loft Portable Scent Diffuser Bundle",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732433001029407431&language=en-US&currency=USD&region=US",
+        "shop_id": "7494948959446010567",
+        "shop_name": "Hotel Collection",
+        "category": "Home Supplies > Home Care Supplies > Home Fragrances",
+        "category_id": "600477",
+        "price_min": 49.95,
+        "price_max": 155.94,
+        "gmv_30d": 39200.32,
+        "units_30d": 1040,
+        "growth_30d": 1887.21,
+        "creator_count": 122,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 231,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-06-15",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 4,
+        "original_record": {
+          "product_id": "1732433001029407431",
+          "product_name": "Hotel Collection | Loft Portable Scent Diffuser Bundle",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732433001029407431&language=en-US&currency=USD&region=US",
+          "shop_id": "7494948959446010567",
+          "shop_name": "Hotel Collection",
+          "category_path": "Home Supplies > Home Care Supplies > Home Fragrances",
+          "category_id": "600477",
+          "price_min": 49.95,
+          "price_max": 155.94,
+          "gmv_30d": 39200.32,
+          "units_30d": 1040,
+          "growth_30d_pct": 1887.21,
+          "creator_count": 122,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 231,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-06-15",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 102.945,
+        "price_basis": "avg",
+        "filter_status": "FAIL",
+        "filter_reasons": [
+          {
+            "rule": "price_range",
+            "action": "reject",
+            "value": 102.945,
+            "basis": "avg",
+            "min": 20,
+            "max": 100
+          },
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "1732564403464999063",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732564403464999063",
+        "product_name": "2-Pack Pre-Lit Artificial Cedar Christmas Garland with Remote, Warm White & Multicolor Fairy Lights, Natural Look Greenery for Mantel, Staircase & Wall Decor, Christmas Decor 2026 sohochic light up garland decor",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732564403464999063&language=en-US&currency=USD&region=US",
+        "shop_id": "7494765533445457047",
+        "shop_name": "Lukio",
+        "category": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+        "category_id": "600009",
+        "price_min": 128.7,
+        "price_max": 258.7,
+        "gmv_30d": 84202.1,
+        "units_30d": 1692,
+        "growth_30d": 445.3,
+        "creator_count": 99,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 139,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-09-03",
+        "data_window_end": "2026-09-30"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "data/raw/20260930T014532Z_home_ee7eadd9e33c4845a747b22411968e6f.json",
+        "task_id": "ee7eadd9e33c4845a747b22411968e6f",
+        "report_url": null,
+        "fetched_at": "20260930T014532Z",
+        "record_index": 9,
+        "original_record": {
+          "product_id": "1732564403464999063",
+          "product_name": "2-Pack Pre-Lit Artificial Cedar Christmas Garland with Remote, Warm White & Multicolor Fairy Lights, Natural Look Greenery for Mantel, Staircase & Wall Decor, Christmas Decor 2026 sohochic light up garland decor",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732564403464999063&language=en-US&currency=USD&region=US",
+          "shop_id": "7494765533445457047",
+          "shop_name": "Lukio",
+          "category_path": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+          "category_id": "600009",
+          "price_min": 128.7,
+          "price_max": 258.7,
+          "gmv_30d": 84202.1,
+          "units_30d": 1692,
+          "growth_30d_pct": 445.3,
+          "creator_count": 99,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 139,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-09-03",
+          "data_window_end": "2026-09-30"
+        }
+      },
+      "calculated": {
+        "price": 193.7,
+        "price_basis": "avg",
+        "filter_status": "FAIL",
+        "filter_reasons": [
+          {
+            "rule": "price_range",
+            "action": "reject",
+            "value": 193.7,
+            "basis": "avg",
+            "min": 20,
+            "max": 100
+          },
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "selling_creator_count"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "WPS engine not implemented; deep-analysis data required"
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "over_limit_keys": [],
+  "duplicates": [],
+  "malformed": []
+}

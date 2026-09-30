@@ -143,6 +143,46 @@ class MissingData(Base):
         self.assertNotIn("insufficient_data", [x["rule"] for x in reasons])
 
 
+class LowBaseAndSellingCreators(Base):
+    def test_missing_selling_creators_alone_is_pass(self):
+        r, _ = self.run_env(envelope([rec(selling_creator_count=None)]))
+        p = self.by_key(r)["1001"]
+        self.assertEqual(p["calculated"]["filter_status"], "PASS")
+        self.assertIn("selling_creator_count", p["missing_fields"])     # still shown as N/A
+
+    def test_selling_creators_below_preferred_still_reviews_when_returned(self):
+        r, _ = self.run_env(envelope([rec(selling_creator_count=2)]))
+        self.assertEqual(self.by_key(r)["1001"]["calculated"]["filter_status"], "REVIEW")
+
+    def test_new_launch_under_30_days_is_review(self):
+        r, _ = self.run_env(envelope([rec(launch_date="2026-09-05", data_window_end="2026-09-30")]))
+        c = self.by_key(r)["1001"]["calculated"]
+        self.assertEqual(c["product_age_days"], 25)
+        self.assertEqual(c["filter_status"], "REVIEW")
+        self.assertIn("low_base_or_seasonal", [x["rule"] for x in c["filter_reasons"]])
+
+    def test_exactly_30_days_not_flagged(self):
+        r, _ = self.run_env(envelope([rec(launch_date="2026-08-31", data_window_end="2026-09-30")]))
+        self.assertEqual(self.by_key(r)["1001"]["calculated"]["filter_status"], "PASS")
+
+    def test_growth_over_1000_is_review(self):
+        r, _ = self.run_env(envelope([rec(growth_30d_pct=1000.01)]))
+        self.assertEqual(self.by_key(r)["1001"]["calculated"]["filter_status"], "REVIEW")
+        r, _ = self.run_env(envelope([rec("1002", growth_30d_pct=1000)]))
+        self.assertEqual(self.by_key(r)["1002"]["calculated"]["filter_status"], "PASS")
+
+    def test_missing_launch_date_is_na_not_flag(self):
+        r, _ = self.run_env(envelope([rec(launch_date=None)]))
+        c = self.by_key(r)["1001"]["calculated"]
+        self.assertIsNone(c["product_age_days"])
+        self.assertEqual(c["filter_status"], "PASS")
+        self.assertIn("low_base_or_seasonal:product_age_days", c["na_checks"])
+
+    def test_age_uses_observation_date_when_window_end_missing(self):
+        r, _ = self.run_env(envelope([rec(launch_date="2026-09-20", data_window_end=None)]))
+        self.assertEqual(self.by_key(r)["1001"]["calculated"]["product_age_days"], 10)   # obs 2026-09-30
+
+
 class Dedupe(Base):
     def test_duplicate_products_across_categories(self):
         a = envelope([rec("2002", video_count=None)], category_key="home", task_id="a")
