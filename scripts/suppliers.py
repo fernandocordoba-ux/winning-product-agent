@@ -656,11 +656,14 @@ def tiktok_view(deep):
             "variant": deep.get("variant")}
 
 
-def commercial_data_for(deep, processed_dir=PROCESSED_DIR, cfg=None, selling_price=None):
-    """(commercial_data, source) from the supplier layer, or (None, None) if no offer was imported."""
+def commercial_data_for(deep, processed_dir=PROCESSED_DIR, cfg=None, selling_price=None, max_offers=None):
+    """(commercial_data, source) from the supplier layer, or (None, None) if no offer was imported.
+    max_offers (Step AA): collection cap — the first N offers by offer_id are considered (deterministic)."""
     offers = load_offers(deep.get("product_id"), processed_dir)
     if not offers:
         return None, None
+    if max_offers:
+        offers = sorted(offers, key=lambda o: str(o.get("offer_id")))[:max_offers]
     ev = evaluate_product(deep.get("product_id"), tiktok_view(deep), offers, cfg, selling_price)
     return to_commercial_data(ev), f"supplier_layer:{processed_dir}"
 

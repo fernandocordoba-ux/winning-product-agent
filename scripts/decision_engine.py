@@ -157,6 +157,8 @@ def build_evidence(p, competitor=None, creative=None, expected_env=None):
         if isinstance(f, dict) and f.get("severe"):
             flags.setdefault(f["flag"], {"sources": [], "severe": False})["severe"] = True
 
+    ev_trust = trust_records(p, d, a, b, em, layer, sel, comp, cre, ev)
+
     env = p.get("data_environment") or d.get("data_environment")
     integrity = list(p.get("integrity_errors") or [])
     if expected_env and env is not None and env != expected_env:
@@ -173,8 +175,114 @@ def build_evidence(p, competitor=None, creative=None, expected_env=None):
                            "competitor": bool(comp), "creative": bool(cre)},
         "supplier_all_unreliable": bool(offers) and all(o.get("match_class") == "UNRELIABLE" for o in offers),
         "identity_conflict": bool(p.get("identity_conflict")),
-        "integrity_errors": integrity, "data_environment": env,
+        "integrity_errors": integrity, "data_environment": env, "trust": ev_trust,
     }
+
+
+# ============================================================================ Stage 18 (AA) — data trust
+TRUST_FIELDS = ("value", "source", "source_field", "scope", "observed_at", "provenance")
+
+
+def _t(value, source, source_field, scope, observed_at, provenance):
+    return {"value": value, "source": source, "source_field": source_field, "scope": scope,
+            "observed_at": observed_at, "provenance": provenance}
+
+
+def trust_records(p, d, a, b, em, layer, sel, comp, cre, ev):
+    """Per metric: where it came from. A field is None when it cannot be traced (never filled in)."""
+    val = lambda k: ev[k]["value"]  # noqa: E731
+    dsrc, dts = (d.get("source") or {}).get("raw_file"), d.get("observation_timestamp")
+    prov = d.get("provenance") or {}
+    wprov = d.get("wps_input_provenance") or {}
+
+    def pv(key):
+        e = prov.get(key) or {}
+        return e if e.get("availability") in ("AVAILABLE", "DERIVED") else None
+    t = {}
+    for k in ("wps", "wps_confidence"):
+        t[k] = _t(val(k), dsrc, f"calculated:{'wps' if k == 'wps' else 'confidence'} (config/scoring.yaml)", "PRODUCT",
+                  dts, ("wps_input_provenance" if wprov and prov else None))
+    g = pv("growth_30d")
+    t["growth_30d_pct"] = _t(val("growth_30d_pct"), dsrc, (g or {}).get("source_field"), (g or {}).get("scope"),
+                             (g or {}).get("provider_observation_timestamp") or (g or {}).get("retrieved_at") or dts,
+                             "deep_analysis.provenance.growth_30d" if g else None)
+    dg = pv("daily_gmv")
+    t["trend"] = _t(val("trend"), dsrc, "calculated:trend_metrics from daily_gmv" if dg else None,
+                    (dg or {}).get("scope"), dts, "deep_analysis.provenance.daily_gmv" if dg else None)
+    for k, pk in (("creator_count", "creator_count"), ("video_count", "video_count")):
+        e = pv(pk)
+        t[k] = _t(val(k), dsrc, (e or {}).get("source_field"), (e or {}).get("scope"), dts,
+                  f"deep_analysis.provenance.{pk}" if e else None)
+    esrc = (em.get("sources") or [None])[0]
+    for k in ("momentum_score", "momentum_confidence"):
+        t[k] = _t(val(k), esrc, f"calculated:{k} (config/emerging.yaml)", "PRODUCT", em.get("history_end"),
+                  "history_store" if em.get("sources") else None)
+    asrc = (a.get("source") or {}).get("raw_file")
+    for k in ("avs", "amazon_confidence"):
+        t[k] = _t(val(k), asrc, f"calculated:{k} (config/amazon_validation.yaml)", "PRODUCT (Amazon US match)",
+                  a.get("observation_timestamp"), "amazon_validation.source" if asrc else None)
+    bsrc = (b.get("source") or {}).get("deep_analysis_file") or b.get("_file")
+    bts = b.get("observation_timestamp")
+    supplier_ok = bool(sel.get("offer_id")) and bool(sel.get("supplier_source") or sel.get("supplier_url"))
+    for k in ("bvs", "bvs_confidence", "gross_margin_pct", "contribution_margin_pct"):
+        t[k] = _t(val(k), bsrc, f"calculated:{k} (config/business_viability.yaml)", "PRODUCT", bts,
+                  "business_viability.source" if bsrc else None)
+    for k, f in (("product_cost", "product_cost"), ("supplier_shipping_cost", "shipping_cost"),
+                 ("supplier_confidence", "supplier_confidence"), ("supplier_quality", "supplier_quality")):
+        t[k] = _t(val(k), sel.get("supplier_url") or sel.get("supplier_source"), f"supplier_offer.{f}",
+                  "SUPPLIER_OFFER", sel.get("observed_at"), f"supplier_offer:{sel.get('offer_id')}" if supplier_ok else None)
+    for pre, x in (("competitor", comp), ("creative", cre)):
+        src = x.get("source_files") or x.get("source")
+        src = src[0] if isinstance(src, list) and src else (src if isinstance(src, str) else None)
+        for part in ("saturation", "opportunity", "confidence"):
+            k = f"{pre}_{part}"
+            t[k] = _t(val(k), src, f"calculated:{part} (config/{pre}s.yaml)", "PRODUCT (qualified matches)",
+                      x.get("observed_at"), f"{pre}_layer" if x.get("provenance_complete") else None)
+    return t
+
+
+def untraceable(ev, keys):
+    """Metrics among keys that are USED (value present) but miss any trust field."""
+    out = {}
+    for k in keys:
+        r = (ev.get("trust") or {}).get(k)
+        if r is None or r.get("value") is None:
+            continue
+        miss = [f for f in TRUST_FIELDS if r.get(f) in (None, "", [])]
+        if miss:
+            out[k] = miss
+    return out
+
+
+DIM_METRICS = {
+    "market_momentum": ["wps", "wps_confidence", "momentum_score", "momentum_confidence", "trend"],
+    "cross_platform_demand": ["avs", "amazon_confidence"],
+    "commercial_viability": ["bvs", "bvs_confidence", "gross_margin_pct", "product_cost", "supplier_shipping_cost",
+                             "supplier_confidence"],
+    "competitive_environment": ["competitor_saturation", "competitor_opportunity", "competitor_confidence"],
+    "creative_opportunity": ["creative_saturation", "creative_opportunity", "creative_confidence"],
+}
+GATE_METRICS = {"NEGATIVE_CONTRIBUTION_MARGIN": ["contribution_margin_pct"],
+                "DEMAND_DECLINING": ["trend", "growth_30d_pct"],
+                "CREATOR_DEPENDENCY_WEAK_BROADER": ["creator_count"], "VIDEO_DEPENDENCY_WEAK_BROADER": ["video_count"]}
+
+
+def trust_check(ev, dims, gates):
+    """Every metric a decision depends on must be traceable (Stage 18)."""
+    used = {}
+    for k, keys in DIM_METRICS.items():
+        if dims[k]["status"] != UNKNOWN:
+            ks = [x for x in keys if not (x.startswith("momentum") and "momentum_ignored" in dims[k]["inputs"])]
+            bad = untraceable(ev, ks)
+            if bad:
+                used[k] = bad
+    for g in gates:
+        if g["status"] == "FIRED" and g["gate"] in GATE_METRICS:
+            bad = untraceable(ev, GATE_METRICS[g["gate"]])
+            if bad:
+                used[f"gate:{g['gate']}"] = bad
+    return {"traceable": not used, "untraceable": used,
+            "checked_fields": list(TRUST_FIELDS)}
 
 
 def v(ev, key):
@@ -546,6 +654,31 @@ def decide(ev, cfg, manual=None):
         path.append(f"not READY ({'; '.join(ready_fail)}); not PROMISING (momentum {st['market_momentum']}, WEAK: "
                     f"{[k for k in rules['promising']['forbid_weak'] if st[k] == WEAK]}) -> WATCHLIST")
 
+    tasks = []
+    if not supplier_economics_known(ev):
+        tasks.append({"task": _task(cfg, "supplier_economics", "supplier economics"), "reason": "supplier economics missing"})
+    for k in DIMENSIONS:
+        if st[k] == UNKNOWN and not (k == "commercial_viability" and not supplier_economics_known(ev)):
+            tasks.append({"task": _task(cfg, k, k), "reason": f"{DIM_LABEL[k]} UNKNOWN: {dims[k]['reason']}"})
+    for g in fired_block:
+        tasks.append({"task": _task(cfg, g["gate"], g["gate"]), "reason": f"gate {g['gate']} (block_ready)"})
+    trust = trust_check(ev, dims, gates)
+    if ev.get("trust_required") and not trust["traceable"]:
+        bad = trust["untraceable"]
+        gate_bad = {g["gate"] for g in fired_reject if f"gate:{g['gate']}" in bad}
+        severe = ("market_momentum" in bad and state != REJECT) or \
+            (state == REJECT and fired_reject and gate_bad == {g["gate"] for g in fired_reject}) or \
+            (state == REJECT and not fired_reject and any(k in bad for k in weak_major))
+        if severe and state != INSUFFICIENT:
+            path.append(f"DATA TRUST: decision depends on untraceable metrics {bad} -> INSUFFICIENT_DATA "
+                        f"(was {state})")
+            state = INSUFFICIENT
+        elif state == READY:
+            path.append(f"DATA TRUST: untraceable metrics {bad} -> PROMISING_NEEDS_VALIDATION (was READY)")
+            state = PROMISING
+        for k, miss in bad.items():
+            tasks.append({"task": f"Restore provenance for {k} (missing: {miss})", "reason": "data trust check"})
+
     passed = [{"text": f"{DIM_LABEL[k]} {st[k]}: {dims[k]['reason']}", "rule": dims[k]["rule"], "evidence": dims[k]["inputs"]}
               for k in DIMENSIONS if st[k] in (STRONG, ACCEPTABLE)]
     passed += [{"text": f"gate {g['gate']} passed", "rule": g["rule"], "evidence": g["evidence"]}
@@ -555,14 +688,6 @@ def decide(ev, cfg, manual=None):
     not_passed += [{"text": f"{DIM_LABEL[k]} {st[k]}: {dims[k]['reason']}", "rule": dims[k]["rule"], "evidence": dims[k]["inputs"]}
                    for k in DIMENSIONS if st[k] in (WEAK, UNKNOWN)]
 
-    tasks = []
-    if not supplier_economics_known(ev):
-        tasks.append({"task": _task(cfg, "supplier_economics", "supplier economics"), "reason": "supplier economics missing"})
-    for k in DIMENSIONS:
-        if st[k] == UNKNOWN and not (k == "commercial_viability" and not supplier_economics_known(ev)):
-            tasks.append({"task": _task(cfg, k, k), "reason": f"{DIM_LABEL[k]} UNKNOWN: {dims[k]['reason']}"})
-    for g in fired_block:
-        tasks.append({"task": _task(cfg, g["gate"], g["gate"]), "reason": f"gate {g['gate']} (block_ready)"})
     pending = [k for k, x in cl.items() if x["status"] == "PENDING"]
 
     out = {"product_id": ev["product_id"], "name": ev["name"], "category": ev["category"], "url": ev["url"],
@@ -571,7 +696,7 @@ def decide(ev, cfg, manual=None):
            "decision_confidence": dconf,
            "why_it_passed": passed, "why_it_did_not_pass": not_passed,
            "missing_validation": [t["task"] for t in tasks] + [f"manual checklist: {k}" for k in pending],
-           "manual_checklist": cl, "evidence": ev}
+           "manual_checklist": cl, "data_trust": trust, "evidence": ev}
     if state == PROMISING:
         out["validation_tasks"] = tasks
     if state == WATCH:
@@ -625,7 +750,7 @@ def shortlist(decisions, cfg):
 
 # ============================================================================ run / versioning
 def run(products, competitor_by_id=None, creative_by_id=None, cfg=None, manual=None, expected_env=None,
-        now=None, scoring_path=ROOT / "config" / "scoring.yaml", runtime_path=ROOT / "config" / "runtime.yaml",
+        now=None, require_trust=False, scoring_path=ROOT / "config" / "scoring.yaml", runtime_path=ROOT / "config" / "runtime.yaml",
         decision_path=ROOT / "config" / "decision.yaml"):
     cfg = cfg or load_cfg(decision_path)
     now = now or datetime.now(timezone.utc)
@@ -634,12 +759,14 @@ def run(products, competitor_by_id=None, creative_by_id=None, cfg=None, manual=N
     for p in products:
         pid = str(p.get("product_id") or p.get("id"))
         ev = build_evidence(p, competitor_by_id.get(pid), creative_by_id.get(pid), expected_env)
+        ev["trust_required"] = require_trust
         decisions.append(decide(ev, cfg, manual))
     decisions.sort(key=lambda d: d["product_id"])
     meta = {"decision_rules_version": cfg["decision_rules_version"],
             "scoring_config_hash": file_hash(scoring_path), "runtime_config_hash": file_hash(runtime_path),
             "decision_config_hash": file_hash(decision_path), "timestamp": now.isoformat(),
             "data_environment": expected_env or NA, "products_evaluated": len(decisions),
+            "data_trust_enforced": require_trust,
             "disclaimer": DISCLAIMER}
     for d in decisions:
         d["versioning"] = {k: meta[k] for k in ("decision_rules_version", "scoring_config_hash",
@@ -682,7 +809,7 @@ def build_json(result):
     by = {s: [d for d in decs if d["decision_state"] == s] for s in (READY, PROMISING, WATCH, REJECT, INSUFFICIENT)}
     strip = lambda d: {k: x for k, x in d.items() if k != "evidence"} | {  # noqa: E731
         "evidence": {"values": d["evidence"]["values"], "flags": d["evidence"]["flags"],
-                     "layers_present": d["evidence"]["layers_present"]}}
+                     "layers_present": d["evidence"]["layers_present"], "trust": d["evidence"].get("trust")}}
     return {"metadata": result["metadata"], "decision_rules_version": result["metadata"]["decision_rules_version"],
             "shortlist": result["shortlist"],
             "ready_products": [strip(d) for d in by[READY]],

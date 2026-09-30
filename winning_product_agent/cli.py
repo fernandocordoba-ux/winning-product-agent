@@ -60,6 +60,15 @@ def print_budget(b):
         _p(f"  {s:<19}{mode:<16}{r['max_products']:>9}{r['planned_queries']:>9}{cached:>9}{paid:>9}{cred:>16}")
     _p(f"  TOTAL expected paid queries: {b['expected_paid_queries_min']}–{b['expected_paid_queries_max']} | "
        f"estimated credits: {b['estimated_credits_min']}–{b['estimated_credits_max']}")
+    if b.get("providers"):
+        _p("  BY PROVIDER")
+        for name, r in b["providers"].items():
+            _p(f"    {name:<52} planned {r['planned_queries']:>2} | paid {r['expected_paid_min']}–{r['expected_paid_max']}"
+               f" | ~credits {r['estimated_credits_min']}–{r['estimated_credits_max']}"
+               + (f" | sources {r['sources']}" if "sources" in r else "")
+               + (f" | limit {r['limits']}" if r.get("limits") else ""))
+            if r.get("note"):
+                _p(f"      {r['note']}")
     _p(f"  basis: {b['estimate_basis']}")
     _p(f"  run credit cap: {b['max_credits_for_run']} | reserve kept: {b['min_balance_reserve']}")
 
@@ -343,7 +352,8 @@ def build_parser():
     r.add_argument("--profile", help="run profile, e.g. config/runtime_first_live.yaml")
     r.add_argument("--max-products", type=int, help="max products for Deep Analysis (<= profile limit)")
     r.add_argument("--check-balance", action="store_true", help="dry run: FREE balance check")
-    r.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.CONFIRMATION_PHRASE}"')
+    r.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.CONFIRMATION_PHRASE}" '
+                                          f'("{R.AA_PHRASE}" for the Step AA profile)')
     r.add_argument("--resume", help="resume a stopped live run by run id")
     r.add_argument("--calibration-lane", action="store_true",
                    help="enable the Amazon/BVS calibration lane for THIS run (calibration_only, never ranked)")

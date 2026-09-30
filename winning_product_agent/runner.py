@@ -54,13 +54,23 @@ PENDING, RUNNING, COMPLETED, PARTIAL, FAILED, SKIPPED, BLOCKED = (
     "PENDING", "RUNNING", "COMPLETED", "PARTIAL", "FAILED", "SKIPPED", "BLOCKED")
 STAGES = ["preflight", "discovery", "filtering", "deep_analysis", "wps", "wps_confidence", "amazon_validation",
           "bvs", "historical_storage", "emerging_detector", "final_report", "run_summary"]
+AA_STAGES = ["preflight", "discovery", "filtering", "deep_analysis", "wps", "wps_confidence", "amazon_validation",
+             "supplier_research", "bvs", "competitor_intelligence", "creative_intelligence", "historical_storage",
+             "emerging_detector", "final_report", "final_decision", "aa_validation", "run_summary"]
+AA_PHRASE = "CONFIRM AA LIVE RUN"
+E2E_KEYS = ("supplier_products_max", "supplier_offers_per_product_max", "competitor_products_max",
+            "competitors_per_product_max", "creative_products_max", "creatives_per_product_max",
+            "final_decision_max_products")
 REQUIRED_STAGES = {"preflight", "discovery", "filtering", "deep_analysis", "wps", "wps_confidence",
                    "historical_storage", "final_report"}
 CHECKPOINTS = {"discovery": "discovery.json", "deep_analysis": "deep_analysis.json",
                "amazon_validation": "amazon_validation.json", "bvs": "bvs.json", "historical_storage": "history.json",
-               "emerging_detector": "emerging.json", "final_report": "report.json"}
+               "emerging_detector": "emerging.json", "final_report": "report.json",
+               "supplier_research": "suppliers.json", "competitor_intelligence": "competitors.json",
+               "creative_intelligence": "creatives.json", "final_decision": "decision.json",
+               "aa_validation": "aa_validation.json"}
 PAID_STAGES = ("discovery", "deep_analysis", "amazon_validation")
-PROFILE_KEYS = {"profile", "runtime", "limits", "query_plan"}
+PROFILE_KEYS = {"profile", "runtime", "limits", "query_plan", "e2e"}
 
 
 # ====================================================================== small helpers
@@ -133,6 +143,10 @@ def _read_json(p):
         return json.loads(Path(p).read_text())
     except (OSError, ValueError):
         return None
+
+
+def _add(a, b):
+    return safety.UNKNOWN if safety.UNKNOWN in (a, b) else round(a + b, 2)
 
 
 class StopPaid(Exception):
@@ -232,6 +246,8 @@ def load_profile(profile_path=None, root=ROOT):
         qp["estimated_credits"] = {**(qp.get("estimated_credits") or {}), **(pq.get("estimated_credits") or {})}
         eff["query_plan"] = qp
         eff["profile_name"] = prof.get("profile") or p.stem
+        if prof.get("e2e") is not None:
+            eff["e2e"] = prof["e2e"]
         try:
             eff["profile_path"] = str(p.relative_to(root))
         except ValueError:
@@ -272,6 +288,21 @@ def validate_effective(rt, eff):
         if not isinstance(only, list) or not only or not set(only) <= known:
             e.append(f"query_plan.discovery_categories must be a non-empty list of enabled category keys "
                      f"(unknown: {sorted(set(only or []) - known) if isinstance(only, list) else only})")
+    e2e = eff.get("e2e")
+    if e2e is not None:
+        if not isinstance(e2e, dict):
+            e.append("e2e must be a mapping")
+        else:
+            for k in E2E_KEYS:
+                v = e2e.get(k)
+                if not isinstance(v, int) or isinstance(v, bool) or v <= 0:
+                    e.append(f"e2e.{k} must be a positive integer (got {v!r})")
+            if e2e.get("confirmation_phrase") != AA_PHRASE:
+                e.append(f"e2e.confirmation_phrase must be exactly {AA_PHRASE!r}")
+            if isinstance(e2e.get("final_decision_max_products"), int) and \
+                    isinstance(lim.get("deep_analysis_max_products"), int) and \
+                    e2e["final_decision_max_products"] < lim["deep_analysis_max_products"]:
+                e.append("e2e.final_decision_max_products must be >= deep_analysis_max_products")
     cap = qp.get("max_credits_for_run")
     if cap is not None and (not isinstance(cap, (int, float)) or cap <= 0):
         e.append("query_plan.max_credits_for_run must be > 0 or null")
@@ -309,6 +340,19 @@ class Runner:
         self.ttl_hours = self.cfg_deep["credit_protection"]["cache_ttl_hours"]
         self.cal_cfg = (yaml.safe_load((self.root / "config" / "calibration_lane.yaml").read_text()) or {}).get(
             "calibration") or {"enabled": False}
+
+    # ------------------------------------------------------------------ e2e (Step AA)
+    @property
+    def e2e(self):
+        return self.eff.get("e2e")
+
+    @property
+    def stage_list(self):
+        return AA_STAGES if self.e2e else STAGES
+
+    @property
+    def phrase(self):
+        return AA_PHRASE if self.e2e else CONFIRMATION_PHRASE
 
     # ------------------------------------------------------------------ limits / plan
     @property
@@ -451,7 +495,8 @@ class Runner:
                 r["estimated_credits_max"] = round(r["expected_paid_max"] * e, 2)
                 tot_min += r["estimated_credits_min"]
                 tot_max += r["estimated_credits_max"]
-        return {"stages": rows,
+        providers = self.provider_budget(rows) if self.e2e else None
+        return {"stages": rows, **({"providers": providers} if providers else {}),
                 "planned_queries_max": sum(r["planned_queries"] for r in rows.values()),
                 "cached_queries": len(cached),
                 "expected_paid_queries_min": sum(r["expected_paid_min"] for r in rows.values()),
@@ -463,6 +508,47 @@ class Runner:
                 "max_credits_for_run": qp.get("max_credits_for_run"),
                 "min_balance_reserve": self.rt["safety"]["min_balance_reserve"]}
 
+    def provider_budget(self, rows):
+        """Step AA: planned queries per PROVIDER. Only KaloPilot is paid; other layers use configured sources."""
+        import yaml as _y
+
+        def implemented(name):
+            c = _y.safe_load((self.root / "config" / name).read_text()) or {}
+            return sorted(k for k, v in (c.get("providers") or {}).items() if isinstance(v, dict) and v.get("implemented"))
+        e, dq, am = self.e2e, rows["discovery"], rows["amazon_validation"]
+        dp = rows["deep_analysis"]
+        kp_min = dq["expected_paid_min"] + dp["expected_paid_min"]
+        kp_max = dq["expected_paid_max"] + dp["expected_paid_max"]
+        return {
+            "KaloPilot (TikTok Shop: discovery + deep analysis)": {
+                "planned_queries": dq["planned_queries"] + dp["planned_queries"], "cache_hits_known": dq["cached"],
+                "expected_paid_min": kp_min, "expected_paid_max": kp_max,
+                "estimated_credits_min": _add(dq["estimated_credits_min"], dp["estimated_credits_min"]),
+                "estimated_credits_max": _add(dq["estimated_credits_max"], dp["estimated_credits_max"]),
+                "note": "deep cache (< 24 h, same prompt) checked per product at run time"},
+            "Amazon (via KaloPilot Amazon validation)": {
+                "planned_queries": am["planned_queries"], "cache_hits_known": 0,
+                "expected_paid_min": am["expected_paid_min"], "expected_paid_max": am["expected_paid_max"],
+                "estimated_credits_min": am["estimated_credits_min"], "estimated_credits_max": am["estimated_credits_max"],
+                "note": am.get("note")},
+            "Suppliers": {"planned_queries": 0, "expected_paid_min": 0, "expected_paid_max": 0,
+                          "estimated_credits_min": 0.0, "estimated_credits_max": 0.0,
+                          "sources": implemented("suppliers.yaml"),
+                          "limits": f"{e['supplier_products_max']} products x {e['supplier_offers_per_product_max']} offers",
+                          "note": "no automated supplier API configured: only offers already imported are used "
+                                  "(no order, no supplier contact)"},
+            "Competitors": {"planned_queries": 0, "expected_paid_min": 0, "expected_paid_max": 0,
+                            "estimated_credits_min": 0.0, "estimated_credits_max": 0.0,
+                            "sources": implemented("competitors.yaml"),
+                            "limits": f"{e['competitor_products_max']} products x {e['competitors_per_product_max']}",
+                            "note": "no automated competitor API configured: only research already imported is used"},
+            "Creatives": {"planned_queries": 0, "expected_paid_min": 0, "expected_paid_max": 0,
+                          "estimated_credits_min": 0.0, "estimated_credits_max": 0.0,
+                          "sources": implemented("creatives.yaml"),
+                          "limits": f"{e['creative_products_max']} products x {e['creatives_per_product_max']}",
+                          "note": "saved KaloPilot top_videos of the deep answers (free, no new query) + manual imports"},
+        }
+
     # ------------------------------------------------------------------ run state
     def _init_run(self, mode, env, resume_id=None):
         self.env, self.mode = env, mode
@@ -473,7 +559,7 @@ class Runner:
         self.log = safety.RunLogger(self.run_dir, self.run_id, self.secrets)
         self.budget = safety.QueryBudget(self.run_id, None)
         self.query_log, self.stop_paid, self.provider_down = [], None, None
-        self.balance_start = self.balance_now = None
+        self.balance_start = self.balance_now = self.balance_end = None
         self.spent_known = 0.0
         self.counts = {s: {"LIVE_QUERY": 0, "CACHE_HIT": 0, "FETCHED_RESULT": 0, "BLOCKED": 0, "FAILED": 0}
                        for s in PAID_STAGES}
@@ -487,7 +573,8 @@ class Runner:
             "config_hashes": safety.config_hashes(self.root / "config"),
             "limits": self.limits, "max_products_arg": self.max_products_arg,
             "calibration_lane": bool((self.cal_cfg or {}).get("enabled")),
-            "stages": {s: {"status": PENDING} for s in STAGES}, "final_status": PENDING}
+            "stages": {s: {"status": PENDING} for s in self.stage_list}, "final_status": PENDING,
+            **({"e2e": self.e2e} if self.e2e else {})}
         if resume_id:
             self.manifest.setdefault("resumed_at", []).append((self.now or now_utc()).isoformat())
             for s in PAID_STAGES:
@@ -623,7 +710,7 @@ class Runner:
             self.client = KaloClient()
         out["discovery_preview"] = self._discovery_preview(env_for_cache, now) if budget else None
         out["plan"] = self._planned_stages(budget)
-        for s in STAGES[1:]:
+        for s in self.stage_list[1:]:
             self.stages[s] = {"status": SKIPPED, "summary": "dry run: planned only, not executed"}
         out["readiness"] = self._readiness(pf, budget, balance)
         out["warnings"] += out["readiness"]["warnings"]
@@ -723,6 +810,34 @@ class Runner:
             {"stage": "emerging_detector", "does": "Momentum Score / Emerging Status (same-environment history)",
              "paid": 0},
             {"stage": "final_report", "does": "dated MD + JSON + latest MD (LIVE records only)", "paid": 0},
+            {"stage": "run_summary", "does": "manifest + summary", "paid": 0}] if not self.e2e else [
+            {"stage": "preflight", "does": "config, limits, directories, modules, safety gate", "paid": 0},
+            {"stage": "discovery", "does": f"{qp.get('discovery_mode')} discovery, max {lim['discovery_max_products']} "
+                                           "products", "paid": b.get("discovery", {}).get("expected_paid_max")},
+            {"stage": "filtering", "does": "PASS / REVIEW / FAIL", "paid": 0},
+            {"stage": "deep_analysis", "does": f"max {lim['deep_analysis_max_products']} products, WPS + Confidence + "
+                                               "trend + concentration + red flags",
+             "paid": b.get("deep_analysis", {}).get("expected_paid_max")},
+            {"stage": "amazon_validation", "does": f"eligible only (WPS>=70, Conf>=60), max "
+                                                   f"{lim['amazon_validation_max_products']}",
+             "paid": b.get("amazon_validation", {}).get("expected_paid_max")},
+            {"stage": "supplier_research", "does": f"top {self.e2e['supplier_products_max']} products, max "
+                                                   f"{self.e2e['supplier_offers_per_product_max']} offers each "
+                                                   "(configured sources only; no order)", "paid": 0},
+            {"stage": "bvs", "does": "BVS with real supplier economics where available (never invented)", "paid": 0},
+            {"stage": "competitor_intelligence", "does": f"top {self.e2e['competitor_products_max']} products, max "
+                                                         f"{self.e2e['competitors_per_product_max']} competitors",
+             "paid": 0},
+            {"stage": "creative_intelligence", "does": f"top {self.e2e['creative_products_max']} products, max "
+                                                       f"{self.e2e['creatives_per_product_max']} creatives (saved "
+                                                       "KaloPilot videos + imports)", "paid": 0},
+            {"stage": "historical_storage", "does": "append LIVE observations, snapshot dedupe", "paid": 0},
+            {"stage": "emerging_detector", "does": "Emerging Status / Momentum (INSUFFICIENT_HISTORY if too short)",
+             "paid": 0},
+            {"stage": "final_report", "does": "winning-products report (LIVE only)", "paid": 0},
+            {"stage": "final_decision", "does": f"Step Z on max {self.e2e['final_decision_max_products']} products, "
+                                                "data trust enforced, shortlist <= 3 READY", "paid": 0},
+            {"stage": "aa_validation", "does": "AA report + validation audit + cost audit + verdict", "paid": 0},
             {"stage": "run_summary", "does": "manifest + summary", "paid": 0}]
 
     def _readiness(self, pf, budget, balance):
@@ -775,13 +890,13 @@ class Runner:
               f"({'configured estimate, not a quote' if b['estimated_credits_max'] != safety.UNKNOWN else 'UNKNOWN'})",
               f"  Run credit cap:      {b['max_credits_for_run']}   | reserve kept: {b['min_balance_reserve']}",
               f"  Current balance:     {balance}", "=" * 66,
-              f"  Type exactly  {CONFIRMATION_PHRASE}  to continue (anything else cancels).", ""]
+              f"  Type exactly  {self.phrase}  to continue (anything else cancels).", ""]
         return "\n".join(L)
 
     def confirm(self, text, confirm_value=None):
         """True only for the exact phrase. yes / y / ok / continue / lowercase are rejected."""
         if confirm_value is not None:
-            return confirm_value == CONFIRMATION_PHRASE, "flag"
+            return confirm_value == self.phrase, "flag"
         if not self.isatty:
             return False, "non_interactive"
         self.out(text)
@@ -789,7 +904,7 @@ class Runner:
             typed = self.input_fn("> ")
         except EOFError:
             return False, "eof"
-        return typed == CONFIRMATION_PHRASE, "typed"
+        return typed == self.phrase, "typed"
 
     def live(self, confirm_value=None, resume_id=None):
         now = self.now or now_utc()
@@ -838,12 +953,12 @@ class Runner:
         if not blocks:
             ok, how = self.confirm(self.confirmation_text(budget, balance), confirm_value)
             if not ok:
-                blocks.append({"non_interactive": "non-interactive session: pass --confirm-live \"CONFIRM LIVE RUN\"",
+                blocks.append({"non_interactive": f"non-interactive session: pass --confirm-live \"{self.phrase}\"",
                                "eof": "no confirmation received"}.get(
-                    how, f"confirmation rejected: you must type exactly {CONFIRMATION_PHRASE}"))
+                    how, f"confirmation rejected: you must type exactly {self.phrase}"))
         if blocks:
-            for s in STAGES[1:]:
-                if self.stages[s]["status"] == PENDING:
+            for s in self.stage_list[1:]:
+                if self.stages.get(s, {}).get("status", PENDING) == PENDING:
                     self.stages[s] = {"status": BLOCKED, "summary": "run blocked before execution"}
             self.manifest.update({"final_status": BLOCKED, "blocking_reasons": blocks,
                                   "completed_at": now_utc().isoformat()})
@@ -866,8 +981,17 @@ class Runner:
                  ("amazon_validation", self.s_amazon), ("bvs", self.s_bvs),
                  ("historical_storage", self.s_history), ("emerging_detector", self.s_emerging),
                  ("final_report", self.s_report)]
+        if self.e2e:                                   # Step AA: full chain, all layers + decision + audit
+            steps = [("discovery", self.s_discovery), ("filtering", self.s_filtering),
+                     ("deep_analysis", self.s_deep), ("wps", self.s_wps), ("wps_confidence", self.s_conf),
+                     ("amazon_validation", self.s_amazon), ("supplier_research", self.s_suppliers),
+                     ("bvs", self.s_bvs), ("competitor_intelligence", self.s_competitors),
+                     ("creative_intelligence", self.s_creatives), ("historical_storage", self.s_history),
+                     ("emerging_detector", self.s_emerging), ("final_report", self.s_report),
+                     ("final_decision", self.s_final_decision), ("aa_validation", self.s_aa_validation)]
         for name, fn in steps:
-            if self.stages.get(name, {}).get("status") == COMPLETED and self._restore(name, ctx):
+            if self.stages.get(name, {}).get("status") == COMPLETED and name not in self.FREE_RERUN and \
+                    self._restore(name, ctx):
                 continue                                               # resume: completed stage reused
             self.stages[name] = {"status": RUNNING}
             self._save_manifest()
@@ -883,6 +1007,14 @@ class Runner:
         self.manifest["outputs"] = ctx.get("outputs", {})
         self.manifest["summary"] = self._summary_counts(ctx)
         self._set("run_summary", COMPLETED, summary=self.manifest["final_status"])
+
+    @property
+    def FREE_RERUN(self):
+        """Stages that cost nothing and are recomputed on resume (AA: their inputs live in ctx only)."""
+        if not self.e2e:
+            return ()
+        return ("supplier_research", "competitor_intelligence", "creative_intelligence", "final_report",
+                "final_decision", "aa_validation", "bvs")
 
     def _restore(self, name, ctx):
         ck = self._load_checkpoint(name) if name in CHECKPOINTS else None
@@ -1308,9 +1440,13 @@ class Runner:
             return SKIPPED, {"summary": "no deep-analysis result"}
         cfg = B.load_cfg()
         cfg["eligibility"]["max_products"] = self.limits["bvs_max_products"]
+        aa = {}
+        if self.e2e:
+            aa = {"only_products": {str(x["product_id"]) for x in ctx.get("supplier_research") or []},
+                  "max_offers": self.e2e["supplier_offers_per_product_max"]}
         r = B.run(deep_path=ctx["deep_file"], amazon_path=ctx.get("amazon_file"),
                   raw_dir=self.raw / "business_viability", cfg=cfg, filters_cfg=self.filters, save=False,
-                  suppliers_dir=self.processed / "suppliers")
+                  suppliers_dir=self.processed / "suppliers", **aa)
         results = [{**x, "data_environment": self.env, "run_id": self.run_id, "calibration_only": False}
                    for x in r.get("results", [])]
         cal_amz = {str(a["product_id"]): a for a in ctx.get("amazon") or [] if a.get("calibration_only")}
@@ -1417,12 +1553,23 @@ class Runner:
         rep = GR.build_report(inputs, cfg, now, view if view.identities() else None)
         import competitors as CI                      # Step X: read-only intelligence, not combined with scores
         everyone = rep.get("all_products") or (rep["top"] + rep["watch"] + rep["rejected"])
-        rep["competitor_intelligence"] = CI.report_rows(everyone,
-                                                        self.processed / "competitors",
-                                                        self.history_dir / "competitors")
         import creatives as CR                        # Step Y: read-only creative intelligence
-        rep["creative_intelligence"] = CR.report_rows(everyone,
-                                                      self.processed / "creatives", self.history_dir / "creatives")
+        if self.e2e:                                  # Step AA: the capped layer analyses of this run
+            names = {str(p.get("product_id")): p.get("name") for p in everyone}
+            keep = ("competitor_name", "competitor_domain", "relationship", "match_confidence_calc", "platform",
+                    "selling_price", "compare_at_price", "meta_ads_present", "active_ads_count", "ad_age_days",
+                    "ad_longevity", "offer_features", "review_count", "store_quality_score")
+            rep["competitor_intelligence"] = [{"product_id": k, "name": names.get(k), "analysis": {
+                kk: vv for kk, vv in a.items() if kk != "competitors"},
+                "competitors": [{f: c.get(f) for f in keep} for c in a.get("competitors") or []]}
+                for k, a in (ctx.get("competitor") or {}).items()]
+            rep["creative_intelligence"] = [{"product_id": k, "name": names.get(k), "analysis": {
+                kk: vv for kk, vv in a.items() if kk != "creatives"}} for k, a in (ctx.get("creative") or {}).items()]
+        else:
+            rep["competitor_intelligence"] = CI.report_rows(everyone, self.processed / "competitors",
+                                                            self.history_dir / "competitors")
+            rep["creative_intelligence"] = CR.report_rows(everyone, self.processed / "creatives",
+                                                          self.history_dir / "creatives")
         pats = [p.lower() for p in cfg["secret_key_patterns"]]
         md = GR.render_markdown(rep, cfg)
         banner = (f"\n> Data environment: **{self.env}** · Run `{self.run_id}` · profile `{self.eff['profile_path']}` · "
@@ -1450,9 +1597,12 @@ class Runner:
         latest.write_text(md)
         outs = {"report_markdown": str(md_path), "report_json": str(js_path), "report_latest": str(latest),
                 "manifest": str(self.run_dir / "manifest.json"), "log": str(self.log.path)}
-        dec = self.final_decision(rep, now)             # Step Z: rules-based decision (no query, no purchase)
-        outs.update({"final_decision_markdown": dec["markdown"], "final_decision_json": dec["json"],
-                     "final_decision_latest": dec["latest"]})
+        if self.e2e:
+            ctx["rep"] = rep                            # Step AA: decision runs as its own stage
+        else:
+            dec = self.final_decision(rep, now)         # Step Z: rules-based decision (no query, no purchase)
+            outs.update({"final_decision_markdown": dec["markdown"], "final_decision_json": dec["json"],
+                         "final_decision_latest": dec["latest"]})
         ctx.setdefault("outputs", {}).update(outs)
         s = rep["summary"]
         self._checkpoint("final_report", {"status": COMPLETED, "outputs": outs, "top": s["top_count"],
@@ -1473,9 +1623,162 @@ class Runner:
         res["metadata"]["run_id"] = self.run_id
         return DE.write_reports(res, self.reports_dir, secrets=self.secrets)
 
+    # ================================================================== Step AA stages (no paid query)
+    def layer_products(self, ctx, n):
+        """Deterministic: discovery PASS before REVIEW, then WPS desc, WPS Confidence desc, product_id."""
+        rank = {"PASS": 0, "REVIEW": 1}
+        ok = sorted(self._ok_deep(ctx), key=lambda d: (rank.get((d.get("source") or {}).get("discovery_status"), 2),
+                                                       -(d.get("wps") or 0), -(d.get("confidence") or 0),
+                                                       str(d["product_id"])))
+        return ok[:n]
+
+    def s_suppliers(self, ctx, now):
+        """Supplier research: configured sources only (today: offers already imported). No order, no contact."""
+        import suppliers as SUP
+        prods = self.layer_products(ctx, self.e2e["supplier_products_max"])
+        if not prods:
+            ctx["supplier_research"] = []
+            return SKIPPED, {"summary": "no deep-analyzed product"}
+        cfg = SUP.load_cfg()
+        live_sources = sorted(k for k, v in (cfg.get("providers") or {}).items()
+                              if isinstance(v, dict) and v.get("implemented") and k != "manual_import")
+        cap = self.e2e["supplier_offers_per_product_max"]
+        rows = []
+        for d in prods:
+            pid = str(d["product_id"])
+            offers = SUP.load_offers(pid, self.processed / "suppliers")
+            used = sorted(offers, key=lambda o: str(o.get("offer_id")))[:cap]
+            rows.append({"product_id": pid, "name": d.get("product_name"),
+                         "source": "manual_import" if offers else "NO_SOURCE_AVAILABLE",
+                         "automated_sources_configured": live_sources, "offers_available": len(offers),
+                         "offers_used": len(used), "offer_ids": [o.get("offer_id") for o in used],
+                         "note": None if offers else "no supplier offer imported for this product and no automated "
+                                                     "supplier provider configured — economics stay N/A"})
+        ctx["supplier_research"] = rows
+        with_data = sum(r["offers_used"] > 0 for r in rows)
+        self._checkpoint("supplier_research", {"status": COMPLETED, "products": rows})
+        return (COMPLETED if with_data == len(rows) else PARTIAL), {
+            "summary": f"{with_data}/{len(rows)} product(s) with real supplier offers (max {cap} each); "
+                       f"automated sources configured: {live_sources or 'none'}", "products": rows}
+
+    def s_competitors(self, ctx, now):
+        import competitors as CI
+        prods = self.layer_products(ctx, self.e2e["competitor_products_max"])
+        cap = self.e2e["competitors_per_product_max"]
+        bvs = {str(b.get("product_id")): b for b in ctx.get("bvs") or []}
+        out, rows = {}, []
+        for d in prods:
+            pid = str(d["product_id"])
+            files = sorted((self.processed / "competitors" / pid).glob("competitors_*.json"))
+            obs = sorted(CI.load_latest(pid, self.processed / "competitors"),
+                         key=lambda c: str(c.get("competitor_id") or c.get("competitor_url") or ""))[:cap]
+            if not obs:
+                rows.append({"product_id": pid, "name": d.get("product_name"), "source": "NO_SOURCE_AVAILABLE",
+                             "observations_used": 0})
+                continue
+            landed = ((bvs.get(pid) or {}).get("economics") or {}).get("landed_cost")
+            a = CI.analyze_product(pid, d, obs, landed_cost=None if landed in (None, B.NA) else landed)
+            comps = a.get("competitors") or []
+            a["observed_at"] = max((c.get("observed_at") or "" for c in comps), default=None) or None
+            a["source_files"] = [str(files[-1])]
+            a["provenance_complete"] = bool(comps) and all(c.get("provenance") for c in comps
+                                                           if c.get("relationship") == "DIRECT")
+            CI.append_history(a, self.history_dir / "competitors")
+            out[pid] = a
+            rows.append({"product_id": pid, "name": d.get("product_name"), "source": "manual_import",
+                         "observations_used": len(obs), "direct": a["direct_competitors"],
+                         "saturation": a["saturation"]["score"], "opportunity": a["opportunity"]["score"],
+                         "confidence": a["confidence"]["score"]})
+        ctx["competitor"], ctx["competitor_rows"] = out, rows
+        self._checkpoint("competitor_intelligence", {"status": COMPLETED, "products": rows})
+        if not prods:
+            return SKIPPED, {"summary": "no deep-analyzed product"}
+        return (COMPLETED if len(out) == len(prods) else PARTIAL), {
+            "summary": f"{len(out)}/{len(prods)} product(s) with competitor evidence (max {cap} each); no automated "
+                       "competitor provider configured", "products": rows}
+
+    def s_creatives(self, ctx, now):
+        import creatives as CR
+        prods = self.layer_products(ctx, self.e2e["creative_products_max"])
+        cap = self.e2e["creatives_per_product_max"]
+        proc = self.processed / "creatives"
+        out, rows = {}, []
+        for d in prods:
+            pid = str(d["product_id"])
+            raw = (d.get("source") or {}).get("raw_file")
+            saved = {"accepted": 0}
+            if raw and raw_env_ok(_read_json(raw) or {}, self.env):      # only this environment's saved answers
+                saved = CR.import_from_kalopilot(pid, self.raw / "deep_analysis", proc)
+            cs = sorted(CR.load_all(pid, proc), key=lambda c: str(c.get("creative_id")))[:cap]
+            if not cs:
+                rows.append({"product_id": pid, "name": d.get("product_name"), "source": "NO_SOURCE_AVAILABLE",
+                             "creatives_used": 0})
+                continue
+            a = CR.analyze_product(pid, {"product_name": d.get("product_name"), "units": d.get("units")}, cs)
+            a["observed_at"] = max((c.get("observed_at") or c.get("retrieved_at") or "" for c in cs), default=None) or None
+            a["source_files"] = sorted({str(c.get("raw_source_location") or "").split("#")[0] for c in cs} - {""})
+            a["provenance_complete"] = all(c.get("raw_source_location") and c.get("retrieved_at")
+                                           for c in a["creatives"] if c.get("qualified"))
+            CR.append_history(a, self.history_dir / "creatives")
+            out[pid] = a
+            srcs = sorted({c.get("source") for c in cs if c.get("source")})
+            rows.append({"product_id": pid, "name": d.get("product_name"), "source": ", ".join(srcs) or "manual_import",
+                         "saved_kalopilot_imported": saved.get("accepted", 0), "creatives_used": len(cs),
+                         "qualified": a["qualified_creatives"], "saturation": a["saturation"]["score"],
+                         "opportunity": a["opportunity"]["score"], "confidence": a["confidence"]["score"]})
+        ctx["creative"], ctx["creative_rows"] = out, rows
+        self._checkpoint("creative_intelligence", {"status": COMPLETED, "products": rows})
+        if not prods:
+            return SKIPPED, {"summary": "no deep-analyzed product"}
+        return (COMPLETED if len(out) == len(prods) else PARTIAL), {
+            "summary": f"{len(out)}/{len(prods)} product(s) with creative evidence (max {cap} each; saved KaloPilot "
+                       "top videos are free)", "products": rows}
+
+    def s_final_decision(self, ctx, now):
+        import decision_engine as DE
+        rep = ctx.get("rep")
+        if not rep:
+            return SKIPPED, {"summary": "no report data"}
+        analyzed = {str(d["product_id"]) for d in self._ok_deep(ctx)}
+        prods = [p for p in rep.get("all_products") or [] if str(p.get("product_id")) in analyzed]
+        prods = sorted(prods, key=lambda p: str(p.get("product_id")))[: self.e2e["final_decision_max_products"]]
+        mv = self.processed / "manual_validation.json"
+        manual = json.loads(mv.read_text()) if mv.exists() else None
+        res = DE.run(prods, ctx.get("competitor") or {}, ctx.get("creative") or {}, manual=manual,
+                     expected_env=self.env, now=now, require_trust=True,
+                     runtime_path=self.root / self.eff["profile_path"])
+        res["metadata"]["run_id"] = self.run_id
+        out = DE.write_reports(res, self.reports_dir, secrets=self.secrets)
+        ctx["decision"] = res
+        ctx.setdefault("outputs", {}).update({"final_decision_markdown": out["markdown"],
+                                              "final_decision_json": out["json"],
+                                              "final_decision_latest": out["latest"]})
+        counts = {}
+        for d in res["decisions"]:
+            counts[d["decision_state"]] = counts.get(d["decision_state"], 0) + 1
+        self._checkpoint("final_decision", {"status": COMPLETED, "outputs": out, "states": counts,
+                                            "shortlist": res["shortlist"]})
+        return COMPLETED, {"summary": f"{len(res['decisions'])} decided: {counts}; shortlist "
+                                      f"{[s['name'] for s in res['shortlist']] or 'empty'}", **out}
+
+    def s_aa_validation(self, ctx, now):
+        import aa_live as AA
+        try:
+            self.balance_end = self._balance()                  # FREE endpoint
+        except ProviderFailure:
+            self.balance_end = self.balance_now
+        self._save_manifest()
+        out = AA.finalize(self, ctx, now)
+        ctx.setdefault("outputs", {}).update(out["paths"])
+        self.manifest["aa_result"] = out["result"]
+        self._checkpoint("aa_validation", {"status": COMPLETED, "result": out["result"], "issues": out["issues"],
+                                           "outputs": out["paths"]})
+        return COMPLETED, {"summary": out["result"] + (f" — {len(out['issues'])} issue(s)" if out["issues"] else ""),
+                           **out["paths"]}
+
     # ------------------------------------------------------------------ status / summary
     def overall_status(self):
-        st = {s: self.stages.get(s, {}).get("status") for s in STAGES}
+        st = {s: self.stages.get(s, {}).get("status") for s in self.stage_list}
         if any(st[s] == FAILED for s in REQUIRED_STAGES):
             return FAILED
         if any(st[s] == BLOCKED for s in REQUIRED_STAGES):

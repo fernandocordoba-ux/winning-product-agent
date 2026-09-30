@@ -1,0 +1,55 @@
+# =============================================================================
+# Run profile — STEP AA: CONTROLLED END-TO-END LIVE RUN
+# =============================================================================
+#   python -m winning_product_agent run --dry-run --profile config/runtime_aa_live.yaml --check-balance
+#   python -m winning_product_agent run --live   --profile config/runtime_aa_live.yaml \
+#          --confirm-live "CONFIRM AA LIVE RUN"
+#
+# TikTok/KaloPilot -> Amazon -> Supplier -> BVS -> Competitors -> Creatives -> History ->
+# Emerging -> Decision Engine -> AA report + validation audit + cost audit.
+#
+# - Validates the architecture with SMALL limits; this is NOT a production-scale run.
+# - Nothing paid runs until the operator types exactly: CONFIRM AA LIVE RUN
+#   (held in memory for that run only; never stored as true in any file).
+# - Paid provider: KaloPilot only (discovery, deep analysis, Amazon validation).
+#   Supplier / competitor research: only sources configured in suppliers.yaml / competitors.yaml
+#   (today: manual imports already on disk). Creatives: SAVED KaloPilot top_videos (free) + manual imports.
+#   A layer without a configured source is reported as NO_SOURCE_AVAILABLE — never fabricated.
+# - Limits are never raised automatically after the run.
+# =============================================================================
+profile: aa_live
+
+runtime:
+  market: US
+  live_mode: true
+  dry_run: false
+  explicit_live_confirmation: false          # set in memory only, by typing CONFIRM AA LIVE RUN
+
+limits:
+  discovery_max_products: 20
+  deep_analysis_max_products: 5
+  amazon_validation_max_products: 3
+  bvs_max_products: 3
+
+query_plan:
+  discovery_mode: per_category
+  discovery_categories: [beauty_personal_care]
+  deep_batch_size: 1                         # a 5-product batch exceeded KaloPilot's ~8k output-token limit
+  amazon_batch_size: 2
+  max_credits_for_run: 25                    # hard stop for this run (balance measured with the FREE endpoint)
+  estimated_credits:
+    discovery: 4.0                           # observed 1.67–3.98
+    deep_analysis: 2.5                       # observed 1.51–3.57 per product
+    amazon_validation: 4.0                   # not observed yet -> actual may differ
+
+e2e:
+  step: AA
+  confirmation_phrase: "CONFIRM AA LIVE RUN"
+  supplier_products_max: 3
+  supplier_offers_per_product_max: 5
+  competitor_products_max: 3
+  competitors_per_product_max: 10
+  creative_products_max: 3
+  creatives_per_product_max: 20
+  final_decision_max_products: 5
+  layer_product_order: "discovery PASS before REVIEW, then WPS desc, WPS Confidence desc, product_id"

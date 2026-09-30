@@ -527,7 +527,7 @@ def latest(dir_, pattern):
 
 
 def run(deep_path=None, amazon_path=None, raw_dir=RAW_DIR, out_dir=OUT_DIR, cfg=None, filters_cfg=None, save=True,
-        suppliers_dir=None):
+        suppliers_dir=None, only_products=None, max_offers=None):
     cfg = cfg or load_cfg()
     filters_cfg = filters_cfg or disc.load_yaml("filters.yaml")
     deep_path = deep_path or latest(DEEP_DIR, "deep_*.json")
@@ -546,9 +546,12 @@ def run(deep_path=None, amazon_path=None, raw_dir=RAW_DIR, out_dir=OUT_DIR, cfg=
     for d in rows:
         # Step W: real supplier offers (ranked, selected) first; legacy manual supplier_data file as fallback
         sell, _ = selling_price(d, {}, cfg)
-        comm, src = SUP.commercial_data_for(d, suppliers_dir, selling_price=sell)
-        if comm is None:
-            comm, src = load_commercial_data(d["product_id"], raw_dir)
+        if only_products is not None and str(d["product_id"]) not in only_products:
+            comm, src = None, None                    # Step AA: supplier research limited to selected products
+        else:
+            comm, src = SUP.commercial_data_for(d, suppliers_dir, selling_price=sell, max_offers=max_offers)
+            if comm is None:
+                comm, src = load_commercial_data(d["product_id"], raw_dir)
         results.append(evaluate(d, amz_by_id.get(d["product_id"]), comm, cfg, filters_cfg, src))
     report = {"deep_file": str(deep_path), "amazon_file": str(amazon_path) if amazon_path else None,
               "eligible": len(rows), "excluded": excluded, "results": results}
