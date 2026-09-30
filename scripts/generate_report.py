@@ -30,6 +30,8 @@ import yaml
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
+sys.path.insert(0, str(HERE))
+import history as HIST  # noqa: E402  (Step Q: append-only product history)
 NA = "N/A"
 PROCESSED = ROOT / "data" / "processed"
 
@@ -146,7 +148,7 @@ def _codes(flags):
     return [f["flag"] for f in flags or [] if isinstance(f, dict) and f.get("flag")]
 
 
-def build_products(inputs, cfg):
+def build_products(inputs, cfg, store=None):
     """Join all stages by product_id (fallback key only for exact Discovery identity)."""
     deep_latest = latest_by_id(inputs["deep"])
     amz_latest, bvs_latest = latest_by_id(inputs["amazon"]), latest_by_id(inputs["bvs"])
@@ -179,11 +181,13 @@ def build_products(inputs, cfg):
         pid = str(d["product_id"]) if d else (rec["facts"].get("product_id") if rec else None)
         a = amz_latest.get(str(pid)) if pid else None
         b = bvs_latest.get(str(pid)) if pid else None
-        out.append(assemble(key, pid, rec, d, a, b, history.get(str(pid), []) if pid else [], cfg, disc))
+        hist_obs = store.observations(pid or key) if store else []
+        out.append(assemble(key, pid, rec, d, a, b, history.get(str(pid), []) if pid else [], cfg, disc,
+                            hist_obs, store.cfg if store else None))
     return out, conflicts
 
 
-def assemble(key, pid, rec, d, a, b, hist, cfg, disc):
+def assemble(key, pid, rec, d, a, b, hist, cfg, disc, hist_obs=None, hist_cfg=None):
     facts = (rec or {}).get("facts") or {}
     calc = (rec or {}).get("calculated") or {}
     codes = cfg["discovery_reason_codes"]
@@ -212,7 +216,11 @@ def assemble(key, pid, rec, d, a, b, hist, cfg, disc):
         "flags": all_flags, "significant_flags": significant,
         "growth_30d": ((d or {}).get("growth") or {}).get("growth_30d_pct") if d else facts.get("growth_30d"),
         "deep": d, "amazon": a, "bvs_record": b,
-        "history": history_rows(hist),
+        # Step Q history store is preferred (all stages, all dates); falls back to Deep Analysis files
+        "history": rows_from_observations(_hist_obs(hist_obs, hist)),
+        "history_source": "history_store" if hist_obs else ("deep_analysis_files" if hist else None),
+        "history_snapshot": (HIST.snapshot_from(_hist_obs(hist_obs, hist), hist_cfg or HIST.load_cfg())["snapshot"]
+                             if (hist_obs or hist) else None),
         "source": traceability(rec, d, a, b, disc),
     }
 
@@ -244,6 +252,20 @@ def history_rows(hist):
                      "wps": num(r.get("wps")), "confidence": num(r.get("confidence")), "gmv": num(r.get("gmv")),
                      "units": num(r.get("units")), "creators": num(cm.get("total")), "videos": num(vm.get("total"))})
     return rows
+
+
+def _hist_obs(hist_obs, deep_records):
+    """History-store observations, or Deep Analysis records converted to the same observation format."""
+    if hist_obs:
+        return hist_obs
+    return [o for o in (HIST.from_deep(r, r.get("_file")) for r in deep_records or []) if o]
+
+
+def rows_from_observations(obs):
+    return [{"date": o.get("observation_date"), "observation_timestamp": o.get("observation_timestamp"),
+             "stage": o.get("source_stage"), "wps": HIST.metric(o, "wps"), "confidence": HIST.metric(o, "confidence"),
+             "gmv": HIST.metric(o, "gmv"), "units": HIST.metric(o, "units"), "creators": HIST.metric(o, "creators"),
+             "videos": HIST.metric(o, "videos")} for o in obs]
 
 
 def direction(rows, field, cfg, points=False):
@@ -463,10 +485,10 @@ def ranking_logic_text(cfg):
             f"5) product_id asc; max {t['max_products']}. No combined score is used.")
 
 
-def build_report(inputs, cfg, now=None):
+def build_report(inputs, cfg, now=None, store=None):
     now = now or datetime.now(timezone.utc)
     local = now.astimezone(ZoneInfo(cfg["timezone"]))
-    products, conflicts = build_products(inputs, cfg)
+    products, conflicts = build_products(inputs, cfg, store)
     top, watch, watch_more, rejected = classify(products, cfg)
     for p in top:
         p["interpretation"] = interpret(p, cfg)
@@ -541,14 +563,7 @@ def top_card(p, cfg):
               + (f" · ⚠ {b['bvs_reliability_warning']}" if b.get("bvs_reliability_warning") else ""), ""]
     else:
         L += ["**Business viability:** N/A (BVS not calculated)", ""]
-    L += ["**History**", ""]
-    if rows:
-        L += ["| Date | WPS | Confidence | GMV | Units | Creators | Videos |", "|---|---|---|---|---|---|---|"]
-        L += [f"| {r['date']} | {fmt(r['wps'])} | {fmt(r['confidence'])} | {fmt(r['gmv'], 'money')} | "
-              f"{fmt(r['units'], 'int')} | {fmt(r['creators'], 'int')} | {fmt(r['videos'], 'int')} |" for r in rows]
-        L.append("")
-    L += [f"Direction — WPS: {direction(rows, 'wps', cfg, True)} · GMV: {direction(rows, 'gmv', cfg)} · "
-          f"Creators: {direction(rows, 'creators', cfg)} · Videos: {direction(rows, 'videos', cfg)}", ""]
+    L += history_block(p, rows, cfg)
     it = p["interpretation"]
     for title, key in (("Why it passed", "why_it_passed"), ("Why it could fail", "why_it_could_fail"),
                        ("What we still need to verify", "what_we_still_need_to_verify"),
@@ -557,6 +572,40 @@ def top_card(p, cfg):
     L += [f"_{it['note']}_", "", "<details><summary>Sources</summary>", "", "```json",
           json.dumps(p["source"], indent=2), "```", "", "</details>", "", "---", ""]
     return L
+
+
+def history_block(p, rows, cfg):
+    """Step Q history section. Arrows only from >= 2 observations; else INSUFFICIENT_HISTORY."""
+    snap = p.get("history_snapshot")
+    L = ["**History**", ""]
+    if snap is None and not rows:
+        return L + ["INSUFFICIENT_HISTORY (no observations stored yet)", ""]
+    if snap is not None:
+        L.append(f"First seen {snap['first_seen_date']} · last seen {snap['last_seen_date']} · observations "
+                 f"{snap['observation_count']} · days tracked {snap['days_observed']} · tracking age "
+                 f"{snap['product_tracking_age_days']} day(s) _(time we have tracked it, not the marketplace listing age)_")
+        L.append("")
+    if len(rows) < cfg["history"]["min_observations"]:
+        return L + [f"INSUFFICIENT_HISTORY ({len(rows)} observation(s); no change or direction is inferred)", ""]
+    s = snap or {}
+    def cell(k):
+        return fmt(s.get(k)) if snap else NA
+    L += ["| Metric | Current | Previous | Change | % change / direction |", "|---|---|---|---|---|",
+          f"| WPS | {cell('latest_wps')} | {cell('previous_wps')} | {cell('wps_change')} | {direction(rows, 'wps', cfg, True)} |",
+          f"| GMV | {fmt(s.get('latest_gmv'), 'money')} | {fmt(s.get('previous_gmv'), 'money')} | "
+          f"{fmt(s.get('gmv_change'), 'money')} | {fmt(s.get('gmv_percent_change'), 'pct')} {direction(rows, 'gmv', cfg)} |",
+          f"| Creators | {cell('latest_creators')} | {cell('previous_creators')} | {cell('creator_change')} | "
+          f"{direction(rows, 'creators', cfg)} |",
+          f"| Videos | {cell('latest_videos')} | {cell('previous_videos')} | {cell('video_change')} | "
+          f"{direction(rows, 'videos', cfg)} |", ""]
+    if snap:
+        L += [f"Trend (GMV): 7D {snap['short_trend']} · 14D {snap['medium_trend']} · 30D {snap['long_trend']} · "
+              f"Volatility: {snap['volatility_level']}", ""]
+    L += ["| Date | Stage | WPS | Confidence | GMV | Units | Creators | Videos |", "|---|---|---|---|---|---|---|---|"]
+    L += [f"| {r['date']} | {r.get('stage') or 'deep_analysis'} | {fmt(r['wps'])} | {fmt(r['confidence'])} | "
+          f"{fmt(r['gmv'], 'money')} | {fmt(r['units'], 'int')} | {fmt(r['creators'], 'int')} | {fmt(r['videos'], 'int')} |"
+          for r in rows[-10:]]
+    return L + [""]
 
 
 def render_markdown(r, cfg):
@@ -638,7 +687,8 @@ def product_json(p):
     keep = {k: p.get(k) for k in ("rank", "tier", "section", "id", "product_id", "name", "category", "shop", "url", "price",
                                   "discovery_status", "wps", "confidence", "avs", "amazon_confidence", "bvs",
                                   "bvs_confidence", "trend", "growth_30d", "flags", "significant_flags", "watch_reasons",
-                                  "primary_rejection_reason", "interpretation", "history", "source")}
+                                  "primary_rejection_reason", "interpretation", "history", "history_source",
+                                  "history_snapshot", "source")}
     d, a, b = p.get("deep") or {}, p.get("amazon") or {}, p.get("bvs_record") or {}
     keep["wps_breakdown"] = d.get("wps_breakdown")
     keep["confidence_breakdown"] = d.get("confidence_breakdown")
@@ -678,11 +728,13 @@ def dated_paths(out_dir, date):
         n += 1
 
 
-def generate(processed=PROCESSED, out_dir=None, cfg=None, now=None, secrets=None):
+def generate(processed=PROCESSED, out_dir=None, cfg=None, now=None, secrets=None, history_dir=None):
     cfg = cfg or load_cfg()
     out_dir = Path(out_dir or ROOT / cfg["output_dir"])
     out_dir.mkdir(parents=True, exist_ok=True)
-    report = build_report(load_inputs(processed), cfg, now)
+    store = HIST.HistoryStore(history_dir) if history_dir else HIST.HistoryStore()
+    store = store if store.identities() else None      # empty history -> fall back to Deep Analysis files
+    report = build_report(load_inputs(processed), cfg, now, store)
     secrets = known_secrets() if secrets is None else secrets
     pats = [p.lower() for p in cfg["secret_key_patterns"]]
     md = scrub(render_markdown(report, cfg), pats, secrets)

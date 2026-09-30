@@ -94,7 +94,8 @@ class Env:
             (self.proc / "business_viability" / "bvs_1.json").write_text(json.dumps({"results": bvs}))
 
     def gen(self, cfg=CFG):
-        return G.generate(processed=self.proc, out_dir=self.out, cfg=cfg, now=NOW, secrets=[FAKE_TOKEN])
+        return G.generate(processed=self.proc, out_dir=self.out, cfg=cfg, now=NOW, secrets=[FAKE_TOKEN],
+                          history_dir=self.root / "history")
 
     def close(self):
         self.tmp.cleanup()
@@ -179,7 +180,7 @@ class Missing(Base):
     def test_missing_history(self):
         standard(self.env)
         md = self.env.gen()["markdown"].read_text()
-        self.assertIn("WPS: INSUFFICIENT_HISTORY", md)
+        self.assertIn("INSUFFICIENT_HISTORY (1 observation(s); no change or direction is inferred)", md)
         self.assertIn("None. Emerging status requires at least 2 observations", md)
 
     def test_na_handling(self):
@@ -203,8 +204,8 @@ class Sections(Base):
         self.assertEqual(e["gmv_change_pct"], 25.0)
         self.assertEqual((e["creator_change"], e["video_change"]), (80.0, 200.0))
         md = self.env.gen()["markdown"].read_text()
-        self.assertIn("WPS: ↑", md)
-        self.assertIn("GMV: ↑", md)
+        self.assertIn("| WPS | 80 | 72 | 8 | ↑ |", md)               # no store: computed from Deep Analysis files
+        self.assertIn("25.00% ↑", md)
 
     def test_single_observation_never_emerging(self):
         self.env.write(discovery=[disc_rec("S")], deep=[[deep_rec("S", 95, 95, trend="ACCELERATING")]])
@@ -248,6 +249,48 @@ class Sections(Base):
         self.env.write(discovery=[disc_rec("A")], deep=[[rec]])
         r = self.env.gen()["report"]
         self.assertEqual(len(r["summary"]["identity_conflicts"]), 1)
+
+
+class HistoryStoreIntegration(Base):
+    def test_report_uses_history_store(self):
+        import history as H
+        from datetime import timedelta
+        store = H.HistoryStore(self.env.root / "history")
+        base = datetime(2026, 9, 20, 12, 0, tzinfo=timezone.utc)
+        for i, (w, g, c, v) in enumerate([(70, 80000, 300, 700), (74, 90000, 340, 800), (80, 100000, 400, 900)]):
+            o = H.empty_observation()
+            o.update({"product_id": "A", "identity_key": "A", "observation_timestamp": H.iso(base + timedelta(days=3 * i)),
+                      "observation_date": (base + timedelta(days=3 * i)).date().isoformat(), "source_stage": "deep_analysis"})
+            o["scores"]["wps"], o["tiktok"]["gmv"], o["tiktok"]["creator_count"], o["tiktok"]["video_count"] = w, g, c, v
+            store.append(o)
+        standard(self.env)
+        r = self.env.gen()
+        a = next(p for p in r["report"]["top"] if p["id"] == "A")
+        self.assertEqual(a["history_source"], "history_store")
+        self.assertEqual(a["history_snapshot"]["observation_count"], 3)
+        md = r["markdown"].read_text()
+        self.assertIn("First seen 2026-09-20 · last seen 2026-09-26 · observations 3 · days tracked 3", md)
+        self.assertIn("| WPS | 80 | 74 | 6 | ↑ |", md)
+        self.assertIn("| GMV | $100,000.00 | $90,000.00 | $10,000.00 | 11.11% ↑ |", md)
+        self.assertIn("Trend (GMV): 7D GROWING", md)
+        self.assertIn("not the marketplace listing age", md)
+        js = json.loads(r["json"].read_text())
+        self.assertEqual(js["top_products"][0]["history_snapshot"]["latest_wps"], 80)
+
+    def test_insufficient_history_no_arrows(self):
+        import history as H
+        store = H.HistoryStore(self.env.root / "history")
+        o = H.empty_observation()
+        o.update({"product_id": "A", "identity_key": "A", "observation_timestamp": "2026-09-30T12:00:00+00:00",
+                  "observation_date": "2026-09-30", "source_stage": "deep_analysis"})
+        o["scores"]["wps"] = 90
+        store.append(o)
+        standard(self.env)
+        md = self.env.gen()["markdown"].read_text()
+        card = md.split("### 1. SYNTHETIC product A")[1].split("\n---\n")[0]
+        self.assertIn("INSUFFICIENT_HISTORY (1 observation(s)", card)
+        self.assertNotIn("↑", card)
+        self.assertNotIn("↓", card)
 
 
 class Outputs(Base):
