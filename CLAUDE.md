@@ -172,6 +172,20 @@ Rank and recommend by momentum (growth, new creators/videos, acceleration) rathe
   competition_velocity only from >= 2 snapshots on different days.
 - `python -m winning_product_agent competitors import <file.csv|json>` / `competitors show <product_id>`.
 
+## Creative Intelligence (Step Y)
+
+- `scripts/creatives.py` + `config/creatives.yaml`. NOT combined with WPS / AVS / BVS (`bvs_inputs()` adapter only).
+- NEVER store competitor scripts, ad copy or transcripts: forbidden columns are rejected and stripped even from raw;
+  summaries max 120 chars; only normalized categories (hook / angle / format / demo / CTA / duration) are analyzed.
+- Sources: `manual_import`, `kalopilot_saved` (top_videos inside SAVED deep answers: no query, no credits).
+  KaloPilot live video queries, Meta Ad Library, Minea, Pipiads raise ProviderNotIntegrated.
+- Hooks / angles: import label (validated against the taxonomy) or a single unambiguous cue in the summary; else UNKNOWN.
+- Qualified creative = match >= 75 (linked product id = 100). Independent scores: Creative Saturation (25/20/20/15/10/10),
+  Creative Opportunity (demand-gated), Creative Confidence. Views are never profitability; long-running = persistence.
+- Gaps need >= 5 creatives with the feature known and state their evidence; test hypotheses come only from gaps and are
+  never predictions. History snapshots in data/history/creatives; velocity only from >= 2 dated snapshots.
+- `python -m winning_product_agent creatives import <file> | from-kalopilot <pid> | show <pid>`.
+
 ## Useful commands
 
 ```bash

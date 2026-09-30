@@ -240,6 +240,39 @@ def cmd_competitors(a):
     return 0
 
 
+def cmd_creatives(a):
+    """Step Y: creative research (manual import or SAVED KaloPilot top videos; no paid query)."""
+    import creatives as CR
+    p = R.safety.load_runtime()["paths"]
+    proc = R.ROOT / p["processed"] / "creatives"
+    if a.action == "import":
+        try:
+            r = CR.import_file(a.target, raw_dir=R.ROOT / p["raw"] / "creatives", processed_dir=proc)
+        except CR.MalformedCreativeInput as e:
+            _p(f"REJECTED FILE: {e}")
+            return 1
+        _p(f"Rows {r['rows']} | accepted {r['accepted']} | rejected {len(r['rejected'])} | products {r['products']}")
+        for x in r["rejected"]:
+            _p(f"  row {x['row']}: {'; '.join(x['errors'])}")
+        return 0 if r["accepted"] else 1
+    if a.action == "from-kalopilot":
+        r = CR.import_from_kalopilot(a.target, R.ROOT / p["raw"] / "deep_analysis", proc)
+        _p(json.dumps(r))
+        return 0 if r["accepted"] else 1
+    cs = CR.load_all(a.target, proc)
+    if not cs:
+        _p(f"No creative data for {a.target}.")
+        return 1
+    obs = __import__("history").HistoryStore(R.ROOT / p["history"]).observations(a.target)
+    d = next((x for x in obs[::-1] if x.get("product_name")), {})
+    an = CR.analyze_product(a.target, {"product_name": d.get("product_name"), "units": (d.get("tiktok") or {}).get("units")}, cs)
+    _p(f"qualified {an['qualified_creatives']} | saturation {an['saturation']['score']} | opportunity "
+       f"{an['opportunity']['score']} | confidence {an['confidence']['score']} | flags {[f['flag'] for f in an['red_flags']]}")
+    for g in an["creative_gaps"]:
+        _p(f"  gap {g['gap']}: {g['evidence']}")
+    return 0
+
+
 def cmd_audit(a):
     import calibration_audit as CA
     r = CA.audit(a.run_id)
@@ -280,6 +313,9 @@ def build_parser():
     co = sub.add_parser("competitors", help="manual competitor research: import <csv|json> / show <product_id>")
     co.add_argument("action", choices=["import", "show"])
     co.add_argument("target")
+    cr = sub.add_parser("creatives", help="creatives: import <csv|json> / from-kalopilot <pid> / show <pid>")
+    cr.add_argument("action", choices=["import", "from-kalopilot", "show"])
+    cr.add_argument("target")
     au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
     au.add_argument("run_id", nargs="?")
     return p
@@ -288,7 +324,8 @@ def build_parser():
 def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit,
-            "suppliers": cmd_suppliers, "competitors": cmd_competitors}[a.cmd](a)
+            "suppliers": cmd_suppliers, "competitors": cmd_competitors,
+            "creatives": cmd_creatives}[a.cmd](a)
 
 
 if __name__ == "__main__":

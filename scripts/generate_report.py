@@ -708,6 +708,42 @@ def competitor_section(r):
     return L
 
 
+def creative_section(r):
+    """Step Y: creative intelligence (separate from WPS / AVS / BVS)."""
+    rows = r.get("creative_intelligence")
+    L = ["", "## Creative intelligence", "",
+         "_Normalized categories only — no competitor scripts or ad copy are stored. Views are never profitability; "
+         "long-running = persistence only. Hypotheses are tests to run, not predictions._", ""]
+    if not rows:
+        return L + ["No creative data imported yet.", ""]
+
+    def v(x, suffix=""):
+        return NA if x is None or x == NA else f"{x}{suffix}"
+    for row in rows:
+        a = row["analysis"]
+        L += [f"### {row['name']} ({row['product_id']})", "",
+              f"- Qualified creatives: {a['qualified_creatives']} (unreliable excluded {a['unreliable_excluded']}, "
+              f"duplicates removed {a['duplicates_removed']})",
+              f"- Creative Saturation Score: {v(a['saturation']['score'])} · Creative Opportunity Score: "
+              f"{v(a['opportunity']['score'])} · Creative Confidence: {a['confidence']['score']} ({a['confidence']['level']})",
+              f"- Top hook categories: {a['hooks']['distribution'] or 'none classified'}",
+              f"- Top marketing angles: {a['angles']['distribution'] or 'none classified'}",
+              f"- Format distribution: {a['formats']['distribution']}",
+              f"- Long-running creatives: {a['long_running_creatives']} · longevity {a['longevity']}",
+              f"- Performance evidence: {a['performance']['performance_evidence_count']} creatives "
+              f"(sourced GMV {v(a['performance']['total_sourced_gmv'], ' USD')}); views ≠ profitability",
+              f"- Creative red flags: {', '.join(f['flag'] for f in a['red_flags']) or 'none'}",
+              "- Creative gaps: " + ("; ".join(f"{g['gap']}{' (' + g.get('angle', g.get('format', '')) + ')' if g.get('angle') or g.get('format') else ''}: {g['evidence']}"
+                                             for g in a["creative_gaps"]) or "none supported by the data"), ""]
+        if a["creative_test_hypotheses"]:
+            L += ["| Evidence | Gap | Hypothesis (untested) | Format | Hook | Angle |", "|---|---|---|---|---|---|"]
+            for h in a["creative_test_hypotheses"]:
+                L.append(f"| {h['evidence']} | {h['observed_gap']} | {h['testable_hypothesis']} | {h['suggested_format']} | "
+                         f"{h['suggested_hook_category']} | {h['suggested_angle']} |")
+            L.append("")
+    return L
+
+
 def render_markdown(r, cfg):
     s = r["summary"]
     L = [f"# Winning Product Research — {s['research_date']}", "",
@@ -793,6 +829,7 @@ def render_markdown(r, cfg):
     dq = r["data_quality"]
     L += supplier_section(r)
     L += competitor_section(r)
+    L += creative_section(r)
     L += ["", "## Data quality", "", f"Base: {dq['products_with_wps']} product(s) with WPS.", "",
           "| Measure | % of products |", "|---|---|",
           f"| Complete TikTok data | {fmt(dq['pct_complete_tiktok_data'], 'pct')} |",
@@ -847,7 +884,8 @@ def build_json(r, cfg):
                 "gross_margin_percent": s["economics"].get("gross_margin_percent"),
                 "contribution_margin_percent": s["economics"].get("contribution_margin_percent")}
                 for s in supplier_rows(r)],
-            "competitor_intelligence": r.get("competitor_intelligence") or []}
+            "competitor_intelligence": r.get("competitor_intelligence") or [],
+            "creative_intelligence": r.get("creative_intelligence") or []}
 
 
 # ================================================================== writing

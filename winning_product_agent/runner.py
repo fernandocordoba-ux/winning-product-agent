@@ -1419,6 +1419,9 @@ class Runner:
         rep["competitor_intelligence"] = CI.report_rows(rep["top"] + rep["watch"] + rep["rejected"],
                                                         self.processed / "competitors",
                                                         self.history_dir / "competitors")
+        import creatives as CR                        # Step Y: read-only creative intelligence
+        rep["creative_intelligence"] = CR.report_rows(rep["top"] + rep["watch"] + rep["rejected"],
+                                                      self.processed / "creatives", self.history_dir / "creatives")
         pats = [p.lower() for p in cfg["secret_key_patterns"]]
         md = GR.render_markdown(rep, cfg)
         banner = (f"\n> Data environment: **{self.env}** · Run `{self.run_id}` · profile `{self.eff['profile_path']}` · "

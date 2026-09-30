@@ -12,7 +12,8 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_FILES = ["runtime.yaml", "scoring.yaml", "filters.yaml", "categories.yaml", "deep_analysis.yaml",
                 "amazon_validation.yaml", "business_viability.yaml", "report.yaml", "history.yaml", "emerging.yaml",
-                "calibration_lane.yaml", "provider_capabilities.yaml", "suppliers.yaml", "competitors.yaml"]
+                "calibration_lane.yaml", "provider_capabilities.yaml", "suppliers.yaml", "competitors.yaml",
+                "creatives.yaml"]
 
 
 def load_all(config_dir=ROOT / "config"):
@@ -143,6 +144,28 @@ def validate(cfgs):
             e.append("competitors.yaml: relationships.adjacent_min must be < direct_min")
         _pos_int(e, "competitors.yaml competitor_calibration.max_competitors_per_product",
                  (cp.get("competitor_calibration") or {}).get("max_competitors_per_product"))
+
+    cv = cfgs.get("creatives.yaml") or {}
+    if cv:
+        for sect in ("saturation", "opportunity", "confidence"):
+            _total(e, f"creatives.yaml {sect}", list(((cv.get(sect) or {}).get("components") or {}).values()), "points")
+        sc = (cv.get("saturation") or {}).get("components") or {}
+        expect = {"creative_volume": 25, "angle_concentration": 20, "hook_concentration": 20, "creator_repetition": 15,
+                  "longevity_concentration": 10, "format_concentration": 10}
+        if {k: (sc.get(k) or {}).get("points") for k in expect} != expect:
+            e.append("creatives.yaml: saturation components must be 25/20/20/15/10/10 (Step Y spec)")
+        for k in ("hooks", "angles"):
+            if not isinstance(cv.get(k), dict) or not cv[k]:
+                e.append(f"creatives.yaml: {k} taxonomy missing")
+        for g, t in (cv.get("hypotheses") or {}).items():
+            for fld in ("hook",):
+                if t.get(fld) and t[fld] not in (cv.get("hooks") or {}):
+                    e.append(f"creatives.yaml: hypotheses.{g}.hook {t[fld]} not in the hook taxonomy")
+            if t.get("angle") and t["angle"] not in (cv.get("angles") or {}):
+                e.append(f"creatives.yaml: hypotheses.{g}.angle {t['angle']} not in the angle taxonomy")
+        for a_ in (cv.get("gaps") or {}).get("underused_angle_candidates") or []:
+            if a_ not in (cv.get("angles") or {}):
+                e.append(f"creatives.yaml: gaps candidate angle {a_} not in the taxonomy")
 
     # ---------------------------------------------------------------- filters
     f = cfgs.get("filters.yaml") or {}
