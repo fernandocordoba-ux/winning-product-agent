@@ -45,10 +45,11 @@ bash scripts/ask.sh "Compare #1 with the UK market" <task_id_from_previous_answe
 | `scripts/kalopilot_client.py` | KaloPilot client: free balance check; `discover` runs one query per category (spends credits) |
 | `scripts/concentration.py` | Creator/video revenue concentration + dependency flags (tested) |
 | `scripts/validate_data.py` | Validate raw data → `data/processed/` (skeleton) |
-| `scripts/score_products.py` | Scoring engine: WPS (not implemented yet → N/A) + Confidence Score |
+| `scripts/score_products.py` | Scoring engine: WPS (wps-v1, per metric breakdown) + Confidence Score (tested) |
+| `scripts/deep_analysis.py` | Deep Analysis (Step M): dry-run by default, credit protection, trend, concentration, WPS, Confidence, red flags (tested) |
 | `scripts/confidence.py` | Confidence Score: data completeness/quality, 0–100 + breakdown (tested) |
 | `scripts/generate_report.py` | Build reports in `reports/` (skeleton) |
-| `config/` | `scoring.yaml`, `filters.yaml`, `categories.yaml` |
+| `config/` | `scoring.yaml`, `filters.yaml`, `categories.yaml`, `deep_analysis.yaml` |
 | `prompts/` | `discovery.md`, `deep_analysis.md`, `validation.md` |
 | `data/raw/` | Raw API responses (git-ignored) |
 | `data/processed/`, `data/history/` | Validated data and dated snapshots |

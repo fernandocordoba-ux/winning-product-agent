@@ -389,7 +389,7 @@ def attach_scores(product, conf_cfg):
     wps = wps_score(scoring_input(product))
     conf = confidence_score(scoring_input(product), conf_cfg)
     product["calculated"]["wps_if_calculable"] = (
-        {"status": "pending", "score": NA, "reason": "WPS engine not implemented; deep-analysis data required"}
+        {"status": "pending", "score": NA, "reason": "insufficient data for a full WPS at discovery stage; deep analysis required", "na_metrics": wps.get("na_metrics")}
         if wps["score"] == NA else wps)
     product["calculated"]["confidence_if_calculable"] = {
         "score": conf["score"], "level": conf["level"], "stage": "discovery",

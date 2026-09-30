@@ -160,16 +160,26 @@ class IndependentFromPerformance(unittest.TestCase):
 class EngineIntegration(unittest.TestCase):
     def test_wps_and_confidence_returned_separately(self):
         r = score_product(complete(), CFG)
-        self.assertEqual(r["wps"]["score"], NA)                      # WPS engine not implemented
-        self.assertEqual(r["wps"]["status"], "not_implemented")
+        self.assertIn("metrics", r["wps"])                           # WPS from the engine
         self.assertEqual(r["confidence"]["score"], 100.0)
         self.assertEqual(r["summary"]["Confidence"], "100.0/100 (VERY_HIGH)")
-        self.assertIn("N/A", r["summary"]["WPS"])
 
-    def test_high_confidence_does_not_create_or_raise_wps(self):
-        hi = score_product(complete(), CFG)
-        lo = score_product({"product_id": "x"}, CFG)
-        self.assertEqual(hi["wps"], lo["wps"])
+    def test_confidence_never_changes_wps(self):
+        p = complete()
+        low_cfg = copy.deepcopy(CFG)
+        for c in low_cfg["components"].values():
+            c["points"] = 0                                          # force Confidence to 0
+        a = score_product(p, CFG)
+        b = score_product(p, low_cfg)
+        self.assertNotEqual(a["confidence"]["score"], b["confidence"]["score"])
+        self.assertEqual(a["wps"], b["wps"])
+
+    def test_wps_never_changes_confidence(self):
+        a = score_product(complete(revenue_growth_pct=500.0), CFG)   # high growth -> higher WPS
+        b = score_product(complete(revenue_growth_pct=-50.0), CFG)
+        self.assertNotEqual(a["wps"]["score"], b["wps"]["score"])
+        self.assertEqual(a["confidence"]["score"], b["confidence"]["score"])
+        self.assertEqual(earned(a["confidence"]), earned(b["confidence"]))
 
 
 class Determinism(unittest.TestCase):
