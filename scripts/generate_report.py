@@ -171,7 +171,8 @@ def build_products(inputs, cfg, store=None):
             d = None                                   # low identity confidence -> do not merge
         if d is not None:
             used_deep.add(str(d["product_id"]))
-        products[key] = {"discovery": rec, "deep": d}
+        products[key] = {"discovery": rec, "deep": d,
+                         "identity_conflict": any(c["discovery_key"] == rec["key"] for c in conflicts)}
     for pid, d in deep_latest.items():                # deep results without a Discovery record
         if pid not in used_deep and pid not in products:
             products[pid] = {"discovery": None, "deep": d}
@@ -185,6 +186,7 @@ def build_products(inputs, cfg, store=None):
         hist_obs = store.observations(pid or key) if store else []
         out.append(assemble(key, pid, rec, d, a, b, history.get(str(pid), []) if pid else [], cfg, disc,
                             hist_obs, store.cfg if store else None))
+        out[-1]["identity_conflict"] = bool(p.get("identity_conflict"))       # Step Z hard gate input
     return out, conflicts
 
 
@@ -501,7 +503,8 @@ def build_report(inputs, cfg, now=None, store=None):
         "identity_conflicts": conflicts,
     }
     return {"summary": summary, "top": top, "emerging": em, "watch": watch, "watch_more": watch_more,
-            "rejected": rejected, "data_quality": data_quality(products, cfg), "ranking_logic": ranking_logic_text(cfg)}
+            "rejected": rejected, "data_quality": data_quality(products, cfg), "ranking_logic": ranking_logic_text(cfg),
+            "all_products": products}                  # Step Z: every product (none hidden) for the decision engine
 
 
 # ================================================================== rendering

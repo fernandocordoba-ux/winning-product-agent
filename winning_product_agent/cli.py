@@ -283,6 +283,54 @@ def cmd_audit(a):
     return 0
 
 
+def cmd_decide(a):
+    """Step Z: rules-based final decision. Offline only: no query, no credits, nothing bought or launched."""
+    import decision_engine as DE
+    rt = R.safety.load_runtime()
+    p = rt["paths"]
+    reports = R.ROOT / p["reports"]
+    if a.explain:
+        saved = DE.load_saved(reports)
+        if not saved:
+            _p("No final decision saved yet (run `decide --rebuild` or a live run report stage).")
+            return 1
+        _p(json.dumps(DE.explain_decision(a.explain, saved), indent=2, ensure_ascii=False, default=str))
+        return 0
+    if not a.rebuild:
+        saved = DE.load_saved(reports)
+        if not saved:
+            _p("No final decision saved yet. `decide --rebuild` recomputes it offline from saved LIVE data.")
+            return 1
+        m = saved["metadata"]
+        _p(f"Final decision {m['timestamp']} · rules {m['decision_rules_version']} · env {m.get('data_environment')}")
+        for d in saved["decisions"]:
+            _p(f"  {d['decision_state']:<30} {d['name']}  (decision confidence {d['decision_confidence']['score']})")
+        _p(f"Shortlist: {[s['name'] for s in saved['shortlist']] or 'empty (no READY product)'}")
+        return 0
+    import generate_report as GR
+    import competitors as CI
+    import creatives as CR
+    env = "LIVE"
+    inputs = GR.load_inputs(R.ROOT / p["processed"])
+    disc = inputs["discovery"] or {}
+    if disc and disc.get("data_environment") != env:
+        inputs["discovery"] = None
+    for k in ("deep", "amazon", "bvs"):
+        inputs[k] = [r for r in inputs[k] if r.get("data_environment") == env]
+    view = R.EnvStore(R.ROOT / p["history"], env)
+    rep = GR.build_report(inputs, GR.load_cfg(), None, view if view.identities() else None)
+    prods = rep["all_products"]
+    comp = {str(r["product_id"]): r["analysis"] for r in CI.report_rows(prods, R.ROOT / p["processed"] / "competitors")}
+    cre = {str(r["product_id"]): r["analysis"] for r in CR.report_rows(prods, R.ROOT / p["processed"] / "creatives")}
+    mv = R.ROOT / p["processed"] / "manual_validation.json"
+    res = DE.run(prods, comp, cre, manual=json.loads(mv.read_text()) if mv.exists() else None, expected_env=env)
+    out = DE.write_reports(res, reports, secrets=GR.known_secrets())
+    _p(f"Final decision: {out['markdown']}\nJSON: {out['json']}\nLatest: {out['latest']}")
+    for d in res["decisions"]:
+        _p(f"  {d['decision_state']:<30} {d['name']}")
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="python -m winning_product_agent", description="winning-product-agent master runner")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -316,6 +364,9 @@ def build_parser():
     cr = sub.add_parser("creatives", help="creatives: import <csv|json> / from-kalopilot <pid> / show <pid>")
     cr.add_argument("action", choices=["import", "from-kalopilot", "show"])
     cr.add_argument("target")
+    de = sub.add_parser("decide", help="Step Z final decision (offline): show / --rebuild / --explain <product_id>")
+    de.add_argument("--rebuild", action="store_true", help="recompute from saved LIVE data (no query, no credits)")
+    de.add_argument("--explain", help="print the full decision path of one product")
     au = sub.add_parser("audit", help="calibration audit of a live run (read-only, no queries)")
     au.add_argument("run_id", nargs="?")
     return p
@@ -325,7 +376,7 @@ def main(argv=None):
     a = build_parser().parse_args(argv)
     return {"preflight": cmd_preflight, "run": cmd_run, "status": cmd_status, "report": cmd_report, "audit": cmd_audit,
             "suppliers": cmd_suppliers, "competitors": cmd_competitors,
-            "creatives": cmd_creatives}[a.cmd](a)
+            "creatives": cmd_creatives, "decide": cmd_decide}[a.cmd](a)
 
 
 if __name__ == "__main__":

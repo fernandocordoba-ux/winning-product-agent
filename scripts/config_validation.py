@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CONFIG_FILES = ["runtime.yaml", "scoring.yaml", "filters.yaml", "categories.yaml", "deep_analysis.yaml",
                 "amazon_validation.yaml", "business_viability.yaml", "report.yaml", "history.yaml", "emerging.yaml",
                 "calibration_lane.yaml", "provider_capabilities.yaml", "suppliers.yaml", "competitors.yaml",
-                "creatives.yaml"]
+                "creatives.yaml", "decision.yaml"]
 
 
 def load_all(config_dir=ROOT / "config"):
@@ -166,6 +166,37 @@ def validate(cfgs):
         for a_ in (cv.get("gaps") or {}).get("underused_angle_candidates") or []:
             if a_ not in (cv.get("angles") or {}):
                 e.append(f"creatives.yaml: gaps candidate angle {a_} not in the taxonomy")
+
+    # ---------------------------------------------------------------- decision engine (Step Z)
+    dz = cfgs.get("decision.yaml") or {}
+    if dz:
+        states = ["READY_FOR_PRODUCT_VALIDATION", "PROMISING_NEEDS_VALIDATION", "WATCHLIST", "REJECT", "INSUFFICIENT_DATA"]
+        if dz.get("states") != states:
+            e.append("decision.yaml: states must be exactly the 5 Step Z states")
+        if not dz.get("decision_rules_version"):
+            e.append("decision.yaml: decision_rules_version missing")
+        for g, rule in (dz.get("hard_gates") or {}).items():
+            if (rule or {}).get("action") not in ("reject", "block_ready"):
+                e.append(f"decision.yaml: hard_gates.{g}.action must be reject or block_ready")
+        required_gates = {"NEGATIVE_CONTRIBUTION_MARGIN", "UNRELIABLE_PRODUCT_MATCH", "REGULATED_PRODUCT",
+                          "COUNTERFEIT_REVIEW_REQUIRED", "EXTREME_COMPETITION_WEAK_DEMAND", "DEMAND_DECLINING",
+                          "CREATOR_DEPENDENCY_WEAK_BROADER", "VIDEO_DEPENDENCY_WEAK_BROADER", "VERY_SLOW_DELIVERY",
+                          "SUPPLIER_MATCH_UNRELIABLE", "CRITICAL_DATA_INTEGRITY_ERROR"}
+        missing = required_gates - set(dz.get("hard_gates") or {})
+        if missing:
+            e.append(f"decision.yaml: hard gates missing {sorted(missing)}")
+        for k, x in (dz.get("minimum_confidence") or {}).items():
+            if not _num(x) or not 0 <= x <= 100:
+                e.append(f"decision.yaml: minimum_confidence.{k} must be 0-100")
+        dims = dz.get("dimensions") or {}
+        for k in ("market_momentum", "cross_platform_demand", "commercial_viability", "competitive_environment",
+                  "creative_opportunity", "evidence_quality"):
+            if k not in dims:
+                e.append(f"decision.yaml: dimension {k} missing")
+        _total(e, "decision.yaml decision_confidence", list(((dz.get("decision_confidence") or {}).get("components")
+                                                             or {}).values()), "points")
+        if ((dz.get("shortlist") or {}).get("max_products") or 0) > 3:
+            e.append("decision.yaml: shortlist.max_products must be <= 3")
 
     # ---------------------------------------------------------------- filters
     f = cfgs.get("filters.yaml") or {}

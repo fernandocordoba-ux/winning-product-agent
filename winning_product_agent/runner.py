@@ -1416,11 +1416,12 @@ class Runner:
         view = EnvStore(self.history_dir, self.env)
         rep = GR.build_report(inputs, cfg, now, view if view.identities() else None)
         import competitors as CI                      # Step X: read-only intelligence, not combined with scores
-        rep["competitor_intelligence"] = CI.report_rows(rep["top"] + rep["watch"] + rep["rejected"],
+        everyone = rep.get("all_products") or (rep["top"] + rep["watch"] + rep["rejected"])
+        rep["competitor_intelligence"] = CI.report_rows(everyone,
                                                         self.processed / "competitors",
                                                         self.history_dir / "competitors")
         import creatives as CR                        # Step Y: read-only creative intelligence
-        rep["creative_intelligence"] = CR.report_rows(rep["top"] + rep["watch"] + rep["rejected"],
+        rep["creative_intelligence"] = CR.report_rows(everyone,
                                                       self.processed / "creatives", self.history_dir / "creatives")
         pats = [p.lower() for p in cfg["secret_key_patterns"]]
         md = GR.render_markdown(rep, cfg)
@@ -1449,12 +1450,28 @@ class Runner:
         latest.write_text(md)
         outs = {"report_markdown": str(md_path), "report_json": str(js_path), "report_latest": str(latest),
                 "manifest": str(self.run_dir / "manifest.json"), "log": str(self.log.path)}
+        dec = self.final_decision(rep, now)             # Step Z: rules-based decision (no query, no purchase)
+        outs.update({"final_decision_markdown": dec["markdown"], "final_decision_json": dec["json"],
+                     "final_decision_latest": dec["latest"]})
         ctx.setdefault("outputs", {}).update(outs)
         s = rep["summary"]
         self._checkpoint("final_report", {"status": COMPLETED, "outputs": outs, "top": s["top_count"],
                                           "watchlist": s["watchlist_count"], "rejected": s["rejected_count"]})
         return COMPLETED, {"summary": f"Top {s['top_count']} | watchlist {s['watchlist_count']} | "
                                       f"rejected {s['rejected_count']}", **outs}
+
+    def final_decision(self, rep, now):
+        import decision_engine as DE
+        comp = {str(r["product_id"]): r["analysis"] for r in rep.get("competitor_intelligence") or []}
+        cre = {str(r["product_id"]): r["analysis"] for r in rep.get("creative_intelligence") or []}
+        mv = self.processed / "manual_validation.json"
+        manual = json.loads(mv.read_text()) if mv.exists() else None
+        res = DE.run(rep.get("all_products") or (rep["top"] + rep["watch"] + rep["rejected"]), comp, cre,
+                     manual=manual, expected_env=self.env, now=now,
+                     runtime_path=ROOT / self.eff["profile_path"] if not Path(self.eff["profile_path"]).is_absolute()
+                     else Path(self.eff["profile_path"]))
+        res["metadata"]["run_id"] = self.run_id
+        return DE.write_reports(res, self.reports_dir, secrets=self.secrets)
 
     # ------------------------------------------------------------------ status / summary
     def overall_status(self):
