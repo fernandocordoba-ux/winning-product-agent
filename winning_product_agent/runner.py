@@ -165,8 +165,8 @@ class KaloClient:
     def credits(self):
         return self.KC.credits()
 
-    def submit(self, query, estimated_cost=None):
-        return self.KC.submit(query, estimated_cost=estimated_cost)
+    def submit(self, query, estimated_cost=None, task_id=None):
+        return self.KC.submit(query, task_id=task_id, estimated_cost=estimated_cost)
 
     def wait(self, task_id):
         return self.KC.wait(task_id)
@@ -259,6 +259,7 @@ class Runner:
         self.rt, self.eff, self.profile_errors = load_profile(profile_path, self.root)
         self.client = client
         self.max_products_arg = max_products
+        self.continue_task = None                  # Step U: follow-up on an unfinished discovery task
         self.preflight_fn = preflight_fn
         self.input_fn = input_fn or input
         self.isatty = sys.stdin.isatty() if isatty is None else isatty
@@ -301,8 +302,28 @@ class Runner:
         v = (self.eff["query_plan"].get("estimated_credits") or {}).get(stage)
         return float(v) if isinstance(v, (int, float)) else None
 
+    def followup_source(self, task_id):
+        """The saved raw answer of an unfinished discovery task (must exist locally, LIVE, same category set)."""
+        for p in sorted(self.raw.glob(f"*_{task_id}*.json")):
+            e = _read_json(p) or {}
+            if e.get("task_id") == task_id and e.get("category_key") and raw_env_ok(e, LIVE):
+                return p, e
+        return None, None
+
+    def followup_query(self, source_env):
+        import re
+        tpl = re.split(r"^===\s*$", (ROOT / "prompts" / "discovery_followup.md").read_text(), flags=re.M)[1].strip()
+        m = self.filters["market"]
+        return tpl.format(currency=m["currency"], limit=self.filters["discovery_mode"]["products_per_category"])
+
     def discovery_queries(self):
         qp, lim = self.eff["query_plan"], self.limits
+        if self.continue_task:
+            p, e = self.followup_source(self.continue_task)
+            if not p:
+                raise ValueError(f"no saved LIVE discovery answer for task {self.continue_task}")
+            return [{"category_key": e["category_key"], "query": self.followup_query(e),
+                     "followup_task": self.continue_task, "followup_raw": str(p)}]
         only = qp.get("discovery_categories")                     # optional subset of category keys
         if qp.get("discovery_mode", "per_category") == "per_category":
             qs = D.build_queries(self.filters, self.categories)
@@ -463,7 +484,7 @@ class Runner:
         self.balance_now = b
         return b
 
-    def paid_query(self, stage, query_type, query, products):
+    def paid_query(self, stage, query_type, query, products, followup_task=None):
         """Cap -> gate -> submit -> wait. Returns (response, task_id, cost). Raises StopPaid / ProviderFailure."""
         est = self.est(stage)
         if self.stop_paid:
@@ -476,21 +497,22 @@ class Runner:
         if cap is not None and spent + (est or 0.0) > cap:
             self.stop_paid = ("run_credit_cap", f"run credit cap {cap} reached (spent {round(spent, 2)} + "
                                                 f"next ~{est if est is not None else 'UNKNOWN'})")
-            return self.paid_query(stage, query_type, query, products)
+            return self.paid_query(stage, query_type, query, products, followup_task)
         gate = safety.check_live_query(self.rt, balance=bal, estimated_cost=est)
         if not gate.allowed:
             cat = ("insufficient_credits" if any("insufficient credits" in r for r in gate.reasons) else
                    "credentials" if any("credentials" in r for r in gate.reasons) else "gate_blocked")
             self.stop_paid = (cat, "BLOCKED LIVE QUERY: " + "; ".join(gate.reasons))
-            return self.paid_query(stage, query_type, query, products)
+            return self.paid_query(stage, query_type, query, products, followup_task)
         try:
-            sub = self.client.submit(query, estimated_cost=est)
+            sub = self.client.submit(query, estimated_cost=est,
+                                     **({"task_id": followup_task} if followup_task else {}))
         except safety.LiveQueryBlocked as e:
             msg = str(e)
             cat = ("insufficient_credits" if "insufficient credits" in msg else
                    "credentials" if "credentials" in msg else "gate_blocked")
             self.stop_paid = (cat, msg)
-            return self.paid_query(stage, query_type, query, products)
+            return self.paid_query(stage, query_type, query, products, followup_task)
         task_id = (sub.get("data") or {}).get("task_id") if isinstance(sub, dict) else None
         if not task_id:
             cat = (sub or {}).get("error_category") or "no_task_id"
@@ -806,7 +828,7 @@ class Runner:
                              "action": "CHECKPOINT"})
                 self.budget.record("cached")
                 continue
-            cached = self.find_cached_discovery(q["query"], self.env, now)
+            cached = None if q.get("followup_task") else self.find_cached_discovery(q["query"], self.env, now)
             if cached:
                 self.budget.record("cached")
                 self._qlog("discovery", "CACHE_HIT", "discovery", [q["category_key"]], raw_file=str(cached))
@@ -814,7 +836,9 @@ class Runner:
                              "action": "CACHE_HIT"})
                 continue
             try:
-                resp, task_id, cost = self.paid_query("discovery", "discovery", q["query"], [q["category_key"]])
+                resp, task_id, cost = self.paid_query("discovery", "discovery_followup" if q.get("followup_task")
+                                                      else "discovery", q["query"], [q["category_key"]],
+                                                      q.get("followup_task"))
             except StopPaid as e:
                 stop = e.message
                 break
@@ -826,6 +850,8 @@ class Runner:
                     "market": self.eff["runtime"]["market"], "currency": self.filters["market"]["currency"],
                     "fetched_at": ts.strftime("%Y%m%dT%H%M%SZ"), "observation_date": ts.strftime("%Y-%m-%d"),
                     "data_environment": self.env, "run_id": self.run_id, "credits_consumed": cost}
+            if q.get("followup_task"):
+                meta.update({"followup_of_task_id": q["followup_task"], "followup_of_raw": q.get("followup_raw")})
             if q.get("categories"):
                 meta["categories"] = q["categories"]
             path = D.save_raw(resp, meta, self.raw)

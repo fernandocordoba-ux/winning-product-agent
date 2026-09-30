@@ -6,6 +6,7 @@
   python -m winning_product_agent run --live --profile config/runtime_first_live.yaml --max-products 5
         [--confirm-live "CONFIRM LIVE RUN"]   # only for non-interactive sessions
         [--resume RUN_ID]                     # continue a stopped run without re-buying queries
+        [--continue-task TASK_ID]             # Discovery = follow-up asking an unfinished task for its JSON
   python -m winning_product_agent status [RUN_ID]
   python -m winning_product_agent report [RUN_ID]
   python -m winning_product_agent audit [RUN_ID]           # Step U calibration audit (read-only)
@@ -123,6 +124,8 @@ def cmd_run(a):
         _p("BLOCKED: --confirm-live / --resume are only valid with --live")
         return 2
     run = R.Runner(profile_path=a.profile, max_products=a.max_products)
+    if a.continue_task:
+        run.continue_task = a.continue_task
     if not a.live:                                    # default: DRY RUN, never paid
         r = run.dry_run(check_balance=a.check_balance)
         print_dry(r)
@@ -193,6 +196,8 @@ def build_parser():
     r.add_argument("--check-balance", action="store_true", help="dry run: FREE balance check")
     r.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.CONFIRMATION_PHRASE}"')
     r.add_argument("--resume", help="resume a stopped live run by run id")
+    r.add_argument("--continue-task", help="Discovery = ONE follow-up on an unfinished KaloPilot task (same "
+                                           "conversation) asking only for the final JSON")
     st = sub.add_parser("status")
     st.add_argument("run_id", nargs="?")
     rp = sub.add_parser("report")

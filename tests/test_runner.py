@@ -625,3 +625,37 @@ class CalibrationAudit(Base):
                         {"economics": {"product_cost": "N/A"}, "bvs_confidence": 75},
                         {"emerging_status": "EMERGING", "observation_count": 1}, None)
         self.assertEqual(len(out), 6)
+
+
+# ============================================================ Step U follow-up on an unfinished task
+class FollowUp(Base):
+    def test_continue_task_sends_one_followup_with_same_task_id(self):
+        import discovery as D
+        raw = self.tmp / "data" / "raw"
+        D.save_raw({"success": True, "data": {"status": "completed", "task_id": "abc", "text": "plan only"}},
+                   {"category_key": "beauty_personal_care", "task_id": "abc", "query": "q", "market": "US",
+                    "fetched_at": "20260930T041358Z", "data_environment": "LIVE"}, raw)
+        seen = []
+
+        class F(FakeProvider):
+            def submit(self, q, estimated_cost=None, task_id=None):
+                seen.append((self.kind(q) if "previous answer" not in q else "followup", task_id))
+                return FakeProvider.submit(self, q.replace("Your previous answer", "find up to") if "previous answer"
+                                           in q else q, estimated_cost)
+        fake = F(env="LIVE")
+        r = self.runner(fake, isatty=False)
+        r.continue_task = "abc"
+        s = r.live(confirm_value=PHRASE)
+        self.assertEqual(seen[0], ("followup", "abc"))
+        self.assertEqual(sum(t == "abc" for _, t in seen), 1)          # only discovery reuses the task
+        self.assertEqual(r.stages["discovery"]["status"], "COMPLETED")
+        m = json.loads((r.run_dir / "manifest.json").read_text())
+        self.assertEqual(m["query_log"][0]["query_type"], "discovery_followup")
+        env = json.loads(sorted(raw.glob("*_beauty_personal_care_t1*.json"))[-1].read_text())
+        self.assertEqual(env["followup_of_task_id"], "abc")
+
+    def test_unknown_task_is_refused(self):
+        r = self.runner(FakeProvider(env="LIVE"), isatty=False)
+        r.continue_task = "nope"
+        with self.assertRaises(ValueError):
+            r.discovery_queries()
