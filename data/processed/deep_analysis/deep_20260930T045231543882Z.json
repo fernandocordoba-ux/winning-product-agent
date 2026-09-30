@@ -1,0 +1,104 @@
+{
+  "mode": "live",
+  "run_id": "20260930T045025Z_52fec2",
+  "data_environment": "LIVE",
+  "discovery_file": "/root/winning-product-agent/data/processed/discovery_20260930T045027Z.json",
+  "selected": 5,
+  "skipped": [
+    {
+      "key": "1729469028834644892",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732614733114479489",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732530555618759155",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732483552324456649",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732386290307535513",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1731896601518248227",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1730934287349420233",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1729409301014090551",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732421662338158894",
+      "reason": "over deep_analysis_max_products (5)"
+    }
+  ],
+  "not_run": [],
+  "stopped": null,
+  "results": [
+    {
+      "product_id": "1732506646693253928",
+      "status": "failed",
+      "error_category": "missing_from_batch_response",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T045231539787Z_batch_deep_batch.json"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T045025Z_52fec2",
+      "_pid": "1732506646693253928"
+    },
+    {
+      "product_id": "1732085052798177429",
+      "status": "failed",
+      "error_category": "missing_from_batch_response",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T045231539787Z_batch_deep_batch.json"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T045025Z_52fec2",
+      "_pid": "1732085052798177429"
+    },
+    {
+      "product_id": "1732421747771085102",
+      "status": "failed",
+      "error_category": "missing_from_batch_response",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T045231539787Z_batch_deep_batch.json"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T045025Z_52fec2",
+      "_pid": "1732421747771085102"
+    },
+    {
+      "product_id": "1732362839287501028",
+      "status": "failed",
+      "error_category": "missing_from_batch_response",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T045231539787Z_batch_deep_batch.json"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T045025Z_52fec2",
+      "_pid": "1732362839287501028"
+    },
+    {
+      "product_id": "1732504597553255078",
+      "status": "failed",
+      "error_category": "missing_from_batch_response",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/deep_analysis/20260930T045231539787Z_batch_deep_batch.json"
+      },
+      "data_environment": "LIVE",
+      "run_id": "20260930T045025Z_52fec2",
+      "_pid": "1732504597553255078"
+    }
+  ]
+}

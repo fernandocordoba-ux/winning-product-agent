@@ -331,6 +331,18 @@ def audit(run_id=None, root=ROOT, write=True, secrets=None, data_root=None):
                else "malformed" if "malformed" in e else "empty" if "empty" in e else
                "auth" if e in ("credentials",) or "401" in e or "403" in e else "other")
         errors[key].append(f"{q['stage']} {q.get('products')}: {e}")
+    seen_raw = set()
+    for r in deep + list(amz.values()):                     # empty answers: say why (output token limit)
+        rf = (r.get("source") or {}).get("raw_file")
+        if r.get("status") == "failed" and rf and rf not in seen_raw:
+            seen_raw.add(rf)
+            data = ((_read(rf) or {}).get("response") or {}).get("data") or {}
+            if data.get("status") == "completed" and not data.get("text") and not data.get("report"):
+                out_tok = (data.get("token_usage") or {}).get("output_tokens")
+                errors["empty"].append(f"{Path(rf).name}: completed with EMPTY text/report, output_tokens {out_tok}, "
+                                       f"credits_consumed {data.get('credits_consumed')}"
+                                       + (" — answer likely cut at the provider's ~8k output-token limit"
+                                          if isinstance(out_tok, int) and out_tok >= 7900 else ""))
     for r in deep + list(amz.values()):
         if r.get("status") in ("failed", "malformed"):
             e = r.get("error_category") or r.get("status")

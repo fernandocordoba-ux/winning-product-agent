@@ -1,0 +1,1821 @@
+{
+  "pipeline": "discovery-v1",
+  "config_versions": {
+    "filters": "filters-v1",
+    "categories": "categories-v1",
+    "confidence": "confidence-v1"
+  },
+  "market": {
+    "region": "US",
+    "currency": "USD",
+    "period_days": 30
+  },
+  "raw_files": [
+    "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json"
+  ],
+  "summary": {
+    "records": 15,
+    "unique": 15,
+    "duplicates_removed": 0,
+    "malformed": 0,
+    "PASS": 0,
+    "REVIEW": 14,
+    "FAIL": 1,
+    "returned_candidates": 14,
+    "over_limit": 0
+  },
+  "candidates": [
+    {
+      "key": "1732506646693253928",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732506646693253928",
+        "product_name": "Blue Boomshampoo",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732506646693253928&language=en-US&currency=USD&region=US",
+        "shop_id": "7494939370774301480",
+        "shop_name": "Blue.Skin.Care.",
+        "category": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+        "category_id": "601450",
+        "price_min": 52.0,
+        "price_max": 52.0,
+        "gmv_30d": 41130.0,
+        "units_30d": 856,
+        "growth_30d": 29604.35,
+        "creator_count": 4,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 3,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-22",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732506646693253928",
+          "product_name": "Blue Boomshampoo",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732506646693253928&language=en-US&currency=USD&region=US",
+          "shop_id": "7494939370774301480",
+          "shop_name": "Blue.Skin.Care.",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+          "category_id": "601450",
+          "price_min": 52.0,
+          "price_max": 52.0,
+          "gmv_30d": 41130.0,
+          "units_30d": 856,
+          "growth_30d_pct": 29604.35,
+          "creator_count": 4,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 3,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-22",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 52.0,
+        "price_basis": "avg",
+        "product_age_days": 68,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 29604.35,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732085052798177429",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732085052798177429",
+        "product_name": "Byennwa Glow Body Cream | Exfoliate Gently",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732085052798177429&language=en-US&currency=USD&region=US",
+        "shop_id": "7495847068856780949",
+        "shop_name": "Byenblan",
+        "category": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+        "category_id": "601450",
+        "price_min": 55.0,
+        "price_max": 55.0,
+        "gmv_30d": 80890.0,
+        "units_30d": 1617,
+        "growth_30d": 28792.83,
+        "creator_count": 1,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 0,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-11-25",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1732085052798177429",
+          "product_name": "Byennwa  Glow Body Cream | Exfoliate Gently",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732085052798177429&language=en-US&currency=USD&region=US",
+          "shop_id": "7495847068856780949",
+          "shop_name": "Byenblan",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+          "category_id": "601450",
+          "price_min": 55.0,
+          "price_max": 55.0,
+          "gmv_30d": 80890.0,
+          "units_30d": 1617,
+          "growth_30d_pct": 28792.83,
+          "creator_count": 1,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 0,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-11-25",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 55.0,
+        "price_basis": "avg",
+        "product_age_days": 307,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 28792.83,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732421747771085102",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732421747771085102",
+        "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732421747771085102&language=en-US&currency=USD&region=US",
+        "shop_id": "7494600907353326894",
+        "shop_name": "DR.RERDIA",
+        "category": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+        "category_id": "601450",
+        "price_min": 24.7,
+        "price_max": 63.7,
+        "gmv_30d": 41166.5,
+        "units_30d": 2032,
+        "growth_30d": 24450.6,
+        "creator_count": 12,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 13,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-06-01",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1732421747771085102",
+          "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732421747771085102&language=en-US&currency=USD&region=US",
+          "shop_id": "7494600907353326894",
+          "shop_name": "DR.RERDIA",
+          "category_path": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+          "category_id": "601450",
+          "price_min": 24.7,
+          "price_max": 63.7,
+          "gmv_30d": 41166.5,
+          "units_30d": 2032,
+          "growth_30d_pct": 24450.6,
+          "creator_count": 12,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 13,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-06-01",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 44.2,
+        "price_basis": "avg",
+        "product_age_days": 119,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 24450.6,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732362839287501028",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732362839287501028",
+        "product_name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732362839287501028&language=en-US&currency=USD&region=US",
+        "shop_id": "7495713071595161828",
+        "shop_name": "Plouise USA",
+        "category": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+        "category_id": "601450",
+        "price_min": 21.0,
+        "price_max": 33.0,
+        "gmv_30d": 35748.96,
+        "units_30d": 1231,
+        "growth_30d": 21731.88,
+        "creator_count": 41,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 73,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-04-24",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 3,
+        "original_record": {
+          "product_id": "1732362839287501028",
+          "product_name": "P.Louise Crystal Bad B*tch Energy Lip Conditioner & Lip Oil Duo",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732362839287501028&language=en-US&currency=USD&region=US",
+          "shop_id": "7495713071595161828",
+          "shop_name": "Plouise USA",
+          "category_path": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+          "category_id": "601450",
+          "price_min": 21.0,
+          "price_max": 33.0,
+          "gmv_30d": 35748.96,
+          "units_30d": 1231,
+          "growth_30d_pct": 21731.88,
+          "creator_count": 41,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 73,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-04-24",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 27.0,
+        "price_basis": "avg",
+        "product_age_days": 157,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 21731.88,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732504597553255078",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732504597553255078",
+        "product_name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732504597553255078&language=en-US&currency=USD&region=US",
+        "shop_id": "7495481687074114214",
+        "shop_name": "AriaMist",
+        "category": "Beauty & Personal Care > Makeup > False Eyelashes & Adhesives",
+        "category_id": "601450",
+        "price_min": 29.89,
+        "price_max": 129.99,
+        "gmv_30d": 32937.77,
+        "units_30d": 1536,
+        "growth_30d": 18713.45,
+        "creator_count": 2,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 1,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-22",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 4,
+        "original_record": {
+          "product_id": "1732504597553255078",
+          "product_name": "【New Aria Exclusive】Cofier No Glue Individual Lash Kit, Jelly-Coated Self Adhesive False Eyelashes with Tweezers, Easy Application, Beginner Friendly No Glue Lash Kit 80/90/100Pcs",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732504597553255078&language=en-US&currency=USD&region=US",
+          "shop_id": "7495481687074114214",
+          "shop_name": "AriaMist",
+          "category_path": "Beauty & Personal Care > Makeup > False Eyelashes & Adhesives",
+          "category_id": "601450",
+          "price_min": 29.89,
+          "price_max": 129.99,
+          "gmv_30d": 32937.77,
+          "units_30d": 1536,
+          "growth_30d_pct": 18713.45,
+          "creator_count": 2,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 1,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-22",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 79.94,
+        "price_basis": "avg",
+        "product_age_days": 68,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 18713.45,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1729469028834644892",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1729469028834644892",
+        "product_name": "HAUS LABS PhD Hybrid Lip Glaze | Plumping Hydrating Sheer Lip Gloss",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729469028834644892&language=en-US&currency=USD&region=US",
+        "shop_id": "7495559495993494428",
+        "shop_name": "Haus Labs",
+        "category": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+        "category_id": "601450",
+        "price_min": 31.95,
+        "price_max": 33.8,
+        "gmv_30d": 26409.96,
+        "units_30d": 1015,
+        "growth_30d": 7851.82,
+        "creator_count": 115,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 120,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2024-05-01",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 5,
+        "original_record": {
+          "product_id": "1729469028834644892",
+          "product_name": "HAUS LABS PhD Hybrid Lip Glaze | Plumping Hydrating Sheer Lip Gloss",
+          "product_url": "https://www.kalodata.com/product/detail?id=1729469028834644892&language=en-US&currency=USD&region=US",
+          "shop_id": "7495559495993494428",
+          "shop_name": "Haus Labs",
+          "category_path": "Beauty & Personal Care > Makeup > Lipstick & Lip Gloss",
+          "category_id": "601450",
+          "price_min": 31.95,
+          "price_max": 33.8,
+          "gmv_30d": 26409.96,
+          "units_30d": 1015,
+          "growth_30d_pct": 7851.82,
+          "creator_count": 115,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 120,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2024-05-01",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 32.875,
+        "price_basis": "avg",
+        "product_age_days": 880,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 7851.82,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732614733114479489",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732614733114479489",
+        "product_name": "BTArtboxnails Square Almond and Stiletto press on nails with 5 desgins, 32 pcs Each",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732614733114479489&language=en-US&currency=USD&region=US",
+        "shop_id": "7495317961883487105",
+        "shop_name": "BTArtboxnails",
+        "category": "Beauty & Personal Care > Nail Art Decoration & Accessories",
+        "category_id": "601450",
+        "price_min": 57.0,
+        "price_max": 64.99,
+        "gmv_30d": 58666.88,
+        "units_30d": 1193,
+        "growth_30d": 4985.06,
+        "creator_count": 143,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 287,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-09-04",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 7,
+        "original_record": {
+          "product_id": "1732614733114479489",
+          "product_name": "BTArtboxnails Square Almond and Stiletto press on nails with 5 desgins, 32 pcs Each",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732614733114479489&language=en-US&currency=USD&region=US",
+          "shop_id": "7495317961883487105",
+          "shop_name": "BTArtboxnails",
+          "category_path": "Beauty & Personal Care > Nail Art Decoration & Accessories",
+          "category_id": "601450",
+          "price_min": 57.0,
+          "price_max": 64.99,
+          "gmv_30d": 58666.88,
+          "units_30d": 1193,
+          "growth_30d_pct": 4985.06,
+          "creator_count": 143,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 287,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-09-04",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 60.995,
+        "price_basis": "avg",
+        "product_age_days": 24,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "product_age_days",
+            "value": 24,
+            "condition": "< 30"
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 4985.06,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732530555618759155",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732530555618759155",
+        "product_name": "Laura Geller Fresh-Faced Favorites Kit (3PC)",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732530555618759155&language=en-US&currency=USD&region=US",
+        "shop_id": "7495061274772343283",
+        "shop_name": "Laura Geller Beauty",
+        "category": "Beauty & Personal Care > Makeup > Makeup Sets",
+        "category_id": "601450",
+        "price_min": 76.7,
+        "price_max": 76.7,
+        "gmv_30d": 81334.8,
+        "units_30d": 1374,
+        "growth_30d": 4789.87,
+        "creator_count": 81,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 146,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-08-03",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 8,
+        "original_record": {
+          "product_id": "1732530555618759155",
+          "product_name": "Laura Geller Fresh-Faced Favorites Kit (3PC)",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732530555618759155&language=en-US&currency=USD&region=US",
+          "shop_id": "7495061274772343283",
+          "shop_name": "Laura Geller Beauty",
+          "category_path": "Beauty & Personal Care > Makeup > Makeup Sets",
+          "category_id": "601450",
+          "price_min": 76.7,
+          "price_max": 76.7,
+          "gmv_30d": 81334.8,
+          "units_30d": 1374,
+          "growth_30d_pct": 4789.87,
+          "creator_count": 81,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 146,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-08-03",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 76.7,
+        "price_basis": "avg",
+        "product_age_days": 56,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 4789.87,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732483552324456649",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732483552324456649",
+        "product_name": "Rechargeable Motorized Electric Shower Back Scrubber - Long Handle IPX Waterproof PVC Spin Bath Brush with 5 Replaceable Heads, 3 Speed Modes, Exfoliating Massager for Adults Sensitive Skin, USB, Full Body (Shoulders, Calves Care, Great Gift Option)",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732483552324456649&language=en-US&currency=USD&region=US",
+        "shop_id": "7495969704918091977",
+        "shop_name": "YXIANG",
+        "category": "Beauty & Personal Care > Bath & Body Care > Bathing Accessories",
+        "category_id": "601450",
+        "price_min": 29.99,
+        "price_max": 29.99,
+        "gmv_30d": 58002.2,
+        "units_30d": 2597,
+        "growth_30d": 2659.76,
+        "creator_count": 71,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 97,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-10",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 9,
+        "original_record": {
+          "product_id": "1732483552324456649",
+          "product_name": "Rechargeable Motorized Electric Shower Back Scrubber - Long Handle IPX Waterproof PVC Spin Bath Brush with 5 Replaceable Heads, 3 Speed Modes, Exfoliating Massager for Adults Sensitive Skin, USB, Full Body (Shoulders, Calves Care, Great Gift Option)",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732483552324456649&language=en-US&currency=USD&region=US",
+          "shop_id": "7495969704918091977",
+          "shop_name": "YXIANG",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Bathing Accessories",
+          "category_id": "601450",
+          "price_min": 29.99,
+          "price_max": 29.99,
+          "gmv_30d": 58002.2,
+          "units_30d": 2597,
+          "growth_30d_pct": 2659.76,
+          "creator_count": 71,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 97,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-07-10",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 29.99,
+        "price_basis": "avg",
+        "product_age_days": 80,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 2659.76,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732386290307535513",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732386290307535513",
+        "product_name": "MAC Skinfinish Colourstruck Blush",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732386290307535513&language=en-US&currency=USD&region=US",
+        "shop_id": "7495993271965420185",
+        "shop_name": "M.A.C Cosmetics Store",
+        "category": "Beauty & Personal Care > Makeup > Blush",
+        "category_id": "601450",
+        "price_min": 44.2,
+        "price_max": 44.2,
+        "gmv_30d": 163762.36,
+        "units_30d": 4821,
+        "growth_30d": 2624.29,
+        "creator_count": 152,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 213,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-07",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 10,
+        "original_record": {
+          "product_id": "1732386290307535513",
+          "product_name": "MAC Skinfinish Colourstruck Blush",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732386290307535513&language=en-US&currency=USD&region=US",
+          "shop_id": "7495993271965420185",
+          "shop_name": "M.A.C Cosmetics Store",
+          "category_path": "Beauty & Personal Care > Makeup > Blush",
+          "category_id": "601450",
+          "price_min": 44.2,
+          "price_max": 44.2,
+          "gmv_30d": 163762.36,
+          "units_30d": 4821,
+          "growth_30d_pct": 2624.29,
+          "creator_count": 152,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 213,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-05-07",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 44.2,
+        "price_basis": "avg",
+        "product_age_days": 144,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 2624.29,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1731896601518248227",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1731896601518248227",
+        "product_name": "Best & Obsessed Skincare Kit",
+        "product_url": "https://www.kalodata.com/product/detail?id=1731896601518248227&language=en-US&currency=USD&region=US",
+        "shop_id": "7494913857786775843",
+        "shop_name": "e.l.f. Cosmetics",
+        "category": "Beauty & Personal Care > Skincare > Skin Care Kits",
+        "category_id": "601450",
+        "price_min": 32.5,
+        "price_max": 32.5,
+        "gmv_30d": 31175.0,
+        "units_30d": 1229,
+        "growth_30d": 2510.87,
+        "creator_count": 1294,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 30,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-10-09",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 11,
+        "original_record": {
+          "product_id": "1731896601518248227",
+          "product_name": "Best & Obsessed Skincare Kit",
+          "product_url": "https://www.kalodata.com/product/detail?id=1731896601518248227&language=en-US&currency=USD&region=US",
+          "shop_id": "7494913857786775843",
+          "shop_name": "e.l.f. Cosmetics",
+          "category_path": "Beauty & Personal Care > Skincare > Skin Care Kits",
+          "category_id": "601450",
+          "price_min": 32.5,
+          "price_max": 32.5,
+          "gmv_30d": 31175.0,
+          "units_30d": 1229,
+          "growth_30d_pct": 2510.87,
+          "creator_count": 1294,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 30,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-10-09",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 32.5,
+        "price_basis": "avg",
+        "product_age_days": 354,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 2510.87,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1730934287349420233",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1730934287349420233",
+        "product_name": "[Travel Size] Salt.Xo | The Kewchie Supreme Bundle - Intimate Wash, Seedless Wash, Grapefruit Sensitive Wash",
+        "product_url": "https://www.kalodata.com/product/detail?id=1730934287349420233&language=en-US&currency=USD&region=US",
+        "shop_id": "7495192697788205257",
+        "shop_name": "Salt.Xo",
+        "category": "Beauty & Personal Care > Feminine Care > Intimate Washes & Wipes",
+        "category_id": "601450",
+        "price_min": 33.0,
+        "price_max": 33.0,
+        "gmv_30d": 26910.09,
+        "units_30d": 947,
+        "growth_30d": 2469.65,
+        "creator_count": 19,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 33,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-03-29",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 12,
+        "original_record": {
+          "product_id": "1730934287349420233",
+          "product_name": "[Travel Size] Salt.Xo | The Kewchie Supreme Bundle - Intimate Wash, Seedless Wash, Grapefruit Sensitive Wash",
+          "product_url": "https://www.kalodata.com/product/detail?id=1730934287349420233&language=en-US&currency=USD&region=US",
+          "shop_id": "7495192697788205257",
+          "shop_name": "Salt.Xo",
+          "category_path": "Beauty & Personal Care > Feminine Care > Intimate Washes & Wipes",
+          "category_id": "601450",
+          "price_min": 33.0,
+          "price_max": 33.0,
+          "gmv_30d": 26910.09,
+          "units_30d": 947,
+          "growth_30d_pct": 2469.65,
+          "creator_count": 19,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 33,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-03-29",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 33.0,
+        "price_basis": "avg",
+        "product_age_days": 548,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 2469.65,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1729409301014090551",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1729409301014090551",
+        "product_name": "ONE/SIZE Cheek Clapper 3D Blush Trio Palette - Multi-Formula, Pigmented Blush Trio | Cream, Powder & Blush Highlighter for Ultra-Intense Color & Radiant Cheeks, how to apply blush",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729409301014090551&language=en-US&currency=USD&region=US",
+        "shop_id": "7495075892729449271",
+        "shop_name": "ONE SIZE BEAUTY",
+        "category": "Beauty & Personal Care > Makeup > Blush",
+        "category_id": "601450",
+        "price_min": 30.4,
+        "price_max": 49.4,
+        "gmv_30d": 123291.0,
+        "units_30d": 3333,
+        "growth_30d": 2280.5,
+        "creator_count": 175,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 110,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2023-11-24",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 13,
+        "original_record": {
+          "product_id": "1729409301014090551",
+          "product_name": "ONE/SIZE Cheek Clapper 3D Blush Trio Palette - Multi-Formula, Pigmented  Blush Trio | Cream, Powder & Blush Highlighter for Ultra-Intense Color & Radiant Cheeks, how to apply blush",
+          "product_url": "https://www.kalodata.com/product/detail?id=1729409301014090551&language=en-US&currency=USD&region=US",
+          "shop_id": "7495075892729449271",
+          "shop_name": "ONE SIZE BEAUTY",
+          "category_path": "Beauty & Personal Care > Makeup > Blush",
+          "category_id": "601450",
+          "price_min": 30.4,
+          "price_max": 49.4,
+          "gmv_30d": 123291.0,
+          "units_30d": 3333,
+          "growth_30d_pct": 2280.5,
+          "creator_count": 175,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 110,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2023-11-24",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 39.9,
+        "price_basis": "avg",
+        "product_age_days": 1039,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 2280.5,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    },
+    {
+      "key": "1732421662338158894",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732421662338158894",
+        "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732421662338158894&language=en-US&currency=USD&region=US",
+        "shop_id": "7494600907353326894",
+        "shop_name": "DR.RERDIA",
+        "category": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+        "category_id": "601450",
+        "price_min": 24.7,
+        "price_max": 63.7,
+        "gmv_30d": 25365.8,
+        "units_30d": 923,
+        "growth_30d": 1872.37,
+        "creator_count": 2,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 8,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-06-01",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 14,
+        "original_record": {
+          "product_id": "1732421662338158894",
+          "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732421662338158894&language=en-US&currency=USD&region=US",
+          "shop_id": "7494600907353326894",
+          "shop_name": "DR.RERDIA",
+          "category_path": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+          "category_id": "601450",
+          "price_min": 24.7,
+          "price_max": 63.7,
+          "gmv_30d": 25365.8,
+          "units_30d": 923,
+          "growth_30d_pct": 1872.37,
+          "creator_count": 2,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 8,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2026-06-01",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 44.2,
+        "price_basis": "avg",
+        "product_age_days": 119,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1872.37,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    }
+  ],
+  "failed": [
+    {
+      "key": "1732073898874933711",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-09-30",
+      "category_key": "beauty_personal_care",
+      "facts": {
+        "product_id": "1732073898874933711",
+        "product_name": "Premium CRÈME DE LA CRÈME: CANVAS BEAUTY Glossy Nourishing Moisturizing Cream",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732073898874933711&language=en-US&currency=USD&region=US",
+        "shop_id": "7495185597363620303",
+        "shop_name": "CANVAS BEAUTY BRAND",
+        "category": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+        "category_id": "601450",
+        "price_min": 95.0,
+        "price_max": 123.5,
+        "gmv_30d": 117525.0,
+        "units_30d": 1273,
+        "growth_30d": 5142.05,
+        "creator_count": 38,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 18,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-11-20",
+        "data_window_end": "2026-09-28"
+      },
+      "missing_fields": [
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/raw/20260930T045027Z_beauty_personal_care_2a294a47e2cc44c794aefcdfc925e0d1.json",
+        "task_id": "2a294a47e2cc44c794aefcdfc925e0d1",
+        "report_url": null,
+        "fetched_at": "20260930T045027Z",
+        "record_index": 6,
+        "original_record": {
+          "product_id": "1732073898874933711",
+          "product_name": "Premium CRÈME DE LA CRÈME: CANVAS BEAUTY Glossy Nourishing Moisturizing Cream",
+          "product_url": "https://www.kalodata.com/product/detail?id=1732073898874933711&language=en-US&currency=USD&region=US",
+          "shop_id": "7495185597363620303",
+          "shop_name": "CANVAS BEAUTY BRAND",
+          "category_path": "Beauty & Personal Care > Bath & Body Care > Body Moisturizers",
+          "category_id": "601450",
+          "price_min": 95.0,
+          "price_max": 123.5,
+          "gmv_30d": 117525.0,
+          "units_30d": 1273,
+          "growth_30d_pct": 5142.05,
+          "creator_count": 38,
+          "selling_creator_count": null,
+          "creator_growth_pct": null,
+          "video_count": 18,
+          "video_growth_pct": null,
+          "shop_count": null,
+          "launch_date": "2025-11-20",
+          "data_window_end": "2026-09-28"
+        }
+      },
+      "calculated": {
+        "price": 109.25,
+        "price_basis": "avg",
+        "product_age_days": 312,
+        "filter_status": "FAIL",
+        "filter_reasons": [
+          {
+            "rule": "price_range",
+            "action": "reject",
+            "value": 109.25,
+            "basis": "avg",
+            "min": 20,
+            "max": 100
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 5142.05,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "video_momentum",
+            "creator_momentum",
+            "competition",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "data_environment": "LIVE"
+    }
+  ],
+  "over_limit_keys": [],
+  "duplicates": [],
+  "malformed": [],
+  "data_environment": "LIVE",
+  "run_id": "20260930T045025Z_52fec2"
+}
