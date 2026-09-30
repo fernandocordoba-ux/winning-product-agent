@@ -45,7 +45,9 @@ DEEP_FIELDS = [("product_name", ("product_name",), "str"), ("price_min", ("price
                ("commission_pct", ("commission_pct",), "num"), ("launch_date", ("launch_date",), "date")]
 DISC_VS_DEEP = [("gmv_30d", ("gmv",)), ("units_30d", ("units",)), ("growth_30d", ("growth", "growth_30d_pct")),
                 ("price_min", ("price", "min")), ("price_max", ("price", "max")),
-                ("creator_count", ("creator_metrics", "total")), ("video_count", ("video_metrics", "total"))]
+                ("creator_count", ("creator_metrics", "total")),
+                ("selling_creator_count", ("creator_metrics", "selling")),   # Step U: definitions differ by answer
+                ("video_count", ("video_metrics", "total"))]
 
 
 def _get(d, path):
