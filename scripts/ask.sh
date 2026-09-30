@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Ask KaloPilot a question and wait for the answer.
 # Usage: bash scripts/ask.sh "<question>" [task_id_for_follow_up]
-# Saves the full JSON answer to reports/<timestamp>.json
+# Saves the unmodified API response (+ query, task_id, fetched_at) to data/raw/<timestamp>_<task_id>.json
 set -euo pipefail
 DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PILOT="$DIR/kalopilot/scripts/pilot.sh"
@@ -11,14 +11,18 @@ echo "Submitting: $1"
 bash "$PILOT" query "$1" ${2:+"$2"}
 echo "Waiting for KaloPilot (usually 1-3 min)..."
 sleep 45
-mkdir -p "$DIR/reports"
+mkdir -p "$DIR/data/raw"
 for i in $(seq 1 40); do
   out=$(bash "$PILOT" result)
   status=$(printf '%s' "$out" | python3 -c 'import sys,json
 try: print(json.load(sys.stdin)["data"]["status"])
 except Exception: print("unknown")')
   if [ "$status" != "running" ] && [ "$status" != "submitted" ]; then
-    f="$DIR/reports/$(date +%Y%m%d-%H%M%S).json"; printf '%s' "$out" > "$f"
+    ts=$(date -u +%Y%m%dT%H%M%SZ); tid=$(cat "$HOME/.kalopilot/task_id" 2>/dev/null || echo unknown)
+    f="$DIR/data/raw/${ts}_${tid}.json"
+    QUERY="$1" FETCHED="$ts" python3 -c 'import sys,json,os
+print(json.dumps({"query":os.environ["QUERY"],"fetched_at":os.environ["FETCHED"],"response":json.loads(sys.stdin.read())},ensure_ascii=False,indent=2))' <<<"$out" > "$f"
+    chmod 444 "$f"   # raw data is never edited
     printf '%s' "$out" | python3 -c 'import sys,json
 d=json.load(sys.stdin).get("data") or {}
 print("\nSTATUS:", d.get("status")); print("TASK_ID:", d.get("task_id"))
