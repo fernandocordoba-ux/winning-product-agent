@@ -11,7 +11,8 @@
 #   only overrides runtime/limits/query_plan for one run. Safety, provider and
 #   paths always come from runtime.yaml.
 # - Credit-saving plan (vs. canonical 9 discovery + 1 query per product):
-#     Discovery        : 1 combined query for all enabled categories (max 20 products)
+#     Discovery        : 1 query, Beauty & Personal Care only (the same per-category prompt that worked
+#                        live for Home; the 9-category "combined" prompt ended early on 2026-09-29, 0 credits)
 #     Deep Analysis    : 5 products in 1 batched query
 #     Amazon Validation: only WPS >= 70 and Confidence >= 60 products, max 5, in 1 batched query
 #   => 2 paid queries, 3 at most. Cached answers (< 24 h) are reused, never re-bought.
@@ -31,7 +32,8 @@ limits:
   bvs_max_products: 5
 
 query_plan:
-  discovery_mode: combined
+  discovery_mode: per_category
+  discovery_categories: [beauty_personal_care]
   deep_batch_size: 5
   amazon_batch_size: 5
   max_credits_for_run: 25                    # hard stop for this run (balance measured with the FREE endpoint)

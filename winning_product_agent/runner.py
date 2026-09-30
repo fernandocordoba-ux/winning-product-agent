@@ -235,6 +235,12 @@ def validate_effective(rt, eff):
         v = qp.get(k, 1)
         if not isinstance(v, int) or isinstance(v, bool) or not 1 <= v <= 10:
             e.append(f"query_plan.{k} must be an integer 1..10 (got {v!r})")
+    only = qp.get("discovery_categories")
+    if only is not None:
+        known = {c["key"] for c in (D.load_yaml("categories.yaml").get("categories") or []) if c.get("enabled", True)}
+        if not isinstance(only, list) or not only or not set(only) <= known:
+            e.append(f"query_plan.discovery_categories must be a non-empty list of enabled category keys "
+                     f"(unknown: {sorted(set(only or []) - known) if isinstance(only, list) else only})")
     cap = qp.get("max_credits_for_run")
     if cap is not None and (not isinstance(cap, (int, float)) or cap <= 0):
         e.append("query_plan.max_credits_for_run must be > 0 or null")
@@ -297,9 +303,12 @@ class Runner:
 
     def discovery_queries(self):
         qp, lim = self.eff["query_plan"], self.limits
+        only = qp.get("discovery_categories")                     # optional subset of category keys
         if qp.get("discovery_mode", "per_category") == "per_category":
-            return D.build_queries(self.filters, self.categories)
-        cats = [c for c in self.categories["categories"] if c.get("enabled", True)]
+            qs = D.build_queries(self.filters, self.categories)
+            return [q for q in qs if not only or q["category_key"] in only]
+        cats = [c for c in self.categories["categories"] if c.get("enabled", True)
+                and (not only or c["key"] in only)]
         text = (ROOT / "prompts" / "discovery_combined.md").read_text()
         import re
         template = re.split(r"^===\s*$", text, flags=re.M)[1].strip()
@@ -821,6 +830,9 @@ class Runner:
                 meta["categories"] = q["categories"]
             path = D.save_raw(resp, meta, self.raw)
             err = response_error(resp)
+            if not err and not D.extract_records({"response": resp})[0]:
+                # Step U finding: the provider can report "completed" without the product JSON block
+                err = "no_product_json_in_answer"
             rows.append({"category_key": q["category_key"], "query_sha256": h, "raw_file": str(path) if not err else None,
                          "failed_raw_file": str(path) if err else None, "action": "LIVE_QUERY", "error": err})
             self._checkpoint("discovery", {"status": RUNNING, "queries": rows})
@@ -1171,8 +1183,9 @@ class Runner:
         return bad
 
     def s_report(self, ctx, now):
-        if not ctx.get("discovery"):
-            return SKIPPED, {"summary": "no data for a report"}
+        d = ctx.get("discovery") or {}
+        if not d or not (d.get("candidates") or d.get("failed") or self._ok_deep(ctx)):
+            return SKIPPED, {"summary": "no products: report not written (latest report left unchanged)"}
         inputs = {"discovery": {**ctx["discovery"], "_file": ctx["discovery_file"]},
                   "deep": [{**r, "_file": ctx["deep_file"]} for r in self._ok_deep(ctx)],
                   "amazon": [{**r, "_file": ctx.get("amazon_file")} for r in ctx.get("amazon") or []

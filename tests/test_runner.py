@@ -51,6 +51,25 @@ def tearDownModule():
     safety.clear_run_overrides()
 
 
+class NoJsonProvider:
+    """Step U finding: status 'completed' but only a plan text, no product JSON, no credits."""
+    data_environment = None
+
+    def __init__(self):
+        self.submits = []
+
+    def credits(self):
+        return {"totalRemain": 72.24}
+
+    def submit(self, q, estimated_cost=None):
+        self.submits.append(q)
+        return {"success": True, "data": {"task_id": "t1"}}
+
+    def wait(self, task_id):
+        return {"success": True, "data": {"status": "completed", "task_id": task_id, "report": None,
+                                          "credits_consumed": None, "text": "I'll find products... Now pulling 👇"}}
+
+
 class FakeProvider:
     """Answers discovery (combined), deep (batch/single) and amazon (batch/single) queries."""
 
@@ -188,7 +207,7 @@ class DryRunDefaults(Base):
 
     def test_dry_run_budget_first_live(self):
         b = self.runner().dry_run()["query_budget"]
-        self.assertEqual(b["stages"]["discovery"]["planned_queries"], 1)       # combined: 1 instead of 9
+        self.assertEqual(b["stages"]["discovery"]["planned_queries"], 1)       # Beauty only: 1 instead of 9
         self.assertEqual(b["stages"]["deep_analysis"]["expected_paid_max"], 1)  # 5 products, batch 5
         self.assertEqual(b["stages"]["amazon_validation"]["expected_paid_min"], 0)
         self.assertEqual((b["expected_paid_queries_min"], b["expected_paid_queries_max"]), (1, 3))
@@ -308,7 +327,7 @@ class LiveRun(Base):
         disc_q = [q for q, k in zip(fake.submits, fake.kinds) if k == "discovery"]
         deep_q = [q for q, k in zip(fake.submits, fake.kinds) if k == "deep"]
         self.assertEqual(len(disc_q), 1)
-        self.assertIn("up to 20 emerging products in total", disc_q[0])
+        self.assertIn('in the category "Beauty & Personal Care"', disc_q[0])   # profile: Beauty only
         self.assertEqual(len(deep_q), 1)
         self.assertEqual(len(fake.ids(deep_q[0])), 5)
         self.assertEqual(s["products"]["deep_analyzed_ok"], 5)
@@ -446,6 +465,28 @@ class LiveRun(Base):
             cli.print_summary(s)
         for t in ("RUN SUMMARY", r.run_id, "Overall status", "Credits:", "Queries:"):
             self.assertIn(t, out.getvalue())
+
+
+class ProviderEndsEarly(Base):
+    def test_completed_without_json_is_a_failed_discovery(self):
+        fake = NoJsonProvider()
+        del NoJsonProvider.data_environment
+        r = self.runner(fake, isatty=False)
+        s = r.live(confirm_value=PHRASE)
+        NoJsonProvider.data_environment = None
+        self.assertEqual(len(fake.submits), 1)                            # no silent retry
+        self.assertEqual(r.stages["discovery"]["status"], "FAILED")
+        self.assertEqual(s["final_status"], "FAILED")
+        self.assertEqual(r.stages["final_report"]["status"], "SKIPPED")
+        self.assertFalse((self.tmp / "reports").exists())                  # no empty report written
+        self.assertTrue(list((self.tmp / "data" / "raw").glob("*.json")))  # raw answer still preserved
+
+    def test_discovery_categories_validated(self):
+        bad = self.tmp / "p.yaml"
+        bad.write_text("runtime: {market: US, live_mode: true, dry_run: false, explicit_live_confirmation: false}\n"
+                       "query_plan: {discovery_categories: [nope]}\n")
+        _, _, errs = R.load_profile(bad, ROOT)
+        self.assertTrue(any("discovery_categories" in e for e in errs))
 
 
 # ============================================================ data environment
