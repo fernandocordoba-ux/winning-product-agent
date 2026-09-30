@@ -38,12 +38,12 @@ business_viability:
   economics:
     selling_price_source: [commercial_input, tiktok_price_avg]   # first available wins;
                                                                  # tiktok_price_avg is labeled an ASSUMPTION
-    payment_processing: { percent: 2.9, fixed: 0.30 }            # VERIFY: Shopify Payments rate for your plan
+    payment_processing: { percent: 2.9, fixed: 0.30 }            # CONFIRMED by user (2026-09-30): their Shopify plan rate
     platform_fee: { percent: 0.0, fixed: 0.0 }                   # extra per-order platform/app fees
     estimated_refund_rate_pct: null                              # e.g. 5 -> 5 % of orders refunded
     estimated_chargeback_rate_pct: null                          # e.g. 0.5
     chargeback_fee: 15.0                                         # USD per chargeback (added to lost revenue)
-    estimated_ad_cost_per_order: null                            # USD; null until ad data exists
+    estimated_ad_cost_per_order: null                            # USD; PENDING: user will provide (with refund + chargeback rates)
     refund_cost_basis: selling_price                             # refund = rate x selling_price
 
   # ---------------------------------------------------------------- Stage 4
