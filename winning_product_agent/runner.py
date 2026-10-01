@@ -314,6 +314,24 @@ def validate_effective(rt, eff):
 
 
 # ====================================================================== runner
+
+BRAND_RULE = ("- Exclude products sold by well-known established brands or their official brand stores (national "
+              "cosmetics, electronics, appliance or apparel brands). Prefer generic / unbranded products that "
+              "independent sellers can source from dropshipping suppliers.")
+
+
+def with_brand_rule(query, qp):
+    """Owner-approved discovery rule (production-v2+): appended only when the config enables it, so earlier
+    versions send byte-identical queries."""
+    if not (qp or {}).get("discovery_exclude_established_brands"):
+        return query
+    marker = "\nDo not run deep analysis"
+    k = query.find(marker)
+    if k < 0:
+        return query.rstrip() + "\n" + BRAND_RULE
+    return query[:k].rstrip("\n") + "\n" + BRAND_RULE + "\n" + query[k:]
+
+
 class Runner:
     def __init__(self, profile_path=None, root=ROOT, data_root=None, client=None, max_products=None,
                  preflight_fn=None, input_fn=None, isatty=None, out=None, now=None):
@@ -413,7 +431,8 @@ class Runner:
         only = qp.get("discovery_categories")                     # optional subset of category keys
         if qp.get("discovery_mode", "per_category") == "per_category":
             qs = D.build_queries(self.filters, self.categories)
-            return [q for q in qs if not only or q["category_key"] in only]
+            return [{**q, "query": with_brand_rule(q["query"], qp)} for q in qs
+                    if not only or q["category_key"] in only]
         cats = [c for c in self.categories["categories"] if c.get("enabled", True)
                 and (not only or c["key"] in only)]
         text = (ROOT / "prompts" / "discovery_combined.md").read_text()
@@ -427,7 +446,7 @@ class Runner:
                             category_lines=lines, per_category_max=max(1, math.ceil(limit / max(1, len(cats))) + 1),
                             gmv_min=d["gmv_30d"]["min"], units_min=d["units_30d"]["min"],
                             price_min=d["price"]["min"], price_max=d["price"]["max"])
-        return [{"category_key": "combined", "query": q, "categories": [c["key"] for c in cats]}]
+        return [{"category_key": "combined", "query": with_brand_rule(q, qp), "categories": [c["key"] for c in cats]}]
 
     def find_cached_discovery(self, query, env, now):
         best = None

@@ -1,0 +1,17 @@
+{
+  "note": "Step 1 approved by the owner: broaden discovery beyond Beauty, exclude established brands, raise the run credit/query caps to fit 4 category queries + 5 deep + up to 2 Amazon queries. Scores, filters, decision rules and confidence minimums unchanged.",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.discovery_categories", "value": ["home", "kitchen", "pet", "fitness"],
+     "reason": "v1 searched only beauty_personal_care; every result was an established beauty brand"},
+    {"file": "runtime.yaml", "path": "query_plan.discovery_exclude_established_brands", "value": true,
+     "reason": "branded products cannot be sourced from dropshipping suppliers"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 50,
+     "reason": "4 discovery x 4.0 + 5 deep x 3.6 + 2 Amazon x 4.0 = 42 estimated"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 50,
+     "reason": "mirror of query_plan.max_credits_for_run"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 11,
+     "reason": "4 discovery + 5 deep + 2 Amazon batches"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 11,
+     "reason": "same as max_queries_per_run"}
+  ]
+}

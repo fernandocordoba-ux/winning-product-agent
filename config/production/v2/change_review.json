@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-10-01T00:48:32.987075+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v1",
+  "note": "Step 1 approved by the owner: broaden discovery beyond Beauty, exclude established brands, raise the run credit/query caps to fit 4 category queries + 5 deep + up to 2 Amazon queries. Scores, filters, decision rules and confidence minimums unchanged.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_categories",
+      "current_value": [
+        "beauty_personal_care"
+      ],
+      "proposed_value": [
+        "home",
+        "kitchen",
+        "pet",
+        "fitness"
+      ],
+      "reason": "v1 searched only beauty_personal_care; every result was an established beauty brand",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T00:48:32Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_exclude_established_brands",
+      "current_value": null,
+      "proposed_value": true,
+      "reason": "branded products cannot be sourced from dropshipping suppliers",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T00:48:32Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 25,
+      "proposed_value": 50,
+      "reason": "4 discovery x 4.0 + 5 deep x 3.6 + 2 Amazon x 4.0 = 42 estimated",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T00:48:32Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 25,
+      "proposed_value": 50,
+      "reason": "mirror of query_plan.max_credits_for_run",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T00:48:32Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 8,
+      "proposed_value": 11,
+      "reason": "4 discovery + 5 deep + 2 Amazon batches",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T00:48:32Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 8,
+      "proposed_value": 11,
+      "reason": "same as max_queries_per_run",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T00:48:32Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 6,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

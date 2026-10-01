@@ -1,0 +1,125 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v2 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T00:48:32.987075+00:00
+# source_calibration_report: owner-approved change of production-v1 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T00:48:32Z)
+# change_summary:
+#   - unchanged from production-v1
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Discovery categories — US, Version 1
+# =============================================================================
+# Configurable list: add/remove categories or set enabled: false to skip one.
+#
+# kalodata_match: KaloData/TikTok Shop category names used to map each of OUR
+#   categories to KaloData data. Names marked "verify" still need to be
+#   confirmed against real KaloData responses. kalodata_ids are only filled
+#   in when seen in real API data (never guessed).
+#
+# Per-category thresholds (future):
+#   Categories will NOT share the same thresholds long-term. Each category has
+#   an `overrides` block. Empty = use the global defaults from
+#   config/filters.yaml and config/scoring.yaml. When category benchmarks
+#   exist, put only the values that differ here, e.g.:
+#
+#     overrides:
+#       filters:
+#         discovery: { gmv_30d: { min: 50000 } }
+#       scoring:
+#         metrics: { demand: { components: { units_sold: { full_at: 200000 } } } }
+#
+#   Resolution order (deterministic): category override > global config.
+#   `benchmarks` will hold the measured category reference values (source +
+#   date) that justify each override.
+# =============================================================================
+
+version: "categories-v1"
+market: US
+
+defaults:
+  overrides: {}
+  benchmarks: null
+
+categories:
+
+  - key: home
+    name: Home
+    enabled: true
+    kalodata_match: ["Home Supplies"]                 # verify
+    kalodata_ids: []
+    overrides: {}
+    benchmarks: null
+
+  - key: kitchen
+    name: Kitchen
+    enabled: true
+    kalodata_match: ["Kitchenware"]                   # verify
+    kalodata_ids: []
+    overrides: {}
+    benchmarks: null
+
+  - key: pet
+    name: Pet
+    enabled: true
+    kalodata_match: ["Pet Supplies"]                  # verify
+    kalodata_ids: []
+    overrides: {}
+    benchmarks: null
+
+  - key: beauty_personal_care
+    name: Beauty & Personal Care
+    enabled: true
+    kalodata_match: ["Beauty & Personal Care"]        # seen in KaloData data
+    kalodata_ids: [601450]                            # seen in KaloData data
+    overrides: {}
+    benchmarks: null
+
+  - key: fitness
+    name: Fitness
+    enabled: true
+    kalodata_match: ["Sports & Outdoor"]              # verify; fitness subcategories
+    kalodata_ids: []
+    overrides: {}
+    benchmarks: null
+
+  - key: automotive_accessories
+    name: Automotive Accessories
+    enabled: true
+    kalodata_match: ["Automotive & Motorcycle"]       # seen in KaloData data
+    kalodata_ids: [605196]                            # seen in KaloData data
+    overrides: {}
+    benchmarks: null
+
+  - key: tools
+    name: Tools
+    enabled: true
+    kalodata_match: ["Tools & Hardware"]              # verify
+    kalodata_ids: []
+    overrides: {}
+    benchmarks: null
+
+  - key: outdoor
+    name: Outdoor
+    enabled: true
+    kalodata_match: ["Sports & Outdoor"]              # verify; outdoor subcategories
+    kalodata_ids: []
+    overrides: {}
+    benchmarks: null
+
+  - key: electronics_accessories
+    name: Electronics Accessories
+    enabled: true
+    kalodata_match: ["Phones & Electronics"]          # verify; accessories subcategories
+    kalodata_ids: []
+    overrides: {}
+    benchmarks: null
+
+production_meta:
+  config_version: production-v2
+  created_at: '2026-10-01T00:48:32.987075+00:00'
+  source_calibration_report: owner-approved change of production-v1 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T00:48:32Z)
+  change_summary:
+  - unchanged from production-v1
+  derived_from: production-v1

@@ -111,3 +111,15 @@ Production data: `data/production/`, runs: `runs/production/`, reports: `reports
 * The system never orders samples, contacts suppliers, spends ad money or launches a product. Test budgets and
   stop-loss thresholds stay unset until the user sets them.
 
+
+## Owner-approved production change (production-v2)
+
+Discovery scope, the established-brand exclusion and run credit/query caps can be changed only with explicit owner
+approval; scores, filters, decision rules and confidence minimums cannot change through this path.
+
+    python -m winning_product_agent production-config owner-change \
+        --changes config/owner_changes/<file>.json --approved-by "<owner>" --approved-at <ISO time> [--activate]
+    python -m winning_product_agent production-config activate v1     # rollback
+
+production-v2 (active): discovery in home, kitchen, pet, fitness; established brands excluded; run cap 50 credits;
+max 11 paid queries per run.

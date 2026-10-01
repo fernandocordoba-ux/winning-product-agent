@@ -370,6 +370,18 @@ def cmd_production_config(a):
         v = PROMO.verify(PROMO.active_dir(version=a.version))
         _p(json.dumps({k: v[k] for k in ("config_version", "ok", "changed", "missing", "extra")}))
         return 0 if v["ok"] else 1
+    if a.action == "owner-change":
+        if not (a.changes and a.approved_by and a.approved_at):
+            _p("owner-change needs --changes <file.json> --approved-by <name> --approved-at <ISO time>")
+            return 2
+        spec = json.loads(Path(a.changes).read_text())
+        r = PROMO.promote_owner_change(changes=spec["changes"], approved_by=a.approved_by,
+                                       approved_at=a.approved_at, note=spec.get("note"), activate_new=a.activate)
+        for c in r["review"]["changes"]:
+            _p(f"  {c['file']} {c['path']}: {c['current_value']} -> {c['proposed_value']}")
+        _p(f"Promoted {r['manifest']['config_version']} (owner approved) -> {r['dir']}; "
+           f"active: {PROMO.active_version()}")
+        return 0
     if a.action == "activate":
         if not a.version:
             _p("activate needs a version, e.g. v1")
@@ -522,8 +534,12 @@ def build_parser():
     pr.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.PRODUCTION_PHRASE}"')
     pr.add_argument("--config-version", help="production config version (default: ACTIVE)")
     pc = sub.add_parser("production-config", help="review | promote | verify [v] | list | activate v")
-    pc.add_argument("action", choices=["review", "promote", "verify", "list", "activate"])
+    pc.add_argument("action", choices=["review", "promote", "verify", "list", "activate", "owner-change"])
     pc.add_argument("version", nargs="?")
+    pc.add_argument("--changes", help="owner-change: JSON file {note, changes:[{file, path, value, reason}]}")
+    pc.add_argument("--approved-by", help="owner-change: who approved the changes")
+    pc.add_argument("--approved-at", help="owner-change: when (ISO time)")
+    pc.add_argument("--activate", action="store_true", help="owner-change: activate the new version")
     fv = sub.add_parser("final-validation", help="product validation & launch gate (report-only, no paid action)")
     fv.add_argument("--latest", action="store_true", help="use the latest production run (default)")
     fv.add_argument("--product-id", help="validate one product of the latest production run")

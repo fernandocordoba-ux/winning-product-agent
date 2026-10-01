@@ -415,6 +415,122 @@ def promote(root=ROOT, rev=None, version=None, now=None, proposed_dir=None, repl
     return {"version": version, "dir": str(target), "manifest": manifest, "review": rev}
 
 
+
+# ============================================================================ owner-approved change (v<N> -> v<N+1>)
+OWNER_CHANGEABLE = {                      # production file -> path prefixes the owner may change explicitly
+    "runtime.yaml": ("query_plan.discovery_categories", "query_plan.discovery_exclude_established_brands",
+                     "query_plan.max_credits_for_run", "query_plan.guardrails.max_queries_per_run",
+                     "query_plan.guardrails.max_provider_queries.kalopilot", "credit_safety.max_credits_for_run"),
+}
+
+
+def _split_production_text(text):
+    """-> (body without header and without the trailing production_meta block)."""
+    lines = text.splitlines(keepends=True)
+    i = 0
+    if lines and lines[0].startswith("# ====") and len(lines) > 1 and "PRODUCTION CONFIG" in lines[1]:
+        i = 1
+        while i < len(lines) and not lines[i].startswith("# ===="):
+            i += 1
+        i += 1
+    body = "".join(lines[i:]).lstrip("\n")
+    k = body.find("\nproduction_meta:")
+    return (body[:k] if k >= 0 else body).rstrip() + "\n"
+
+
+def promote_owner_change(root=ROOT, changes=None, approved_by=None, approved_at=None, note=None, base_version=None,
+                         now=None, activate_new=False):
+    """Create v<N+1> from an existing production version with changes the OWNER approved explicitly.
+
+    * Only paths listed in OWNER_CHANGEABLE can change (discovery scope, brand rule, run credit / query caps).
+      Scores, filters, decision rules and confidence minimums cannot change through this path.
+    * Every change is recorded with approver + timestamp in change_review.json and the manifest.
+    * Unchanged files keep their text verbatim (only header + production_meta are re-stamped).
+    * The new version is immutable and verified; it is NOT activated unless activate_new=True.
+    """
+    root = Path(root)
+    if not changes or not approved_by or not approved_at:
+        raise ValueError("owner promotion needs changes, approved_by and approved_at")
+    base_version = base_version or active_version(root)
+    base = active_dir(root, base_version)
+    vb = verify(base)
+    if not vb["ok"]:
+        raise ValueError(f"base {base_version} failed hash verification: {vb}")
+    now = now or datetime.now(timezone.utc)
+    created = now.isoformat()
+    version = next_version(root)
+    target = root / "config" / "production" / version
+    if target.exists():
+        raise FileExistsError(f"{target} exists: production versions are immutable")
+    rows = []
+    by_file = {}
+    for c in changes:
+        f, path = c["file"], c["path"]
+        if not any(path == p or path.startswith(p + ".") for p in OWNER_CHANGEABLE.get(f, ())):
+            raise ValueError(f"{f}:{path} cannot be changed through an owner promotion")
+        old = _yaml(base / f)
+        for part in path.split("."):
+            old = old.get(part) if isinstance(old, dict) else None
+        rows.append({"file": f, "path": path, "current_value": old, "proposed_value": c["value"],
+                     "reason": c.get("reason"), "approval_status": APPROVE, "approved_by": approved_by,
+                     "approved_at": approved_at, "approval_kind": "OWNER_EXPLICIT"})
+        by_file.setdefault(f, []).append(rows[-1])
+    source = f"owner-approved change of production-{base_version} (approved by {approved_by} at {approved_at})"
+    tmp = target.with_name(version + ".tmp")
+    shutil.rmtree(tmp, ignore_errors=True)
+    tmp.mkdir(parents=True)
+    for p in sorted(base.glob("*.yaml")):
+        rs = by_file.get(p.name, [])
+        summary = [f"{r['path']}: {r['current_value']} -> {r['proposed_value']} (owner approved)" for r in rs] or \
+                  [f"unchanged from production-{base_version}"]
+        if rs:
+            data = _yaml(p)
+            data.pop("production_meta", None)
+            for r in rs:
+                set_path(data, r["path"], r["proposed_value"])
+            body = yaml.safe_dump(data, sort_keys=False, allow_unicode=True)
+        else:
+            body = _split_production_text(p.read_text())
+        meta = _meta_block(version, created, source, summary)
+        meta["derived_from"] = f"production-{base_version}"
+        body = body.rstrip() + "\n\nproduction_meta:\n" + "\n".join(
+            "  " + line for line in yaml.safe_dump(meta, sort_keys=False, allow_unicode=True).splitlines()) + "\n"
+        (tmp / p.name).write_text(_header(version, created, source, summary).replace(
+            "(Step AC promotion)", "(owner-approved promotion)") + body)
+    errors = validate_set(tmp)
+    for f, rs in by_file.items():                         # the written values must read back exactly
+        d = _yaml(tmp / f)
+        for r in rs:
+            v = d
+            for part in r["path"].split("."):
+                v = v.get(part) if isinstance(v, dict) else None
+            if v != r["proposed_value"]:
+                errors.append(f"{f}:{r['path']} did not persist")
+    if errors:
+        shutil.rmtree(tmp, ignore_errors=True)
+        raise ValueError("production config set invalid: " + "; ".join(errors))
+    rev = {"generated_at": created, "kind": "OWNER_APPROVED", "base_version": base_version, "note": note,
+           "changes": rows, "counts": {APPROVE: len(rows), REJECT: 0, DEFER: 0}}
+    (tmp / "change_review.json").write_text(json.dumps(rev, ensure_ascii=False, indent=2, default=str))
+    bm = json.loads((base / "manifest.json").read_text())
+    manifest = {"config_version": f"production-{version}", "version": version, "promotion_timestamp": created,
+                "promotion_kind": "OWNER_APPROVED", "derived_from": f"production-{base_version}",
+                "approved_by": approved_by, "approved_at": approved_at,
+                "source_calibration_version": bm.get("source_calibration_version"),
+                "source_calibration_report": source,
+                "decision_rules_version": _yaml(tmp / "decision_rules.yaml").get("decision_rules_version"),
+                "scoring_version": _yaml(tmp / "scoring.yaml").get("version"),
+                "changes": {"approved": len(rows), "rejected": 0, "deferred": 0},
+                "aliases": bm.get("aliases"), "hash_algorithm": "sha256",
+                "files": {p.name: sha256(p) for p in sorted(tmp.glob("*")) if p.is_file()}}
+    (tmp / "manifest.json").write_text(json.dumps(manifest, indent=2))
+    os.replace(tmp, target)
+    for p in target.glob("*"):
+        p.chmod(0o444)
+    act = activate(root, version, note=note or "owner-approved promotion") if activate_new else None
+    return {"version": version, "dir": str(target), "manifest": manifest, "review": rev, "activation": act}
+
+
 def validate_set(d):
     """Run the normal config validation on a production set (production names mapped back)."""
     import config_validation as CV
