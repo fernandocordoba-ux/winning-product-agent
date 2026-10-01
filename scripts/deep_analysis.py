@@ -92,7 +92,9 @@ def select_candidates(discovery_result, cfg, scoring_cfg=None):
             o = (p.get("source") or {}).get("original_record") or {}
             seq = [disc.parse_value(o.get(k), "num")[0] for k in ("gmv_prev2_30d", "gmv_prev_30d", "gmv_30d")]
             p["calculated"]["sustained_growth"] = (None if None in seq else seq[0] < seq[1] < seq[2])
-        ordered = sorted(enumerate(pool), key=lambda ip: (ip[1]["calculated"].get("sustained_growth") is not True,
+        old = set(sel.get("deprioritize_ids") or [])          # analyzed recently -> after new products
+        ordered = sorted(enumerate(pool), key=lambda ip: (str(ip[1]["facts"].get("product_id")) in old,
+                                                          ip[1]["calculated"].get("sustained_growth") is not True,
                                                           -(ip[1]["calculated"]["preliminary_wps"] or 0),
                                                           rank.get(ip[1]["calculated"]["filter_status"], 99), ip[0]))
     else:

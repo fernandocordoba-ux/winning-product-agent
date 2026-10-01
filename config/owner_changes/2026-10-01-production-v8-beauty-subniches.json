@@ -1,0 +1,17 @@
+{
+  "note": "Owner: beauty niche only, find 10 candidates. Data so far (74 beauty records): results concentrate in branded makeup and bath & body and the same products repeat; sourceable generic beauty sells in tools/devices, nails & lashes, hair care and skin/body care. One 'proven' query per sub-niche (4), deep-analyze the 10 best, products analyzed in the last 14 days go after new ones. Credit cap fits the current balance (59.68 - 5 reserve); Amazon only if credits remain under the cap.",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.discovery_lenses", "value": ["proven"], "reason": "highest-volume steady products in AE"},
+    {"file": "runtime.yaml", "path": "query_plan.discovery_subniches", "value": [
+      "beauty tools & devices: hair styling tools, facial and skin devices, makeup brushes and applicators",
+      "nails & lashes: press-on nails, nail art kits, false lashes and lash kits",
+      "hair care: hair oils, masks, serums, scalp care, hair accessories",
+      "skincare & body care: face masks, serums, body scrubs, bath and shower accessories"], "reason": "sourceable beauty sub-niches; diversity beyond branded makeup"},
+    {"file": "runtime.yaml", "path": "query_plan.prefer_new_days", "value": 14, "reason": "spend deep analyses on new products first"},
+    {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 10, "reason": "10 candidates"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 54, "reason": "4 x 4.0 + 10 x 3.6 = 52; balance 59.68 - reserve 5"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 54, "reason": "mirror"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 16, "reason": "4 + 10 + 2"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 16, "reason": "same"}
+  ]
+}

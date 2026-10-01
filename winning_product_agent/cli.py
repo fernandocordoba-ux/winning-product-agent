@@ -146,6 +146,7 @@ def cmd_run(a):
         return 0 if r["status"] == "DRY_RUN_COMPLETED" else 1
     s = run.live(confirm_value=a.confirm_live, resume_id=a.resume)
     print_summary(s)
+    _candidates_report()
     return 0 if s["final_status"] in ("COMPLETED", "PARTIAL") else 1
 
 
@@ -455,6 +456,17 @@ def print_production_dry(r):
                                                          if r["readiness"]["reasons"] else ""))
 
 
+def _candidates_report():
+    """Full candidates report (every candidate, every datum) after each production run / rebuild. Free."""
+    try:
+        import candidates_report as CRP
+        r = CRP.write()
+        if r:
+            _p(f"Candidates report ({r['rows']} products): " + ", ".join(r["files"]))
+    except Exception as e:  # noqa: BLE001 — a report failure never invalidates the run
+        _p(f"Candidates report not written: {e.__class__.__name__}: {e}")
+
+
 def cmd_production_run(a):
     from winning_product_agent import production as P
     if a.live and a.dry_run:
@@ -467,6 +479,7 @@ def cmd_production_run(a):
     if a.report_only:
         r = run.report_only(a.run_id, rescore=getattr(a, 'rescore', False))
         _p(json.dumps(r, indent=2, default=str))
+        _candidates_report()
         return 0
     if not a.live:                                    # default: DRY RUN, never paid
         r = run.dry_run()

@@ -43,7 +43,8 @@ def templates(path=ROOT / "prompts" / "discovery_lenses.md"):
     return blocks
 
 
-def build_queries(categories=DEFAULT_CATEGORIES, lenses=LENSES, limit=15):
+def build_queries(categories=DEFAULT_CATEGORIES, lenses=LENSES, limit=15, subniches=None):
+    """subniches: optional list of focus phrases (one query per lens x sub-niche, same category)."""
     with CR.active(__import__("promotion").active_dir(ROOT)):
         filters, cats = D.load_yaml("filters.yaml"), D.load_yaml("categories.yaml")
     t = templates()
@@ -52,13 +53,15 @@ def build_queries(categories=DEFAULT_CATEGORIES, lenses=LENSES, limit=15):
     for key in categories:
         c = next(x for x in cats["categories"] if x["key"] == key)
         for lens in lenses:
-            q = t[lens].format(region=m["region"], currency=m["currency"], limit=limit, category_name=c["name"],
+          for sn in (subniches or [None]):
+            name = f'{c["name"]}" — focus only on this sub-niche: "{sn}' if sn else c["name"]
+            q = t[lens].format(region=m["region"], currency=m["currency"], limit=limit, category_name=name,
                                kalodata_match=", ".join(c.get("kalodata_match") or [c["name"]]),
                                units_min=d["units_30d"]["min"], gmv_min=d["gmv_30d"]["min"], base_min=BASE_MIN,
                                price_min=d["price"]["min"], price_max=d["price"]["max"],
                                common_rules="{common_rules}")
             q = q.replace("{common_rules}", t["common"].format(currency=m["currency"]))
-            out.append({"lens": lens, "category_key": key, "query": q,
+            out.append({"lens": lens, "category_key": key, "query": q, "subniche": sn,
                         "query_sha256": hashlib.sha256(q.encode()).hexdigest()})
     return out
 

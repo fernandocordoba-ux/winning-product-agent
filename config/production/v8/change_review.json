@@ -1,0 +1,111 @@
+{
+  "generated_at": "2026-10-01T15:48:19.163303+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v7",
+  "note": "Owner: beauty niche only, find 10 candidates. Data so far (74 beauty records): results concentrate in branded makeup and bath & body and the same products repeat; sourceable generic beauty sells in tools/devices, nails & lashes, hair care and skin/body care. One 'proven' query per sub-niche (4), deep-analyze the 10 best, products analyzed in the last 14 days go after new ones. Credit cap fits the current balance (59.68 - 5 reserve); Amazon only if credits remain under the cap.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_lenses",
+      "current_value": [
+        "proven",
+        "creators"
+      ],
+      "proposed_value": [
+        "proven"
+      ],
+      "reason": "highest-volume steady products in AE",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_subniches",
+      "current_value": null,
+      "proposed_value": [
+        "beauty tools & devices: hair styling tools, facial and skin devices, makeup brushes and applicators",
+        "nails & lashes: press-on nails, nail art kits, false lashes and lash kits",
+        "hair care: hair oils, masks, serums, scalp care, hair accessories",
+        "skincare & body care: face masks, serums, body scrubs, bath and shower accessories"
+      ],
+      "reason": "sourceable beauty sub-niches; diversity beyond branded makeup",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.prefer_new_days",
+      "current_value": null,
+      "proposed_value": 14,
+      "reason": "spend deep analyses on new products first",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "limits.deep_analysis_max_products",
+      "current_value": 6,
+      "proposed_value": 10,
+      "reason": "10 candidates",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 40,
+      "proposed_value": 54,
+      "reason": "4 x 4.0 + 10 x 3.6 = 52; balance 59.68 - reserve 5",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 40,
+      "proposed_value": 54,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 10,
+      "proposed_value": 16,
+      "reason": "4 + 10 + 2",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 10,
+      "proposed_value": 16,
+      "reason": "same",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:48:19Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 8,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

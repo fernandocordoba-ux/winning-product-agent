@@ -57,3 +57,31 @@ class Rules(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BeautyV8(unittest.TestCase):
+    def test_subniche_queries(self):
+        import lens_experiment as LX
+        qs = LX.build_queries(("beauty_personal_care",), ("proven",), subniches=["nails & lashes", "hair care"])
+        self.assertEqual(len(qs), 2)
+        self.assertIn('focus only on this sub-niche: "nails & lashes"', qs[0]["query"])
+        self.assertEqual({q["category_key"] for q in qs}, {"beauty_personal_care"})
+
+    def test_new_products_first(self):
+        res = {"candidates": [cand("A", "Lash kit", 9000, 400, 900), cand("B", "Press on nails", 3000, 100, 200)]}
+        cfg = copy.deepcopy(DA.load_cfg())
+        cfg["selection"].update(deep_analysis_max_products=1, order="preliminary_wps", deprioritize_ids=["A"])
+        sel, _ = DA.select_candidates(res, cfg)
+        self.assertEqual(sel[0]["key"], "B")
+
+
+class CandidatesReport(unittest.TestCase):
+    def test_report_from_saved_run(self):
+        import tempfile
+        import candidates_report as CRP
+        d = Path(tempfile.mkdtemp())
+        r = CRP.write(out_dir=d)
+        if r is None:
+            self.skipTest("no production run saved in this checkout")
+        self.assertTrue((d / "latest.csv").exists() and (d / "latest.md").exists())
+        self.assertGreater(r["rows"], 0)

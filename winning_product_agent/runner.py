@@ -444,8 +444,10 @@ class Runner:
             import lens_experiment as LX
             cats = only or [c["key"] for c in self.categories["categories"] if c.get("enabled", True)]
             n = self.filters["discovery_mode"]["products_per_category"]
-            return [{"category_key": q["category_key"], "query": q["query"], "lens": q["lens"]}
-                    for q in LX.build_queries(cats, tuple(qp.get("discovery_lenses") or LX.LENSES), limit=n)]
+            return [{"category_key": q["category_key"], "query": q["query"], "lens": q["lens"] + (
+                        f":{q['subniche']}" if q.get("subniche") else "")}
+                    for q in LX.build_queries(cats, tuple(qp.get("discovery_lenses") or LX.LENSES), limit=n,
+                                              subniches=qp.get("discovery_subniches"))]
         if qp.get("discovery_mode", "per_category") == "per_category":
             qs = D.build_queries(self.filters, self.categories)
             return [{**q, "query": with_brand_rule(q["query"], qp)} for q in qs
@@ -837,6 +839,7 @@ class Runner:
         cfg["selection"]["deep_analysis_max_products"] = self.limits["deep_analysis_max_products"]
         cfg["selection"]["order"] = self.eff["query_plan"].get("deep_selection") or cfg["selection"].get("order")
         cfg["selection"]["exclude_keywords"] = self.eff["query_plan"].get("deep_exclude_keywords") or []
+        cfg["selection"]["deprioritize_ids"] = self.recently_analyzed(self.eff["query_plan"].get("prefer_new_days"))
         sel, _ = DA.select_candidates(res, cfg)
         return {"available": True, "raw_files": [str(p) for p in paths], "summary": res["summary"],
                 "deep_candidates": [{"product_id": DA.product_ref_id(p), "name": p["facts"].get("product_name"),
@@ -1245,6 +1248,22 @@ class Runner:
                 "data": {"status": "completed", "task_id": task_id, "report_url": data.get("report_url"),
                          "report": "```json\n" + json.dumps(obj, ensure_ascii=False) + "\n```"}}
 
+    def recently_analyzed(self, days):
+        """product ids with a successful deep analysis in the last `days` days (prefer NEW products)."""
+        if not days:
+            return []
+        cut = now_utc() - timedelta(days=days)
+        ids = set()
+        for p in (self.processed / "deep_analysis").glob("deep_*.json"):
+            try:
+                if datetime.fromtimestamp(p.stat().st_mtime, timezone.utc) < cut:
+                    continue
+                ids |= {str(r.get("product_id")) for r in (_read_json(p) or {}).get("results") or []
+                        if r.get("status") == "ok"}
+            except OSError:
+                continue
+        return sorted(ids)
+
     def s_deep(self, ctx, now):
         if not ctx.get("discovery"):
             return SKIPPED, {"summary": "no filtered discovery result"}
@@ -1252,6 +1271,7 @@ class Runner:
         cfg["selection"]["deep_analysis_max_products"] = self.limits["deep_analysis_max_products"]
         cfg["selection"]["order"] = self.eff["query_plan"].get("deep_selection") or cfg["selection"].get("order")
         cfg["selection"]["exclude_keywords"] = self.eff["query_plan"].get("deep_exclude_keywords") or []
+        cfg["selection"]["deprioritize_ids"] = self.recently_analyzed(self.eff["query_plan"].get("prefer_new_days"))
         cfgs = {"deep": cfg, "filters": self.filters, "scoring": load_scoring_config()}
         dres = ctx["discovery"]
         market = dres.get("market") or {"region": "US", "currency": "USD"}
