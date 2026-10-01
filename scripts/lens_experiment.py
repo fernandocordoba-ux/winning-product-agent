@@ -87,13 +87,23 @@ def analyze(raw_dir=RAW_DIR):
     with CR.active(__import__("promotion").active_dir(ROOT)):
         import score_products as SP
         scoring = SP.load_scoring_config()
+    with CR.active(__import__("promotion").active_dir(ROOT)):
+        filters, cats = D.load_yaml("filters.yaml"), D.load_yaml("categories.yaml")
     rows = []
     for p in sorted(Path(raw_dir).glob("*.json")):
         env = json.loads(p.read_text())
         recs, errs = D.extract_records(env)
-        for r in recs:
+        cat = env.get("lens_category") or env.get("category_key")
+        for i, r in enumerate(recs):
             f = facts(r)
             f["preliminary"] = DA.preliminary_score({"facts": f}, scoring)
+            prod, bad = D.normalize(r, {"category_key": cat, "market": "US", "currency": "USD"}, i)
+            if prod:                             # the SAME production filters (price, minimums, IP / regulated risk)
+                ev = D.evaluate(prod, D.filters_for_category(filters, cats, cat))
+                f["filter_status"] = ev["filter_status"]
+                f["filter_reasons"] = [x.get("rule") for x in ev.get("filter_reasons") or []]
+            else:
+                f["filter_status"], f["filter_reasons"] = "MALFORMED", [bad]
             rows.append({**f, "lens": env.get("lens"), "category_key": env.get("lens_category") or env.get("category_key"),
                          "raw": p.name, "errors": errs})
     by = {}
@@ -105,10 +115,13 @@ def analyze(raw_dir=RAW_DIR):
                     "median_units": statistics.median([r["units_30d"] for r in L if r["units_30d"] is not None])
                     if any(r["units_30d"] is not None for r in L) else None,
                     "median_preliminary": round(statistics.median(pre), 2) if pre else None,
-                    "preliminary_ge_50": sum(x >= 50 for x in pre)}
+                    "preliminary_ge_50": sum(x >= 50 for x in pre),
+                    "filter_pass": sum(r.get("filter_status") == "PASS" for r in L),
+                    "filter_fail": sum(r.get("filter_status") == "FAIL" for r in L)}
     seen, top = set(), []
-    for r in sorted(rows, key=lambda r: -(r["preliminary"] or 0)):
-        if r["product_id"] in seen or not r["base_ok"]:
+    # sustained growth first, then preliminary score; FAIL (filters) and tiny-base spikes never enter the top 10
+    for r in sorted(rows, key=lambda r: (not r["sustained"], -(r["preliminary"] or 0))):
+        if r["product_id"] in seen or not r["base_ok"] or r.get("filter_status") in ("FAIL", "MALFORMED"):
             continue
         seen.add(r["product_id"])
         top.append(r)
@@ -118,10 +131,10 @@ def analyze(raw_dir=RAW_DIR):
 def render(a):
     L = ["# Discovery lens experiment", "", f"Generated {a['generated_at']}. Discovery only; preliminary score = share of "
          "WPS points computable from discovery facts (not the final WPS).", "",
-         "| Lens | Products | With 90-day data | Sustained growth | Median units 30d | Median preliminary | Preliminary >= 50 |",
-         "|---|---|---|---|---|---|---|"]
+         "| Lens | Products | Filters PASS / FAIL | With 90-day data | Sustained growth | Median units 30d | Median preliminary | Preliminary >= 50 |",
+         "|---|---|---|---|---|---|---|---|"]
     for k, x in a["lenses"].items():
-        L.append(f"| {k} | {x['products']} | {x['with_90d_pct'] if x['with_90d_pct'] is not None else 'N/A'} % | "
+        L.append(f"| {k} | {x['products']} | {x['filter_pass']} / {x['filter_fail']} | {x['with_90d_pct'] if x['with_90d_pct'] is not None else 'N/A'} % | "
                  f"{x['sustained']} | {x['median_units'] if x['median_units'] is not None else 'N/A'} | "
                  f"{x['median_preliminary'] if x['median_preliminary'] is not None else 'N/A'} | {x['preliminary_ge_50']} |")
     L += ["", "## Top 10 (base >= previous-month revenue minimum)", "",
