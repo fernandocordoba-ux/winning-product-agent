@@ -75,6 +75,14 @@ def latest_production_run(root=ROOT, data_root=None):
         m = json.loads(mf.read_text())
         if m.get("mode") == "LIVE" and (m.get("outputs") or {}).get("final_decision_json"):
             best = (m, mf.parent)
+    if best:                                     # a newer free rebuild (--report-only [--rescore]) of that run wins
+        m, d = best
+        for mf in sorted(runs.glob("*/manifest.json")):
+            r = json.loads(mf.read_text())
+            if r.get("report_only_source_run") == m.get("run_id") and (r.get("outputs") or {}).get("final_decision_json"):
+                m = {**m, "outputs": {**(m.get("outputs") or {}), "final_decision_json": r["outputs"]["final_decision_json"]},
+                     "config_version": r.get("config_version", m.get("config_version")), "rebuilt_by": r.get("run_id")}
+        best = (m, d)
     return best or (None, None)
 
 

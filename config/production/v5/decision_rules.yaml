@@ -1,0 +1,270 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v5 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T04:55:32.013666+00:00
+# source_calibration_report: owner-approved change of production-v4 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T04:55:31Z)
+# change_summary:
+#   - decision.insufficient_if_unknown_at_least: 4 -> 99 (owner approved)
+#   - dimensions.evidence_quality.layers: None -> ['wps', 'momentum', 'amazon', 'competitor', 'creative'] (owner approved)
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+decision_rules_version: Z-v1-production-v1
+states:
+- READY_FOR_PRODUCT_VALIDATION
+- PROMISING_NEEDS_VALIDATION
+- WATCHLIST
+- REJECT
+- INSUFFICIENT_DATA
+forbidden_language:
+- GUARANTEED_WINNER
+- CERTAIN_WINNER
+- 100_PERCENT_PROFITABLE
+- guaranteed winner
+- certain winner
+minimum_confidence:
+  wps: 60
+  momentum: 60
+  amazon: 50
+  bvs: 50
+  supplier: 50
+  competitor: 50
+  creative: 65
+hard_gates:
+  NEGATIVE_CONTRIBUTION_MARGIN:
+    action: reject
+    below: 0
+  UNRELIABLE_PRODUCT_MATCH:
+    action: reject
+  REGULATED_PRODUCT:
+    action: reject
+    flags:
+    - REGULATED_PRODUCT
+  REGULATED_REVIEW_REQUIRED:
+    action: block_ready
+    flags:
+    - REGULATED_REVIEW_REQUIRED
+    - AD_POLICY_REVIEW_REQUIRED
+  IP_REVIEW_REQUIRED:
+    action: block_ready
+    flags:
+    - IP_REVIEW_REQUIRED
+    resolved_by: ip_trademark_check
+  COUNTERFEIT_REVIEW_REQUIRED:
+    action: block_ready
+    flags:
+    - COUNTERFEIT_REVIEW_REQUIRED
+    severe_action: reject
+    resolved_by: ip_trademark_check
+  EXTREME_COMPETITION_WEAK_DEMAND:
+    action: reject
+    flags:
+    - EXTREME_DIRECT_COMPETITION
+    - EXTREME_SATURATION
+    - EXTREME_COMPETITION
+  DEMAND_DECLINING:
+    action: reject
+    trend: DECLINING
+    growth_at_most: -20
+  CREATOR_DEPENDENCY_WEAK_BROADER:
+    action: reject
+    flags:
+    - CREATOR_DEPENDENCY
+    max_creators: 10
+    broader_weak_statuses:
+    - WEAK
+    when_broader_unknown: block_ready
+  VIDEO_DEPENDENCY_WEAK_BROADER:
+    action: reject
+    flags:
+    - VIDEO_DEPENDENCY
+    max_videos: 10
+  VERY_SLOW_DELIVERY:
+    action: reject
+  SUPPLIER_MATCH_UNRELIABLE:
+    action: block_ready
+  CRITICAL_DATA_INTEGRITY_ERROR:
+    action: reject
+dimensions:
+  market_momentum:
+    strong:
+      wps_min: 70
+      momentum_min_if_known: 60
+    acceptable:
+      wps_min: 55
+    declining_trend_caps_at: ACCEPTABLE
+    momentum_weak_below: 40
+  cross_platform_demand:
+    strong:
+      avs_min: 70
+      confidence_min: 60
+    acceptable:
+      avs_min: 50
+  commercial_viability:
+    require_supplier_economics: true
+    strong:
+      bvs_min: 70
+      gross_margin_min: 40
+    acceptable:
+      bvs_min: 55
+      gross_margin_min: 30
+  competitive_environment:
+    strong:
+      opportunity_min: 60
+      saturation_max: 50
+    acceptable:
+      opportunity_min: 45
+      saturation_max: 70
+    compression_caps_at: ACCEPTABLE
+  creative_opportunity:
+    strong:
+      opportunity_min: 60
+      saturation_max: 55
+    acceptable:
+      opportunity_min: 45
+      saturation_max: 75
+  evidence_quality:
+    core_layer: wps
+    acceptable_min_passing_share: 0.5
+    strong_margin: 20
+    strong_min_known_layers: 5
+    layers:
+    - wps
+    - momentum
+    - amazon
+    - competitor
+    - creative
+decision:
+  insufficient_if_unknown:
+  - market_momentum
+  insufficient_if_unknown_at_least: 99
+  major_dimensions:
+  - market_momentum
+  - cross_platform_demand
+  - commercial_viability
+  - competitive_environment
+  reject_if_weak_major_at_least: 2
+  ready:
+    require_in:
+      market_momentum:
+      - STRONG
+      - ACCEPTABLE
+      commercial_viability:
+      - STRONG
+      - ACCEPTABLE
+      competitive_environment:
+      - STRONG
+      - ACCEPTABLE
+      creative_opportunity:
+      - STRONG
+      - ACCEPTABLE
+      evidence_quality:
+      - STRONG
+      - ACCEPTABLE
+    forbid:
+      cross_platform_demand:
+      - WEAK
+    require_supplier_economics: true
+  promising:
+    require_in:
+      market_momentum:
+      - STRONG
+      - ACCEPTABLE
+    forbid_weak:
+    - commercial_viability
+    - competitive_environment
+    - creative_opportunity
+    - cross_platform_demand
+    - evidence_quality
+decision_confidence:
+  components:
+    core_dimension_coverage:
+      points: 30
+    layer_confidences:
+      points: 25
+    provenance_completeness:
+      points: 15
+    reliable_sources:
+      points: 15
+    historical_depth:
+      points: 15
+  history_full_at: 3
+  sources_full_at: 5
+shortlist:
+  max_products: 3
+  only_state: READY_FOR_PRODUCT_VALIDATION
+  order_by:
+  - market_momentum
+  - commercial_viability
+  - decision_confidence
+  - competitive_opportunity
+  - creative_opportunity
+  - product_id
+checklist:
+- supplier_sample
+- final_shipping_quote
+- final_landed_cost
+- margin_verification
+- meta_ads_review
+- shopify_competitor_review
+- creative_angle_review
+- ip_trademark_check
+- returns_risk
+- product_quality_check
+- customer_support_complexity
+- packaging_considerations
+validation_tasks:
+  supplier_economics: Import supplier offers with product_cost and shipping_cost (suppliers
+    import <csv|json>); no orders, no supplier contact
+  commercial_viability: Re-run BVS with the selected supplier offer; confirm BVS Confidence
+    >= minimum
+  competitive_environment: Import competitor research (competitors import <csv|json>)
+    so Competitor Confidence >= minimum
+  creative_opportunity: Import creative research (creatives import / creatives from-kalopilot
+    <product_id>, free, saved data only)
+  cross_platform_demand: 'Optional: Amazon validation (paid KaloPilot query) to add
+    cross-platform evidence'
+  evidence_quality: Raise the weakest layer confidence above its minimum (see evidence
+    matrix)
+  market_momentum: A further deep-analysis observation (paid) to confirm WPS / Momentum
+  REGULATED_REVIEW_REQUIRED: Manual compliance / ad-policy review of the product category
+  IP_REVIEW_REQUIRED: 'Manual IP / trademark check (checklist: ip_trademark_check)'
+  COUNTERFEIT_REVIEW_REQUIRED: 'Manual counterfeit / brand-authorization review (checklist:
+    ip_trademark_check)'
+  SUPPLIER_MATCH_UNRELIABLE: Find a supplier offer that matches the exact product
+    (match >= 75)
+  CREATOR_DEPENDENCY_WEAK_BROADER: Collect broader demand evidence (Amazon validation
+    or a later observation) before judging creator dependency
+next_queries:
+  deep_analysis:
+    action: KaloPilot deep analysis of this product
+    paid: true
+    est_credits: 2.5
+  history:
+    action: A second deep-analysis observation >= 1 day later (Momentum needs >= 2
+      snapshots)
+    paid: true
+    est_credits: 2.5
+  amazon:
+    action: KaloPilot Amazon validation
+    paid: true
+    est_credits: 4.0
+  supplier:
+    action: Manual supplier offer import
+    paid: false
+  competitor:
+    action: Manual competitor research import
+    paid: false
+  creative:
+    action: creatives from-kalopilot <product_id> (saved data) or manual import
+    paid: false
+
+production_meta:
+  config_version: production-v5
+  created_at: '2026-10-01T04:55:32.013666+00:00'
+  source_calibration_report: owner-approved change of production-v4 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T04:55:31Z)
+  change_summary:
+  - 'decision.insufficient_if_unknown_at_least: 4 -> 99 (owner approved)'
+  - 'dimensions.evidence_quality.layers: None -> [''wps'', ''momentum'', ''amazon'',
+    ''competitor'', ''creative''] (owner approved)'
+  derived_from: production-v4

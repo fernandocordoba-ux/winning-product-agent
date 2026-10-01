@@ -50,15 +50,49 @@ def latest_discovery(processed_dir=ROOT / "data" / "processed"):
     return files[-1] if files else None
 
 
-def select_candidates(discovery_result, cfg):
-    """PASS before REVIEW (keeping Discovery's order inside each status), FAIL excluded."""
+def preliminary_score(product, scoring_cfg=None):
+    """PRELIMINARY WPS from Discovery facts only (growth, units, videos, creators): share of the available WPS
+    points, 0-100. Used only to choose which products get a paid deep analysis; never shown as the WPS."""
+    from score_products import wps_breakdown
+    f = product.get("facts") or {}
+    sin = {"revenue_growth_pct": f.get("growth_30d"), "units_sold": f.get("units_30d"),
+           "videos_count": f.get("video_count"), "creators_count": f.get("creator_count")}
+    b = wps_breakdown(sin, scoring_cfg or load_scoring_config())
+    return round(100 * b["points_earned"] / b["points_possible"], 2) if b.get("points_possible") else None
+
+
+def _seasonal(product, keywords):
+    name = (product.get("facts") or {}).get("product_name") or ""
+    return sorted({k for k in keywords or [] if re.search(rf"\b{re.escape(k)}", name, re.I)})
+
+
+def select_candidates(discovery_result, cfg, scoring_cfg=None):
+    """PASS before REVIEW (keeping Discovery's order inside each status), FAIL excluded.
+    selection.order = preliminary_wps -> highest preliminary score first (status as tie-break).
+    selection.exclude_keywords -> seasonal products are listed but not deep-analyzed."""
     sel = cfg["selection"]
     eligible = set(sel["eligible_statuses"])
     pool = [p for p in discovery_result.get("candidates", [])
             if p["calculated"]["filter_status"] in eligible]
     rank = {s: i for i, s in enumerate(sel["status_priority"])}
-    ordered = sorted(enumerate(pool), key=lambda ip: (rank.get(ip[1]["calculated"]["filter_status"], 99), ip[0]))
-    selected, skipped = [], []
+    skipped = []
+    if sel.get("exclude_keywords"):
+        keep = []
+        for p in pool:
+            hit = _seasonal(p, sel["exclude_keywords"])
+            if hit:
+                skipped.append({"key": p["key"], "reason": f"seasonal keyword {hit}: not deep-analyzed"})
+            else:
+                keep.append(p)
+        pool = keep
+    if sel.get("order") == "preliminary_wps":
+        for p in pool:
+            p["calculated"]["preliminary_wps"] = preliminary_score(p, scoring_cfg)
+        ordered = sorted(enumerate(pool), key=lambda ip: (-(ip[1]["calculated"]["preliminary_wps"] or 0),
+                                                          rank.get(ip[1]["calculated"]["filter_status"], 99), ip[0]))
+    else:
+        ordered = sorted(enumerate(pool), key=lambda ip: (rank.get(ip[1]["calculated"]["filter_status"], 99), ip[0]))
+    selected = []
     for _, p in ordered:
         if not any(p["facts"].get(k) for k in sel["require_identifier"]):
             skipped.append({"key": p["key"], "reason": "no product_id or product_url to query"})

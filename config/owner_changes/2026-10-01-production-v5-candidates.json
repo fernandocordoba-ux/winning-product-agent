@@ -1,0 +1,15 @@
+{
+  "note": "Owner request: remove the 'insufficient if >= 4 unknown dimensions' rule so products with KaloPilot potential can become PROMISING; supplier/BVS confidence must not judge evidence quality (suppliers are informative only); evaluate up to 100 discovery candidates and deep-analyze the 10 best by a free preliminary score, skipping seasonal items. Negative-evidence gates, WPS thresholds and READY rules unchanged.",
+  "changes": [
+    {"file": "decision_rules.yaml", "path": "decision.insufficient_if_unknown_at_least", "value": 99, "reason": "rule removed (owner); market_momentum UNKNOWN still means INSUFFICIENT"},
+    {"file": "decision_rules.yaml", "path": "dimensions.evidence_quality.layers", "value": ["wps", "momentum", "amazon", "competitor", "creative"], "reason": "supplier / BVS informative only"},
+    {"file": "runtime.yaml", "path": "limits.discovery_max_products", "value": 100, "reason": "free: candidates already returned by the 9 discovery queries"},
+    {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 10, "reason": "10 paid deep analyses (~3.6 each)"},
+    {"file": "runtime.yaml", "path": "query_plan.deep_selection", "value": "preliminary_wps", "reason": "deep-analyze the best candidates, not the first"},
+    {"file": "runtime.yaml", "path": "query_plan.deep_exclude_keywords", "value": ["halloween", "christmas", "xmas", "thanksgiving", "easter", "valentine", "advent", "santa"], "reason": "seasonal items are listed but not deep-analyzed"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 82, "reason": "9 x 4.0 + 10 x 3.6 + 2 x 4.0 = 80"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 82, "reason": "mirror"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 21, "reason": "9 + 10 + 2"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 21, "reason": "same"}
+  ]
+}

@@ -1,0 +1,221 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v5 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T04:55:32.013666+00:00
+# source_calibration_report: owner-approved change of production-v4 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T04:55:31Z)
+# change_summary:
+#   - unchanged from production-v4
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Business Viability Score (BVS) — Step O (EXPERIMENTAL v1, editable here)
+# =============================================================================
+# Question BVS answers: does it make economic and operational sense to sell
+# this product through our Shopify store?
+#
+# Independent from WPS, Confidence, AVS and Amazon Confidence (never combined).
+# Computed only by scripts/business_viability.py from these rules.
+#
+# Scoring convention (same as WPS/AVS): each component = sum of its sub-parts;
+# a sub-part without data is N/A and earns 0 points (never rescaled away);
+# missing evidence lowers BVS Confidence.
+#
+# EXTERNAL DATA BOUNDARY: KaloData/KaloPilot has NO supplier economics.
+# Supplier cost, shipping, supplier metrics and logistics come from
+# data/raw/business_viability/ (supplier_data records). Until a supplier source
+# is integrated, those fields are N/A and BVS Confidence stays low.
+# =============================================================================
+
+business_viability:
+  version: "bvs-v1"
+
+  # ---------------------------------------------------------------- Stage 1
+  eligibility:
+    minimum_wps: 55
+    minimum_confidence: 60
+    amazon_required: false                  # Amazon data optional; missing lowers BVS Confidence
+    max_products: 40
+
+  # ---------------------------------------------------------------- Stage 3/16
+  supplier_source:
+    provider: none                          # none | manual  (future: cj, zendrop, autods, ...)
+    raw_dir: data/raw/business_viability
+    query_type: supplier_data
+
+  # Economics assumptions. VERIFY against your own Shopify plan / history.
+  # null = unknown -> dependent outputs stay N/A (never estimated).
+  economics:
+    selling_price_source: [commercial_input, tiktok_price_avg]   # first available wins;
+                                                                 # tiktok_price_avg is labeled an ASSUMPTION
+    payment_processing: { percent: 2.9, fixed: 0.30 }            # CONFIRMED by user (2026-09-30): their Shopify plan rate
+    platform_fee: { percent: 0.0, fixed: 0.0 }                   # extra per-order platform/app fees
+    estimated_refund_rate_pct: null                              # e.g. 5 -> 5 % of orders refunded
+    estimated_chargeback_rate_pct: null                          # e.g. 0.5
+    chargeback_fee: 15.0                                         # USD per chargeback (added to lost revenue)
+    estimated_ad_cost_per_order: null                            # USD; PENDING: user will provide (with refund + chargeback rates)
+    refund_cost_basis: selling_price                             # refund = rate x selling_price
+
+  # ---------------------------------------------------------------- Stage 4
+  gross_margin_potential:
+    points: 25
+    parts:
+      gross_margin:                         # gross_margin_percent (before ads)
+        points: 15
+        bands: [{ min: 70, s: 1.0 }, { min: 60, s: 0.8 }, { min: 50, s: 0.6 }, { min: 40, s: 0.3 }, { min: -1000000000, s: 0.0 }]
+      contribution_margin:                  # contribution_margin_percent
+        points: 10
+        bands: [{ min: 30, s: 1.0 }, { min: 20, s: 0.75 }, { min: 10, s: 0.5 }, { min: 0, s: 0.2 }, { min: -1000000000, s: 0.0 }]
+    low_gross_margin_below: 40              # -> LOW_GROSS_MARGIN
+    negative_contribution_below: 0          # -> NEGATIVE_CONTRIBUTION_MARGIN (severe)
+
+  # ---------------------------------------------------------------- Stage 5
+  shipping_viability:
+    points: 15
+    parts:
+      delivery_time:  { points: 5, input: delivery_days_max,
+                        bands: [{ max: 7, s: 1.0 }, { max: 12, s: 0.6 }, { max: 20, s: 0.3 }, { max: 1000000000, s: 0.0 }] }
+      shipping_cost:  { points: 4, input: shipping_cost_pct_of_price,     # supplier_shipping_cost / selling_price * 100
+                        bands: [{ max: 10, s: 1.0 }, { max: 20, s: 0.5 }, { max: 1000000000, s: 0.0 }] }
+      tracking:       { points: 2, input: tracking_available }            # true 1 / false 0
+      handling:       { points: 4 }                                        # 1 - 0.25 x restrictions (needs all core fields)
+    handling_core_fields: [fragile, contains_battery, contains_liquid, oversized]
+    handling_extra_fields: [special_handling, customs_risk]
+    handling_penalty_per_restriction: 0.25
+    oversized_if: { longest_side_cm_min: 60, weight_kg_min: 5 }           # either -> oversized (when fields given)
+    flags:
+      SLOW_SHIPPING: { delivery_days_max_above: 12 }
+      HIGH_SHIPPING_COST: { shipping_cost_pct_above: 20 }
+      TRACKING_UNAVAILABLE: { tracking_available: false }
+    # FRAGILE / BATTERY_RESTRICTION / LIQUID_RESTRICTION / OVERSIZED / CUSTOMS_RISK:
+    # from supplier fields, or title keywords below (evidence = keyword in product name)
+    keywords:
+      FRAGILE: [glass, ceramic, porcelain, crystal, mirror]
+      BATTERY_RESTRICTION: [lithium, battery, rechargeable, power bank, mah]
+      LIQUID_RESTRICTION: [liquid, oil, spray, perfume, serum, lotion, aerosol]
+      OVERSIZED: [mattress, furniture, sofa, oversized, 6ft, 9ft]
+
+  # ---------------------------------------------------------------- Stage 6
+  supplier_viability:
+    points: 15
+    parts:
+      supplier_count:    { points: 3, bands: [{ min: 3, s: 1.0 }, { min: 2, s: 0.6 }, { min: 1, s: 0.2 }, { min: 0, s: 0.0 }] }
+      price_consistency: { points: 2, bands: [{ max: 10, s: 1.0 }, { max: 25, s: 0.5 }, { max: 1000000000, s: 0.0 }] }  # CV % of supplier prices, needs >= 2
+      rating:            { points: 3, bands: [{ min: 4.7, s: 1.0 }, { min: 4.5, s: 0.7 }, { min: 4.0, s: 0.4 }, { min: 0, s: 0.0 }] }
+      processing_time:   { points: 2, bands: [{ max: 2, s: 1.0 }, { max: 4, s: 0.5 }, { max: 1000000000, s: 0.0 }] }   # days
+      us_warehouse:      { points: 2 }                                    # true 1 / false 0
+      stock:             { points: 2, bands: [{ min: 500, s: 1.0 }, { min: 100, s: 0.5 }, { min: 0, s: 0.0 }] }
+      moq:               { points: 1, bands: [{ max: 5, s: 1.0 }, { max: 50, s: 0.5 }, { max: 1000000000, s: 0.0 }] }
+    primary_supplier: lowest_price          # tie -> first listed
+    flags:
+      SINGLE_SUPPLIER_DEPENDENCY: { supplier_count_max: 1 }
+      LOW_SUPPLIER_RATING: { rating_below: 4.5 }
+      LONG_PROCESSING_TIME: { processing_days_above: 4 }
+      LOW_STOCK: { stock_below: 100 }
+      MOQ_TOO_HIGH: { moq_above: 50 }
+      NO_US_WAREHOUSE: { us_warehouse: false }
+
+  # ---------------------------------------------------------------- Stage 7
+  competition_opportunity:
+    points: 15
+    parts:
+      tiktok_saturation: { points: 4, input: similar_listings_count,
+                           bands: [{ max: 20, s: 1.0 }, { max: 100, s: 0.5 }, { max: 1000000000, s: 0.0 }] }
+      amazon_saturation: { points: 4, map: { LOW: 1.0, MODERATE: 0.5, HIGH: 0.0 } }        # Step N amazon_competition
+      price_compression: { points: 3, map: { GOOD: 1.0, MIXED: 0.5, POOR: 0.0 } }          # Step N price_alignment
+      brand_concentration: { points: 4, input: amazon_top3_brand_share_pct,
+                             bands: [{ max: 30, s: 1.0 }, { max: 60, s: 0.5 }, { max: 1000000000, s: 0.0 }] }
+    # Low competition is NOT automatically good: multiply by a demand factor.
+    demand_factor:
+      cross_platform: { STRONG: 1.0, MODERATE: 0.8, WEAK: 0.5 }                            # Step N, if available
+      tiktok_units_30d: [{ min: 2000, factor: 1.0 }, { min: 500, factor: 0.8 }, { min: 0, factor: 0.5 }]
+      # neither available -> factor 1.0, marked demand_unverified (BVS Confidence lower)
+    flags:
+      EXTREME_COMPETITION: { similar_listings_min: 200, amazon_competition: HIGH }         # either
+      PRICE_COMPRESSION: { price_ratio_below: 0.70 }
+
+  # ---------------------------------------------------------------- Stage 8
+  return_risk:
+    points: 10
+    # Preferred evidence: actual refund rate from store/supplier history.
+    actual_refund_rate_bands: [{ max: 3, s: 1.0 }, { max: 8, s: 0.5 }, { max: 1000000000, s: 0.0 }]
+    # Otherwise: characteristics found in the product name/category (keyword evidence),
+    # or explicit boolean attributes in commercial data. s = 1 - min(sum, cap) / cap
+    risk_cap: 10
+    high_return_risk_min: 5                 # sum of weights -> HIGH_RETURN_RISK
+    characteristics:
+      SIZE_DEPENDENT:           { weight: 3, keywords: [size, sizes, xs, xl, xxl, fit, fitted, shoes, sneakers, dress, pants, leggings, bra, ring] }
+      COMPATIBILITY_RISK:       { weight: 3, keywords: [compatible, replacement, for iphone, for samsung, fits, adapter] }
+      FRAGILE_PRODUCT:          { weight: 2, keywords: [glass, ceramic, porcelain, crystal, mirror] }
+      ELECTRONICS_FAILURE_RISK: { weight: 2, keywords: [electric, electronic, rechargeable, usb, bluetooth, battery, charger, motor] }
+      BEAUTY_SENSITIVITY:       { weight: 2, keywords: [skincare, serum, cream, lotion, makeup, peel, acid, retinol, sunscreen] }
+      QUALITY_EXPECTATION_RISK: { weight: 2, keywords: [luxury, premium quality, real leather, handmade] }
+      INSTALLATION_COMPLEXITY:  { weight: 2, keywords: [install, installation, mount, mounted, hardwire, assembly required] }
+      VARIANT_MISMATCH:         { weight: 1, keywords: [assorted, random color, multicolor] }
+
+  # ---------------------------------------------------------------- Stage 9
+  advertising_viability:
+    points: 10
+    parts:
+      successful_videos:  { points: 3, input: selling_video_count_or_video_count, scale: log10, zero_at: 10, full_at: 1000 }
+      creator_diversity:  { points: 3, input: top_3_creator_revenue_share,
+                            bands: [{ max: 30, s: 1.0 }, { max: 50, s: 0.6 }, { max: 70, s: 0.3 }, { max: 1000000000, s: 0.0 }] }
+      creative_diversity: { points: 2, input: top_3_video_revenue_share,
+                            bands: [{ max: 30, s: 1.0 }, { max: 50, s: 0.6 }, { max: 70, s: 0.3 }, { max: 1000000000, s: 0.0 }] }
+      ad_restriction:     { points: 2 }       # restricted-ad keyword found -> 0, none -> 1 (keyword screening)
+    # Not scored (no deterministic evidence yet): demonstration potential,
+    # visual transformation, problem/solution clarity. Future: creative analysis data.
+    restricted_ad_keywords: [weight loss, diet, supplement, cbd, hemp, vape, nicotine, knife, firearm, ammo,
+                             cure, treatment, prescription, alcohol, gambling]
+
+  # ---------------------------------------------------------------- Stage 10
+  compliance_ip:
+    points: 10
+    # s = 1 - min(sum of penalties, 10) / 10. Keyword screening only unless a
+    # verified compliance review is present in commercial data (compliance_review.status).
+    penalties:
+      COUNTERFEIT_REVIEW_REQUIRED: 6
+      REGULATED_PRODUCT: 5
+      IP_REVIEW_REQUIRED: 4
+      MEDICAL_CLAIM_RISK: 4
+      BRAND_DEPENDENCY: 3
+      AD_POLICY_REVIEW_REQUIRED: 2
+    keywords:
+      COUNTERFEIT_REVIEW_REQUIRED: [dupe, replica, "1:1", knockoff, inspired by, fake]
+      MEDICAL_CLAIM_RISK: [cure, cures, heal, heals, treat, treats, treatment, pain relief, anti-inflammatory,
+                           clinically proven, fda approved, medical grade, detox]
+      BRAND_DEPENDENCY: [compatible with, for iphone, for samsung, for apple, for airpods, for stanley, for tesla, for dyson]
+    # IP_REVIEW_REQUIRED -> filters.yaml trademark_ip_risk keywords (+ Amazon IP flag)
+    # REGULATED_PRODUCT  -> filters.yaml highly_regulated keywords
+    # AD_POLICY_REVIEW_REQUIRED -> advertising_viability.restricted_ad_keywords
+
+  # ---------------------------------------------------------------- Stage 12
+  bvs_confidence:
+    components:
+      supplier_cost:       { points: 20 }   # product_cost available
+      shipping_cost:       { points: 15 }   # supplier_shipping_cost available
+      delivery_time:       { points: 10 }   # delivery_days_max available
+      supplier_data:       { points: 15 }   # share of supplier fields available
+      competition_data:    { points: 10 }   # share of competition inputs available (+ demand)
+      return_risk_evidence: { points: 10 }  # actual refund rate 1.0 | keyword screening 0.5 | none 0
+      ad_evidence:         { points: 10 }   # share of advertising inputs available
+      compliance_evidence: { points: 10 }   # verified review 1.0 | keyword screening 0.5 | none 0
+    keyword_evidence_weight: 0.5
+    levels: { VERY_HIGH: 90, HIGH: 75, MODERATE: 60, LOW: 40, VERY_LOW: 0 }
+    reliability_warning: { bvs_min: 70, bvs_confidence_below: 60 }   # "high BVS, low evidence" marker
+
+  # ---------------------------------------------------------------- Stage 13
+  severe_flags: [NEGATIVE_CONTRIBUTION_MARGIN, LOW_GROSS_MARGIN, HIGH_SHIPPING_COST, SLOW_SHIPPING,
+                 SINGLE_SUPPLIER_DEPENDENCY, HIGH_RETURN_RISK, EXTREME_COMPETITION, PRICE_COMPRESSION,
+                 IP_REVIEW_REQUIRED, REGULATED_PRODUCT, AD_POLICY_REVIEW_REQUIRED, INSUFFICIENT_SUPPLIER_DATA]
+  insufficient_supplier_data: { required: [product_cost, supplier_shipping_cost] }   # any missing -> flag
+
+  rounding: 2
+
+production_meta:
+  config_version: production-v5
+  created_at: '2026-10-01T04:55:32.013666+00:00'
+  source_calibration_report: owner-approved change of production-v4 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T04:55:31Z)
+  change_summary:
+  - unchanged from production-v4
+  derived_from: production-v4

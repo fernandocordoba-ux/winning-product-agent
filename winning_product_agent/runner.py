@@ -827,6 +827,8 @@ class Runner:
         res = D.run_discovery(paths, filters, self.categories)
         cfg = copy.deepcopy(self.cfg_deep)
         cfg["selection"]["deep_analysis_max_products"] = self.limits["deep_analysis_max_products"]
+        cfg["selection"]["order"] = self.eff["query_plan"].get("deep_selection") or cfg["selection"].get("order")
+        cfg["selection"]["exclude_keywords"] = self.eff["query_plan"].get("deep_exclude_keywords") or []
         sel, _ = DA.select_candidates(res, cfg)
         return {"available": True, "raw_files": [str(p) for p in paths], "summary": res["summary"],
                 "deep_candidates": [{"product_id": DA.product_ref_id(p), "name": p["facts"].get("product_name"),
@@ -1238,6 +1240,8 @@ class Runner:
             return SKIPPED, {"summary": "no filtered discovery result"}
         cfg = copy.deepcopy(self.cfg_deep)
         cfg["selection"]["deep_analysis_max_products"] = self.limits["deep_analysis_max_products"]
+        cfg["selection"]["order"] = self.eff["query_plan"].get("deep_selection") or cfg["selection"].get("order")
+        cfg["selection"]["exclude_keywords"] = self.eff["query_plan"].get("deep_exclude_keywords") or []
         cfgs = {"deep": cfg, "filters": self.filters, "scoring": load_scoring_config()}
         dres = ctx["discovery"]
         market = dres.get("market") or {"region": "US", "currency": "USD"}

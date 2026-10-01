@@ -1,0 +1,138 @@
+{
+  "generated_at": "2026-10-01T04:55:32.013666+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v4",
+  "note": "Owner request: remove the 'insufficient if >= 4 unknown dimensions' rule so products with KaloPilot potential can become PROMISING; supplier/BVS confidence must not judge evidence quality (suppliers are informative only); evaluate up to 100 discovery candidates and deep-analyze the 10 best by a free preliminary score, skipping seasonal items. Negative-evidence gates, WPS thresholds and READY rules unchanged.",
+  "changes": [
+    {
+      "file": "decision_rules.yaml",
+      "path": "decision.insufficient_if_unknown_at_least",
+      "current_value": 4,
+      "proposed_value": 99,
+      "reason": "rule removed (owner); market_momentum UNKNOWN still means INSUFFICIENT",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "decision_rules.yaml",
+      "path": "dimensions.evidence_quality.layers",
+      "current_value": null,
+      "proposed_value": [
+        "wps",
+        "momentum",
+        "amazon",
+        "competitor",
+        "creative"
+      ],
+      "reason": "supplier / BVS informative only",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "limits.discovery_max_products",
+      "current_value": 20,
+      "proposed_value": 100,
+      "reason": "free: candidates already returned by the 9 discovery queries",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "limits.deep_analysis_max_products",
+      "current_value": 5,
+      "proposed_value": 10,
+      "reason": "10 paid deep analyses (~3.6 each)",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.deep_selection",
+      "current_value": null,
+      "proposed_value": "preliminary_wps",
+      "reason": "deep-analyze the best candidates, not the first",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.deep_exclude_keywords",
+      "current_value": null,
+      "proposed_value": [
+        "halloween",
+        "christmas",
+        "xmas",
+        "thanksgiving",
+        "easter",
+        "valentine",
+        "advent",
+        "santa"
+      ],
+      "reason": "seasonal items are listed but not deep-analyzed",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 65,
+      "proposed_value": 82,
+      "reason": "9 x 4.0 + 10 x 3.6 + 2 x 4.0 = 80",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 65,
+      "proposed_value": 82,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 16,
+      "proposed_value": 21,
+      "reason": "9 + 10 + 2",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 16,
+      "proposed_value": 21,
+      "reason": "same",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T04:55:31Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 10,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

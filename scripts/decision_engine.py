@@ -423,6 +423,8 @@ def layer_confidences(ev):
 def dim_evidence(ev, cfg):
     c, mins = cfg["dimensions"]["evidence_quality"], cfg["minimum_confidence"]
     confs = layer_confidences(ev)
+    if c.get("layers"):                       # owner-approved: only these layers judge evidence quality
+        confs = {k: x for k, x in confs.items() if k in c["layers"]}
     known = {k: x for k, x in confs.items() if x is not None}
     passing = [k for k, x in known.items() if x >= mins[k]]
     inputs = {"layer_confidences": confs, "minimums": mins, "passing": passing}

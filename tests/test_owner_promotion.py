@@ -61,7 +61,7 @@ class OwnerPromotion(TP.ConfigRoot):
         self.promote()
         for bad in ({"file": "decision_rules.yaml", "path": "minimum_confidence.wps", "value": 40},
                     {"file": "scoring.yaml", "path": "metrics.demand.points", "value": 30},
-                    {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 50}):
+                    {"file": "runtime.yaml", "path": "limits.amazon_validation_max_products", "value": 50}):
             with self.assertRaises(ValueError):
                 PROMO.promote_owner_change(self.root, [bad], approved_by="owner", approved_at="t")
         with self.assertRaises(ValueError):
