@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-10-01T04:46:44.533174+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v3",
+  "note": "Owner chose option B: the WPS demand / creator reach / video count scales were calibrated for mega-sellers (full points at 100k units, 5k creators, 10k videos). Recalibrated for emerging winners. Points, weights, metrics, thresholds (55/70) and decision rules unchanged. Offline replay on 9 production products: 2 -> 6 at WPS >= 55.",
+  "changes": [
+    {
+      "file": "scoring.yaml",
+      "path": "version",
+      "current_value": "wps-v2.1",
+      "proposed_value": "wps-v2.2",
+      "reason": "scale recalibration",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval: opción B)",
+      "approved_at": "2026-10-01T04:46:44Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "scoring.yaml",
+      "path": "metrics.demand.components.units_sold.zero_at",
+      "current_value": 1000,
+      "proposed_value": 200,
+      "reason": "was 1000",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval: opción B)",
+      "approved_at": "2026-10-01T04:46:44Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "scoring.yaml",
+      "path": "metrics.demand.components.units_sold.full_at",
+      "current_value": 100000,
+      "proposed_value": 10000,
+      "reason": "was 100000",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval: opción B)",
+      "approved_at": "2026-10-01T04:46:44Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "scoring.yaml",
+      "path": "metrics.creator_reach.components.creator_count.zero_at",
+      "current_value": 100,
+      "proposed_value": 10,
+      "reason": "was 100",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval: opción B)",
+      "approved_at": "2026-10-01T04:46:44Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "scoring.yaml",
+      "path": "metrics.creator_reach.components.creator_count.full_at",
+      "current_value": 5000,
+      "proposed_value": 500,
+      "reason": "was 5000",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval: opción B)",
+      "approved_at": "2026-10-01T04:46:44Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "scoring.yaml",
+      "path": "metrics.video_momentum.components.video_count.zero_at",
+      "current_value": 100,
+      "proposed_value": 20,
+      "reason": "was 100",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval: opción B)",
+      "approved_at": "2026-10-01T04:46:44Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "scoring.yaml",
+      "path": "metrics.video_momentum.components.video_count.full_at",
+      "current_value": 10000,
+      "proposed_value": 1500,
+      "reason": "was 10000",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval: opción B)",
+      "approved_at": "2026-10-01T04:46:44Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 7,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

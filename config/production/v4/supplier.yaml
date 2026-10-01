@@ -1,0 +1,152 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v4 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T04:46:44.533174+00:00
+# source_calibration_report: owner-approved change of production-v3 (approved by Fernando Cordoba (owner, chat approval: opción B) at 2026-10-01T04:46:44Z)
+# change_summary:
+#   - unchanged from production-v3
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Supplier Data Integration — Step W (EXPERIMENTAL v1, editable here)
+# =============================================================================
+# scripts/suppliers.py captures, normalizes, scores and ranks REAL supplier offers for
+# finalist products so BVS can use real product cost, shipping, delivery and supplier quality.
+#
+#  - NO orders are placed and NO supplier is contacted by this system.
+#  - Nothing is estimated: a missing field stays null/N/A and lowers Supplier Confidence.
+#  - Independent scores (never combined into one master score):
+#      Supplier Match Confidence, Supplier Quality Score, Supplier Confidence.
+#  - WPS and AVS are not touched. BVS consumes the SELECTED offer (see ranking / selection).
+# =============================================================================
+version: "suppliers-v1"
+
+# ----------------------------------------------------------------------------- providers
+# Only providers with REAL project access are implemented. The others are listed so an
+# adapter can be added later; asking for them raises ProviderNotIntegrated (never faked).
+providers:
+  manual_import:  { implemented: true,  note: "CSV / JSON supplied by the user (Stage 3)" }
+  aliexpress:     { implemented: false, note: "no API access configured in this project" }
+  cjdropshipping: { implemented: false, note: "no API access configured in this project" }
+  alibaba:        { implemented: false, note: "no API access configured in this project" }
+  zendrop:        { implemented: false, note: "no API access configured in this project" }
+  autods:         { implemented: false, note: "no API access configured in this project" }
+  kalopilot:      { implemented: false, note: "KaloPilot has no supplier dataset (checked Step O)" }
+
+# ----------------------------------------------------------------------------- manual import
+manual_import:
+  required_fields: [matched_product_id, supplier_name, supplier_url, product_cost, shipping_cost,
+                    estimated_delivery_min_days, estimated_delivery_max_days]
+  currency_default: USD                    # only USD offers are accepted for economics
+  accepted_currencies: [USD]
+
+# ----------------------------------------------------------------------------- matching
+# Supplier Match Confidence 0-100 = 100 * sum(points * s) / sum(points of AVAILABLE evidence).
+# If the available evidence is below min_evidence_points the offer is REVIEW (never economics).
+matching:
+  classes: { VERY_STRONG: 90, STRONG: 75, POSSIBLE: 60, UNRELIABLE: 0 }
+  min_for_economics: 75                    # STRONG or better; below -> supplier_match_status = REVIEW
+  min_evidence_points: 50
+  components:
+    name_tokens:   { points: 35 }          # token overlap (Dice) of product names, stopwords removed
+    function:      { points: 20 }          # overlap of function words (config list) found in either name
+    model:         { points: 15 }          # model / SKU codes (letters+digits) — N/A if neither side has one
+    dimensions:    { points: 10 }          # numbers with units (ml, oz, cm, in, mm, pcs, pack, count) — N/A if none
+    variant:       { points: 10 }          # variant text overlap — N/A if either side has none
+    brand:         { points: 10 }          # same brand = 1; branded TikTok product vs different/generic supplier = 0
+  stopwords: [the, a, an, and, or, with, for, of, to, in, on, by, new, hot, best, set, kit, pcs, piece, pieces,
+              pack, "1", "2", "3", for, women, men, gift, gifts, premium, "in stock", "[in", "stock]"]
+  function_words: [shampoo, conditioner, cream, lotion, serum, oil, spray, gloss, lip, blush, lash, lashes,
+                   eyelash, nail, nails, brush, scrubber, massager, perfume, fragrance, mask, cleanser, wash,
+                   moisturizer, exfoliating, organizer, divider, basket, hanger, rack, shelf, tray, pad, holder,
+                   bottle, cup, bag, lamp, light, charger, cable, case, stand, mat, towel, comb, dryer, curler]
+
+# ----------------------------------------------------------------------------- landed cost
+landed_cost:
+  include_duty_only_if_explicit: true      # import_duty_per_order used ONLY when provided; else N/A + disclosure
+
+# ----------------------------------------------------------------------------- delivery
+# Conservative: effective days = estimated_delivery_max_days (+ processing_time_days when add_processing).
+delivery:
+  add_processing_time: true
+  tiers:                                    # first matching max_days wins; score used by the quality/rank logic
+    - { tier: STRONGEST,  max_days: 7,    score: 1.0 }
+    - { tier: STRONG,     max_days: 10,   score: 0.8 }
+    - { tier: ACCEPTABLE, max_days: 14,   score: 0.6 }
+    - { tier: WEAK,       max_days: 20,   score: 0.3 }
+    - { tier: POOR,       max_days: null, score: 0.0 }
+
+# ----------------------------------------------------------------------------- Supplier Quality Score
+# 0-100 = 100 * sum(points * s) / sum(points of AVAILABLE inputs). Missing inputs are NOT scored
+# as 0 here (they lower Supplier Confidence instead). If available points < min_available_points
+# the score is N/A.
+quality:
+  min_available_points: 40
+  components:
+    rating:          { points: 25, bands: [[4.8, 1.0], [4.6, 0.8], [4.4, 0.6], [4.0, 0.3]] }     # >= value -> s
+    review_count:    { points: 15, scale: log10, zero_at: 10, full_at: 5000 }
+    order_count:     { points: 15, scale: log10, zero_at: 10, full_at: 10000 }
+    processing_time: { points: 10, bands_max: [[2, 1.0], [3, 0.8], [5, 0.5], [7, 0.2]] }         # <= value -> s
+    tracking:        { points: 10 }                                                              # true = 1
+    inventory:       { points: 10, bands: [[1000, 1.0], [200, 0.7], [50, 0.4]] }
+    us_warehouse:    { points: 10 }
+    moq:             { points: 5,  bands_max: [[1, 1.0], [10, 0.6], [50, 0.3]] }
+
+# ----------------------------------------------------------------------------- Supplier Confidence
+# 0-100 = completeness / reliability of the evidence (not how good the offer is). Components sum to 100.
+confidence:
+  components:
+    product_match:     { points: 25 }       # match_confidence / 100
+    product_cost:      { points: 20 }
+    shipping_cost:     { points: 15 }
+    delivery_estimate: { points: 15 }       # min + max = 1.0; max only = 0.7
+    reputation:        { points: 10 }       # rating + (reviews or orders) = 1.0; one of them = 0.5
+    inventory:         { points: 5 }
+    tracking:          { points: 5 }
+    moq:               { points: 5 }
+  levels: { VERY_HIGH: 90, HIGH: 75, MODERATE: 60, LOW: 40, VERY_LOW: 0 }
+
+# ----------------------------------------------------------------------------- ranking / selection
+# supplier_offer_rank: lexicographic on the keys below (deterministic). NOT price-first.
+ranking:
+  rank_by:
+    - eligible                  # economics-eligible offers first
+    - delivery_tier             # faster tier first
+    - supplier_quality          # higher first (N/A last)
+    - landed_cost               # lower first (N/A last)
+    - supplier_confidence       # higher first
+    - offer_id                  # final deterministic tie-breaker
+  eligibility:                  # required for BVS economics (Stage 10)
+    min_match_confidence: 75
+    require: [product_cost, shipping_cost]
+    exclude_inventory_status: [OUT_OF_STOCK]
+
+# ----------------------------------------------------------------------------- red flags
+flags:
+  UNRELIABLE_PRODUCT_MATCH: { match_below: 60 }
+  HIGH_PRODUCT_COST:        { product_cost_pct_of_price_above: 40 }   # needs a selling price
+  HIGH_SHIPPING_COST:       { shipping_cost_pct_of_price_above: 15 }  # needs a selling price
+  SLOW_DELIVERY:            { effective_days_above: 14 }
+  VERY_SLOW_DELIVERY:       { effective_days_above: 20 }
+  LOW_SUPPLIER_RATING:      { rating_below: 4.5 }
+  LOW_ORDER_HISTORY:        { order_count_below: 100 }
+  MOQ_TOO_HIGH:             { moq_above: 10 }
+  LOW_INVENTORY:            { available_quantity_below: 100, statuses: [LOW_STOCK] }
+  SUPPLIER_DATA_INCOMPLETE: { confidence_below: 60 }
+  # NO_TRACKING (tracking false), NO_US_WAREHOUSE (false), SINGLE_SUPPLIER_DEPENDENCY (1 qualified offer)
+  # trigger only on explicit evidence.
+
+# ----------------------------------------------------------------------------- calibration (Stage 17)
+supplier_calibration:
+  enabled: false
+  max_products: 3
+  max_offers_per_product: 5
+
+production_meta:
+  config_version: production-v4
+  created_at: '2026-10-01T04:46:44.533174+00:00'
+  source_calibration_report: 'owner-approved change of production-v3 (approved by Fernando
+    Cordoba (owner, chat approval: opción B) at 2026-10-01T04:46:44Z)'
+  change_summary:
+  - unchanged from production-v3
+  derived_from: production-v3

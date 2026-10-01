@@ -1,0 +1,12 @@
+{
+  "note": "Owner chose option B: the WPS demand / creator reach / video count scales were calibrated for mega-sellers (full points at 100k units, 5k creators, 10k videos). Recalibrated for emerging winners. Points, weights, metrics, thresholds (55/70) and decision rules unchanged. Offline replay on 9 production products: 2 -> 6 at WPS >= 55.",
+  "changes": [
+    {"file": "scoring.yaml", "path": "version", "value": "wps-v2.2", "reason": "scale recalibration"},
+    {"file": "scoring.yaml", "path": "metrics.demand.components.units_sold.zero_at", "value": 200, "reason": "was 1000"},
+    {"file": "scoring.yaml", "path": "metrics.demand.components.units_sold.full_at", "value": 10000, "reason": "was 100000"},
+    {"file": "scoring.yaml", "path": "metrics.creator_reach.components.creator_count.zero_at", "value": 10, "reason": "was 100"},
+    {"file": "scoring.yaml", "path": "metrics.creator_reach.components.creator_count.full_at", "value": 500, "reason": "was 5000"},
+    {"file": "scoring.yaml", "path": "metrics.video_momentum.components.video_count.zero_at", "value": 20, "reason": "was 100"},
+    {"file": "scoring.yaml", "path": "metrics.video_momentum.components.video_count.full_at", "value": 1500, "reason": "was 10000"}
+  ]
+}

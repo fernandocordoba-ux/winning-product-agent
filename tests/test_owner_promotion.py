@@ -60,7 +60,7 @@ class OwnerPromotion(TP.ConfigRoot):
     def test_rules_cannot_change_through_owner_path(self):
         self.promote()
         for bad in ({"file": "decision_rules.yaml", "path": "minimum_confidence.wps", "value": 40},
-                    {"file": "scoring.yaml", "path": "version", "value": "x"},
+                    {"file": "scoring.yaml", "path": "metrics.demand.points", "value": 30},
                     {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 50}):
             with self.assertRaises(ValueError):
                 PROMO.promote_owner_change(self.root, [bad], approved_by="owner", approved_at="t")
@@ -111,3 +111,20 @@ class BrandRule(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ScaleEdit(unittest.TestCase):
+    def test_path_walk_keeps_comments_and_other_blocks(self):
+        t = ("version: \"wps-v2.1\"   # keep\nmetrics:\n  demand:\n    components:\n      units_sold:\n"
+             "        zero_at: 1000\n        full_at: 100000\n  video_momentum:\n    components:\n"
+             "      video_count:\n        zero_at: 100   # c\n      video_sales_share:\n        zero_at: 50\n")
+        t2 = PROMO._text_set_scalar(t, "metrics.video_momentum.components.video_count.zero_at", 100, 20)
+        t2 = PROMO._text_set_scalar(t2, "version", "wps-v2.1", "wps-v2.2")
+        import yaml
+        d = yaml.safe_load(t2)
+        self.assertEqual(d["metrics"]["video_momentum"]["components"]["video_count"]["zero_at"], 20)
+        self.assertEqual(d["metrics"]["video_momentum"]["components"]["video_sales_share"]["zero_at"], 50)
+        self.assertEqual(d["metrics"]["demand"]["components"]["units_sold"]["zero_at"], 1000)
+        self.assertEqual(d["version"], "wps-v2.2")
+        self.assertIn("# c", t2)
+        self.assertIsNone(PROMO._text_set_scalar(t, "metrics.demand.components.units_sold.zero_at", 999, 1))

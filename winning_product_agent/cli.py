@@ -445,7 +445,7 @@ def cmd_production_run(a):
         return 2
     run = P.ProductionRunner(version=a.config_version, profile_path=a.profile, max_products=a.max_products)
     if a.report_only:
-        r = run.report_only(a.run_id)
+        r = run.report_only(a.run_id, rescore=getattr(a, 'rescore', False))
         _p(json.dumps(r, indent=2, default=str))
         return 0
     if not a.live:                                    # default: DRY RUN, never paid
@@ -531,6 +531,8 @@ def build_parser():
     pr.add_argument("--resume", help="resume a stopped production run by run id (same config version)")
     pr.add_argument("--report-only", action="store_true", help="rebuild reports / decision / audit (no query)")
     pr.add_argument("--run-id", help="source run for --report-only (default: latest production live run)")
+    pr.add_argument("--rescore", action="store_true", help="with --report-only: recompute WPS from saved raw answers "
+                                                            "with the ACTIVE config (no query, no credits)")
     pr.add_argument("--confirm-live", help=f'non-interactive confirmation; must be exactly "{R.PRODUCTION_PHRASE}"')
     pr.add_argument("--config-version", help="production config version (default: ACTIVE)")
     pc = sub.add_parser("production-config", help="review | promote | verify [v] | list | activate v")

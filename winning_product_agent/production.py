@@ -443,7 +443,43 @@ class ProductionRunner(R.Runner):
             self.health = self.provider_health(client)
             return super().live(confirm_value=confirm_value, resume_id=resume_id)
 
-    def report_only(self, run_id=None, now=None):
+    def rescore_deep(self, ctx, src):
+        """Re-run deep analysis on the SAVED raw answers with the ACTIVE config (no query, no credits).
+        Only scoring changes; the raw provider data is the same. Amazon results are not re-bought."""
+        import deep_analysis as DA
+        cfgs = {"deep": DA.load_cfg(), "filters": self.filters, "scoring": R.load_scoring_config()}
+        cands = {str((c.get("facts") or {}).get("product_id") or c.get("key")): c
+                 for c in (ctx.get("discovery") or {}).get("candidates") or []}
+        out, changes = [], []
+        for r in ctx.get("deep") or []:
+            raw = (r.get("source") or {}).get("raw_file")
+            cand = cands.get(str(r.get("product_id")))
+            if r.get("status") != "ok" or not raw or not Path(raw).exists() or cand is None:
+                out.append(r)
+                continue
+            env = R._read_json(Path(raw))
+            new = DA.analyze(env, raw, cand, cfgs, history_snapshots=(r.get("wps_inputs") or {}).get("history_snapshots")
+                             or 0, cache_hit=(r.get("source") or {}).get("cache_hit", False))
+            if new.get("status") == "ok":
+                for k, val in r.items():                  # runner-added tags (environment, run id, ...) kept
+                    new.setdefault(k, val)
+                new["rescored_from"] = {"run_id": src, "wps": r.get("wps"), "scoring": (r.get("config_versions") or {}).get("wps")}
+                changes.append({"product_id": r["product_id"], "wps_before": r.get("wps"), "wps_after": new.get("wps")})
+                out.append(new)
+            else:
+                out.append(r)
+        ctx["deep"] = out
+        saved = R.write_new_json(self.processed / "deep_analysis" /
+                                 f"deep_rescored_{R.now_utc().strftime('%Y%m%dT%H%M%S%fZ')}.json",
+                                 {"results": out, "rescored_from_run": src, "run_id": self.run_id,
+                                  "data_environment": self.env})
+        ctx["deep_file"] = str(saved)
+        self._checkpoint("deep_analysis", {"status": R.COMPLETED, "results": out, "saved": str(saved)})
+        self.stages["wps"] = {"status": R.COMPLETED, "summary": f"rescored {len(changes)} product(s) with "
+                              f"{cfgs['scoring'].get('version')} from saved raw answers (no query)", "changes": changes}
+        return changes
+
+    def report_only(self, run_id=None, now=None, rescore=False):
         """Rebuild reports + decision + audit from a finished production run. Never a paid query."""
         now = now or self.now or R.now_utc()
         runs = sorted(p.parent.name for p in self.runs_dir.glob("*/manifest.json")
@@ -465,6 +501,8 @@ class ProductionRunner(R.Runner):
             self.ck_dir = own_ck
             for name in ("discovery", "filtering", "deep_analysis", "wps", "wps_confidence", "amazon_validation"):
                 self.stages[name] = {"status": R.SKIPPED, "summary": f"restored from {src} (no query)"}
+            if rescore:
+                self.rescore_deep(ctx, src)
             steps = [("supplier_research", self.s_suppliers), ("bvs", self.s_bvs),
                      ("competitor_intelligence", self.s_competitors), ("creative_intelligence", self.s_creatives),
                      ("emerging_detector", self.s_emerging), ("final_report", self.s_report),

@@ -425,19 +425,54 @@ OWNER_CHANGEABLE = {                      # production file -> path prefixes the
     # which products get the (optional) Amazon / BVS checks — eligibility only, never the AVS / BVS formulas
     "amazon_validation.yaml": ("amazon_validation.minimum_wps",),
     "business_viability.yaml": ("business_viability.eligibility.minimum_wps",),
+    # WPS scale end-points only (owner-approved recalibration); points, weights and metrics stay fixed
+    "scoring.yaml": ("version",
+                     "metrics.demand.components.units_sold.zero_at", "metrics.demand.components.units_sold.full_at",
+                     "metrics.creator_reach.components.creator_count.zero_at",
+                     "metrics.creator_reach.components.creator_count.full_at",
+                     "metrics.video_momentum.components.video_count.zero_at",
+                     "metrics.video_momentum.components.video_count.full_at"),
 }
+
+
+def _y(v):
+    return f'"{v}"' if isinstance(v, str) else v
 
 
 def _text_set_scalar(text, path, old, new):
     """Replace one scalar in YAML text keeping comments; None if the line is not uniquely identifiable."""
     if isinstance(new, (dict, list)) or isinstance(old, (dict, list)) or old is None:
         return None
-    leaf = path.split(".")[-1]
-    pat = re.compile(rf"^(\s*{re.escape(leaf)}:\s*){re.escape(str(old))}(\s*(#.*)?)$", re.M)
+    parts = path.split(".")
+    leaf = parts[-1]
+    pat = re.compile(rf"^(\s*{re.escape(leaf)}:\s*)[\"']?{re.escape(str(old))}[\"']?(\s*(#.*)?)$", re.M)
     hits = pat.findall(text)
-    if len(hits) != 1:
-        return None
-    return pat.sub(lambda m: f"{m.group(1)}{new}{m.group(2)}", text, count=1)
+    if len(hits) == 1:
+        return pat.sub(lambda m: f"{m.group(1)}{_y(new)}{m.group(2)}", text, count=1)
+    # ambiguous leaf: walk the key path in order (block YAML), replace the leaf under the last parent
+    lines = text.splitlines(keepends=True)
+    i, indent = 0, -1
+    for part in parts[:-1]:
+        rx = re.compile(rf"^(\s*){re.escape(part)}:\s*(#.*)?$")
+        while i < len(lines):
+            m = rx.match(lines[i].rstrip("\n"))
+            if m and len(m.group(1)) > indent:
+                indent = len(m.group(1))
+                break
+            i += 1
+        else:
+            return None
+        i += 1
+    lp = re.compile(rf"^(\s*{re.escape(leaf)}:\s*)[\"']?{re.escape(str(old))}[\"']?(\s*(#.*)?)$")
+    for j in range(i, len(lines)):
+        ln = lines[j].rstrip("\n")
+        if ln.strip() and not ln.lstrip().startswith("#") and len(ln) - len(ln.lstrip()) <= indent:
+            return None                                   # left the parent block
+        m = lp.match(ln)
+        if m:
+            lines[j] = f"{m.group(1)}{_y(new)}{m.group(2)}" + ("\n" if lines[j].endswith("\n") else "")
+            return "".join(lines)
+    return None
 
 
 def _split_production_text(text):
