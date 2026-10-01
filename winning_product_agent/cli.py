@@ -465,6 +465,13 @@ def _candidates_report():
             _p(f"Candidates report ({r['rows']} products): " + ", ".join(r["files"]))
     except Exception as e:  # noqa: BLE001 — a report failure never invalidates the run
         _p(f"Candidates report not written: {e.__class__.__name__}: {e}")
+    try:
+        import funnel_report as FR
+        r = FR.write()
+        if r:
+            _p("Funnel report (PDF + TXT): " + ", ".join(r["files"]))
+    except Exception as e:  # noqa: BLE001
+        _p(f"Funnel report not written: {e.__class__.__name__}: {e}")
 
 
 def cmd_production_run(a):
