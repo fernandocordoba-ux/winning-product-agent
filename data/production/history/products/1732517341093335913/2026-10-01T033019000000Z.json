@@ -1,0 +1,76 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 29.985,
+    "gmv": 57200.88,
+    "units": 2113,
+    "growth": 472.09,
+    "creator_count": 198,
+    "selling_creator_count": null,
+    "video_count": 514,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T033019Z_beauty_personal_care_d4e5263a6dc3428a96f3c6310119e6ce.json",
+    "task_id": "d4e5263a6dc3428a96f3c6310119e6ce",
+    "report_url": null,
+    "record_index": 3
+  },
+  "product_id": "1732517341093335913",
+  "identity_key": "1732517341093335913",
+  "key_type": "product_id",
+  "product_name": "Maxcomfi Ebony Individual False Lashes - High Quality Wispy Lash Clusters, D-Curl Layered Black & Brown, Realistic Mommy Look Reusable Segmented Strips, Acrylic Resin Beginner-Friendly At-Home Makeup Extensions",
+  "category": "Beauty & Personal Care > Makeup > False Eyelashes & Adhesives",
+  "shop": "Maxcomfi",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T03:30:19+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T03:30:19+00:00",
+  "source_snapshot_hash": "87d3f9b5f18b1af06087dec00429d09153d3a1763cfb5ef822f1b586210c4c1a",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.504679+00:00",
+  "imported_at": "2026-10-01T04:22:40.504679+00:00"
+}

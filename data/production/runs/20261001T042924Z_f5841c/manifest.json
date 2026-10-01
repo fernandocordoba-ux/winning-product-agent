@@ -1,0 +1,408 @@
+{
+  "run_id": "20261001T042924Z_f5841c",
+  "started_at": "2026-10-01T04:29:24.229089+00:00",
+  "completed_at": "2026-10-01T04:29:25.150285+00:00",
+  "market": "US",
+  "mode": "REPORT_ONLY",
+  "data_environment": "PRODUCTION",
+  "profile": {
+    "name": "production-v3",
+    "path": "config/production/v3/runtime.yaml",
+    "hash": "cecaac1daccc4cf9"
+  },
+  "runtime_config": {
+    "runtime": {
+      "market": "US",
+      "live_mode": true,
+      "dry_run": false,
+      "explicit_live_confirmation": false
+    },
+    "query_plan": {
+      "discovery_mode": "per_category",
+      "discovery_categories": [
+        "home",
+        "kitchen",
+        "pet",
+        "beauty_personal_care",
+        "fitness",
+        "automotive_accessories",
+        "tools",
+        "outdoor",
+        "electronics_accessories"
+      ],
+      "deep_batch_size": 1,
+      "amazon_batch_size": 2,
+      "max_credits_for_run": 65,
+      "estimated_credits": {
+        "discovery": 4.0,
+        "deep_analysis": 3.6,
+        "amazon_validation": 4.0
+      },
+      "guardrails": {
+        "max_queries_per_run": 16,
+        "max_provider_queries": {
+          "kalopilot": 16
+        },
+        "max_failed_queries": 2,
+        "max_retry_count": 0,
+        "note": "sized from the approved limits; stop new paid queries, keep completed data, PARTIAL report"
+      },
+      "discovery_exclude_established_brands": true
+    }
+  },
+  "config_hashes": {
+    "amazon_validation.yaml": "5483f447fb5ed5af",
+    "business_viability.yaml": "095102dec072c1f1",
+    "calibration_lane.yaml": "cc6f945a372599bf",
+    "categories.yaml": "afe19c6b21aa13cc",
+    "competitors.yaml": "478630ee63b7eb9b",
+    "creatives.yaml": "376d0fe10a73b4d5",
+    "decision.yaml": "593b2d941ada7e2d",
+    "deep_analysis.yaml": "25e9b67143ba19f5",
+    "emerging.yaml": "297b83c9f2bcc9af",
+    "filters.yaml": "2de5a9448caa531a",
+    "final_validation.yaml": "125ce67bb01283f7",
+    "history.yaml": "8467a93c9250c65a",
+    "provider_capabilities.yaml": "5c5acfae843b722f",
+    "report.yaml": "8f881f382b423f14",
+    "runtime.yaml": "d2e0749a5357aec7",
+    "runtime_aa_live.yaml": "cd314862c590feee",
+    "runtime_first_live.yaml": "319dcbec325d4843",
+    "scoring.yaml": "b7a483c92186b236",
+    "suppliers.yaml": "e11f428e5305f999"
+  },
+  "limits": {
+    "discovery_max_products": 20,
+    "deep_analysis_max_products": 5,
+    "amazon_validation_max_products": 3,
+    "bvs_max_products": 3
+  },
+  "max_products_arg": null,
+  "calibration_lane": false,
+  "stages": {
+    "preflight": {
+      "status": "PENDING"
+    },
+    "provider_health": {
+      "status": "PENDING"
+    },
+    "discovery": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T030132Z_06130f (no query)"
+    },
+    "filtering": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T030132Z_06130f (no query)"
+    },
+    "deep_analysis": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T030132Z_06130f (no query)"
+    },
+    "wps": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T030132Z_06130f (no query)"
+    },
+    "wps_confidence": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T030132Z_06130f (no query)"
+    },
+    "amazon_validation": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T030132Z_06130f (no query)"
+    },
+    "supplier_research": {
+      "status": "PARTIAL",
+      "summary": "2/3 product(s) with real supplier offers (max 5 each); automated sources configured: none",
+      "products": [
+        {
+          "product_id": "1732539550637789185",
+          "name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        },
+        {
+          "product_id": "1732294732712743843",
+          "name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+          "source": "manual_import",
+          "automated_sources_configured": [],
+          "offers_available": 1,
+          "offers_used": 1,
+          "offer_ids": [
+            "off_b5976ad1d5786229"
+          ],
+          "note": null
+        },
+        {
+          "product_id": "1729393801040204109",
+          "name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+          "source": "manual_import",
+          "automated_sources_configured": [],
+          "offers_available": 1,
+          "offers_used": 1,
+          "offer_ids": [
+            "off_ac97922cb1b98f08"
+          ],
+          "note": null
+        }
+      ]
+    },
+    "bvs": {
+      "status": "SKIPPED",
+      "summary": "no product eligible for BVS",
+      "excluded": [
+        {
+          "product_id": "1729393801040204109",
+          "reason": "WPS 37.47 < 55"
+        },
+        {
+          "product_id": "1732539550637789185",
+          "reason": "WPS 53.2 < 55"
+        },
+        {
+          "product_id": "1732444459834315676",
+          "reason": "WPS 35.15 < 55"
+        },
+        {
+          "product_id": "1729504019443521424",
+          "reason": "deep analysis not ok"
+        },
+        {
+          "product_id": "1732294732712743843",
+          "reason": "WPS 52.63 < 55"
+        }
+      ]
+    },
+    "competitor_intelligence": {
+      "status": "PARTIAL",
+      "summary": "0/3 product(s) with competitor evidence (max 10 each); no automated competitor provider configured",
+      "products": [
+        {
+          "product_id": "1732539550637789185",
+          "name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1732294732712743843",
+          "name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1729393801040204109",
+          "name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        }
+      ]
+    },
+    "creative_intelligence": {
+      "status": "COMPLETED",
+      "summary": "3/3 product(s) with creative evidence (max 20 each; saved KaloPilot top videos are free)",
+      "products": [
+        {
+          "product_id": "1732539550637789185",
+          "name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 43.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1732294732712743843",
+          "name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 37.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1729393801040204109",
+          "name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 31.0,
+          "opportunity": null,
+          "confidence": 50.0
+        }
+      ]
+    },
+    "historical_storage": {
+      "status": "PENDING"
+    },
+    "emerging_detector": {
+      "status": "COMPLETED",
+      "summary": "44 product(s) evaluated: {'INSUFFICIENT_HISTORY': 44}",
+      "saved": "/root/winning-product-agent/data/production/processed/emerging/emerging_20261001T042924796166Z.json"
+    },
+    "final_report": {
+      "status": "COMPLETED",
+      "summary": "Top 0 | watchlist 17 | rejected 12",
+      "report_markdown": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-4.md",
+      "report_json": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-4.json",
+      "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+      "manifest": "/root/winning-product-agent/runs/production/20261001T042924Z_f5841c/manifest.json",
+      "log": "/root/winning-product-agent/runs/production/20261001T042924Z_f5841c/log.jsonl"
+    },
+    "final_decision": {
+      "status": "COMPLETED",
+      "summary": "4 decided: {'INSUFFICIENT_DATA': 4}; shortlist empty",
+      "markdown": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-3.md",
+      "json": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-3.json",
+      "latest": "/root/winning-product-agent/reports/production/latest-final-decision.md"
+    },
+    "validation_packs": {
+      "status": "PENDING"
+    },
+    "production_history": {
+      "status": "PENDING"
+    },
+    "post_run_audit": {
+      "status": "COMPLETED",
+      "summary": "RUN_VALIDATED",
+      "run_audit": "/root/winning-product-agent/reports/production/2026-10-01-run-audit-3.md"
+    },
+    "run_summary": {
+      "status": "COMPLETED"
+    }
+  },
+  "final_status": "REPORT_ONLY_COMPLETED",
+  "e2e": {
+    "step": "PRODUCTION",
+    "confirmation_phrase": "CONFIRM PRODUCTION LIVE RUN",
+    "supplier_products_max": 3,
+    "supplier_offers_per_product_max": 5,
+    "competitor_products_max": 3,
+    "competitors_per_product_max": 10,
+    "creative_products_max": 3,
+    "creatives_per_product_max": 20,
+    "final_decision_max_products": 5,
+    "layer_product_order": "discovery PASS before REVIEW, then WPS desc, WPS Confidence desc, product_id"
+  },
+  "config_version": "production-v3",
+  "config_dir": "/root/winning-product-agent/config/production/v3",
+  "runtime_mode": "REPORT_ONLY",
+  "run_caps": null,
+  "run_profile": null,
+  "config_manifest_hashes": {
+    "amazon_validation.yaml": "402d16b76022d09050404111d554f0739b35f47dc9b7f0e5c2caf3b831e80ed3",
+    "business_viability.yaml": "5023dc0b8cd12a3ef702b17390b8a2c0d465f3566febac560219d7d6184ef20f",
+    "calibration_lane.yaml": "85831df1bbd556c516746068e92c73120fd70e79895917714f78e89e64e7292e",
+    "categories.yaml": "8641f1d175c42c0cd7253b22b66dd71304bf6474dbc9921406be11fe2c550c1b",
+    "change_review.json": "9f7ff10bd8376c8071d798c888118e7360867987134ba10502e864c36dce44b1",
+    "competitor.yaml": "1b4fbaff433f0ad4925942df83de69261538470bbecc6863088c3baed9d1fa30",
+    "creative.yaml": "415f62d82eb3ecc66c8541650a723ec5eb7fe7a80085843a3f57557075cde8cb",
+    "decision_rules.yaml": "65b5813fe4104074109b1fddee06e0bcdbda21931d6f405c95ccac4b806ea4bc",
+    "deep_analysis.yaml": "54b7b27b72864c00157895c7afac64fbafbfce5d5154c60999e394ed438b67e8",
+    "emerging.yaml": "db6b5c4f11dedc06f39d971db23bef8f061e58e491cbc8f60887e2c380888d02",
+    "filters.yaml": "7b351e33ae207b2146436cc76a8b1da2c10d6a880a0652deb2d18a9195d779ee",
+    "history.yaml": "71827dd6e229a2dd16be9060f3f4c4dd44a72461bd913fcff6370272141ae708",
+    "provider_capabilities.yaml": "a1b3e52e1a3912d0d3926165070db632a2980c1cd21ddf89ca75ba164aa94c9b",
+    "report.yaml": "1434cc29acef3bc1e4c48c23a44f64630a9887d5be7051f665e6b96ad70b1065",
+    "runtime.yaml": "cecaac1daccc4cf9d231e8b453a76a9bbbfb6aa218d7d54e8552c702470fadf0",
+    "scoring.yaml": "0cea671114062b5e8353d783eb658b14de4bb4010d15b97b218dcd9053ca10ee",
+    "supplier.yaml": "b9894ee1c32a8eae36c5084c326485025406024f8d6aa99e0a864335ba951f2f"
+  },
+  "config_hashes_at_start": {
+    "amazon_validation.yaml": "402d16b76022d09050404111d554f0739b35f47dc9b7f0e5c2caf3b831e80ed3",
+    "business_viability.yaml": "5023dc0b8cd12a3ef702b17390b8a2c0d465f3566febac560219d7d6184ef20f",
+    "calibration_lane.yaml": "85831df1bbd556c516746068e92c73120fd70e79895917714f78e89e64e7292e",
+    "categories.yaml": "8641f1d175c42c0cd7253b22b66dd71304bf6474dbc9921406be11fe2c550c1b",
+    "change_review.json": "9f7ff10bd8376c8071d798c888118e7360867987134ba10502e864c36dce44b1",
+    "competitor.yaml": "1b4fbaff433f0ad4925942df83de69261538470bbecc6863088c3baed9d1fa30",
+    "creative.yaml": "415f62d82eb3ecc66c8541650a723ec5eb7fe7a80085843a3f57557075cde8cb",
+    "decision_rules.yaml": "65b5813fe4104074109b1fddee06e0bcdbda21931d6f405c95ccac4b806ea4bc",
+    "deep_analysis.yaml": "54b7b27b72864c00157895c7afac64fbafbfce5d5154c60999e394ed438b67e8",
+    "emerging.yaml": "db6b5c4f11dedc06f39d971db23bef8f061e58e491cbc8f60887e2c380888d02",
+    "filters.yaml": "7b351e33ae207b2146436cc76a8b1da2c10d6a880a0652deb2d18a9195d779ee",
+    "history.yaml": "71827dd6e229a2dd16be9060f3f4c4dd44a72461bd913fcff6370272141ae708",
+    "manifest.json": "41c64732890a7655aa98afd0dc33733848208a90e8eb6cdc988da7386af23c58",
+    "provider_capabilities.yaml": "a1b3e52e1a3912d0d3926165070db632a2980c1cd21ddf89ca75ba164aa94c9b",
+    "report.yaml": "1434cc29acef3bc1e4c48c23a44f64630a9887d5be7051f665e6b96ad70b1065",
+    "runtime.yaml": "cecaac1daccc4cf9d231e8b453a76a9bbbfb6aa218d7d54e8552c702470fadf0",
+    "scoring.yaml": "0cea671114062b5e8353d783eb658b14de4bb4010d15b97b218dcd9053ca10ee",
+    "supplier.yaml": "b9894ee1c32a8eae36c5084c326485025406024f8d6aa99e0a864335ba951f2f"
+  },
+  "production_data_paths": {
+    "raw": "data/production/raw",
+    "processed": "data/production/processed",
+    "history": "data/production/history",
+    "reports": "reports/production",
+    "runs": "runs/production",
+    "cache": "data/production/raw"
+  },
+  "report_only_source_run": "20261001T030132Z_06130f",
+  "query_log": [],
+  "provider_query_counts": {
+    "discovery": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "deep_analysis": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "amazon_validation": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    }
+  },
+  "cache_hits": 0,
+  "query_accounting": {
+    "run_id": "20261001T042924Z_f5841c",
+    "planned_queries": 0,
+    "executed_queries": 0,
+    "cached_queries": 0,
+    "blocked_queries": 0,
+    "failed_queries": 0,
+    "estimated_credit_cost": "UNKNOWN",
+    "estimated_credit_cost_basis": "no estimate configured",
+    "actual_credit_cost": 0.0,
+    "remaining_balance": "UNKNOWN"
+  },
+  "credits": {
+    "balance_start": null,
+    "balance_now": null,
+    "credits_used_reported": 0.0,
+    "credits_used_by_balance": null
+  },
+  "post_run_audit": {
+    "result": "RUN_VALIDATED",
+    "issues": [],
+    "first_production_run_status": null,
+    "critical_issues": []
+  },
+  "outputs": {
+    "report_markdown": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-4.md",
+    "report_json": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-4.json",
+    "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+    "manifest": "/root/winning-product-agent/runs/production/20261001T042924Z_f5841c/manifest.json",
+    "log": "/root/winning-product-agent/runs/production/20261001T042924Z_f5841c/log.jsonl",
+    "final_decision_markdown": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-3.md",
+    "final_decision_json": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-3.json",
+    "final_decision_latest": "/root/winning-product-agent/reports/production/latest-final-decision.md",
+    "run_audit": "/root/winning-product-agent/reports/production/2026-10-01-run-audit-3.md"
+  },
+  "manifest_copy_of": "/root/winning-product-agent/runs/production/20261001T042924Z_f5841c/manifest.json"
+}

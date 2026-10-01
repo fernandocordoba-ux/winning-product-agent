@@ -1,0 +1,78 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 48.739999999999995,
+    "gmv": 74338.86,
+    "units": 2004,
+    "growth": 492.11,
+    "creator_count": 37,
+    "selling_creator_count": null,
+    "video_count": 109,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T035223Z_outdoor_9602f1b1059f4f10b1f2896da265848b.json",
+    "task_id": "9602f1b1059f4f10b1f2896da265848b",
+    "report_url": null,
+    "record_index": 4
+  },
+  "product_id": "1732347942593532736",
+  "identity_key": "1732347942593532736",
+  "key_type": "product_id",
+  "product_name": "3-piece Men's Tactical Work Pants, Outdoor Camouflage Design, Training, Multi Pocket Pants, Hiking and Camping, Lightweight, Breathable, Quick Drying Sports Pants",
+  "category": "Sports & Outdoor > Sport & Outdoor Clothing > Joggers",
+  "shop": "tracy M shop",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T03:52:23+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-01T03:52:23+00:00",
+  "source_snapshot_hash": "b8cb108745cb737dedf6b561093f7933cdbec7220e20ce92da6ab71602d9dcea",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.504165+00:00",
+  "imported_at": "2026-10-01T04:22:40.504165+00:00"
+}

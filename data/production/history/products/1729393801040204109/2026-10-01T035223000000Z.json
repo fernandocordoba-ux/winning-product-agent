@@ -1,0 +1,78 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 77.42,
+    "gmv": 27801.52,
+    "units": 708,
+    "growth": 710.2,
+    "creator_count": 89,
+    "selling_creator_count": null,
+    "video_count": 105,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T035223Z_outdoor_9602f1b1059f4f10b1f2896da265848b.json",
+    "task_id": "9602f1b1059f4f10b1f2896da265848b",
+    "report_url": null,
+    "record_index": 3
+  },
+  "product_id": "1729393801040204109",
+  "identity_key": "1729393801040204109",
+  "key_type": "product_id",
+  "product_name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+  "category": "Sports & Outdoor > Sports & Outdoor Accessories > Sports Eyewear",
+  "shop": "LOSREYES",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T03:52:23+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-01T03:52:23+00:00",
+  "source_snapshot_hash": "d1be9ef37f1ae2ad042ccd5049c2f172b975b54fd70994b2691505f58e8c4520",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.502356+00:00",
+  "imported_at": "2026-10-01T04:22:40.502356+00:00"
+}

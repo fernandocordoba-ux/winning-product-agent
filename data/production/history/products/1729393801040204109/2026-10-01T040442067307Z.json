@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 77.42,
+    "gmv": 27801.52,
+    "units": 708,
+    "growth": 463.43,
+    "creator_count": 89,
+    "selling_creator_count": 33,
+    "video_count": 105,
+    "selling_video_count": 39,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 2277
+  },
+  "concentration": {
+    "top_creator_revenue_share": 82.0,
+    "top_video_revenue_share": 2.19
+  },
+  "scores": {
+    "wps": 37.47,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "CREATOR_DEPENDENCY"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T042239911825Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T040442067307Z_1729393801040204109_deep_product.json",
+    "task_id": "1ee363d971034ba2909062f4244b3230",
+    "report_url": null
+  },
+  "product_id": "1729393801040204109",
+  "identity_key": "1729393801040204109",
+  "key_type": "product_id",
+  "product_name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+  "category": "Sports & Outdoor > Sports & Outdoor Accessories > Sports Eyewear",
+  "shop": "LOSREYES",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T04:04:42.067307+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-29",
+  "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+  "source_snapshot_hash": "7ef52695170d2987982dbb0a34114fb70af339b8364b8cdc910dd493a9089e9d",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.510142+00:00",
+  "imported_at": "2026-10-01T04:22:40.510142+00:00"
+}

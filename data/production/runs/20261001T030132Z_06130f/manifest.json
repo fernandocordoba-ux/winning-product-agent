@@ -1,0 +1,878 @@
+{
+  "run_id": "20261001T030132Z_06130f",
+  "started_at": "2026-10-01T03:01:32.774295+00:00",
+  "completed_at": "2026-10-01T04:22:41.480711+00:00",
+  "market": "US",
+  "mode": "LIVE",
+  "data_environment": "PRODUCTION",
+  "profile": {
+    "name": "production-v3",
+    "path": "config/production/v3/runtime.yaml",
+    "hash": "cecaac1daccc4cf9"
+  },
+  "runtime_config": {
+    "runtime": {
+      "market": "US",
+      "live_mode": true,
+      "dry_run": false,
+      "explicit_live_confirmation": false
+    },
+    "query_plan": {
+      "discovery_mode": "per_category",
+      "discovery_categories": [
+        "home",
+        "kitchen",
+        "pet",
+        "beauty_personal_care",
+        "fitness",
+        "automotive_accessories",
+        "tools",
+        "outdoor",
+        "electronics_accessories"
+      ],
+      "deep_batch_size": 1,
+      "amazon_batch_size": 2,
+      "max_credits_for_run": 65,
+      "estimated_credits": {
+        "discovery": 4.0,
+        "deep_analysis": 3.6,
+        "amazon_validation": 4.0
+      },
+      "guardrails": {
+        "max_queries_per_run": 16,
+        "max_provider_queries": {
+          "kalopilot": 16
+        },
+        "max_failed_queries": 2,
+        "max_retry_count": 0,
+        "note": "sized from the approved limits; stop new paid queries, keep completed data, PARTIAL report"
+      },
+      "discovery_exclude_established_brands": true
+    }
+  },
+  "config_hashes": {
+    "amazon_validation.yaml": "5483f447fb5ed5af",
+    "business_viability.yaml": "095102dec072c1f1",
+    "calibration_lane.yaml": "cc6f945a372599bf",
+    "categories.yaml": "afe19c6b21aa13cc",
+    "competitors.yaml": "478630ee63b7eb9b",
+    "creatives.yaml": "376d0fe10a73b4d5",
+    "decision.yaml": "593b2d941ada7e2d",
+    "deep_analysis.yaml": "25e9b67143ba19f5",
+    "emerging.yaml": "297b83c9f2bcc9af",
+    "filters.yaml": "2de5a9448caa531a",
+    "final_validation.yaml": "125ce67bb01283f7",
+    "history.yaml": "8467a93c9250c65a",
+    "provider_capabilities.yaml": "5c5acfae843b722f",
+    "report.yaml": "8f881f382b423f14",
+    "runtime.yaml": "d2e0749a5357aec7",
+    "runtime_aa_live.yaml": "cd314862c590feee",
+    "runtime_first_live.yaml": "319dcbec325d4843",
+    "scoring.yaml": "b7a483c92186b236",
+    "suppliers.yaml": "e11f428e5305f999"
+  },
+  "limits": {
+    "discovery_max_products": 20,
+    "deep_analysis_max_products": 5,
+    "amazon_validation_max_products": 3,
+    "bvs_max_products": 3
+  },
+  "max_products_arg": null,
+  "calibration_lane": false,
+  "stages": {
+    "preflight": {
+      "status": "COMPLETED",
+      "summary": "READY_FOR_DRY_RUN"
+    },
+    "provider_health": {
+      "status": "COMPLETED",
+      "summary": "kalopilot AVAILABLE, amazon DEGRADED, supplier DEGRADED, competitor DEGRADED, creative AVAILABLE"
+    },
+    "discovery": {
+      "status": "PARTIAL",
+      "summary": "8/9 discovery answers",
+      "queries": 9,
+      "answers": 8,
+      "stop_reason": null
+    },
+    "filtering": {
+      "status": "COMPLETED",
+      "summary": "113 unique: PASS 55, REVIEW 49, FAIL 9 (malformed 0)",
+      "counts": {
+        "records": 113,
+        "unique": 113,
+        "duplicates_removed": 0,
+        "malformed": 0,
+        "PASS": 55,
+        "REVIEW": 49,
+        "FAIL": 9,
+        "returned_candidates": 20,
+        "over_limit": 84
+      },
+      "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json"
+    },
+    "deep_analysis": {
+      "status": "PARTIAL",
+      "summary": "4/5 analyzed ok",
+      "ok": 4,
+      "selected": 5,
+      "failed": [
+        {
+          "product_id": "1729504019443521424",
+          "error": "malformed"
+        }
+      ],
+      "saved": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T042239911825Z.json"
+    },
+    "wps": {
+      "status": "COMPLETED",
+      "summary": "WPS for 4 product(s); incomplete: 0",
+      "products": [
+        {
+          "product_id": "1729393801040204109",
+          "wps": 37.47,
+          "complete": true,
+          "verdict": "skip",
+          "na_metrics": []
+        },
+        {
+          "product_id": "1732539550637789185",
+          "wps": 53.2,
+          "complete": true,
+          "verdict": "skip",
+          "na_metrics": []
+        },
+        {
+          "product_id": "1732444459834315676",
+          "wps": 35.15,
+          "complete": true,
+          "verdict": "skip",
+          "na_metrics": []
+        },
+        {
+          "product_id": "1732294732712743843",
+          "wps": 52.63,
+          "complete": true,
+          "verdict": "skip",
+          "na_metrics": []
+        }
+      ]
+    },
+    "wps_confidence": {
+      "status": "COMPLETED",
+      "summary": "Confidence for 4 product(s)",
+      "products": [
+        {
+          "product_id": "1729393801040204109",
+          "confidence": 84.83,
+          "level": "HIGH"
+        },
+        {
+          "product_id": "1732539550637789185",
+          "confidence": 84.83,
+          "level": "HIGH"
+        },
+        {
+          "product_id": "1732444459834315676",
+          "confidence": 88.17,
+          "level": "HIGH"
+        },
+        {
+          "product_id": "1732294732712743843",
+          "confidence": 84.83,
+          "level": "HIGH"
+        }
+      ]
+    },
+    "amazon_validation": {
+      "status": "SKIPPED",
+      "summary": "no eligible product (WPS >= 55 and Confidence >= 60): 0 paid queries",
+      "excluded": [
+        {
+          "product_id": "1729393801040204109",
+          "reason": "WPS 37.47 < 55"
+        },
+        {
+          "product_id": "1732539550637789185",
+          "reason": "WPS 53.2 < 55"
+        },
+        {
+          "product_id": "1732444459834315676",
+          "reason": "WPS 35.15 < 55"
+        },
+        {
+          "product_id": "1732294732712743843",
+          "reason": "WPS 52.63 < 55"
+        }
+      ]
+    },
+    "supplier_research": {
+      "status": "PARTIAL",
+      "summary": "0/3 product(s) with real supplier offers (max 5 each); automated sources configured: none",
+      "products": [
+        {
+          "product_id": "1732539550637789185",
+          "name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        },
+        {
+          "product_id": "1732294732712743843",
+          "name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        },
+        {
+          "product_id": "1729393801040204109",
+          "name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        }
+      ]
+    },
+    "bvs": {
+      "status": "SKIPPED",
+      "summary": "no product eligible for BVS",
+      "excluded": [
+        {
+          "product_id": "1729393801040204109",
+          "reason": "WPS 37.47 < 55"
+        },
+        {
+          "product_id": "1732539550637789185",
+          "reason": "WPS 53.2 < 55"
+        },
+        {
+          "product_id": "1732444459834315676",
+          "reason": "WPS 35.15 < 55"
+        },
+        {
+          "product_id": "1729504019443521424",
+          "reason": "deep analysis not ok"
+        },
+        {
+          "product_id": "1732294732712743843",
+          "reason": "WPS 52.63 < 55"
+        }
+      ]
+    },
+    "competitor_intelligence": {
+      "status": "PARTIAL",
+      "summary": "0/3 product(s) with competitor evidence (max 10 each); no automated competitor provider configured",
+      "products": [
+        {
+          "product_id": "1732539550637789185",
+          "name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1732294732712743843",
+          "name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1729393801040204109",
+          "name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        }
+      ]
+    },
+    "creative_intelligence": {
+      "status": "COMPLETED",
+      "summary": "3/3 product(s) with creative evidence (max 20 each; saved KaloPilot top videos are free)",
+      "products": [
+        {
+          "product_id": "1732539550637789185",
+          "name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 43.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1732294732712743843",
+          "name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 37.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1729393801040204109",
+          "name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 31.0,
+          "opportunity": null,
+          "confidence": 50.0
+        }
+      ]
+    },
+    "historical_storage": {
+      "status": "COMPLETED",
+      "summary": "33 observation(s) appended, 0 duplicate(s) skipped",
+      "written": 33,
+      "duplicates": 0
+    },
+    "emerging_detector": {
+      "status": "COMPLETED",
+      "summary": "44 product(s) evaluated: {'INSUFFICIENT_HISTORY': 44}",
+      "saved": "/root/winning-product-agent/data/production/processed/emerging/emerging_20261001T042240579481Z.json"
+    },
+    "final_report": {
+      "status": "COMPLETED",
+      "summary": "Top 0 | watchlist 17 | rejected 12",
+      "report_markdown": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-3.md",
+      "report_json": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-3.json",
+      "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+      "manifest": "/root/winning-product-agent/runs/production/20261001T030132Z_06130f/manifest.json",
+      "log": "/root/winning-product-agent/runs/production/20261001T030132Z_06130f/log.jsonl"
+    },
+    "final_decision": {
+      "status": "COMPLETED",
+      "summary": "4 decided: {'INSUFFICIENT_DATA': 4}; shortlist empty",
+      "markdown": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-2.md",
+      "json": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-2.json",
+      "latest": "/root/winning-product-agent/reports/production/latest-final-decision.md"
+    },
+    "validation_packs": {
+      "status": "SKIPPED",
+      "summary": "no READY_FOR_PRODUCT_VALIDATION product: no validation pack"
+    },
+    "production_history": {
+      "status": "COMPLETED",
+      "summary": "4 decision observation(s) appended, 0 unchanged snapshot(s) skipped"
+    },
+    "post_run_audit": {
+      "status": "COMPLETED",
+      "summary": "RUN_VALIDATED",
+      "run_audit": "/root/winning-product-agent/reports/production/2026-10-01-run-audit-2.md"
+    },
+    "run_summary": {
+      "status": "COMPLETED",
+      "summary": "PARTIAL"
+    }
+  },
+  "final_status": "PARTIAL",
+  "e2e": {
+    "step": "PRODUCTION",
+    "confirmation_phrase": "CONFIRM PRODUCTION LIVE RUN",
+    "supplier_products_max": 3,
+    "supplier_offers_per_product_max": 5,
+    "competitor_products_max": 3,
+    "competitors_per_product_max": 10,
+    "creative_products_max": 3,
+    "creatives_per_product_max": 20,
+    "final_decision_max_products": 5,
+    "layer_product_order": "discovery PASS before REVIEW, then WPS desc, WPS Confidence desc, product_id"
+  },
+  "config_version": "production-v3",
+  "config_dir": "/root/winning-product-agent/config/production/v3",
+  "runtime_mode": "LIVE",
+  "run_caps": null,
+  "run_profile": null,
+  "config_manifest_hashes": {
+    "amazon_validation.yaml": "402d16b76022d09050404111d554f0739b35f47dc9b7f0e5c2caf3b831e80ed3",
+    "business_viability.yaml": "5023dc0b8cd12a3ef702b17390b8a2c0d465f3566febac560219d7d6184ef20f",
+    "calibration_lane.yaml": "85831df1bbd556c516746068e92c73120fd70e79895917714f78e89e64e7292e",
+    "categories.yaml": "8641f1d175c42c0cd7253b22b66dd71304bf6474dbc9921406be11fe2c550c1b",
+    "change_review.json": "9f7ff10bd8376c8071d798c888118e7360867987134ba10502e864c36dce44b1",
+    "competitor.yaml": "1b4fbaff433f0ad4925942df83de69261538470bbecc6863088c3baed9d1fa30",
+    "creative.yaml": "415f62d82eb3ecc66c8541650a723ec5eb7fe7a80085843a3f57557075cde8cb",
+    "decision_rules.yaml": "65b5813fe4104074109b1fddee06e0bcdbda21931d6f405c95ccac4b806ea4bc",
+    "deep_analysis.yaml": "54b7b27b72864c00157895c7afac64fbafbfce5d5154c60999e394ed438b67e8",
+    "emerging.yaml": "db6b5c4f11dedc06f39d971db23bef8f061e58e491cbc8f60887e2c380888d02",
+    "filters.yaml": "7b351e33ae207b2146436cc76a8b1da2c10d6a880a0652deb2d18a9195d779ee",
+    "history.yaml": "71827dd6e229a2dd16be9060f3f4c4dd44a72461bd913fcff6370272141ae708",
+    "provider_capabilities.yaml": "a1b3e52e1a3912d0d3926165070db632a2980c1cd21ddf89ca75ba164aa94c9b",
+    "report.yaml": "1434cc29acef3bc1e4c48c23a44f64630a9887d5be7051f665e6b96ad70b1065",
+    "runtime.yaml": "cecaac1daccc4cf9d231e8b453a76a9bbbfb6aa218d7d54e8552c702470fadf0",
+    "scoring.yaml": "0cea671114062b5e8353d783eb658b14de4bb4010d15b97b218dcd9053ca10ee",
+    "supplier.yaml": "b9894ee1c32a8eae36c5084c326485025406024f8d6aa99e0a864335ba951f2f"
+  },
+  "config_hashes_at_start": {
+    "amazon_validation.yaml": "402d16b76022d09050404111d554f0739b35f47dc9b7f0e5c2caf3b831e80ed3",
+    "business_viability.yaml": "5023dc0b8cd12a3ef702b17390b8a2c0d465f3566febac560219d7d6184ef20f",
+    "calibration_lane.yaml": "85831df1bbd556c516746068e92c73120fd70e79895917714f78e89e64e7292e",
+    "categories.yaml": "8641f1d175c42c0cd7253b22b66dd71304bf6474dbc9921406be11fe2c550c1b",
+    "change_review.json": "9f7ff10bd8376c8071d798c888118e7360867987134ba10502e864c36dce44b1",
+    "competitor.yaml": "1b4fbaff433f0ad4925942df83de69261538470bbecc6863088c3baed9d1fa30",
+    "creative.yaml": "415f62d82eb3ecc66c8541650a723ec5eb7fe7a80085843a3f57557075cde8cb",
+    "decision_rules.yaml": "65b5813fe4104074109b1fddee06e0bcdbda21931d6f405c95ccac4b806ea4bc",
+    "deep_analysis.yaml": "54b7b27b72864c00157895c7afac64fbafbfce5d5154c60999e394ed438b67e8",
+    "emerging.yaml": "db6b5c4f11dedc06f39d971db23bef8f061e58e491cbc8f60887e2c380888d02",
+    "filters.yaml": "7b351e33ae207b2146436cc76a8b1da2c10d6a880a0652deb2d18a9195d779ee",
+    "history.yaml": "71827dd6e229a2dd16be9060f3f4c4dd44a72461bd913fcff6370272141ae708",
+    "manifest.json": "41c64732890a7655aa98afd0dc33733848208a90e8eb6cdc988da7386af23c58",
+    "provider_capabilities.yaml": "a1b3e52e1a3912d0d3926165070db632a2980c1cd21ddf89ca75ba164aa94c9b",
+    "report.yaml": "1434cc29acef3bc1e4c48c23a44f64630a9887d5be7051f665e6b96ad70b1065",
+    "runtime.yaml": "cecaac1daccc4cf9d231e8b453a76a9bbbfb6aa218d7d54e8552c702470fadf0",
+    "scoring.yaml": "0cea671114062b5e8353d783eb658b14de4bb4010d15b97b218dcd9053ca10ee",
+    "supplier.yaml": "b9894ee1c32a8eae36c5084c326485025406024f8d6aa99e0a864335ba951f2f"
+  },
+  "production_data_paths": {
+    "raw": "data/production/raw",
+    "processed": "data/production/processed",
+    "history": "data/production/history",
+    "reports": "reports/production",
+    "runs": "runs/production",
+    "cache": "data/production/raw"
+  },
+  "provider_health": {
+    "providers": {
+      "kalopilot": {
+        "status": "AVAILABLE",
+        "balance": 129.64,
+        "detail": "credentials present; free credit endpoint answered",
+        "authentication": "AUTHENTICATED",
+        "capability": "discovery + deep analysis + Amazon validation (provider_capabilities.yaml)",
+        "last_successful_query": {
+          "timestamp": "2026-10-01T00:21:27.581607+00:00",
+          "source": "production",
+          "stage": "deep_analysis"
+        }
+      },
+      "amazon": {
+        "status": "DEGRADED",
+        "detail": "via KaloPilot; reliability never measured live (AB)",
+        "authentication": "via KaloPilot",
+        "capability": "KaloPilot Amazon prompt (never measured live)",
+        "last_successful_query": "NOT_MEASURED"
+      },
+      "supplier": {
+        "status": "DEGRADED",
+        "sources": [
+          "manual_import"
+        ],
+        "imported_files": 0,
+        "detail": "manual import only (no automated supplier provider configured)",
+        "authentication": "not required (manual)",
+        "capability": "manual_import only",
+        "last_successful_query": "N/A (no paid query)"
+      },
+      "competitor": {
+        "status": "DEGRADED",
+        "sources": [
+          "manual_import"
+        ],
+        "imported_files": 0,
+        "detail": "manual import only (no automated competitor provider configured)",
+        "authentication": "not required (manual)",
+        "capability": "manual_import only",
+        "last_successful_query": "N/A (no paid query)"
+      },
+      "creative": {
+        "status": "AVAILABLE",
+        "sources": [
+          "kalopilot_saved",
+          "manual_import"
+        ],
+        "detail": "saved KaloPilot top videos + imports",
+        "authentication": "via KaloPilot",
+        "capability": "saved KaloPilot top_videos (no hooks / angles / dates) + manual_import",
+        "last_successful_query": "N/A (no paid query)"
+      }
+    },
+    "degraded_mode_decisions": [
+      {
+        "provider": "amazon",
+        "status": "DEGRADED",
+        "action": "CONTINUE",
+        "effect": "cross-platform demand UNKNOWN (never estimated)"
+      },
+      {
+        "provider": "supplier",
+        "status": "DEGRADED",
+        "action": "CONTINUE",
+        "effect": "READY requires supplier economics (decision rules ready.require_supplier_economics)"
+      },
+      {
+        "provider": "competitor",
+        "status": "DEGRADED",
+        "action": "CONTINUE_REDUCED_CONFIDENCE",
+        "effect": "Decision Confidence -10 for products without competitor evidence"
+      }
+    ],
+    "blocks": [],
+    "degraded_effects": {
+      "WPS": "unaffected (TikTok data only)",
+      "AVS": "computed only for eligible products (WPS>=55, Conf>=60); Amazon never measured live, matches are not forced",
+      "BVS": "partial: real supplier economics only for products with imported offers; otherwise INSUFFICIENT_SUPPLIER_DATA (never estimated)",
+      "Competitor Intelligence": "only for products with imported competitor research; otherwise Competitive Environment UNKNOWN",
+      "Creative Intelligence": "saved KaloPilot top videos (free) + imports; without hook / angle / date the creative confidence stays <= 60 < minimum 65 -> Creative Opportunity UNKNOWN",
+      "Decision Confidence": "-10 for every product without competitor evidence (competitor provider DEGRADED)",
+      "READY_FOR_PRODUCT_VALIDATION eligibility": "requires supplier economics (imported offers), competitor evidence and classified creative evidence; with the current sources NO product can reach READY unless those are imported before the run"
+    },
+    "checked_at": "2026-10-01T03:01:32.773655+00:00"
+  },
+  "query_budget": {
+    "stages": {
+      "discovery": {
+        "planned_queries": 9,
+        "cached": 0,
+        "expected_paid_min": 9,
+        "expected_paid_max": 9,
+        "mode": "per_category",
+        "max_products": 20,
+        "estimate_per_query": 4.0,
+        "estimated_credits_min": 36.0,
+        "estimated_credits_max": 36.0
+      },
+      "deep_analysis": {
+        "planned_queries": 5,
+        "cached": "checked per product at run time",
+        "expected_paid_min": 0,
+        "expected_paid_max": 5,
+        "max_products": 5,
+        "batch_size": 1,
+        "note": "0 only if no PASS/REVIEW candidate or all cached (< 24 h)",
+        "estimate_per_query": 3.6,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 18.0
+      },
+      "amazon_validation": {
+        "planned_queries": 2,
+        "cached": "checked per product at run time",
+        "expected_paid_min": 0,
+        "expected_paid_max": 2,
+        "max_products": 3,
+        "batch_size": 2,
+        "note": "only products with WPS>=55, Conf>=60 (may be 0)",
+        "estimate_per_query": 4.0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 8.0
+      }
+    },
+    "providers": {
+      "KaloPilot (TikTok Shop: discovery + deep analysis)": {
+        "planned_queries": 14,
+        "cache_hits_known": 0,
+        "expected_paid_min": 9,
+        "expected_paid_max": 14,
+        "estimated_credits_min": 36.0,
+        "estimated_credits_max": 54.0,
+        "note": "deep cache (< 24 h, same prompt) checked per product at run time"
+      },
+      "Amazon (via KaloPilot Amazon validation)": {
+        "planned_queries": 2,
+        "cache_hits_known": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 2,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 8.0,
+        "note": "only products with WPS>=55, Conf>=60 (may be 0)"
+      },
+      "Suppliers": {
+        "planned_queries": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 0.0,
+        "sources": [
+          "manual_import"
+        ],
+        "limits": "3 products x 5 offers",
+        "note": "no automated supplier API configured: only offers already imported are used (no order, no supplier contact)"
+      },
+      "Competitors": {
+        "planned_queries": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 0.0,
+        "sources": [
+          "manual_import"
+        ],
+        "limits": "3 products x 10",
+        "note": "no automated competitor API configured: only research already imported is used"
+      },
+      "Creatives": {
+        "planned_queries": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 0.0,
+        "sources": [
+          "kalopilot_saved",
+          "manual_import"
+        ],
+        "limits": "3 products x 20",
+        "note": "saved KaloPilot top_videos of the deep answers (free, no new query) + manual imports"
+      }
+    },
+    "planned_queries_max": 16,
+    "cached_queries": 0,
+    "expected_paid_queries_min": 9,
+    "expected_paid_queries_max": 16,
+    "estimated_credits_min": 36.0,
+    "estimated_credits_max": 62.0,
+    "estimate_basis": "configured estimate per paid query (query_plan.estimated_credits) — NOT a provider quote; batched queries have no observed cost yet",
+    "max_credits_for_run": 65,
+    "min_balance_reserve": 5.0
+  },
+  "query_log": [
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "home"
+      ],
+      "timestamp": "2026-10-01T03:11:48.781345+00:00",
+      "task_id": "405fbfe1170a4fbbac326fa41805c263",
+      "credits": 7.47,
+      "error_category": null
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "kitchen"
+      ],
+      "timestamp": "2026-10-01T03:18:30.323063+00:00",
+      "task_id": "3cbd359a332b466487f3214de9363e89",
+      "credits": 4.5,
+      "error_category": null
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "pet"
+      ],
+      "timestamp": "2026-10-01T03:24:09.404072+00:00",
+      "task_id": "fd35bbc2301f403d9aa2f98da71a5715",
+      "credits": 3.31,
+      "error_category": null
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "beauty_personal_care"
+      ],
+      "timestamp": "2026-10-01T03:30:19.030854+00:00",
+      "task_id": "d4e5263a6dc3428a96f3c6310119e6ce",
+      "credits": 4.0,
+      "error_category": null
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "fitness"
+      ],
+      "timestamp": "2026-10-01T03:36:28.830156+00:00",
+      "task_id": "7ebeb0d9778142c38885b89843865ab3",
+      "credits": 4.1,
+      "error_category": null
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "automotive_accessories"
+      ],
+      "timestamp": "2026-10-01T03:38:01.928288+00:00",
+      "task_id": "b20ad32407ab414abd7f280eabd57f63",
+      "credits": 0.44,
+      "error_category": "empty_answer_output_token_limit"
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "tools"
+      ],
+      "timestamp": "2026-10-01T03:45:13.441975+00:00",
+      "task_id": "2bd50c66a0dd46ab915c9f289505b1ec",
+      "credits": 5.27,
+      "error_category": null
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "outdoor"
+      ],
+      "timestamp": "2026-10-01T03:52:23.758317+00:00",
+      "task_id": "9602f1b1059f4f10b1f2896da265848b",
+      "credits": 4.88,
+      "error_category": null
+    },
+    {
+      "stage": "discovery",
+      "action": "LIVE_QUERY",
+      "query_type": "discovery",
+      "products": [
+        "electronics_accessories"
+      ],
+      "timestamp": "2026-10-01T03:59:34.087452+00:00",
+      "task_id": "cd866fa43e5c4534bdfddafe316e8452",
+      "credits": 5.48,
+      "error_category": null
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "LIVE_QUERY",
+      "query_type": "deep_product",
+      "products": [
+        "1729393801040204109"
+      ],
+      "timestamp": "2026-10-01T04:04:42.066426+00:00",
+      "task_id": "1ee363d971034ba2909062f4244b3230",
+      "credits": 3.05,
+      "error_category": null
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "LIVE_QUERY",
+      "query_type": "deep_product",
+      "products": [
+        "1732539550637789185"
+      ],
+      "timestamp": "2026-10-01T04:08:48.803726+00:00",
+      "task_id": "7408b40be1414e5fbf162c3d75a3ed8f",
+      "credits": 2.32,
+      "error_category": null
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "LIVE_QUERY",
+      "query_type": "deep_product",
+      "products": [
+        "1732444459834315676"
+      ],
+      "timestamp": "2026-10-01T04:13:25.699397+00:00",
+      "task_id": "21311b329f3d49748d008a1a90be5d4e",
+      "credits": 2.44,
+      "error_category": null
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "LIVE_QUERY",
+      "query_type": "deep_product",
+      "products": [
+        "1729504019443521424"
+      ],
+      "timestamp": "2026-10-01T04:17:32.350512+00:00",
+      "task_id": "e6a31ee9bcb348878fde8726b6e09ec4",
+      "credits": 2.19,
+      "error_category": null
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "LIVE_QUERY",
+      "query_type": "deep_product",
+      "products": [
+        "1732294732712743843"
+      ],
+      "timestamp": "2026-10-01T04:22:39.892263+00:00",
+      "task_id": "3e0ada2f98ad4805af341a5a272c9d83",
+      "credits": 3.18,
+      "error_category": null
+    }
+  ],
+  "provider_query_counts": {
+    "discovery": {
+      "LIVE_QUERY": 9,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "deep_analysis": {
+      "LIVE_QUERY": 5,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "amazon_validation": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    }
+  },
+  "cache_hits": 0,
+  "query_accounting": {
+    "run_id": "20261001T030132Z_06130f",
+    "planned_queries": 14,
+    "executed_queries": 14,
+    "cached_queries": 0,
+    "blocked_queries": 0,
+    "failed_queries": 0,
+    "estimated_credit_cost": "UNKNOWN",
+    "estimated_credit_cost_basis": "no estimate configured",
+    "actual_credit_cost": 52.63,
+    "remaining_balance": 77.01
+  },
+  "credits": {
+    "balance_start": 129.64,
+    "balance_now": 77.01,
+    "credits_used_reported": 52.63,
+    "credits_used_by_balance": 52.63
+  },
+  "post_run_audit": {
+    "result": "RUN_VALIDATED",
+    "issues": [],
+    "first_production_run_status": null,
+    "critical_issues": []
+  },
+  "outputs": {
+    "report_markdown": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-3.md",
+    "report_json": "/root/winning-product-agent/reports/production/2026-09-30-winning-products-3.json",
+    "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+    "manifest": "/root/winning-product-agent/runs/production/20261001T030132Z_06130f/manifest.json",
+    "log": "/root/winning-product-agent/runs/production/20261001T030132Z_06130f/log.jsonl",
+    "final_decision_markdown": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-2.md",
+    "final_decision_json": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-2.json",
+    "final_decision_latest": "/root/winning-product-agent/reports/production/latest-final-decision.md",
+    "run_audit": "/root/winning-product-agent/reports/production/2026-10-01-run-audit-2.md"
+  },
+  "summary": {
+    "discovered": 113,
+    "pass": 55,
+    "review": 49,
+    "fail": 9,
+    "deep_analyzed_ok": 4,
+    "deep_failed": 1,
+    "amazon_validated": 0,
+    "bvs_evaluated": 0,
+    "stop_reason": null,
+    "provider_failure": null
+  },
+  "manifest_copy_of": "/root/winning-product-agent/runs/production/20261001T030132Z_06130f/manifest.json"
+}

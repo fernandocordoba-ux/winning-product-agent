@@ -1,0 +1,76 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 90.99,
+    "gmv": 354935.61,
+    "units": 5109,
+    "growth": 283.08,
+    "creator_count": 345,
+    "selling_creator_count": null,
+    "video_count": 876,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T035934Z_electronics_accessories_cd866fa43e5c4534bdfddafe316e8452.json",
+    "task_id": "cd866fa43e5c4534bdfddafe316e8452",
+    "report_url": null,
+    "record_index": 8
+  },
+  "product_id": "1732536376534668134",
+  "identity_key": "1732536376534668134",
+  "key_type": "product_id",
+  "product_name": "6.56-inch smartphone, 5MP + 13MP cameras, 4GB RAM + 32GB ROM, dual SIM dual standby, supports 128GB SD card.",
+  "category": "Phones & Electronics > Phones & Tablets > Mobile Phones",
+  "shop": "Beautifulcloth",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T03:59:34+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T03:59:34+00:00",
+  "source_snapshot_hash": "85a2de4d86f8232bbd283a1f556a4302f891b2a96ba76632b2371b76efcc7291",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.506220+00:00",
+  "imported_at": "2026-10-01T04:22:40.506220+00:00"
+}

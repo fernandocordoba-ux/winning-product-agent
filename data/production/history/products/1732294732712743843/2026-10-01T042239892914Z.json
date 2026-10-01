@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 27.89,
+    "gmv": 191498.99,
+    "units": 8311,
+    "growth": 523.33,
+    "creator_count": 264,
+    "selling_creator_count": 126,
+    "video_count": 496,
+    "selling_video_count": 198,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 601
+  },
+  "concentration": {
+    "top_creator_revenue_share": 52.36,
+    "top_video_revenue_share": 37.73
+  },
+  "scores": {
+    "wps": 52.63,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T042239911825Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T042239892914Z_1732294732712743843_deep_product.json",
+    "task_id": "3e0ada2f98ad4805af341a5a272c9d83",
+    "report_url": null
+  },
+  "product_id": "1732294732712743843",
+  "identity_key": "1732294732712743843",
+  "key_type": "product_id",
+  "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+  "category": "Kitchenware > Kitchen Utensils & Gadgets > Sieves and Colanders",
+  "shop": "Gevoli",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T04:22:39.892914+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-29",
+  "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+  "source_snapshot_hash": "ba879886f603122ccbe7f8b629d947b20fce76d13d310c1c6a40c1d478087fc5",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.511127+00:00",
+  "imported_at": "2026-10-01T04:22:40.511127+00:00"
+}

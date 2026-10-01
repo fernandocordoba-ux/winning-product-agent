@@ -1,0 +1,76 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 34.99,
+    "gmv": 43546,
+    "units": 1624,
+    "growth": 277.97,
+    "creator_count": 120,
+    "selling_creator_count": null,
+    "video_count": 283,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T034513Z_tools_2bd50c66a0dd46ab915c9f289505b1ec.json",
+    "task_id": "2bd50c66a0dd46ab915c9f289505b1ec",
+    "report_url": null,
+    "record_index": 4
+  },
+  "product_id": "1732384747649536905",
+  "identity_key": "1732384747649536905",
+  "key_type": "product_id",
+  "product_name": "Bourvill 80 Pcs Magnetic Nut Driver Set, Metric & SAE CR-V Steel, Wing Nut Driver & Universal Socket with 1/4'' Quick-Change Extension, Red Storage Case for Drill & Impact Driver#summerfinds",
+  "category": "Tools & Hardware",
+  "shop": "Bourvill Tool",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T03:45:13+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T03:45:13+00:00",
+  "source_snapshot_hash": "c20c6a974fd33edeb028d6fefd38e06829ffb743b86ccaf72b02110f5f694e1c",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.506453+00:00",
+  "imported_at": "2026-10-01T04:22:40.506453+00:00"
+}

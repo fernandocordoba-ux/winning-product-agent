@@ -1,0 +1,4033 @@
+{
+  "mode": "live",
+  "run_id": "20261001T030132Z_06130f",
+  "data_environment": "PRODUCTION",
+  "discovery_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+  "selected": 5,
+  "skipped": [
+    {
+      "key": "1732441965952996161",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732347942593532736",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732302526190817377",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732517341093335913",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732316761469850306",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732439976327942479",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1729497208501606279",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732448593413902529",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1729696808559088233",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732536376534668134",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732384747649536905",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732393386198536280",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732379907449852541",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1732421747771085102",
+      "reason": "over deep_analysis_max_products (5)"
+    },
+    {
+      "key": "1731687080816709729",
+      "reason": "over deep_analysis_max_products (5)"
+    }
+  ],
+  "not_run": [],
+  "stopped": null,
+  "results": [
+    {
+      "status": "ok",
+      "product_id": "1729393801040204109",
+      "product_name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+      "product_url": "https://www.kalodata.com/product/detail?id=1729393801040204109&language=en-US&currency=USD&region=US",
+      "category": "Sports & Outdoor > Sports & Outdoor Accessories > Sports Eyewear",
+      "category_id": "836744",
+      "shop": {
+        "shop_id": "7495187285147289933",
+        "shop_name": "LOSREYES"
+      },
+      "price": {
+        "min": 25.0,
+        "max": 129.84,
+        "avg": 77.42,
+        "history": null
+      },
+      "gmv": 27801.52,
+      "units": 708,
+      "growth": {
+        "growth_30d_pct": 463.43,
+        "category_growth_pct": -19.52,
+        "gmv_prev_30d": 4934.31,
+        "growth_30d_provider": 463.43,
+        "growth_source": "calculated"
+      },
+      "launch_date": "2024-02-05",
+      "data_window_end": "2026-09-29",
+      "commission_pct": 7,
+      "creator_metrics": {
+        "total": 89,
+        "selling": 33,
+        "growth_pct": 3.49,
+        "top_creators": [
+          {
+            "creator_id": "6994572013114770437",
+            "name": "LOSREYES",
+            "revenue": 22795.88,
+            "growth_pct": 4315.82
+          },
+          {
+            "creator_id": "7204780729088377902",
+            "name": "Jenna_Seas🏝️",
+            "revenue": 760.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6964868065726366726",
+            "name": "✨MamaMarie✨",
+            "revenue": 457.47,
+            "growth_pct": -0.64
+          },
+          {
+            "creator_id": "6780852450561508358",
+            "name": "P A I G E 🤍",
+            "revenue": 456.11,
+            "growth_pct": -50.02
+          },
+          {
+            "creator_id": "7323194535802258475",
+            "name": "Laura | Mom Finds & More ✨",
+            "revenue": 314.0,
+            "growth_pct": 454.17
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 105,
+        "selling": 39,
+        "growth_pct": 2.94,
+        "sales_share_pct": 17.65,
+        "top_videos": [
+          {
+            "video_id": "7688440009690451213",
+            "creator": "jenna_seas",
+            "revenue": 608.0,
+            "views": 6655
+          },
+          {
+            "video_id": "7622086362614861086",
+            "creator": "mariecamu",
+            "revenue": 457.47,
+            "views": 16045
+          },
+          {
+            "video_id": "7681366511717469471",
+            "creator": "paigefeeser4",
+            "revenue": 456.11,
+            "views": 18676
+          },
+          {
+            "video_id": "7690583977781939470",
+            "creator": "shoplosreyes",
+            "revenue": 398.0,
+            "views": 3136
+          },
+          {
+            "video_id": "7614346919719996686",
+            "creator": "sb143x",
+            "revenue": 293.28,
+            "views": 26798
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 2277,
+        "category_product_count_level": "Sports Eyewear",
+        "competition_count": 2277,
+        "competition_scope": "SUBCATEGORY",
+        "competition_category_id": "836744",
+        "competition_subcategory_id": "836744",
+        "competition_comparable": true,
+        "category_level_stated": "Sports Eyewear",
+        "competition_source_field": "category_product_count"
+      },
+      "sales_history": {
+        "daily_gmv": [
+          286,
+          144,
+          245,
+          204,
+          82,
+          327,
+          41,
+          286,
+          82,
+          204,
+          82,
+          96,
+          144,
+          624,
+          207,
+          43,
+          123,
+          96,
+          39,
+          38,
+          114,
+          2204,
+          2774,
+          2166,
+          1444,
+          7790,
+          38,
+          114,
+          4332,
+          3432
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": 258.5,
+          "prior_velocity_pct": 284.86,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "GROWING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1729393801040204109",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 82.0,
+            "reason": null,
+            "inputs": {
+              "gmv": 27801.52,
+              "creators_count": 89,
+              "items_returned": 5,
+              "top_revenue_sum": 22795.88
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 86.37,
+            "reason": null,
+            "inputs": {
+              "gmv": 27801.52,
+              "creators_count": 89,
+              "items_returned": 5,
+              "top_revenue_sum": 24013.350000000002
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 2.19,
+            "reason": null,
+            "inputs": {
+              "gmv": 27801.52,
+              "videos_count": 105,
+              "items_returned": 5,
+              "top_revenue_sum": 608.0
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 5.47,
+            "reason": null,
+            "inputs": {
+              "gmv": 27801.52,
+              "videos_count": 105,
+              "items_returned": 5,
+              "top_revenue_sum": 1521.58
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "FLAGGED",
+            "action": "flag",
+            "value": 82.0,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 2.19,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 37.47,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_long_term": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "growth_recent_trend": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "SUPPORTING"
+        },
+        "growth_acceleration": {
+          "points": 0.3,
+          "max": 5,
+          "tier": "SUPPORTING"
+        },
+        "demand": {
+          "points": 0.0,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "video_momentum": {
+          "points": 0.08,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "creator_reach": {
+          "points": 0.0,
+          "max": 9,
+          "tier": "CORE"
+        },
+        "creator_growth": {
+          "points": 2.4,
+          "max": 6,
+          "tier": "SUPPORTING"
+        },
+        "competition_category_growth": {
+          "points": 0.05,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "competition_saturation": {
+          "points": 5.03,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "margin_potential": {
+          "points": 9.6,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        }
+      },
+      "wps_groups": {
+        "growth_momentum": {
+          "points": 20.3,
+          "max": 25.0,
+          "na": []
+        },
+        "demand": {
+          "points": 0.0,
+          "max": 15.0,
+          "na": []
+        },
+        "video_momentum": {
+          "points": 0.08,
+          "max": 15.0,
+          "na": []
+        },
+        "creator_momentum": {
+          "points": 2.4,
+          "max": 15.0,
+          "na": []
+        },
+        "competition": {
+          "points": 5.08,
+          "max": 15.0,
+          "na": []
+        },
+        "margin_potential": {
+          "points": 9.6,
+          "max": 10.0,
+          "na": []
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5.0,
+          "na": []
+        }
+      },
+      "wps_points": {
+        "earned": 37.47,
+        "possible": 100.0
+      },
+      "wps_missing_by_tier": {
+        "CORE": [],
+        "SUPPORTING": [],
+        "ENHANCEMENT": []
+      },
+      "wps_inputs": {
+        "product_id": "1729393801040204109",
+        "product_name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+        "recent_velocity_pct": 258.5,
+        "acceleration_pp": -26.36,
+        "competition_count_comparable": 2277,
+        "revenue_growth_pct": 463.43,
+        "units_sold": 708,
+        "videos_count": 105,
+        "video_sales_share_pct": 17.65,
+        "creators_count": 89,
+        "category_growth_pct": -19.52,
+        "category_product_count": 2277,
+        "price_avg": 77.42,
+        "commission_pct": 7,
+        "gmv": 27801.52,
+        "price_min": 25.0,
+        "price_max": 129.84,
+        "shops_count": null,
+        "similar_listings_count": null,
+        "launch_date_days": 967,
+        "history_snapshots": 0
+      },
+      "confidence_adjustments": [
+        {
+          "reason": "ENHANCEMENT field missing: price_history",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_creator_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_video_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_units",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: creator_growth_pct",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: video_growth_pct",
+          "points": -1
+        }
+      ],
+      "confidence_before_adjustments": 90.83,
+      "provenance": {
+        "price_min": {
+          "value": 25.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 129.84,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_avg": {
+          "value": 77.42,
+          "provider": "kalopilot",
+          "source_field": "price_min+price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "gmv_30d": {
+          "value": 27801.52,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 4934.31,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "previous 30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 708,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 463.43,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d,gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d vs previous 30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED",
+          "provider_value": 463.43
+        },
+        "daily_gmv": {
+          "value": [
+            286,
+            144,
+            245,
+            204,
+            82,
+            327,
+            41,
+            286,
+            82,
+            204,
+            82,
+            96,
+            144,
+            624,
+            207,
+            43,
+            123,
+            96,
+            39,
+            38,
+            114,
+            2204,
+            2774,
+            2166,
+            1444,
+            7790,
+            38,
+            114,
+            4332,
+            3432
+          ],
+          "provider": "kalopilot",
+          "source_field": "daily_gmv",
+          "scope": "PRODUCT",
+          "period": "daily, 30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_count": {
+          "value": 89,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_creator_count": {
+          "value": 33,
+          "provider": "kalopilot",
+          "source_field": "selling_creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_creators": {
+          "value": [
+            {
+              "creator_id": "6994572013114770437",
+              "name": "LOSREYES",
+              "revenue": 22795.88,
+              "growth_pct": 4315.82
+            },
+            {
+              "creator_id": "7204780729088377902",
+              "name": "Jenna_Seas🏝️",
+              "revenue": 760.0,
+              "growth_pct": 0.0
+            },
+            {
+              "creator_id": "6964868065726366726",
+              "name": "✨MamaMarie✨",
+              "revenue": 457.47,
+              "growth_pct": -0.64
+            },
+            {
+              "creator_id": "6780852450561508358",
+              "name": "P A I G E 🤍",
+              "revenue": 456.11,
+              "growth_pct": -50.02
+            },
+            {
+              "creator_id": "7323194535802258475",
+              "name": "Laura | Mom Finds & More ✨",
+              "revenue": 314.0,
+              "growth_pct": 454.17
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_creators",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_growth_pct": {
+          "value": 3.49,
+          "provider": "kalopilot",
+          "source_field": "creator_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 105,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_video_count": {
+          "value": 39,
+          "provider": "kalopilot",
+          "source_field": "selling_video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_sales_share_pct": {
+          "value": 17.65,
+          "provider": "kalopilot",
+          "source_field": "video_sales_share_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_videos": {
+          "value": [
+            {
+              "video_id": "7688440009690451213",
+              "creator": "jenna_seas",
+              "revenue": 608.0,
+              "views": 6655
+            },
+            {
+              "video_id": "7622086362614861086",
+              "creator": "mariecamu",
+              "revenue": 457.47,
+              "views": 16045
+            },
+            {
+              "video_id": "7681366511717469471",
+              "creator": "paigefeeser4",
+              "revenue": 456.11,
+              "views": 18676
+            },
+            {
+              "video_id": "7690583977781939470",
+              "creator": "shoplosreyes",
+              "revenue": 398.0,
+              "views": 3136
+            },
+            {
+              "video_id": "7614346919719996686",
+              "creator": "sb143x",
+              "revenue": 293.28,
+              "views": 26798
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_videos",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_growth_pct": {
+          "value": 2.94,
+          "provider": "kalopilot",
+          "source_field": "video_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "category_growth_pct": {
+          "value": -19.52,
+          "provider": "kalopilot",
+          "source_field": "category_growth_pct",
+          "scope": "CATEGORY (as returned)",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "competition_count": {
+          "value": 2277,
+          "provider": "kalopilot",
+          "source_field": "category_product_count",
+          "scope": "SUBCATEGORY",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "commission_pct": {
+          "value": 7,
+          "provider": "kalopilot",
+          "source_field": "commission_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "similar_listings_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "similar_listings_count",
+          "scope": "PRODUCT_CLUSTER",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:04:42.067307+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "wps_input_provenance": {
+        "revenue_growth_pct": "growth_30d",
+        "recent_velocity_pct": "daily_gmv",
+        "acceleration_pp": "daily_gmv",
+        "units_sold": "units_30d",
+        "videos_count": "video_count",
+        "video_sales_share_pct": "video_sales_share_pct",
+        "creators_count": "creator_count",
+        "top_creators_growth_pct": "top_creators",
+        "category_growth_pct": "category_growth_pct",
+        "competition_count_comparable": "competition_count",
+        "price_avg": "price_avg",
+        "commission_pct": "commission_pct",
+        "daily_sales_series": "daily_gmv",
+        "gmv": "gmv_30d",
+        "shops_count": "shop_count",
+        "similar_listings_count": "similar_listings_count"
+      },
+      "wps_na_metrics": [],
+      "confidence": 84.83,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 3.33,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 2.5,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "CREATOR_DEPENDENCY",
+          "value": 82.0,
+          "condition": "> 70"
+        }
+      ],
+      "missing_data": [
+        "shop_count",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1729393801040204109",
+        "product_name": "LosReyes Kids' Polycarbonate Plastic Sports Sunglasses, 3-12 Ages, UV400 Protection, Non-Slip Secure Fit, Scratch-Sweat Resistant, Energy-Boosted Bold Design, Affordable Durable, for Playground, Outdoor Use",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729393801040204109&language=en-US&currency=USD&region=US",
+        "category_path": "Sports & Outdoor > Sports & Outdoor Accessories > Sports Eyewear",
+        "category_id": "836744",
+        "shop_id": "7495187285147289933",
+        "shop_name": "LOSREYES",
+        "price_min": 25.0,
+        "price_max": 129.84,
+        "price_history": null,
+        "gmv_30d": 27801.52,
+        "units_30d": 708,
+        "gmv_prev_30d": 4934.31,
+        "growth_30d_pct": 463.43,
+        "category_growth_pct": -19.52,
+        "launch_date": "2024-02-05",
+        "data_window_end": "2026-09-29",
+        "commission_pct": 7,
+        "daily_gmv": [
+          286,
+          144,
+          245,
+          204,
+          82,
+          327,
+          41,
+          286,
+          82,
+          204,
+          82,
+          96,
+          144,
+          624,
+          207,
+          43,
+          123,
+          96,
+          39,
+          38,
+          114,
+          2204,
+          2774,
+          2166,
+          1444,
+          7790,
+          38,
+          114,
+          4332,
+          3432
+        ],
+        "creator_count": 89,
+        "selling_creator_count": 33,
+        "creator_growth_pct": 3.49,
+        "top_creators": [
+          {
+            "creator_id": "6994572013114770437",
+            "name": "LOSREYES",
+            "revenue": 22795.88,
+            "growth_pct": 4315.82
+          },
+          {
+            "creator_id": "7204780729088377902",
+            "name": "Jenna_Seas🏝️",
+            "revenue": 760.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6964868065726366726",
+            "name": "✨MamaMarie✨",
+            "revenue": 457.47,
+            "growth_pct": -0.64
+          },
+          {
+            "creator_id": "6780852450561508358",
+            "name": "P A I G E 🤍",
+            "revenue": 456.11,
+            "growth_pct": -50.02
+          },
+          {
+            "creator_id": "7323194535802258475",
+            "name": "Laura | Mom Finds & More ✨",
+            "revenue": 314.0,
+            "growth_pct": 454.17
+          }
+        ],
+        "video_count": 105,
+        "selling_video_count": 39,
+        "video_growth_pct": 2.94,
+        "video_sales_share_pct": 17.65,
+        "top_videos": [
+          {
+            "video_id": "7688440009690451213",
+            "creator": "jenna_seas",
+            "revenue": 608.0,
+            "views": 6655
+          },
+          {
+            "video_id": "7622086362614861086",
+            "creator": "mariecamu",
+            "revenue": 457.47,
+            "views": 16045
+          },
+          {
+            "video_id": "7681366511717469471",
+            "creator": "paigefeeser4",
+            "revenue": 456.11,
+            "views": 18676
+          },
+          {
+            "video_id": "7690583977781939470",
+            "creator": "shoplosreyes",
+            "revenue": 398.0,
+            "views": 3136
+          },
+          {
+            "video_id": "7614346919719996686",
+            "creator": "sb143x",
+            "revenue": 293.28,
+            "views": 26798
+          }
+        ],
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 2277,
+        "category_product_count_level": "Sports Eyewear",
+        "leaf_category_id": "836744"
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v2.1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-10-01T04:04:42.067307+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T040442067307Z_1729393801040204109_deep_product.json",
+        "task_id": "1ee363d971034ba2909062f4244b3230",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1729393801040204109",
+        "discovery_status": "PASS"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T030132Z_06130f",
+      "_pid": "1729393801040204109"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732539550637789185",
+      "product_name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732539550637789185&language=en-US&currency=USD&region=US",
+      "category": "Home Supplies > Home Care Supplies > Dust Covers",
+      "category_id": "600001",
+      "shop": {
+        "shop_id": "7495497201509304321",
+        "shop_name": "FaddishDeal"
+      },
+      "price": {
+        "min": 70.15,
+        "max": 70.15,
+        "avg": 70.15,
+        "history": null
+      },
+      "gmv": 55427.26,
+      "units": 1571,
+      "growth": {
+        "growth_30d_pct": 547.9,
+        "category_growth_pct": -1.95,
+        "gmv_prev_30d": 8554.85,
+        "growth_30d_provider": 547.904522,
+        "growth_source": "calculated"
+      },
+      "launch_date": "2026-08-07",
+      "data_window_end": "2026-10-01",
+      "commission_pct": 12.0,
+      "creator_metrics": {
+        "total": 18,
+        "selling": 14,
+        "growth_pct": 350.0,
+        "top_creators": [
+          {
+            "creator_id": "7031740471244899334",
+            "name": "Ethan",
+            "revenue": 28543.81,
+            "growth_pct": -35.26
+          },
+          {
+            "creator_id": "7353820518555862059",
+            "name": "Rosy",
+            "revenue": 15991.95,
+            "growth_pct": 22596.79
+          },
+          {
+            "creator_id": "7100614724015162414",
+            "name": "Hannah",
+            "revenue": 6163.45,
+            "growth_pct": 239.31
+          },
+          {
+            "creator_id": "7528396322241135671",
+            "name": "Lea Edwards",
+            "revenue": 520.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6804184263518782470",
+            "name": "Cortlyn Burl",
+            "revenue": 494.0,
+            "growth_pct": 0.0
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 91,
+        "selling": 40,
+        "growth_pct": 264.0,
+        "sales_share_pct": 95.63491,
+        "top_videos": [
+          {
+            "video_id": "7676437197842615566",
+            "creator": "abigail980319",
+            "revenue": 16069.25,
+            "views": 134486
+          },
+          {
+            "video_id": "7684236935153405215",
+            "creator": "zoey51585",
+            "revenue": 15791.8,
+            "views": 85227
+          },
+          {
+            "video_id": "7687910305778633998",
+            "creator": "abigail980319",
+            "revenue": 9334.0,
+            "views": 23398
+          },
+          {
+            "video_id": "7686059960685448479",
+            "creator": "b55d3c6ed2",
+            "revenue": 4394.0,
+            "views": 9650
+          },
+          {
+            "video_id": "7678282116332834062",
+            "creator": "abigail980319",
+            "revenue": 1122.4,
+            "views": 5214
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 1048,
+        "category_product_count_level": "Dust Covers",
+        "competition_count": 1048,
+        "competition_scope": "SUBCATEGORY",
+        "competition_category_id": "600001",
+        "competition_subcategory_id": "700665",
+        "competition_comparable": true,
+        "category_level_stated": "Dust Covers",
+        "competition_source_field": "category_product_count"
+      },
+      "sales_history": {
+        "daily_gmv": [
+          1964.0,
+          1613.0,
+          1684.0,
+          1824.0,
+          1403.0,
+          912.0,
+          1122.0,
+          1263.0,
+          1193.0,
+          842.0,
+          702.0,
+          772.0,
+          1894.0,
+          1193.0,
+          1052.0,
+          324.0,
+          1824.0,
+          561.0,
+          1333.0,
+          312.0,
+          312.0,
+          494.0,
+          78.0,
+          156.0,
+          156.0,
+          442.0,
+          390.0,
+          15158.0,
+          10348.0,
+          4108.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": 525.93,
+          "prior_velocity_pct": -27.51,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "ACCELERATING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732539550637789185",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 51.5,
+            "reason": null,
+            "inputs": {
+              "gmv": 55427.26,
+              "creators_count": 18,
+              "items_returned": 5,
+              "top_revenue_sum": 28543.81
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 91.47,
+            "reason": null,
+            "inputs": {
+              "gmv": 55427.26,
+              "creators_count": 18,
+              "items_returned": 5,
+              "top_revenue_sum": 50699.21
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 28.99,
+            "reason": null,
+            "inputs": {
+              "gmv": 55427.26,
+              "videos_count": 91,
+              "items_returned": 5,
+              "top_revenue_sum": 16069.25
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 74.32,
+            "reason": null,
+            "inputs": {
+              "gmv": 55427.26,
+              "videos_count": 91,
+              "items_returned": 5,
+              "top_revenue_sum": 41195.05
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 51.5,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 28.99,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 53.2,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_long_term": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "growth_recent_trend": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "SUPPORTING"
+        },
+        "growth_acceleration": {
+          "points": 5.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        },
+        "demand": {
+          "points": 1.47,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "video_momentum": {
+          "points": 7.5,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "creator_reach": {
+          "points": 0.0,
+          "max": 9,
+          "tier": "CORE"
+        },
+        "creator_growth": {
+          "points": 2.4,
+          "max": 6,
+          "tier": "SUPPORTING"
+        },
+        "competition_category_growth": {
+          "points": 1.93,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "competition_saturation": {
+          "points": 6.29,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "margin_potential": {
+          "points": 8.6,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        }
+      },
+      "wps_groups": {
+        "growth_momentum": {
+          "points": 25.0,
+          "max": 25.0,
+          "na": []
+        },
+        "demand": {
+          "points": 1.47,
+          "max": 15.0,
+          "na": []
+        },
+        "video_momentum": {
+          "points": 7.5,
+          "max": 15.0,
+          "na": []
+        },
+        "creator_momentum": {
+          "points": 2.4,
+          "max": 15.0,
+          "na": []
+        },
+        "competition": {
+          "points": 8.23,
+          "max": 15.0,
+          "na": []
+        },
+        "margin_potential": {
+          "points": 8.6,
+          "max": 10.0,
+          "na": []
+        },
+        "trend_stability": {
+          "points": 0.0,
+          "max": 5.0,
+          "na": []
+        }
+      },
+      "wps_points": {
+        "earned": 53.2,
+        "possible": 100.0
+      },
+      "wps_missing_by_tier": {
+        "CORE": [],
+        "SUPPORTING": [],
+        "ENHANCEMENT": []
+      },
+      "wps_inputs": {
+        "product_id": "1732539550637789185",
+        "product_name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+        "recent_velocity_pct": 525.93,
+        "acceleration_pp": 553.44,
+        "competition_count_comparable": 1048,
+        "revenue_growth_pct": 547.9,
+        "units_sold": 1571,
+        "videos_count": 91,
+        "video_sales_share_pct": 95.63491,
+        "creators_count": 18,
+        "category_growth_pct": -1.95,
+        "category_product_count": 1048,
+        "price_avg": 70.15,
+        "commission_pct": 12.0,
+        "gmv": 55427.26,
+        "price_min": 70.15,
+        "price_max": 70.15,
+        "shops_count": null,
+        "similar_listings_count": null,
+        "launch_date_days": 55,
+        "history_snapshots": 0
+      },
+      "confidence_adjustments": [
+        {
+          "reason": "ENHANCEMENT field missing: price_history",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_creator_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_video_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_units",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: creator_growth_pct",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: video_growth_pct",
+          "points": -1
+        }
+      ],
+      "confidence_before_adjustments": 90.83,
+      "provenance": {
+        "price_min": {
+          "value": 70.15,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 70.15,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_avg": {
+          "value": 70.15,
+          "provider": "kalopilot",
+          "source_field": "price_min+price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "gmv_30d": {
+          "value": 55427.26,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 8554.85,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "previous 30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1571,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 547.9,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d,gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d vs previous 30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED",
+          "provider_value": 547.904522
+        },
+        "daily_gmv": {
+          "value": [
+            1964.0,
+            1613.0,
+            1684.0,
+            1824.0,
+            1403.0,
+            912.0,
+            1122.0,
+            1263.0,
+            1193.0,
+            842.0,
+            702.0,
+            772.0,
+            1894.0,
+            1193.0,
+            1052.0,
+            324.0,
+            1824.0,
+            561.0,
+            1333.0,
+            312.0,
+            312.0,
+            494.0,
+            78.0,
+            156.0,
+            156.0,
+            442.0,
+            390.0,
+            15158.0,
+            10348.0,
+            4108.0
+          ],
+          "provider": "kalopilot",
+          "source_field": "daily_gmv",
+          "scope": "PRODUCT",
+          "period": "daily, 30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_count": {
+          "value": 18,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_creator_count": {
+          "value": 14,
+          "provider": "kalopilot",
+          "source_field": "selling_creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_creators": {
+          "value": [
+            {
+              "creator_id": "7031740471244899334",
+              "name": "Ethan",
+              "revenue": 28543.81,
+              "growth_pct": -35.26
+            },
+            {
+              "creator_id": "7353820518555862059",
+              "name": "Rosy",
+              "revenue": 15991.95,
+              "growth_pct": 22596.79
+            },
+            {
+              "creator_id": "7100614724015162414",
+              "name": "Hannah",
+              "revenue": 6163.45,
+              "growth_pct": 239.31
+            },
+            {
+              "creator_id": "7528396322241135671",
+              "name": "Lea Edwards",
+              "revenue": 520.0,
+              "growth_pct": 0.0
+            },
+            {
+              "creator_id": "6804184263518782470",
+              "name": "Cortlyn Burl",
+              "revenue": 494.0,
+              "growth_pct": 0.0
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_creators",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_growth_pct": {
+          "value": 350.0,
+          "provider": "kalopilot",
+          "source_field": "creator_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 91,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_video_count": {
+          "value": 40,
+          "provider": "kalopilot",
+          "source_field": "selling_video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_sales_share_pct": {
+          "value": 95.63491,
+          "provider": "kalopilot",
+          "source_field": "video_sales_share_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_videos": {
+          "value": [
+            {
+              "video_id": "7676437197842615566",
+              "creator": "abigail980319",
+              "revenue": 16069.25,
+              "views": 134486
+            },
+            {
+              "video_id": "7684236935153405215",
+              "creator": "zoey51585",
+              "revenue": 15791.8,
+              "views": 85227
+            },
+            {
+              "video_id": "7687910305778633998",
+              "creator": "abigail980319",
+              "revenue": 9334.0,
+              "views": 23398
+            },
+            {
+              "video_id": "7686059960685448479",
+              "creator": "b55d3c6ed2",
+              "revenue": 4394.0,
+              "views": 9650
+            },
+            {
+              "video_id": "7678282116332834062",
+              "creator": "abigail980319",
+              "revenue": 1122.4,
+              "views": 5214
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_videos",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_growth_pct": {
+          "value": 264.0,
+          "provider": "kalopilot",
+          "source_field": "video_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "category_growth_pct": {
+          "value": -1.95,
+          "provider": "kalopilot",
+          "source_field": "category_growth_pct",
+          "scope": "CATEGORY (as returned)",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "competition_count": {
+          "value": 1048,
+          "provider": "kalopilot",
+          "source_field": "category_product_count",
+          "scope": "SUBCATEGORY",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "commission_pct": {
+          "value": 12.0,
+          "provider": "kalopilot",
+          "source_field": "commission_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "similar_listings_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "similar_listings_count",
+          "scope": "PRODUCT_CLUSTER",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:08:48.803962+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "wps_input_provenance": {
+        "revenue_growth_pct": "growth_30d",
+        "recent_velocity_pct": "daily_gmv",
+        "acceleration_pp": "daily_gmv",
+        "units_sold": "units_30d",
+        "videos_count": "video_count",
+        "video_sales_share_pct": "video_sales_share_pct",
+        "creators_count": "creator_count",
+        "top_creators_growth_pct": "top_creators",
+        "category_growth_pct": "category_growth_pct",
+        "competition_count_comparable": "competition_count",
+        "price_avg": "price_avg",
+        "commission_pct": "commission_pct",
+        "daily_sales_series": "daily_gmv",
+        "gmv": "gmv_30d",
+        "shops_count": "shop_count",
+        "similar_listings_count": "similar_listings_count"
+      },
+      "wps_na_metrics": [],
+      "confidence": 84.83,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 3.33,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 2.5,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [],
+      "missing_data": [
+        "shop_count",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732539550637789185",
+        "product_name": "【FaddishDeal】Durable Air Conditioner Cover, Full Mesh AC Protector, Heavy-Duty Outdoor Protection, All-Season Use, AC Covers, AC Covers For Outside",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732539550637789185&language=en-US&currency=USD&region=US",
+        "category_path": "Home Supplies > Home Care Supplies > Dust Covers",
+        "category_id": "600001",
+        "shop_id": "7495497201509304321",
+        "shop_name": "FaddishDeal",
+        "price_min": 70.15,
+        "price_max": 70.15,
+        "price_history": null,
+        "gmv_30d": 55427.26,
+        "units_30d": 1571,
+        "gmv_prev_30d": 8554.85,
+        "growth_30d_pct": 547.904522,
+        "category_growth_pct": -1.95,
+        "launch_date": "2026-08-07",
+        "data_window_end": "2026-10-01",
+        "commission_pct": 12.0,
+        "daily_gmv": [
+          1964.0,
+          1613.0,
+          1684.0,
+          1824.0,
+          1403.0,
+          912.0,
+          1122.0,
+          1263.0,
+          1193.0,
+          842.0,
+          702.0,
+          772.0,
+          1894.0,
+          1193.0,
+          1052.0,
+          324.0,
+          1824.0,
+          561.0,
+          1333.0,
+          312.0,
+          312.0,
+          494.0,
+          78.0,
+          156.0,
+          156.0,
+          442.0,
+          390.0,
+          15158.0,
+          10348.0,
+          4108.0
+        ],
+        "creator_count": 18,
+        "selling_creator_count": 14,
+        "creator_growth_pct": 350.0,
+        "top_creators": [
+          {
+            "creator_id": "7031740471244899334",
+            "name": "Ethan",
+            "revenue": 28543.81,
+            "growth_pct": -35.26
+          },
+          {
+            "creator_id": "7353820518555862059",
+            "name": "Rosy",
+            "revenue": 15991.95,
+            "growth_pct": 22596.79
+          },
+          {
+            "creator_id": "7100614724015162414",
+            "name": "Hannah",
+            "revenue": 6163.45,
+            "growth_pct": 239.31
+          },
+          {
+            "creator_id": "7528396322241135671",
+            "name": "Lea Edwards",
+            "revenue": 520.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6804184263518782470",
+            "name": "Cortlyn Burl",
+            "revenue": 494.0,
+            "growth_pct": 0.0
+          }
+        ],
+        "video_count": 91,
+        "selling_video_count": 40,
+        "video_growth_pct": 264.0,
+        "video_sales_share_pct": 95.63491,
+        "top_videos": [
+          {
+            "video_id": "7676437197842615566",
+            "creator": "abigail980319",
+            "revenue": 16069.25,
+            "views": 134486
+          },
+          {
+            "video_id": "7684236935153405215",
+            "creator": "zoey51585",
+            "revenue": 15791.8,
+            "views": 85227
+          },
+          {
+            "video_id": "7687910305778633998",
+            "creator": "abigail980319",
+            "revenue": 9334.0,
+            "views": 23398
+          },
+          {
+            "video_id": "7686059960685448479",
+            "creator": "b55d3c6ed2",
+            "revenue": 4394.0,
+            "views": 9650
+          },
+          {
+            "video_id": "7678282116332834062",
+            "creator": "abigail980319",
+            "revenue": 1122.4,
+            "views": 5214
+          }
+        ],
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 1048,
+        "category_product_count_level": "Dust Covers",
+        "leaf_category_id": "700665"
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v2.1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-10-01T04:08:48.803962+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T040848803962Z_1732539550637789185_deep_product.json",
+        "task_id": "7408b40be1414e5fbf162c3d75a3ed8f",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732539550637789185",
+        "discovery_status": "PASS"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T030132Z_06130f",
+      "_pid": "1732539550637789185"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732444459834315676",
+      "product_name": "Halloween Decoration Outdoor, Large Witch Cauldron on 50\" Tripod with Mist Maker & Skeleton, Cauldron Halloween Decor for Outside Yard Garden Lawn Home Porch Door",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732444459834315676&language=en-US&currency=USD&region=US",
+      "category": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+      "category_id": "600009",
+      "shop": {
+        "shop_id": "7494320790118959004",
+        "shop_name": "MEADIN"
+      },
+      "price": {
+        "min": 27.99,
+        "max": 39.99,
+        "avg": 33.99,
+        "history": null
+      },
+      "gmv": 26100.84,
+      "units": 907,
+      "growth": {
+        "growth_30d_pct": 575.95,
+        "category_growth_pct": -6.05,
+        "gmv_prev_30d": 3861.37,
+        "growth_30d_provider": 575.95,
+        "growth_source": "calculated"
+      },
+      "launch_date": "2026-07-02",
+      "data_window_end": "2026-10-01",
+      "commission_pct": 10.0,
+      "creator_metrics": {
+        "total": 107,
+        "selling": 107,
+        "growth_pct": 282.14,
+        "top_creators": [
+          {
+            "creator_id": "6726398477146424326",
+            "name": "Claudia Karla",
+            "revenue": 3015.52,
+            "growth_pct": 1494.68
+          },
+          {
+            "creator_id": "6816693788464858118",
+            "name": "BarefootMama",
+            "revenue": 1970.83,
+            "growth_pct": 240.07
+          },
+          {
+            "creator_id": "6540800780524344335",
+            "name": "Rachel Henthorn",
+            "revenue": 1766.99,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6819364012154078213",
+            "name": "✨Chaotic Nicole✨",
+            "revenue": 1433.14,
+            "growth_pct": 1035.89
+          },
+          {
+            "creator_id": "6556248378961826831",
+            "name": "Chan | Home & Mom Finds",
+            "revenue": 1218.41,
+            "growth_pct": 74.51
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 215,
+        "selling": 92,
+        "growth_pct": 283.93,
+        "sales_share_pct": 49.07,
+        "top_videos": [
+          {
+            "video_id": "7685029155016019214",
+            "creator": "taylor.tex",
+            "revenue": 1970.83,
+            "views": 67714
+          },
+          {
+            "video_id": "7685440144647703838",
+            "creator": "claukarlatx",
+            "revenue": 1647.57,
+            "views": 63798
+          },
+          {
+            "video_id": "7662224724428197151",
+            "creator": "chandlerspriggs",
+            "revenue": 1218.41,
+            "views": 41789
+          },
+          {
+            "video_id": "7687690637910543647",
+            "creator": "claukarlatx",
+            "revenue": 841.0,
+            "views": 30905
+          },
+          {
+            "video_id": "7677997991378177311",
+            "creator": "magnoliasfinds",
+            "revenue": 787.85,
+            "views": 26012
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 6438,
+        "category_product_count_level": "Festive Decorations",
+        "competition_count": 6438,
+        "competition_scope": "SUBCATEGORY",
+        "competition_category_id": "600009",
+        "competition_subcategory_id": "600009",
+        "competition_comparable": true,
+        "category_level_stated": "Festive Decorations",
+        "competition_source_field": "category_product_count"
+      },
+      "sales_history": {
+        "daily_gmv": [
+          330.0,
+          330.0,
+          330.0,
+          240.0,
+          240.0,
+          330.0,
+          270.0,
+          420.0,
+          300.0,
+          750.0,
+          210.0,
+          540.0,
+          493.0,
+          696.0,
+          1483.0,
+          691.0,
+          405.0,
+          1107.0,
+          1538.0,
+          1044.0,
+          1682.0,
+          1595.0,
+          1450.0,
+          1421.0,
+          1508.0,
+          1769.0,
+          1653.0,
+          1247.0,
+          957.0,
+          1073.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": 9.15,
+          "prior_velocity_pct": 81.39,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "STABLE",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732444459834315676",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 11.55,
+            "reason": null,
+            "inputs": {
+              "gmv": 26100.84,
+              "creators_count": 107,
+              "items_returned": 5,
+              "top_revenue_sum": 3015.52
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 25.87,
+            "reason": null,
+            "inputs": {
+              "gmv": 26100.84,
+              "creators_count": 107,
+              "items_returned": 5,
+              "top_revenue_sum": 6753.34
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 7.55,
+            "reason": null,
+            "inputs": {
+              "gmv": 26100.84,
+              "videos_count": 215,
+              "items_returned": 5,
+              "top_revenue_sum": 1970.83
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 18.53,
+            "reason": null,
+            "inputs": {
+              "gmv": 26100.84,
+              "videos_count": 215,
+              "items_returned": 5,
+              "top_revenue_sum": 4836.8099999999995
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 11.55,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 7.55,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 35.15,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_long_term": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "growth_recent_trend": {
+          "points": 5.83,
+          "max": 10,
+          "tier": "SUPPORTING"
+        },
+        "growth_acceleration": {
+          "points": 0.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        },
+        "demand": {
+          "points": 0.0,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "video_momentum": {
+          "points": 1.25,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "creator_reach": {
+          "points": 0.16,
+          "max": 9,
+          "tier": "CORE"
+        },
+        "creator_growth": {
+          "points": 4.8,
+          "max": 6,
+          "tier": "SUPPORTING"
+        },
+        "competition_category_growth": {
+          "points": 1.49,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "competition_saturation": {
+          "points": 3.34,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "margin_potential": {
+          "points": 5.88,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "trend_stability": {
+          "points": 2.41,
+          "max": 5,
+          "tier": "SUPPORTING"
+        }
+      },
+      "wps_groups": {
+        "growth_momentum": {
+          "points": 15.83,
+          "max": 25.0,
+          "na": []
+        },
+        "demand": {
+          "points": 0.0,
+          "max": 15.0,
+          "na": []
+        },
+        "video_momentum": {
+          "points": 1.25,
+          "max": 15.0,
+          "na": []
+        },
+        "creator_momentum": {
+          "points": 4.96,
+          "max": 15.0,
+          "na": []
+        },
+        "competition": {
+          "points": 4.83,
+          "max": 15.0,
+          "na": []
+        },
+        "margin_potential": {
+          "points": 5.88,
+          "max": 10.0,
+          "na": []
+        },
+        "trend_stability": {
+          "points": 2.41,
+          "max": 5.0,
+          "na": []
+        }
+      },
+      "wps_points": {
+        "earned": 35.15,
+        "possible": 100.0
+      },
+      "wps_missing_by_tier": {
+        "CORE": [],
+        "SUPPORTING": [],
+        "ENHANCEMENT": []
+      },
+      "wps_inputs": {
+        "product_id": "1732444459834315676",
+        "product_name": "Halloween Decoration Outdoor, Large Witch Cauldron on 50\" Tripod with Mist Maker & Skeleton, Cauldron Halloween Decor for Outside Yard Garden Lawn Home Porch Door",
+        "recent_velocity_pct": 9.15,
+        "acceleration_pp": -72.24,
+        "competition_count_comparable": 6438,
+        "revenue_growth_pct": 575.95,
+        "units_sold": 907,
+        "videos_count": 215,
+        "video_sales_share_pct": 49.07,
+        "creators_count": 107,
+        "category_growth_pct": -6.05,
+        "category_product_count": 6438,
+        "price_avg": 33.99,
+        "commission_pct": 10.0,
+        "gmv": 26100.84,
+        "price_min": 27.99,
+        "price_max": 39.99,
+        "shops_count": 1,
+        "similar_listings_count": null,
+        "launch_date_days": 91,
+        "history_snapshots": 0
+      },
+      "confidence_adjustments": [
+        {
+          "reason": "ENHANCEMENT field missing: price_history",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_creator_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_video_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_units",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: creator_growth_pct",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: video_growth_pct",
+          "points": -1
+        }
+      ],
+      "confidence_before_adjustments": 94.17,
+      "provenance": {
+        "price_min": {
+          "value": 27.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 39.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_avg": {
+          "value": 33.99,
+          "provider": "kalopilot",
+          "source_field": "price_min+price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "gmv_30d": {
+          "value": 26100.84,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 3861.37,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "previous 30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 907,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 575.95,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d,gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d vs previous 30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED",
+          "provider_value": 575.95
+        },
+        "daily_gmv": {
+          "value": [
+            330.0,
+            330.0,
+            330.0,
+            240.0,
+            240.0,
+            330.0,
+            270.0,
+            420.0,
+            300.0,
+            750.0,
+            210.0,
+            540.0,
+            493.0,
+            696.0,
+            1483.0,
+            691.0,
+            405.0,
+            1107.0,
+            1538.0,
+            1044.0,
+            1682.0,
+            1595.0,
+            1450.0,
+            1421.0,
+            1508.0,
+            1769.0,
+            1653.0,
+            1247.0,
+            957.0,
+            1073.0
+          ],
+          "provider": "kalopilot",
+          "source_field": "daily_gmv",
+          "scope": "PRODUCT",
+          "period": "daily, 30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_count": {
+          "value": 107,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_creator_count": {
+          "value": 107,
+          "provider": "kalopilot",
+          "source_field": "selling_creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_creators": {
+          "value": [
+            {
+              "creator_id": "6726398477146424326",
+              "name": "Claudia Karla",
+              "revenue": 3015.52,
+              "growth_pct": 1494.68
+            },
+            {
+              "creator_id": "6816693788464858118",
+              "name": "BarefootMama",
+              "revenue": 1970.83,
+              "growth_pct": 240.07
+            },
+            {
+              "creator_id": "6540800780524344335",
+              "name": "Rachel Henthorn",
+              "revenue": 1766.99,
+              "growth_pct": 0.0
+            },
+            {
+              "creator_id": "6819364012154078213",
+              "name": "✨Chaotic Nicole✨",
+              "revenue": 1433.14,
+              "growth_pct": 1035.89
+            },
+            {
+              "creator_id": "6556248378961826831",
+              "name": "Chan | Home & Mom Finds",
+              "revenue": 1218.41,
+              "growth_pct": 74.51
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_creators",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_growth_pct": {
+          "value": 282.14,
+          "provider": "kalopilot",
+          "source_field": "creator_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 215,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_video_count": {
+          "value": 92,
+          "provider": "kalopilot",
+          "source_field": "selling_video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_sales_share_pct": {
+          "value": 49.07,
+          "provider": "kalopilot",
+          "source_field": "video_sales_share_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_videos": {
+          "value": [
+            {
+              "video_id": "7685029155016019214",
+              "creator": "taylor.tex",
+              "revenue": 1970.83,
+              "views": 67714
+            },
+            {
+              "video_id": "7685440144647703838",
+              "creator": "claukarlatx",
+              "revenue": 1647.57,
+              "views": 63798
+            },
+            {
+              "video_id": "7662224724428197151",
+              "creator": "chandlerspriggs",
+              "revenue": 1218.41,
+              "views": 41789
+            },
+            {
+              "video_id": "7687690637910543647",
+              "creator": "claukarlatx",
+              "revenue": 841.0,
+              "views": 30905
+            },
+            {
+              "video_id": "7677997991378177311",
+              "creator": "magnoliasfinds",
+              "revenue": 787.85,
+              "views": 26012
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_videos",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_growth_pct": {
+          "value": 283.93,
+          "provider": "kalopilot",
+          "source_field": "video_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "category_growth_pct": {
+          "value": -6.05,
+          "provider": "kalopilot",
+          "source_field": "category_growth_pct",
+          "scope": "CATEGORY (as returned)",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "competition_count": {
+          "value": 6438,
+          "provider": "kalopilot",
+          "source_field": "category_product_count",
+          "scope": "SUBCATEGORY",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": 1,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "commission_pct": {
+          "value": 10.0,
+          "provider": "kalopilot",
+          "source_field": "commission_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "similar_listings_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "similar_listings_count",
+          "scope": "PRODUCT_CLUSTER",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "2026-10-01T04:13:25.700283+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "wps_input_provenance": {
+        "revenue_growth_pct": "growth_30d",
+        "recent_velocity_pct": "daily_gmv",
+        "acceleration_pp": "daily_gmv",
+        "units_sold": "units_30d",
+        "videos_count": "video_count",
+        "video_sales_share_pct": "video_sales_share_pct",
+        "creators_count": "creator_count",
+        "top_creators_growth_pct": "top_creators",
+        "category_growth_pct": "category_growth_pct",
+        "competition_count_comparable": "competition_count",
+        "price_avg": "price_avg",
+        "commission_pct": "commission_pct",
+        "daily_sales_series": "daily_gmv",
+        "gmv": "gmv_30d",
+        "shops_count": "shop_count",
+        "similar_listings_count": "similar_listings_count"
+      },
+      "wps_na_metrics": [],
+      "confidence": 88.17,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 6.67,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 2.5,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [],
+      "missing_data": [
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732444459834315676",
+        "product_name": "Halloween Decoration Outdoor, Large Witch Cauldron on 50\" Tripod with Mist Maker & Skeleton, Cauldron Halloween Decor for Outside Yard Garden Lawn Home Porch Door",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732444459834315676&language=en-US&currency=USD&region=US",
+        "category_path": "Home Supplies > Festive & Party Supplies > Festive Decorations",
+        "category_id": "600009",
+        "shop_id": "7494320790118959004",
+        "shop_name": "MEADIN",
+        "price_min": 27.99,
+        "price_max": 39.99,
+        "price_history": null,
+        "gmv_30d": 26100.84,
+        "units_30d": 907,
+        "gmv_prev_30d": 3861.37,
+        "growth_30d_pct": 575.95,
+        "category_growth_pct": -6.05,
+        "launch_date": "2026-07-02",
+        "data_window_end": "2026-10-01",
+        "commission_pct": 10.0,
+        "daily_gmv": [
+          330.0,
+          330.0,
+          330.0,
+          240.0,
+          240.0,
+          330.0,
+          270.0,
+          420.0,
+          300.0,
+          750.0,
+          210.0,
+          540.0,
+          493.0,
+          696.0,
+          1483.0,
+          691.0,
+          405.0,
+          1107.0,
+          1538.0,
+          1044.0,
+          1682.0,
+          1595.0,
+          1450.0,
+          1421.0,
+          1508.0,
+          1769.0,
+          1653.0,
+          1247.0,
+          957.0,
+          1073.0
+        ],
+        "creator_count": 107,
+        "selling_creator_count": 107,
+        "creator_growth_pct": 282.14,
+        "top_creators": [
+          {
+            "creator_id": "6726398477146424326",
+            "name": "Claudia Karla",
+            "revenue": 3015.52,
+            "growth_pct": 1494.68
+          },
+          {
+            "creator_id": "6816693788464858118",
+            "name": "BarefootMama",
+            "revenue": 1970.83,
+            "growth_pct": 240.07
+          },
+          {
+            "creator_id": "6540800780524344335",
+            "name": "Rachel Henthorn",
+            "revenue": 1766.99,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "6819364012154078213",
+            "name": "✨Chaotic Nicole✨",
+            "revenue": 1433.14,
+            "growth_pct": 1035.89
+          },
+          {
+            "creator_id": "6556248378961826831",
+            "name": "Chan | Home & Mom Finds",
+            "revenue": 1218.41,
+            "growth_pct": 74.51
+          }
+        ],
+        "video_count": 215,
+        "selling_video_count": 92,
+        "video_growth_pct": 283.93,
+        "video_sales_share_pct": 49.07,
+        "top_videos": [
+          {
+            "video_id": "7685029155016019214",
+            "creator": "taylor.tex",
+            "revenue": 1970.83,
+            "views": 67714
+          },
+          {
+            "video_id": "7685440144647703838",
+            "creator": "claukarlatx",
+            "revenue": 1647.57,
+            "views": 63798
+          },
+          {
+            "video_id": "7662224724428197151",
+            "creator": "chandlerspriggs",
+            "revenue": 1218.41,
+            "views": 41789
+          },
+          {
+            "video_id": "7687690637910543647",
+            "creator": "claukarlatx",
+            "revenue": 841.0,
+            "views": 30905
+          },
+          {
+            "video_id": "7677997991378177311",
+            "creator": "magnoliasfinds",
+            "revenue": 787.85,
+            "views": 26012
+          }
+        ],
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 6438,
+        "category_product_count_level": "Festive Decorations",
+        "leaf_category_id": "600009"
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v2.1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-10-01T04:13:25.700283+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T041325700283Z_1732444459834315676_deep_product.json",
+        "task_id": "21311b329f3d49748d008a1a90be5d4e",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732444459834315676",
+        "discovery_status": "PASS"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T030132Z_06130f",
+      "_pid": "1732444459834315676"
+    },
+    {
+      "product_id": "1729504019443521424",
+      "status": "malformed",
+      "errors": [
+        "text: invalid JSON block (Expecting value)",
+        "no parseable ```json product array found in report/text"
+      ],
+      "observation_timestamp": "2026-10-01T04:17:32.351167+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T041732351167Z_1729504019443521424_deep_product.json",
+        "task_id": "e6a31ee9bcb348878fde8726b6e09ec4",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1729504019443521424",
+        "discovery_status": "PASS"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T030132Z_06130f",
+      "_pid": "1729504019443521424"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732294732712743843",
+      "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732294732712743843&language=en-US&currency=USD&region=US",
+      "category": "Kitchenware > Kitchen Utensils & Gadgets > Sieves and Colanders",
+      "category_id": "600135",
+      "shop": {
+        "shop_id": "7494487906024327075",
+        "shop_name": "Gevoli"
+      },
+      "price": {
+        "min": 21.99,
+        "max": 33.79,
+        "avg": 27.89,
+        "history": null
+      },
+      "gmv": 191498.99,
+      "units": 8311,
+      "growth": {
+        "growth_30d_pct": 523.33,
+        "category_growth_pct": 4.87,
+        "gmv_prev_30d": 30721.7,
+        "growth_30d_provider": 523.33,
+        "growth_source": "calculated"
+      },
+      "launch_date": "2026-05-07",
+      "data_window_end": "2026-09-29",
+      "commission_pct": 8.0,
+      "creator_metrics": {
+        "total": 264,
+        "selling": 126,
+        "growth_pct": null,
+        "top_creators": [
+          {
+            "creator_id": "7419441417393947691",
+            "name": "Holly",
+            "revenue": 100264.39,
+            "growth_pct": 1.11
+          },
+          {
+            "creator_id": "7400853936364749867",
+            "name": "Lollipop",
+            "revenue": 43413.31,
+            "growth_pct": -5.9
+          },
+          {
+            "creator_id": "7427280447620777006",
+            "name": "Resellergrowth",
+            "revenue": 16165.75,
+            "growth_pct": 86.23
+          },
+          {
+            "creator_id": "6857245188058776581",
+            "name": "Josh Morris",
+            "revenue": 4233.3,
+            "growth_pct": 5446.66
+          },
+          {
+            "creator_id": "7588025491115508749",
+            "name": "VELOR✨",
+            "revenue": 3197.17,
+            "growth_pct": 963.07
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 496,
+        "selling": 198,
+        "growth_pct": null,
+        "sales_share_pct": 97.11,
+        "top_videos": [
+          {
+            "video_id": "7682562249734573342",
+            "creator": "holly6849",
+            "revenue": 72246.43,
+            "views": 4947640
+          },
+          {
+            "video_id": "7681727587906800927",
+            "creator": "holly6849",
+            "revenue": 17852.1,
+            "views": 1189649
+          },
+          {
+            "video_id": "7685627841081314573",
+            "creator": "lollipop8017",
+            "revenue": 17770.78,
+            "views": 1398690
+          },
+          {
+            "video_id": "7679320382955900173",
+            "creator": "lollipop8017",
+            "revenue": 16359.61,
+            "views": 1021693
+          },
+          {
+            "video_id": "7682991465387085086",
+            "creator": "resellergrowth",
+            "revenue": 14918.82,
+            "views": 1028770
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 601,
+        "category_product_count_level": "Sieves and Colanders",
+        "competition_count": 601,
+        "competition_scope": "SUBCATEGORY",
+        "competition_category_id": "600135",
+        "competition_subcategory_id": "600135",
+        "competition_comparable": true,
+        "category_level_stated": "Sieves and Colanders",
+        "competition_source_field": "category_product_count"
+      },
+      "sales_history": {
+        "daily_gmv": [
+          3973.0,
+          3674.0,
+          7697.0,
+          3224.0,
+          1150.0,
+          1449.0,
+          7947.0,
+          8522.0,
+          7497.0,
+          5148.0,
+          4898.0,
+          4248.0,
+          8172.0,
+          6972.0,
+          10296.0,
+          14069.0,
+          8522.0,
+          11470.0,
+          8547.0,
+          7942.0,
+          11077.0,
+          10849.0,
+          5282.0,
+          4807.0,
+          4731.0,
+          4769.0,
+          4920.0,
+          4344.0,
+          3168.0,
+          2136.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -54.66,
+          "prior_velocity_pct": 18.37,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "DECLINING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732294732712743843",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 52.36,
+            "reason": null,
+            "inputs": {
+              "gmv": 191498.99,
+              "creators_count": 264,
+              "items_returned": 5,
+              "top_revenue_sum": 100264.39
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 83.47,
+            "reason": null,
+            "inputs": {
+              "gmv": 191498.99,
+              "creators_count": 264,
+              "items_returned": 5,
+              "top_revenue_sum": 159843.45
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 37.73,
+            "reason": null,
+            "inputs": {
+              "gmv": 191498.99,
+              "videos_count": 496,
+              "items_returned": 5,
+              "top_revenue_sum": 72246.43
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 56.33,
+            "reason": null,
+            "inputs": {
+              "gmv": 191498.99,
+              "videos_count": 496,
+              "items_returned": 5,
+              "top_revenue_sum": 107869.31
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 52.36,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 37.73,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 52.63,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_long_term": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "growth_recent_trend": {
+          "points": 0.0,
+          "max": 10,
+          "tier": "SUPPORTING"
+        },
+        "growth_acceleration": {
+          "points": 0.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        },
+        "demand": {
+          "points": 6.9,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "video_momentum": {
+          "points": 10.11,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "creator_reach": {
+          "points": 2.23,
+          "max": 9,
+          "tier": "CORE"
+        },
+        "creator_growth": {
+          "points": 4.8,
+          "max": 6,
+          "tier": "SUPPORTING"
+        },
+        "competition_category_growth": {
+          "points": 2.66,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "competition_saturation": {
+          "points": 7.2,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "margin_potential": {
+          "points": 5.55,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "trend_stability": {
+          "points": 3.18,
+          "max": 5,
+          "tier": "SUPPORTING"
+        }
+      },
+      "wps_groups": {
+        "growth_momentum": {
+          "points": 10.0,
+          "max": 25.0,
+          "na": []
+        },
+        "demand": {
+          "points": 6.9,
+          "max": 15.0,
+          "na": []
+        },
+        "video_momentum": {
+          "points": 10.11,
+          "max": 15.0,
+          "na": []
+        },
+        "creator_momentum": {
+          "points": 7.03,
+          "max": 15.0,
+          "na": []
+        },
+        "competition": {
+          "points": 9.87,
+          "max": 15.0,
+          "na": []
+        },
+        "margin_potential": {
+          "points": 5.55,
+          "max": 10.0,
+          "na": []
+        },
+        "trend_stability": {
+          "points": 3.18,
+          "max": 5.0,
+          "na": []
+        }
+      },
+      "wps_points": {
+        "earned": 52.63,
+        "possible": 100.0
+      },
+      "wps_missing_by_tier": {
+        "CORE": [],
+        "SUPPORTING": [],
+        "ENHANCEMENT": []
+      },
+      "wps_inputs": {
+        "product_id": "1732294732712743843",
+        "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+        "recent_velocity_pct": -54.66,
+        "acceleration_pp": -73.03,
+        "competition_count_comparable": 601,
+        "revenue_growth_pct": 523.33,
+        "units_sold": 8311,
+        "videos_count": 496,
+        "video_sales_share_pct": 97.11,
+        "creators_count": 264,
+        "category_growth_pct": 4.87,
+        "category_product_count": 601,
+        "price_avg": 27.89,
+        "commission_pct": 8.0,
+        "gmv": 191498.99,
+        "price_min": 21.99,
+        "price_max": 33.79,
+        "shops_count": null,
+        "similar_listings_count": null,
+        "launch_date_days": 145,
+        "history_snapshots": 0
+      },
+      "confidence_adjustments": [
+        {
+          "reason": "ENHANCEMENT field missing: price_history",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_creator_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_video_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_units",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: creator_growth_pct",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: video_growth_pct",
+          "points": -1
+        }
+      ],
+      "confidence_before_adjustments": 90.83,
+      "provenance": {
+        "price_min": {
+          "value": 21.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 33.79,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_avg": {
+          "value": 27.89,
+          "provider": "kalopilot",
+          "source_field": "price_min+price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "gmv_30d": {
+          "value": 191498.99,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 30721.7,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "previous 30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 8311,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 523.33,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d,gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d vs previous 30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED",
+          "provider_value": 523.33
+        },
+        "daily_gmv": {
+          "value": [
+            3973.0,
+            3674.0,
+            7697.0,
+            3224.0,
+            1150.0,
+            1449.0,
+            7947.0,
+            8522.0,
+            7497.0,
+            5148.0,
+            4898.0,
+            4248.0,
+            8172.0,
+            6972.0,
+            10296.0,
+            14069.0,
+            8522.0,
+            11470.0,
+            8547.0,
+            7942.0,
+            11077.0,
+            10849.0,
+            5282.0,
+            4807.0,
+            4731.0,
+            4769.0,
+            4920.0,
+            4344.0,
+            3168.0,
+            2136.0
+          ],
+          "provider": "kalopilot",
+          "source_field": "daily_gmv",
+          "scope": "PRODUCT",
+          "period": "daily, 30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_count": {
+          "value": 264,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_creator_count": {
+          "value": 126,
+          "provider": "kalopilot",
+          "source_field": "selling_creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_creators": {
+          "value": [
+            {
+              "creator_id": "7419441417393947691",
+              "name": "Holly",
+              "revenue": 100264.39,
+              "growth_pct": 1.11
+            },
+            {
+              "creator_id": "7400853936364749867",
+              "name": "Lollipop",
+              "revenue": 43413.31,
+              "growth_pct": -5.9
+            },
+            {
+              "creator_id": "7427280447620777006",
+              "name": "Resellergrowth",
+              "revenue": 16165.75,
+              "growth_pct": 86.23
+            },
+            {
+              "creator_id": "6857245188058776581",
+              "name": "Josh Morris",
+              "revenue": 4233.3,
+              "growth_pct": 5446.66
+            },
+            {
+              "creator_id": "7588025491115508749",
+              "name": "VELOR✨",
+              "revenue": 3197.17,
+              "growth_pct": 963.07
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_creators",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_growth_pct": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "creator_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "video_count": {
+          "value": 496,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_video_count": {
+          "value": 198,
+          "provider": "kalopilot",
+          "source_field": "selling_video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_sales_share_pct": {
+          "value": 97.11,
+          "provider": "kalopilot",
+          "source_field": "video_sales_share_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_videos": {
+          "value": [
+            {
+              "video_id": "7682562249734573342",
+              "creator": "holly6849",
+              "revenue": 72246.43,
+              "views": 4947640
+            },
+            {
+              "video_id": "7681727587906800927",
+              "creator": "holly6849",
+              "revenue": 17852.1,
+              "views": 1189649
+            },
+            {
+              "video_id": "7685627841081314573",
+              "creator": "lollipop8017",
+              "revenue": 17770.78,
+              "views": 1398690
+            },
+            {
+              "video_id": "7679320382955900173",
+              "creator": "lollipop8017",
+              "revenue": 16359.61,
+              "views": 1021693
+            },
+            {
+              "video_id": "7682991465387085086",
+              "creator": "resellergrowth",
+              "revenue": 14918.82,
+              "views": 1028770
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_videos",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_growth_pct": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "video_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "category_growth_pct": {
+          "value": 4.87,
+          "provider": "kalopilot",
+          "source_field": "category_growth_pct",
+          "scope": "CATEGORY (as returned)",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "competition_count": {
+          "value": 601,
+          "provider": "kalopilot",
+          "source_field": "category_product_count",
+          "scope": "SUBCATEGORY",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "commission_pct": {
+          "value": 8.0,
+          "provider": "kalopilot",
+          "source_field": "commission_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "similar_listings_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "similar_listings_count",
+          "scope": "PRODUCT_CLUSTER",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-09-29",
+          "retrieved_at": "2026-10-01T04:22:39.892914+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "wps_input_provenance": {
+        "revenue_growth_pct": "growth_30d",
+        "recent_velocity_pct": "daily_gmv",
+        "acceleration_pp": "daily_gmv",
+        "units_sold": "units_30d",
+        "videos_count": "video_count",
+        "video_sales_share_pct": "video_sales_share_pct",
+        "creators_count": "creator_count",
+        "top_creators_growth_pct": "top_creators",
+        "category_growth_pct": "category_growth_pct",
+        "competition_count_comparable": "competition_count",
+        "price_avg": "price_avg",
+        "commission_pct": "commission_pct",
+        "daily_sales_series": "daily_gmv",
+        "gmv": "gmv_30d",
+        "shops_count": "shop_count",
+        "similar_listings_count": "similar_listings_count"
+      },
+      "wps_na_metrics": [],
+      "confidence": 84.83,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 3.33,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 2.5,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "SALES_DECLINING",
+          "trend": "DECLINING",
+          "growth_30d_pct": 523.33
+        }
+      ],
+      "missing_data": [
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732294732712743843",
+        "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732294732712743843&language=en-US&currency=USD&region=US",
+        "category_path": "Kitchenware > Kitchen Utensils & Gadgets > Sieves and Colanders",
+        "category_id": 600135,
+        "shop_id": "7494487906024327075",
+        "shop_name": "Gevoli",
+        "price_min": 21.99,
+        "price_max": 33.79,
+        "price_history": null,
+        "gmv_30d": 191498.99,
+        "units_30d": 8311,
+        "gmv_prev_30d": 30721.7,
+        "growth_30d_pct": 523.33,
+        "category_growth_pct": 4.87,
+        "launch_date": "2026-05-07",
+        "data_window_end": "2026-09-29",
+        "commission_pct": 8.0,
+        "daily_gmv": [
+          3973.0,
+          3674.0,
+          7697.0,
+          3224.0,
+          1150.0,
+          1449.0,
+          7947.0,
+          8522.0,
+          7497.0,
+          5148.0,
+          4898.0,
+          4248.0,
+          8172.0,
+          6972.0,
+          10296.0,
+          14069.0,
+          8522.0,
+          11470.0,
+          8547.0,
+          7942.0,
+          11077.0,
+          10849.0,
+          5282.0,
+          4807.0,
+          4731.0,
+          4769.0,
+          4920.0,
+          4344.0,
+          3168.0,
+          2136.0
+        ],
+        "creator_count": 264,
+        "selling_creator_count": 126,
+        "creator_growth_pct": null,
+        "top_creators": [
+          {
+            "creator_id": "7419441417393947691",
+            "name": "Holly",
+            "revenue": 100264.39,
+            "growth_pct": 1.11
+          },
+          {
+            "creator_id": "7400853936364749867",
+            "name": "Lollipop",
+            "revenue": 43413.31,
+            "growth_pct": -5.9
+          },
+          {
+            "creator_id": "7427280447620777006",
+            "name": "Resellergrowth",
+            "revenue": 16165.75,
+            "growth_pct": 86.23
+          },
+          {
+            "creator_id": "6857245188058776581",
+            "name": "Josh Morris",
+            "revenue": 4233.3,
+            "growth_pct": 5446.66
+          },
+          {
+            "creator_id": "7588025491115508749",
+            "name": "VELOR✨",
+            "revenue": 3197.17,
+            "growth_pct": 963.07
+          }
+        ],
+        "video_count": 496,
+        "selling_video_count": 198,
+        "video_growth_pct": null,
+        "video_sales_share_pct": 97.11,
+        "top_videos": [
+          {
+            "video_id": "7682562249734573342",
+            "creator": "holly6849",
+            "revenue": 72246.43,
+            "views": 4947640
+          },
+          {
+            "video_id": "7681727587906800927",
+            "creator": "holly6849",
+            "revenue": 17852.1,
+            "views": 1189649
+          },
+          {
+            "video_id": "7685627841081314573",
+            "creator": "lollipop8017",
+            "revenue": 17770.78,
+            "views": 1398690
+          },
+          {
+            "video_id": "7679320382955900173",
+            "creator": "lollipop8017",
+            "revenue": 16359.61,
+            "views": 1021693
+          },
+          {
+            "video_id": "7682991465387085086",
+            "creator": "resellergrowth",
+            "revenue": 14918.82,
+            "views": 1028770
+          }
+        ],
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 601,
+        "category_product_count_level": "Sieves and Colanders",
+        "leaf_category_id": 600135
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v2.1",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-10-01T04:22:39.892914+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T042239892914Z_1732294732712743843_deep_product.json",
+        "task_id": "3e0ada2f98ad4805af341a5a272c9d83",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732294732712743843",
+        "discovery_status": "PASS"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T030132Z_06130f",
+      "_pid": "1732294732712743843"
+    }
+  ]
+}

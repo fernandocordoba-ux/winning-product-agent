@@ -1,0 +1,76 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 44.99,
+    "gmv": 48712.97,
+    "units": 2334,
+    "growth": 314.01,
+    "creator_count": 109,
+    "selling_creator_count": null,
+    "video_count": 503,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T032409Z_pet_fd35bbc2301f403d9aa2f98da71a5715.json",
+    "task_id": "fd35bbc2301f403d9aa2f98da71a5715",
+    "report_url": null,
+    "record_index": 1
+  },
+  "product_id": "1729497208501606279",
+  "identity_key": "1729497208501606279",
+  "key_type": "product_id",
+  "product_name": "GeniKiss Electric Pet Probiotic Deodorizer Spray, Urine Odor Eliminator, Cat Litter Freshener, Plant-Based Formula for Dogs & Cats, Indoor Anti-Mite & Antibacterial Solution, Pet Complex Bioenzyme Clean Flavour Sterilisation and Mite Removal Spray",
+  "category": "Pet Supplies > Dog & Cat Accessories > Training & Behavior Aids",
+  "shop": "Wpbb US",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T03:24:09+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T03:24:09+00:00",
+  "source_snapshot_hash": "51498866a395729f7d7763eeeffa4c82e25a294dc23c147df6c8ec8beb8bc33b",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.505463+00:00",
+  "imported_at": "2026-10-01T04:22:40.505463+00:00"
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 44.2,
+    "gmv": 42153.5,
+    "units": 2253,
+    "growth": 218.48,
+    "creator_count": 12,
+    "selling_creator_count": null,
+    "video_count": 9,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T035934Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T033019Z_beauty_personal_care_d4e5263a6dc3428a96f3c6310119e6ce.json",
+    "task_id": "d4e5263a6dc3428a96f3c6310119e6ce",
+    "report_url": null,
+    "record_index": 4
+  },
+  "product_id": "1732421747771085102",
+  "identity_key": "1732421747771085102",
+  "key_type": "product_id",
+  "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+  "category": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+  "shop": "DR.RERDIA",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T03:30:19+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T03:30:19+00:00",
+  "source_snapshot_hash": "148cd4210b21eb362549118c0854e205fd32a241f55414e2e297e23cce45e0bc",
+  "run_id": "20261001T030132Z_06130f",
+  "written_at": "2026-10-01T04:22:40.507197+00:00",
+  "imported_at": "2026-10-01T04:22:40.507197+00:00"
+}

@@ -1,0 +1,17 @@
+{
+  "offer_id": "off_ac97922cb1b98f08",
+  "matched_product_id": "1729393801040204109",
+  "supplier_name": "Zendrop (Zendrop Fulfillment)",
+  "observed_at": "2026-10-01T04:35:00+00:00",
+  "retrieved_at": "2026-10-01T04:29:16.618942+00:00",
+  "imported_at": "2026-10-01T04:29:16.620088+00:00",
+  "product_cost": 0.62,
+  "shipping_cost": 5.11,
+  "landed_cost": 5.73,
+  "estimated_delivery_min_days": 8,
+  "estimated_delivery_max_days": 8,
+  "available_quantity": null,
+  "inventory_status": "IN_STOCK",
+  "raw_source_location": "data/production/raw/suppliers/20261001T042916618960Z_manual_import.json#row4",
+  "snapshot_hash": "b727b320f92e72dda138ccc528d70738f43d77f5b92f897a96405d7b7a9599cd"
+}
