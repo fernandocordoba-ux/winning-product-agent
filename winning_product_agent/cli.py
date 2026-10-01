@@ -391,6 +391,26 @@ def cmd_production_config(a):
     return 2
 
 
+def cmd_lens_experiment(a):
+    """Step AE: discovery lens experiment (dry-run by default; --live needs the exact production phrase)."""
+    import lens_experiment as LX
+    cats = tuple(a.categories.split(",")) if a.categories else LX.DEFAULT_CATEGORIES
+    qs = LX.build_queries(cats)
+    if a.analyze:
+        _p(f"Report: {LX.write(LX.analyze())}")
+        return 0
+    if not a.live:
+        _p(f"DRY RUN — {len(qs)} discovery queries (no deep analysis), ~{LX.EST_PER_QUERY} credits each, "
+           f"estimated {len(qs) * LX.EST_PER_QUERY:g}, run cap {LX.RUN_CAP:g}")
+        for q in qs:
+            _p(f"\n----- {q['lens']} / {q['category_key']} -----\n{q['query']}")
+        return 0
+    r = LX.run_live(qs, a.confirm_live)
+    _p(f"Credits spent: {r['credits_spent']}")
+    _p(f"Report: {LX.write(LX.analyze())}")
+    return 0
+
+
 def print_production_dry(r):
     _p(f"PRODUCTION DRY RUN {r['run_id']} | config {r['config_version']} | market {r['market']}")
     v = r["config_hash_verification"]
@@ -542,6 +562,11 @@ def build_parser():
     pc.add_argument("--approved-by", help="owner-change: who approved the changes")
     pc.add_argument("--approved-at", help="owner-change: when (ISO time)")
     pc.add_argument("--activate", action="store_true", help="owner-change: activate the new version")
+    lx = sub.add_parser("lens-experiment", help="discovery lens experiment (dry-run default; --live is PAID)")
+    lx.add_argument("--live", action="store_true")
+    lx.add_argument("--confirm-live")
+    lx.add_argument("--analyze", action="store_true", help="rebuild the report from saved raw answers (free)")
+    lx.add_argument("--categories", help="comma-separated category keys (default home,kitchen)")
     fv = sub.add_parser("final-validation", help="product validation & launch gate (report-only, no paid action)")
     fv.add_argument("--latest", action="store_true", help="use the latest production run (default)")
     fv.add_argument("--product-id", help="validate one product of the latest production run")
@@ -560,6 +585,7 @@ def main(argv=None):
             "suppliers": cmd_suppliers, "competitors": cmd_competitors,
             "creatives": cmd_creatives, "decide": cmd_decide, "calibrate": cmd_calibrate,
             "production-run": cmd_production_run, "production-config": cmd_production_config,
+            "lens-experiment": cmd_lens_experiment,
             "final-validation": cmd_final_validation, "insights": cmd_insights}[a.cmd](a)
 
 
