@@ -1,0 +1,22 @@
+{
+  "product_id": "1732530555618759155",
+  "observed_at": "2026-10-01",
+  "creative_count": 5,
+  "active_ad_count": 0,
+  "angle_distribution": {},
+  "hook_distribution": {},
+  "format_distribution": {
+    "VIDEO": 5
+  },
+  "long_running_count": 0,
+  "creative_ids": [
+    "crv_125f54bf3d2e0e20",
+    "crv_200741ef23b97d8c",
+    "crv_31e97f2493972083",
+    "crv_7b3aff7619b512ee",
+    "crv_c4460abff0088ca5"
+  ],
+  "saturation_score": 49.0,
+  "snapshot_hash": "3172ab8ebd45693ebae91bf6297fc6003a723b5380b3d8625cb9bc0ea57e38bf",
+  "imported_at": "2026-10-01T00:21:28.064654+00:00"
+}

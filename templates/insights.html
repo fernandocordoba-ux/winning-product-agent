@@ -223,6 +223,9 @@ const R = {
     const comps = Object.entries(h.components || {}).map(([k, v]) => row(esc(k), tag(v === "READY" ? "Listo" : v, v === "READY" ? "good" : "bad"))).join("");
     return `<h2>${Q[6].t}</h2><p class="lead">Chequeo previo: ${tag(h.preflight === "READY_FOR_DRY_RUN" ? "Todo listo" : h.preflight, h.preflight === "READY_FOR_DRY_RUN" ? "good" : "bad")} · configuración ${esc(h.config.version || "N/A")} ${tag(h.config.hashes_ok ? "sin cambios" : "modificada", h.config.hashes_ok ? "good" : "bad")}</p>` +
       why("La configuración de producción está sellada con huellas digitales (hashes). Si alguien cambia un archivo, el sistema lo detecta y bloquea la corrida. El chequeo previo revisa configuración, rutas, módulos y la compuerta de seguridad que impide consultas pagadas sin tu confirmación.") +
+      (DATA.audit ? `<h3>Auditoría de la última corrida</h3><div class="rows">` +
+        row("Resultado", tag(DATA.audit.result === "RUN_VALIDATED" ? "Validada" : "Requiere revisión", DATA.audit.result === "RUN_VALIDATED" ? "good" : "warn"),
+          DATA.audit.issues.length ? DATA.audit.issues.join(" ") : "Todos los chequeos pasaron.") + `</div>` : "") +
       `<div class="rows">${comps}</div>`;
   },
   next() {

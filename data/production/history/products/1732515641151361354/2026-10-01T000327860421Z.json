@@ -1,0 +1,81 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 29.0,
+    "gmv": 47980.36,
+    "units": 2333,
+    "growth": 772.15,
+    "creator_count": 333,
+    "selling_creator_count": 77,
+    "video_count": 502,
+    "selling_video_count": 303,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 1258
+  },
+  "concentration": {
+    "top_creator_revenue_share": 10.29,
+    "top_video_revenue_share": 6.52
+  },
+  "scores": {
+    "wps": 39.91,
+    "confidence": 88.17
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "creator_growth_pct",
+    "video_growth_pct",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T002127603984Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T000327860421Z_1732515641151361354_deep_product.json",
+    "task_id": "667b53f274ea4de8b0700697cd471a94",
+    "report_url": null
+  },
+  "product_id": "1732515641151361354",
+  "identity_key": "1732515641151361354",
+  "key_type": "product_id",
+  "product_name": "MANYO Best Double Cleansing Duo, Pure Cleansing Oil 4.73 fl oz (140ml), Pure & Deep Cleansing Foam 4.05 fl oz (120ml), Blackhead Remover, Korean Skin Care",
+  "category": "Beauty & Personal Care > Skincare > Facial Cleansers",
+  "shop": "manyo",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T00:03:27.860421+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-29",
+  "retrieved_at": "2026-10-01T00:03:27.860421+00:00",
+  "source_snapshot_hash": "59d9118d6be2fb78ca29308b03136c1eca49c7a2db7e3bb927aecae862aaceeb",
+  "run_id": "20260930T235340Z_73a032",
+  "written_at": "2026-10-01T00:21:28.267706+00:00",
+  "imported_at": "2026-10-01T00:21:28.267706+00:00"
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 44.2,
+    "gmv": 26475.4,
+    "units": 961,
+    "growth": 1179.0,
+    "creator_count": 2,
+    "selling_creator_count": null,
+    "video_count": 8,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "low_base_or_seasonal"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20260930T235850Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20260930T235850Z_beauty_personal_care_c471992fc4fb440b8efe64fe25b488d9.json",
+    "task_id": "c471992fc4fb440b8efe64fe25b488d9",
+    "report_url": null,
+    "record_index": 12
+  },
+  "product_id": "1732421662338158894",
+  "identity_key": "1732421662338158894",
+  "key_type": "product_id",
+  "product_name": "[In Stock]DR.RERDIA Oral Spray with Propolis, Menthol & Astragalus Root",
+  "category": "Beauty & Personal Care > Nasal & Oral Care > Mouthwash",
+  "shop": "DR.RERDIA",
+  "market": "US",
+  "observation_timestamp": "2026-09-30T23:58:50+00:00",
+  "observation_date": "2026-09-30",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "REVIEW",
+  "provider_observation_timestamp": "2026-09-29",
+  "retrieved_at": "2026-09-30T23:58:50+00:00",
+  "source_snapshot_hash": "85399fd9f1ee29cc5b0956a56b578028c35a57b7474b19339251fba214d62fd0",
+  "run_id": "20260930T235340Z_73a032",
+  "written_at": "2026-10-01T00:21:28.266490+00:00",
+  "imported_at": "2026-10-01T00:21:28.266490+00:00"
+}

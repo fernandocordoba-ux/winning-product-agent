@@ -322,7 +322,28 @@ def build(root=ROOT, now=None, with_balance=True):
             "costs": costs(root), "health": health(root), "data_quality": dq,
             "final_validation": [{"name": r["name"], "state": r["state"], "missing": r["reasons"]["missing"][:6],
                                   "actions": r["action_queue"]} for r in fv or []],
-            "production_pending": snap["source"] != "PRODUCTION"}
+            "production_pending": snap["source"] != "PRODUCTION",
+            "audit": audit_es((snap.get("manifest") or {}).get("post_run_audit"))}
+
+
+def audit_es(a):
+    """Post-run audit in plain Spanish (production runs only)."""
+    if not a:
+        return None
+    items = []
+    for x in a.get("issues") or []:
+        es = x
+        if "GMV/units" in x:
+            import re
+            m = re.search(r"(\d+): GMV/units = ([\d.]+) USD per unit, outside the listed price range ([\d.]+)", x)
+            if m:
+                es = (f"Producto {m.group(1)}: las ventas divididas entre unidades dan {m.group(2)} USD por unidad, pero el "
+                      f"precio publicado es {m.group(3)} USD. Puede deberse a descuentos, promociones o paquetes, o a un "
+                      "dato inconsistente del proveedor (discovery y análisis profundo traen las mismas cifras, así que "
+                      "no es un error de lectura nuestro). Mientras no se revise, el puntaje de margen de ese producto "
+                      "puede estar inflado.")
+        items.append(es)
+    return {"result": a.get("result"), "first_run": a.get("first_production_run_status"), "issues": items}
 
 
 def font_faces(root=ROOT):
