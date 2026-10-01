@@ -1,0 +1,116 @@
+{
+  "generated_at": "2026-10-01T15:22:43.175177+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v5",
+  "note": "Owner: focus on the Beauty niche for now and return the best 5 products. Discovery uses the two lenses that won the AE experiment (proven best-sellers + accelerating creators, 90-day data, sustained growth ranked first). Deep analysis of the 6 best (one spare in case an answer fails). Formula, filters and decision rules unchanged.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_mode",
+      "current_value": "per_category",
+      "proposed_value": "lenses",
+      "reason": "AE experiment: higher-volume, sustained products",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_lenses",
+      "current_value": null,
+      "proposed_value": [
+        "proven",
+        "creators"
+      ],
+      "reason": "best two lenses in AE",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_categories",
+      "current_value": [
+        "home",
+        "kitchen",
+        "pet",
+        "beauty_personal_care",
+        "fitness",
+        "automotive_accessories",
+        "tools",
+        "outdoor",
+        "electronics_accessories"
+      ],
+      "proposed_value": [
+        "beauty_personal_care"
+      ],
+      "reason": "owner focus: beauty",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "limits.deep_analysis_max_products",
+      "current_value": 10,
+      "proposed_value": 6,
+      "reason": "best 5 + 1 spare",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 82,
+      "proposed_value": 40,
+      "reason": "2 x 4.0 + 6 x 3.6 + 2 x 4.0 = 37.6",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 82,
+      "proposed_value": 40,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 21,
+      "proposed_value": 10,
+      "reason": "2 + 6 + 2",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 21,
+      "proposed_value": 10,
+      "reason": "same",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T15:22:42Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 8,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

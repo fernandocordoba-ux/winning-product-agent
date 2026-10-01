@@ -1,0 +1,145 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v7 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T15:22:53.944380+00:00
+# source_calibration_report: owner-approved change of production-v6 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T15:22:53Z)
+# change_summary:
+#   - unchanged from production-v6
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Amazon Validation — Step N (EXPERIMENTAL v1 thresholds, editable here)
+# =============================================================================
+# Cross-validates TikTok Shop US products against Amazon US.
+# Produces AVS (Amazon Validation Score) and Amazon Confidence, which are kept
+# SEPARATE from WPS and from the TikTok Confidence Score (never added together).
+#
+# Everything below is computed by scripts/amazon_validation.py from the numbers
+# the data provider returns. Claude never assigns a match, signal or score.
+# Missing Amazon data -> N/A (never estimated); a real 0 stays 0.
+# =============================================================================
+
+amazon_validation:
+  version: "amazon-validation-v1"
+  enabled: true
+
+  # ---------------------------------------------------------------- Stage 1
+  minimum_wps: 55
+  minimum_confidence: 60
+  max_products: 20
+  excluded_discovery_statuses: [FAIL]
+  # Eligible products are validated in this deterministic order:
+  #   WPS desc, Confidence desc, product_id asc
+
+  # ---------------------------------------------------------------- Stage 9
+  cache_hours: 24
+  provider: kalopilot                       # KaloPilot has NO dedicated Amazon dataset (only web search);
+                                            # swap for an Amazon data API later without code changes elsewhere
+  estimated_credits_per_query: 4.0
+  min_balance_reserve: 5.0
+  query_type: amazon_match
+  max_candidates_requested: 5               # Amazon listings the provider is asked to return
+
+  # ---------------------------------------------------------------- Stage 2
+  # Match confidence (0-100) = sum of component points.
+  #   name_similarity : overlap coefficient of distinctive title tokens
+  #                     |A ∩ B| / min(|A|, |B|), linear zero_at -> full_at
+  #   brand           : 1 if normalized brands are equal, 0 if different or unknown
+  #   category        : overlap coefficient of category-path tokens, linear
+  #   variant_attributes : share of TikTok attribute tokens (e.g. "3in1", "5tier",
+  #                     "2pack", "6ft", "32oz") found in the Amazon title/attributes.
+  #                     If the TikTok title has NO attribute tokens -> component is
+  #                     excluded and the other points are rescaled to 100.
+  matching:
+    components:
+      name_similarity:    { points: 40, zero_at: 0.2, full_at: 0.8 }
+      brand:              { points: 20, if_missing: zero }
+      category:           { points: 15, zero_at: 0.1, full_at: 0.6 }
+      variant_attributes: { points: 25, if_missing: exclude }
+    classes:                                # applied to the rounded match confidence, >= threshold
+      EXACT: 90
+      STRONG: 75
+      POSSIBLE: 60
+      UNRELIABLE: 0
+    min_reliable_match: 60                  # below -> amazon_match_status NO_RELIABLE_MATCH
+    stopwords: [a, an, and, the, for, with, of, to, in, on, by, from, set, new, your, you, our,
+                is, at, as, or, pcs, pc, pack, piece, pieces, x, us, amazon, tiktok, shop,
+                gift, gifts, best, premium, perfect, ideal, great]
+    min_token_length: 2
+    max_title_tokens: 20                    # first N distinctive tokens of each title are compared
+
+  # ---------------------------------------------------------------- Stage 4
+  # Amazon demand strength s in [0,1] = mean of the AVAILABLE sub-signals
+  # (missing ones are listed and the component is marked "partial"):
+  demand_signals:
+    review_count:          { scale: log10, zero_at: 50, full_at: 5000 }
+    bsr:                   { scale: log10, zero_at: 100000, full_at: 1000 }   # inverted: lower rank = stronger
+    monthly_sales_estimate: { scale: log10, zero_at: 100, full_at: 3000 }     # only if the provider returns it
+
+  cross_platform_demand:                    # needs Amazon demand s AND TikTok units_30d
+    STRONG:   { amazon_demand_min: 0.6, tiktok_units_30d_min: 2000 }
+    MODERATE: { amazon_demand_min: 0.3, tiktok_units_30d_min: 500 }
+    # otherwise WEAK; either input missing -> INSUFFICIENT_DATA
+
+  amazon_competition:
+    HIGH:                                   # ANY available condition true -> HIGH
+      comparable_listings_min: 1000
+      matched_review_count_min: 10000
+      top3_brand_share_pct_min: 60
+    LOW:                                    # ALL of these available AND true -> LOW
+      comparable_listings_max: 200
+      matched_review_count_max: 1000
+    # neither -> MODERATE; comparable_listings AND matched_review_count both missing -> INSUFFICIENT_DATA
+
+  price_alignment:                          # ratio = amazon_price / tiktok_price_avg
+    GOOD:  { ratio_min: 0.85, ratio_max: 1.5 }
+    MIXED: { ratio_min: 0.70, ratio_max: 2.5 }   # inside MIXED range but outside GOOD
+    # outside MIXED range -> POOR; either price missing -> INSUFFICIENT_DATA
+
+  # ---------------------------------------------------------------- Stage 5
+  # AVS (0-100), N/A components score 0 (never rescaled away), like WPS.
+  avs:
+    components:
+      amazon_demand_evidence:      { points: 30 }   # s from demand_signals (partial allowed)
+      match_confidence:            { points: 20 }   # match_confidence/100; NO_RELIABLE_MATCH -> 0
+      competition_opportunity:     { points: 20, map: { LOW: 1.0, MODERATE: 0.5, HIGH: 0.0 } }
+      price_alignment:             { points: 15, map: { GOOD: 1.0, MIXED: 0.5, POOR: 0.0 } }
+      cross_platform_consistency:  { points: 15 }   # direction agreement, see below
+    # Direction: TikTok trend ACCELERATING/GROWING -> up, STABLE -> flat, DECLINING -> down
+    #            Amazon recent_trend growing -> up, stable -> flat, declining -> down
+    # same direction 1.0, one step apart 0.5, opposite 0.0, either missing -> N/A
+    consistency_map: { same: 1.0, adjacent: 0.5, opposite: 0.0 }
+    rounding: 2
+
+  # ---------------------------------------------------------------- Stage 6
+  # Amazon Confidence (0-100): completeness/reliability of Amazon evidence only.
+  amazon_confidence:
+    components:
+      match_confidence:     { points: 30 }                                  # match_confidence/100 (0 if no candidates)
+      price:                { points: 10, fields: [amazon_price] }
+      rating_reviews:       { points: 15, fields: [amazon_rating, amazon_review_count] }
+      ranking_demand:       { points: 20, fields: [amazon_bsr, amazon_sales_indicator] }
+      comparable_listings:  { points: 15, fields: [amazon_competitor_count, amazon_price_range_min, amazon_price_range_max] }
+      competition_data:     { points: 10, fields: [amazon_top_brands] }
+    # fields: share of listed fields available (0 counts as available)
+    levels: { VERY_HIGH: 90, HIGH: 75, MODERATE: 60, LOW: 40, VERY_LOW: 0 }
+    rounding: 2
+
+  # ---------------------------------------------------------------- Stage 7
+  red_flags:
+    AMAZON_HIGH_SATURATION: { competition: HIGH }
+    AMAZON_PRICE_COMPRESSION: { price_ratio_below: 0.70 }
+    AMAZON_LOW_DEMAND: { amazon_demand_below: 0.2 }
+    AMAZON_DOMINATED_BY_MAJOR_BRANDS: { top3_brand_share_pct_min: 60 }
+    AMAZON_DATA_INSUFFICIENT: { amazon_confidence_below: 50 }
+    # NO_RELIABLE_MATCH: match status; IP_REVIEW_REQUIRED: filters.yaml trademark keywords
+    # in either title or the Amazon brand (keyword match only, never an infringement claim)
+
+production_meta:
+  config_version: production-v7
+  created_at: '2026-10-01T15:22:53.944380+00:00'
+  source_calibration_report: owner-approved change of production-v6 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T15:22:53Z)
+  change_summary:
+  - unchanged from production-v6
+  derived_from: production-v6

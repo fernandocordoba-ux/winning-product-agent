@@ -1,0 +1,2 @@
+{"note": "Companion of v6: the final decision must cover every deep-analyzed product (6).",
+ "changes": [{"file": "runtime.yaml", "path": "e2e.final_decision_max_products", "value": 10, "reason": "must be >= deep_analysis_max_products (6); 10 also covers the v5 setting"}]}

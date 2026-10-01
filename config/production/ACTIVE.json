@@ -1,6 +1,6 @@
 {
-  "active_version": "v5",
-  "previous_version": "v4",
-  "activated_at": "2026-10-01T04:55:32.550330+00:00",
-  "note": "Owner request: remove the 'insufficient if >= 4 unknown dimensions' rule so products with KaloPilot potential can become PROMISING; supplier/BVS confidence must not judge evidence quality (suppliers are informative only); evaluate up to 100 discovery candidates and deep-analyze the 10 best by a free preliminary score, skipping seasonal items. Negative-evidence gates, WPS thresholds and READY rules unchanged."
+  "active_version": "v7",
+  "previous_version": "v6",
+  "activated_at": "2026-10-01T15:22:54.340625+00:00",
+  "note": "Companion of v6: the final decision must cover every deep-analyzed product (6)."
 }

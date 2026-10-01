@@ -88,7 +88,12 @@ def select_candidates(discovery_result, cfg, scoring_cfg=None):
     if sel.get("order") == "preliminary_wps":
         for p in pool:
             p["calculated"]["preliminary_wps"] = preliminary_score(p, scoring_cfg)
-        ordered = sorted(enumerate(pool), key=lambda ip: (-(ip[1]["calculated"]["preliminary_wps"] or 0),
+        for p in pool:                        # 90-day sustained growth (lens answers) ranks first
+            o = (p.get("source") or {}).get("original_record") or {}
+            seq = [disc.parse_value(o.get(k), "num")[0] for k in ("gmv_prev2_30d", "gmv_prev_30d", "gmv_30d")]
+            p["calculated"]["sustained_growth"] = (None if None in seq else seq[0] < seq[1] < seq[2])
+        ordered = sorted(enumerate(pool), key=lambda ip: (ip[1]["calculated"].get("sustained_growth") is not True,
+                                                          -(ip[1]["calculated"]["preliminary_wps"] or 0),
                                                           rank.get(ip[1]["calculated"]["filter_status"], 99), ip[0]))
     else:
         ordered = sorted(enumerate(pool), key=lambda ip: (rank.get(ip[1]["calculated"]["filter_status"], 99), ip[0]))

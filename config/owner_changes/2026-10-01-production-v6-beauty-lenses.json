@@ -1,0 +1,13 @@
+{
+  "note": "Owner: focus on the Beauty niche for now and return the best 5 products. Discovery uses the two lenses that won the AE experiment (proven best-sellers + accelerating creators, 90-day data, sustained growth ranked first). Deep analysis of the 6 best (one spare in case an answer fails). Formula, filters and decision rules unchanged.",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.discovery_mode", "value": "lenses", "reason": "AE experiment: higher-volume, sustained products"},
+    {"file": "runtime.yaml", "path": "query_plan.discovery_lenses", "value": ["proven", "creators"], "reason": "best two lenses in AE"},
+    {"file": "runtime.yaml", "path": "query_plan.discovery_categories", "value": ["beauty_personal_care"], "reason": "owner focus: beauty"},
+    {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 6, "reason": "best 5 + 1 spare"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 40, "reason": "2 x 4.0 + 6 x 3.6 + 2 x 4.0 = 37.6"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 40, "reason": "mirror"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 10, "reason": "2 + 6 + 2"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 10, "reason": "same"}
+  ]
+}

@@ -277,7 +277,9 @@ def validate_effective(rt, eff):
     if isinstance(lim.get("deep_analysis_max_products"), int) and isinstance(lim.get("discovery_max_products"), int) \
             and lim["deep_analysis_max_products"] > lim["discovery_max_products"]:
         e.append("limits.deep_analysis_max_products > discovery_max_products")
-    if qp.get("discovery_mode", "per_category") not in ("per_category", "combined"):
+    if qp.get("discovery_mode") == "lenses" and not set(qp.get("discovery_lenses") or []) <= {"proven", "rising", "creators"}:
+        e.append(f"query_plan.discovery_lenses must be a subset of proven/rising/creators (got {qp.get('discovery_lenses')!r})")
+    if qp.get("discovery_mode", "per_category") not in ("per_category", "combined", "lenses"):
         e.append(f"query_plan.discovery_mode must be per_category or combined (got {qp.get('discovery_mode')!r})")
     for k in ("deep_batch_size", "amazon_batch_size"):
         v = qp.get(k, 1)
@@ -438,6 +440,12 @@ class Runner:
             return [{"category_key": e["category_key"], "query": self.followup_query(e),
                      "followup_task": self.continue_task, "followup_raw": str(p)}]
         only = qp.get("discovery_categories")                     # optional subset of category keys
+        if qp.get("discovery_mode") == "lenses":                  # Step AE: proven / rising / creators prompts
+            import lens_experiment as LX
+            cats = only or [c["key"] for c in self.categories["categories"] if c.get("enabled", True)]
+            n = self.filters["discovery_mode"]["products_per_category"]
+            return [{"category_key": q["category_key"], "query": q["query"], "lens": q["lens"]}
+                    for q in LX.build_queries(cats, tuple(qp.get("discovery_lenses") or LX.LENSES), limit=n)]
         if qp.get("discovery_mode", "per_category") == "per_category":
             qs = D.build_queries(self.filters, self.categories)
             return [{**q, "query": with_brand_rule(q["query"], qp)} for q in qs
@@ -1164,6 +1172,8 @@ class Runner:
                 meta.update({"followup_of_task_id": q["followup_task"], "followup_of_raw": q.get("followup_raw")})
             if q.get("categories"):
                 meta["categories"] = q["categories"]
+            if q.get("lens"):
+                meta["lens"] = q["lens"]
             path = D.save_raw(resp, meta, self.raw)
             err = response_error(resp)
             if not err and not D.extract_records({"response": resp})[0]:

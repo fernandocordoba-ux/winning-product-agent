@@ -1,0 +1,149 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v7 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T15:22:53.944380+00:00
+# source_calibration_report: owner-approved change of production-v6 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T15:22:53Z)
+# change_summary:
+#   - unchanged from production-v6
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Emerging Product Detector — Step R (EXPERIMENTAL v1, editable here)
+# =============================================================================
+# Uses the Step Q history store only. Produces Momentum Score, Momentum
+# Confidence and Emerging Status — all SEPARATE from WPS, Confidence, AVS,
+# Amazon Confidence, BVS and BVS Confidence (never combined, never modified).
+# Every label and point below is computed by scripts/emerging.py.
+# =============================================================================
+
+emerging_detector:
+  version: "emerging-v1"
+  enabled: true
+  minimum_observations: 3
+  minimum_observation_days: 3               # distinct UTC dates
+  minimum_wps: 70
+  minimum_wps_confidence: 60
+  strong_emerging_min_momentum_score: 80
+  emerging_min_momentum_score: 65
+  maximum_creator_dependency: 0.70          # top creator share of revenue (fraction)
+  maximum_video_dependency: 0.70
+  minimum_positive_growth_signals: 2        # for EMERGING_STRONG (creator / selling creator / video / selling video)
+
+  # ------------------------------------------------------------- evaluation window
+  evaluation_window_days: 30                # observations within [latest - 30d, latest]
+  trend_windows: [short, medium, long]      # Step Q windows; first one that is not INSUFFICIENT_DATA is used
+  competition_metrics: [shop_count, similar_listings]   # first metric with >= minimum_observations points
+
+  # ------------------------------------------------------------- acceleration (Stage 6)
+  # Uses the last 3 valid points:  prev_vel = (v2 - v1) / dt1 ; cur_vel = (v3 - v2) / dt2 ;
+  # acceleration = cur_vel - prev_vel   (dt in days from real timestamps).
+  # For percent metrics velocities are normalized to % of the middle value (v2) per day
+  # (|v2| = 0 -> max(|v1|,|v2|,|v3|); all 0 -> FLAT). WPS uses points per day.
+  # First matching rule:
+  #   ACCELERATING : cur_vel > flat_band  and  acceleration >= accel_min
+  #   DECELERATING : acceleration <= -accel_min  or  cur_vel < -flat_band
+  #   POSITIVE     : cur_vel > flat_band
+  #   FLAT         : otherwise
+  acceleration:
+    percent_metrics: { flat_band: 0.5, accel_min: 1.0 }   # % of value per day
+    points_metrics:  { flat_band: 0.1, accel_min: 0.2 }   # WPS points per day
+
+  # ------------------------------------------------------------- momentum classes (Stages 7-9)
+  # Each series gets a direction from its Step Q trend label (ACCELERATING/GROWING -> up,
+  # STABLE -> flat, DECLINING -> down, VOLATILE/INSUFFICIENT_DATA -> unknown) and is
+  # "strong" if its trend is ACCELERATING or its acceleration class is ACCELERATING.
+  # Pair = (primary, secondary):
+  #   demand   = (GMV, units)                                  — never GMV alone when units exist
+  #   creators = (selling creators, creator count) if selling has data, else (creator count, -)
+  #   videos   = (selling videos, video count)     if selling has data, else (video count, -)
+  # Rules on the known series of a pair:
+  #   none known                    -> INSUFFICIENT_DATA
+  #   any down and none up          -> DECLINING
+  #   up and down both present      -> STABLE   (conflicting evidence)
+  #   all up and any strong         -> STRONG_GROWTH
+  #   some up, rest flat/up         -> GROWING
+  #   all flat                      -> STABLE
+
+  # ------------------------------------------------------------- competition vs demand (Stage 10)
+  # growth rate (%/day) = (last - first) / |first| * 100 / span_days  over the evaluation window
+  # demand_growth_rate = mean of available GMV and units rates
+  # competition_pressure_ratio = competition_growth_rate / demand_growth_rate (only if demand rate > 0)
+  competition:
+    rising_min_pct_per_day: 0.5             # competition rate <= this -> HEALTHY
+    catching_up_ratio: 0.5                  # ratio <  0.5 -> RISING (demand much faster)
+    outpacing_ratio: 1.0                    # 0.5 <= ratio < 1.0 -> CATCHING_UP ; >= 1.0 -> OUTPACING_DEMAND
+    significant_outpacing_ratio: 1.5        # -> LOSING_MOMENTUM
+    # demand rate <= 0 and competition rate > rising_min -> OUTPACING_DEMAND (ratio N/A)
+    # demand rate <= 0 and competition not rising        -> HEALTHY (competition is not the problem)
+
+  # ------------------------------------------------------------- Momentum Score (Stage 12)
+  # component = points * ( rate_weight * s_rate + acceleration_weight * s_acc )
+  #   s_rate = linear(rate %/day, zero_at, full_at) clamped 0..1
+  #   s_acc  = acceleration_map[acceleration class]
+  # N/A component -> 0 points (never rescaled), lowers Momentum Confidence.
+  momentum_score:
+    acceleration_map: { ACCELERATING: 1.0, POSITIVE: 0.6, FLAT: 0.3, DECELERATING: 0.0 }
+    components:
+      wps_trajectory:      { points: 20, metric: wps, rate_zero_at: -0.2, rate_full_at: 0.5,   # WPS points/day
+                             rate_weight: 0.7, acceleration_weight: 0.3 }
+      gmv_momentum:        { points: 25, metric: gmv, rate_zero_at: 0, rate_full_at: 5,         # %/day
+                             rate_weight: 0.7, acceleration_weight: 0.3 }
+      units_momentum:      { points: 15, metric: units, rate_zero_at: 0, rate_full_at: 5,
+                             rate_weight: 0.7, acceleration_weight: 0.3 }
+      creator_momentum:    { points: 15, metric: creators_primary, rate_zero_at: 0, rate_full_at: 5,
+                             rate_weight: 0.7, acceleration_weight: 0.3 }
+      video_momentum:      { points: 15, metric: videos_primary, rate_zero_at: 0, rate_full_at: 5,
+                             rate_weight: 0.7, acceleration_weight: 0.3 }
+      competition_balance: { points: 10, map: { HEALTHY: 1.0, RISING: 0.8, CATCHING_UP: 0.4, OUTPACING_DEMAND: 0.0 } }
+
+  # ------------------------------------------------------------- Momentum Confidence (Stage 13)
+  momentum_confidence:
+    components:
+      observation_count:      { points: 15, full_at: 6 }     # min(n / 6, 1)
+      observation_day_span:   { points: 15, full_at: 14 }    # min(span_days / 14, 1)
+      gmv_completeness:       { points: 15 }                 # share of observations with the value
+      units_completeness:     { points: 10 }
+      wps_completeness:       { points: 15 }
+      creator_completeness:   { points: 10 }
+      video_completeness:     { points: 10 }
+      competition_completeness: { points: 5 }
+      concentration_completeness: { points: 5 }              # latest top creator + top video share (0.5 each)
+    levels: { VERY_HIGH: 90, HIGH: 75, MODERATE: 60, LOW: 40, VERY_LOW: 0 }
+
+  # ------------------------------------------------------------- Emerging Status (Stage 14)
+  # Checked in this order (first match wins):
+  #   1 INSUFFICIENT_HISTORY  eligibility not met (observations, days, current WPS, WPS Confidence)
+  #   2 LOSING_MOMENTUM       demand DECLINING, or WPS change <= -wps_decline_points,
+  #                           or pressure ratio >= significant_outpacing_ratio,
+  #                           or OUTPACING_DEMAND while demand rate <= 0
+  #   3 EMERGING_STRONG       all strong rules below
+  #   4 EMERGING              all emerging rules below
+  #   5 EMERGING_REVIEW       momentum score >= review_min_momentum_score and demand not DECLINING
+  #   6 STABLE                everything else (status_reason explains, e.g. WPS below minimum)
+  status:
+    wps_decline_points: 5                   # WPS change over the window
+    strong_min_momentum_confidence: 75
+    emerging_min_momentum_confidence: 60
+    review_min_momentum_score: 50
+    allow_dependency_for_strong: false      # CREATOR/VIDEO_DEPENDENCY blocks EMERGING_STRONG
+    strong_demand: [STRONG_GROWTH, GROWING]
+    emerging_demand: [STRONG_GROWTH, GROWING]
+    positive_signal_classes: [STRONG_GROWTH, GROWING]
+    severe_flags: [DEMAND_DECLINING, WPS_DECLINING, COMPETITION_OUTPACING_DEMAND, MOMENTUM_SLOWING]
+
+  # ------------------------------------------------------------- flags (Stage 15)
+  flags:
+    rapid_growth_pct_per_day: 3.0           # RAPID_*_GROWTH / RAPID_*_ACCELERATION need rate >= this
+    insufficient_momentum_confidence_below: 40   # -> INSUFFICIENT_MOMENTUM_DATA
+
+  # ------------------------------------------------------------- output
+  output_dir: data/processed/emerging
+
+production_meta:
+  config_version: production-v7
+  created_at: '2026-10-01T15:22:53.944380+00:00'
+  source_calibration_report: owner-approved change of production-v6 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T15:22:53Z)
+  change_summary:
+  - unchanged from production-v6
+  derived_from: production-v6
