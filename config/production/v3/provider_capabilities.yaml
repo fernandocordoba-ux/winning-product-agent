@@ -1,0 +1,131 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v3 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T01:16:30.196817+00:00
+# source_calibration_report: owner-approved change of production-v2 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T01:16:30Z)
+# change_summary:
+#   - unchanged from production-v2
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# KaloPilot provider capability matrix (Step U post-live calibration)
+# =============================================================================
+# Built ONLY from the real live runs (nothing guessed):
+#   Discovery: 45 records  (Home 2026-09-29 15, Beauty task 2a294a47 15, Beauty option A task e6539a31 15)
+#   Deep Analysis: 9 records (run 20260930T134127Z_547f9f: 5, run 20260930T144516Z_e4f12d: 4 ok + 1 empty)
+# Counts are "records with a usable value / records". Small samples: re-check after more runs.
+#
+#   RELIABLY_AVAILABLE   returned in every observed record
+#   SOMETIMES_AVAILABLE  returned in some records
+#   NOT_AVAILABLE        never returned in any observed record
+#   DERIVED              calculated by our code from provider fields (never asked from the provider)
+#
+# Rules (enforced by tests/test_calibration_fixes.py):
+#   - CORE WPS metrics may only use RELIABLY_AVAILABLE or DERIVED fields.
+#   - SOMETIMES / NOT_AVAILABLE fields are SUPPORTING or ENHANCEMENT: missing -> lower Confidence,
+#     never an automatic rejection.
+# =============================================================================
+provider: kalopilot
+observed:
+  discovery_records: 45
+  deep_records: 9
+  runs: ["20260930T014532Z home discovery", "task 2a294a47 beauty discovery", "20260930T134127Z_547f9f deep",
+         "20260930T144516Z_e4f12d discovery (task e6539a31) + deep"]
+
+fields:
+  RELIABLY_AVAILABLE:
+    # discovery 30/30 and deep 5/5
+    - product_id
+    - product_name
+    - product_url
+    - shop_id
+    - shop_name
+    - category_path
+    - category_id                # NOTE: returned as the TOP-level category id (601450 = Beauty), not the leaf
+    - price_min
+    - price_max
+    - gmv_30d
+    - units_30d
+    - creator_count              # deep 9/9. DISCOVERY 30/45: the 3rd discovery answer left it null (see creator_fields)
+    - video_count
+    - launch_date
+    - data_window_end
+    # deep only (9/9 unless noted)
+    - selling_creator_count      # deep 9/9; discovery 15/45 (only the 3rd answer) — definition differs, see creator_fields
+    - selling_video_count
+    - video_sales_share_pct
+    - commission_pct
+    - category_growth_pct        # scope as returned; level not stated
+    - category_product_count     # 5/5 present, but its LEVEL varied (211,238 vs 467–8,347): see competition_scope
+    - daily_gmv                  # 30–31 daily points in 9/9
+    - gmv_prev_30d               # requested since Step U: discovery 15/15, deep 4/4
+    - category_product_count_level   # requested since Step U: deep 4/4 (leaf names matched category_path)
+    - leaf_category_id           # requested since Step U: deep 4/4
+    - top_creators               # list present 5/5 (see top_creators_growth below)
+  SOMETIMES_AVAILABLE:
+    - growth_30d_pct             # deep 8/9; discovery 45/45 but the first two answers were wrong by ~100x
+                                 # -> always recalculated from gmv_prev_30d (matched KaloPilot in 15/15 + 4/4)
+    - creator_growth_pct         # deep 5/9, discovery 0/45
+    - video_growth_pct           # deep 3/9, discovery 0/45
+    - shop_count                 # deep 4/9, discovery 0/45
+    - top_videos                 # deep 7/9
+    - top_creators_growth        # creators with growth_pct: 4, 1, 5, 10, 2  (>= 3 needed: 3/5)
+  NOT_AVAILABLE:
+    - similar_listings_count     # deep 0/9
+    - daily_units                # deep 0/9
+    - daily_creator_count        # deep 0/9
+    - daily_video_count          # deep 0/9
+    - price_history              # deep 0/9
+  DERIVED:
+    - price_avg                  # (price_min + price_max) / 2
+    - growth_30d_calculated      # (gmv_30d - gmv_prev_30d) / gmv_prev_30d * 100 when gmv_prev_30d is returned
+    - recent_velocity_pct        # from daily_gmv (last 7 days vs previous 7)
+    - acceleration_pp            # from daily_gmv (velocity change)
+    - daily_sales_cv             # from daily_gmv (trend stability)
+    - concentration_shares       # from top_creators / top_videos revenue
+
+# Requested since Step U: all three now observed (see RELIABLY_AVAILABLE)
+pending_observation: []
+
+# Creator fields are NOT consistent across answers (observed 2026-09-30, option A run):
+creator_fields:
+  discovery_answers_1_2: {creator_count: "30/30", selling_creator_count: "0/30"}
+  discovery_answer_3: {creator_count: "0/15", selling_creator_count: "15/15",
+                       provider_note: "this plan doesn't expose total creator counts; selling_creator_count = creators with sales"}
+  mismatch_example: "Laura Geller kit: discovery selling_creator_count 77 vs deep creator_count 77 / selling 37"
+  rule: >
+    WPS uses DEEP creator_count only. Discovery creator fields are informational; the calibration audit
+    compares discovery vs deep creator fields and flags MAPPING_REVIEW_REQUIRED when they disagree.
+
+# Provider behaviour observed live
+behaviour:
+  plan_restriction_pause: "Category Overview not included in Professional plan -> task pauses, API says completed with message_id 0"
+  answer_output_limit_tokens: 8000     # empty text at 8,001 output tokens: a 5-product batch AND 1 single product
+  provider_prefilters: "KaloPilot applies the prompt's filters itself (e.g. dropped DR.RERDIA at < $20 avg price)"
+  deep_cost_per_product_credits: [1.51, 3.57]   # observed range, 1 product per query (9 answers)
+  discovery_cost_credits: [1.67, 3.98]          # observed (Beauty web-continued 1.67; option A 2.91; Home 3.98)
+
+# WPS input -> provider field it depends on (used to check CORE metrics only use reliable data)
+wps_input_to_field:
+  revenue_growth_pct: growth_30d_calculated     # CORE: calculated when gmv_prev_30d exists; else provider (flagged)
+  recent_velocity_pct: recent_velocity_pct
+  acceleration_pp: acceleration_pp
+  units_sold: units_30d
+  videos_count: video_count
+  video_sales_share_pct: video_sales_share_pct
+  creators_count: creator_count
+  top_creators_growth_pct: top_creators_growth
+  category_growth_pct: category_growth_pct
+  competition_count_comparable: category_product_count
+  price_avg: price_avg
+  commission_pct: commission_pct
+  daily_sales_series: daily_gmv
+
+production_meta:
+  config_version: production-v3
+  created_at: '2026-10-01T01:16:30.196817+00:00'
+  source_calibration_report: owner-approved change of production-v2 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T01:16:30Z)
+  change_summary:
+  - unchanged from production-v2
+  derived_from: production-v2

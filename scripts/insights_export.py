@@ -191,14 +191,19 @@ def production_snapshot(root):
     m, run_dir = FV.latest_production_run(root)
     if not m:
         return None
-    dec = json.loads(Path(m["outputs"]["final_decision_json"]).read_text())
+    dec_path = m["outputs"]["final_decision_json"]
+    for p in sorted(run_dir.parent.glob("*/manifest.json")):     # newest free rebuild of this live run wins
+        rm = json.loads(p.read_text())
+        if rm.get("report_only_source_run") == m["run_id"] and (rm.get("outputs") or {}).get("final_decision_json"):
+            dec_path = rm["outputs"]["final_decision_json"]
+    dec = json.loads(Path(dec_path).read_text())
     decisions = [d for k in ("ready_products", "promising_products", "watchlist", "rejected_products",
                              "insufficient_data") for d in dec.get(k) or []]
     deep = {str(x.get("product_id")): x for x in (json.loads((run_dir / "checkpoints" / "deep_analysis.json")
                                                              .read_text()).get("results") or [])}
     return {"source": "PRODUCTION", "label": f"Corrida de producción {m['run_id']}", "run_id": m["run_id"],
             "config_version": m.get("config_version"), "decisions": decisions, "deep": deep,
-            "shortlist": dec.get("shortlist") or [], "generated_from": m["outputs"]["final_decision_json"],
+            "shortlist": dec.get("shortlist") or [], "generated_from": dec_path,
             "manifest": m}
 
 
@@ -299,6 +304,8 @@ def build(root=ROOT, now=None, with_balance=True):
                         if str(x.get("source", "")).startswith("dimension:")],
             "negative": [x.get("reason") or x.get("source") for x in (d.get("explanation") or {}).get("NEGATIVE_EVIDENCE") or []],
             "next_actions": list(dict.fromkeys(action_es(a) for a in d.get("next_actions") or [])),
+            "amazon": d.get("amazon_validation"),
+            "momentum_ok": (d.get("dimension_status") or {}).get("market_momentum") in ("STRONG", "ACCEPTABLE"),
         })
     products.sort(key=lambda p: (["READY_FOR_PRODUCT_VALIDATION", "PROMISING_NEEDS_VALIDATION", "WATCHLIST",
                                   "INSUFFICIENT_DATA", "REJECT"].index(p["state"]) if p["state"] in STATE_ES else 9,
@@ -319,6 +326,9 @@ def build(root=ROOT, now=None, with_balance=True):
     return {"generated_at": now.isoformat(), "source": snap["source"], "source_label": snap["label"],
             "run_id": snap["run_id"], "config_version": snap["config_version"], "balance": bal,
             "counts": counts, "shortlist": [s.get("name") for s in snap["shortlist"]], "products": products,
+            "potential": [{"id": p["id"], "name": p["name"], "category": p["category"], "wps": p["wps"],
+                           "state_es": p["state_es"], "amazon": p["amazon"]}
+                          for p in sorted((x for x in products if x["momentum_ok"]), key=lambda x: -(x["wps"] or 0))],
             "costs": costs(root), "health": health(root), "data_quality": dq,
             "final_validation": [{"name": r["name"], "state": r["state"], "missing": r["reasons"]["missing"][:6],
                                   "actions": r["action_queue"]} for r in fv or []],

@@ -315,6 +315,15 @@ def validate_effective(rt, eff):
 
 # ====================================================================== runner
 
+
+def amazon_rule():
+    """Amazon eligibility text from the ACTIVE config (never hard-coded)."""
+    try:
+        c = AV.load_cfg()
+        return f"WPS>={c['minimum_wps']:g}, Conf>={c['minimum_confidence']:g}"
+    except Exception:  # noqa: BLE001
+        return "see amazon_validation.yaml"
+
 BRAND_RULE = ("- Exclude products sold by well-known established brands or their official brand stores (national "
               "cosmetics, electronics, appliance or apparel brands). Prefer generic / unbranded products that "
               "independent sellers can source from dropshipping suppliers.")
@@ -501,7 +510,7 @@ class Runner:
             "amazon_validation": {"planned_queries": amz_q, "cached": "checked per product at run time",
                                   "expected_paid_min": 0, "expected_paid_max": amz_q, "max_products": amz_n,
                                   "batch_size": qp.get("amazon_batch_size", 1),
-                                  "note": "only products with WPS >= 70 and Confidence >= 60 (may be 0)"},
+                                  "note": f"only products with {amazon_rule()} (may be 0)"},
         }
         tot_min = tot_max = 0.0
         unknown = False
@@ -839,7 +848,7 @@ class Runner:
              "paid": b.get("deep_analysis", {}).get("expected_paid_max")},
             {"stage": "wps", "does": "WPS v1 (scripts/score_products.py)", "paid": 0},
             {"stage": "wps_confidence", "does": "Confidence Score", "paid": 0},
-            {"stage": "amazon_validation", "does": f"eligible only (WPS>=70, Conf>=60), max "
+            {"stage": "amazon_validation", "does": f"eligible only ({amazon_rule()}), max "
                                                    f"{lim['amazon_validation_max_products']}",
              "paid": b.get("amazon_validation", {}).get("expected_paid_max")},
             {"stage": "bvs", "does": "BVS from stored supplier data only (incomplete if none; never invented)",
@@ -856,7 +865,7 @@ class Runner:
             {"stage": "deep_analysis", "does": f"max {lim['deep_analysis_max_products']} products, WPS + Confidence + "
                                                "trend + concentration + red flags",
              "paid": b.get("deep_analysis", {}).get("expected_paid_max")},
-            {"stage": "amazon_validation", "does": f"eligible only (WPS>=70, Conf>=60), max "
+            {"stage": "amazon_validation", "does": f"eligible only ({amazon_rule()}), max "
                                                    f"{lim['amazon_validation_max_products']}",
              "paid": b.get("amazon_validation", {}).get("expected_paid_max")},
             {"stage": "supplier_research", "does": f"top {self.e2e['supplier_products_max']} products, max "
@@ -1462,7 +1471,7 @@ class Runner:
             r.update(expected_paid_max=q, max_products=n, estimated_credits_max=round(q * e, 2) if e is not None
                      else safety.UNKNOWN, expected_paid_min=q if deep_left == 0 else 0,
                      estimated_credits_min=(round(q * e, 2) if e is not None else safety.UNKNOWN) if deep_left == 0
-                     else 0.0, note=f"{n} product(s): eligible (WPS>=70, Conf>=60) + calibration lane")
+                     else 0.0, note=f"{n} product(s): eligible ({amazon_rule()}) + calibration lane")
         rows = b["stages"].values()
         b["expected_paid_queries_min"] = sum(r["expected_paid_min"] for r in rows)
         b["expected_paid_queries_max"] = sum(r["expected_paid_max"] for r in rows)

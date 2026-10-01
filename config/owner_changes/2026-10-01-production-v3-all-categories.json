@@ -1,0 +1,18 @@
+{
+  "note": "Owner request: search all 9 categories (Beauty included); Amazon must not hide products with KaloPilot potential, so Amazon and BVS checks start at WPS 55 (decision 'acceptable' momentum) instead of 70. Scores, AVS/BVS formulas, filters, decision rules and confidence minimums unchanged. Brand exclusion kept.",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.discovery_categories",
+     "value": ["home", "kitchen", "pet", "beauty_personal_care", "fitness", "automotive_accessories", "tools", "outdoor", "electronics_accessories"],
+     "reason": "owner: include every category, Beauty is a niche of interest"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 65,
+     "reason": "9 discovery x 4.0 + 5 deep x 3.6 + 2 Amazon x 4.0 = 62 estimated"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 65, "reason": "mirror"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 16,
+     "reason": "9 discovery + 5 deep + 2 Amazon batches"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 16, "reason": "same"},
+    {"file": "amazon_validation.yaml", "path": "amazon_validation.minimum_wps", "value": 55,
+     "reason": "owner: products with KaloPilot potential (WPS >= 55) should get the Amazon check when budget allows"},
+    {"file": "business_viability.yaml", "path": "business_viability.eligibility.minimum_wps", "value": 55,
+     "reason": "free stage: compute margin with real supplier costs for every product with KaloPilot potential"}
+  ]
+}

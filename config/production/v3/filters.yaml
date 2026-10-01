@@ -1,0 +1,264 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v3 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T01:16:30.196817+00:00
+# source_calibration_report: owner-approved change of production-v2 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T01:16:30Z)
+# change_summary:
+#   - unchanged from production-v2
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Discovery filters — Version 1 (EXPERIMENTAL thresholds)
+# =============================================================================
+# All thresholds live HERE, never hardcoded in Python. Change a number here
+# (e.g. gmv_30d.min 25000 -> 50000) and the pipeline uses it on the next run.
+#
+# Deterministic rules only: every check is a numeric comparison or an exact
+# keyword/category match. Claude does not decide pass/reject/flag by judgment.
+#
+# Actions:
+#   reject -> product removed from the shortlist (kept in data/raw + log)
+#   flag   -> product kept, warning attached for human review
+# Missing input for a check -> check result "N/A" (never estimated);
+# see insufficient_data below.
+# =============================================================================
+
+version: "filters-v1"
+status: experimental
+
+market:
+  region: US
+  currency: USD
+  period_days: 30
+
+# -----------------------------------------------------------------------------
+# 1) Initial discovery filters
+#    min/max  -> hard filter (reject if outside)
+#    preferred_min -> soft filter (flag if below, not rejected)
+# -----------------------------------------------------------------------------
+discovery:
+  price:
+    basis: avg            # avg = (price_min + price_max) / 2 ; options: avg | min | max
+    min: 20
+    max: 100
+    action: reject
+
+  gmv_30d:
+    min: 25000            # USD
+    action: reject
+
+  units_30d:
+    min: 500
+    action: reject
+
+  growth_30d:
+    preferred_min: 30     # % revenue growth vs. prior 30 days
+    action: flag
+
+  selling_creators:
+    preferred_min: 5      # creators with sales for the product in the period
+    action: flag
+
+# -----------------------------------------------------------------------------
+# 2) Reject / flag rules
+# -----------------------------------------------------------------------------
+risk_rules:
+
+  collapsing_sales:
+    description: Sales falling sharply.
+    checks:
+      - input: revenue_growth_pct           # vs. prior 30 days
+        condition: "<= -30"
+        action: reject
+      - input: last7_vs_first7_sales_pct    # avg daily sales, last 7 vs first 7 days of window
+        condition: "<= -50"
+        action: flag
+
+  extreme_seller_saturation:
+    description: Too many sellers offering the same/similar product.
+    checks:
+      - input: similar_listings_count       # competing listings of the same product
+        condition: ">= 200"
+        action: flag
+      - input: category_product_count       # products selling in the same category
+        condition: ">= 50000"
+        action: flag
+
+  # Creator / video dependency -> see `concentration` section below.
+
+  low_base_or_seasonal:
+    description: >
+      Growth may be inflated by a near-zero prior period (new launch) or a
+      seasonal spike. Flag only: the product is kept for careful review.
+    checks:
+      - input: product_age_days             # data_window_end (or observation_date) - launch_date
+        condition: "< 30"
+        action: flag
+      - input: revenue_growth_pct           # % vs. prior 30 days
+        condition: "> 1000"
+        action: flag
+
+  trademark_ip_risk:
+    description: Brand names, licensed characters or copy/dupe language in the title.
+    match_field: product_name               # case-insensitive whole-word match
+    action: flag
+    keywords:
+      - disney
+      - marvel
+      - pokemon
+      - nintendo
+      - barbie
+      - hello kitty
+      - nike
+      - adidas
+      - apple
+      - stanley
+      - lululemon
+      - dupe
+      - replica
+      - inspired by
+      - "1:1"
+      - knockoff
+
+  highly_regulated:
+    description: Products needing licenses, approvals or restricted handling.
+    action: flag                            # change to reject to exclude outright
+    match_field: [product_name, category]
+    keywords:
+      - supplement
+      - vitamin
+      - gummies
+      - cbd
+      - hemp
+      - nicotine
+      - vape
+      - medical device
+      - hearing aid
+      - contact lens
+      - pesticide
+      - infant formula
+      - weight loss
+      - knife
+      - firearm
+      - ammo
+
+  shipping_problems:
+    description: Hazmat, fragile or oversized items.
+    action: flag
+    match_field: [product_name, category]
+    keywords:
+      - lithium
+      - battery
+      - aerosol
+      - flammable
+      - glass
+      - ceramic
+      - liquid
+      - mattress
+      - furniture
+      - oversized
+
+  insufficient_data:
+    description: Not enough real data to evaluate (nothing is estimated).
+    required_fields:                        # CRITICAL: missing any of these -> reject (FAIL)
+      - product_name
+      - price_min
+      - gmv_30d
+      - units_30d
+    missing_required_action: reject
+    # product_id is not critical: a deterministic fallback key is used instead
+    # (see discovery_mode.dedupe) and the product goes to REVIEW.
+    missing_product_id_action: flag
+    low_confidence:
+      below: 60                             # Confidence Score (config/scoring.yaml)
+      action: flag
+      stage: deep_analysis                  # NOT applied in discovery: discovery data is
+                                            # intentionally shallow, so confidence is low by design
+
+# -----------------------------------------------------------------------------
+# 3) Concentration analysis — avoid false positives
+#    (e.g. $500K GMV where $400K came from one viral creator)
+#    Calculated by scripts/concentration.py, only when source data allows it.
+#
+#    share = sum(revenue of top N creators|videos for THIS product, same period)
+#            / product GMV for the period * 100
+#
+#    N/A (no flag, no penalty) when:
+#      - product GMV missing or <= 0
+#      - creator/video revenue for the product missing or non-numeric
+#      - fewer than N items returned AND the product's total count is unknown
+#        or larger than the items returned (can't know the true top N)
+#      - result > 100% (inconsistent data -> validation warning)
+# -----------------------------------------------------------------------------
+concentration:
+  enabled: true
+  metrics:
+    top_creator_revenue_share:  { source: creators, top_n: 1 }
+    top3_creator_revenue_share: { source: creators, top_n: 3 }
+    top_video_revenue_share:    { source: videos,   top_n: 1 }
+    top3_video_revenue_share:   { source: videos,   top_n: 3 }
+  flags:
+    CREATOR_DEPENDENCY:
+      metric: top_creator_revenue_share
+      condition: "> 70"                     # % of measurable product revenue
+      action: flag
+    VIDEO_DEPENDENCY:
+      metric: top_video_revenue_share
+      condition: "> 70"
+      action: flag
+  max_valid_share_pct: 100                  # above this -> N/A + warning
+  rounding: 2
+
+# -----------------------------------------------------------------------------
+# 4) Discovery mode (Step L) — cheap, broad first pass
+#    Used by scripts/discovery.py. Concentration + low_confidence are NOT
+#    applied here (they need deep-analysis data, Step M).
+# -----------------------------------------------------------------------------
+discovery_mode:
+  products_per_category: 15                 # asked from KaloPilot per category query
+  max_candidates: 100                       # PASS + REVIEW returned (hard cap)
+  # Missing any of these optional fields -> REVIEW (never FAIL by itself)
+  # (selling_creator_count removed 2026-09-30: KaloPilot discovery never returns it,
+  #  so it sent every product to REVIEW. It stays N/A when missing; the
+  #  selling_creators preferred_min filter still applies whenever it IS returned.)
+  review_if_missing:
+    - growth_30d
+  # Deterministic order of returned candidates. Momentum first, NOT total GMV.
+  sort_by:
+    - { field: filter_status, order: [PASS, REVIEW] }
+    - { field: risk_flag, rule: low_base_or_seasonal }   # Step U: near-zero-base / spike products go last
+    - { field: growth_30d, direction: desc }        # N/A sorts last (growth is CALCULATED from gmv_prev_30d when given)
+    - { field: units_30d, direction: desc }
+    - { field: key, direction: asc }                # final tie-breaker
+  dedupe:
+    # 1st choice: KaloData/TikTok product_id (digits only after trimming).
+    # Fallback (no product_id): "fallback:" + sha1 of
+    #   lowercase(trimmed, single-spaced product_name) | lowercase(shop_name or "") | price_min
+    # When duplicates exist, keep the record with the most non-null facts;
+    # tie -> earliest (raw_file, record_index). Values are never merged across records.
+    fallback_fields: [product_name, shop_name, price_min]
+
+# -----------------------------------------------------------------------------
+# Output: every product keeps its filter log
+# -----------------------------------------------------------------------------
+output:
+  keep_rejected_in_log: true                # FAIL products saved with reasons
+  statuses:
+    PASS: all hard filters and risk rules passed, no review reasons
+    REVIEW: kept; at least one flag or missing optional data
+    FAIL: at least one reject rule triggered or critical data missing
+  fields:
+    - key
+    - filter_status                         # PASS | FAIL | REVIEW
+    - filter_reasons                        # rule + input value + threshold
+    - na_checks                             # checks skipped because data was missing
+    - config_version                        # "filters-v1"
+
+production_meta:
+  config_version: production-v3
+  created_at: '2026-10-01T01:16:30.196817+00:00'
+  source_calibration_report: owner-approved change of production-v2 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T01:16:30Z)
+  change_summary:
+  - unchanged from production-v2
+  derived_from: production-v2

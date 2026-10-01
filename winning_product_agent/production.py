@@ -248,7 +248,7 @@ class ProductionRunner(R.Runner):
         pen = ((self.rt.get("degraded_mode") or {}).get("competitor") or {}).get("decision_confidence_penalty", 0)
         return {
             "WPS": "unaffected (TikTok data only)" if st["kalopilot"] == AVAILABLE else "BLOCKED: KaloPilot unavailable",
-            "AVS": ("computed only for eligible products (WPS >= 70, Confidence >= 60); Amazon never measured live, "
+            "AVS": (f"computed only for eligible products ({R.amazon_rule()}); Amazon never measured live, "
                     "matches are not forced" if st["amazon"] != UNAVAILABLE else "N/A -> Cross-Platform Demand UNKNOWN"),
             "BVS": ("partial: real supplier economics only for products with imported offers; otherwise "
                     "INSUFFICIENT_SUPPLIER_DATA (never estimated)" if st["supplier"] != AVAILABLE else "full inputs"),

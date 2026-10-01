@@ -620,6 +620,63 @@ def missing_for_insufficient(ev, cfg):
     return fields, sources, queries
 
 
+AMZ_LEVELS = {"COMPLETA": "Validación Amazon completa", "MEDIA": "Validación Amazon media",
+              "PARCIAL": "Validación Amazon parcial", "NO_VALIDADA": "Sin validar en Amazon"}
+
+
+def _amazon_min_wps():
+    try:
+        import amazon_validation as _AV
+        c = _AV.load_cfg()
+        return c.get("minimum_wps"), c.get("minimum_confidence")
+    except Exception:  # noqa: BLE001
+        return None, None
+
+
+def amazon_validation_level(ev, cfg, av_min=None):
+    """How far the (optional) Amazon check got. Label only: it never changes the decision state.
+    COMPLETA  reliable match + AVS + Amazon Confidence >= strong minimum
+    MEDIA     reliable match + AVS + Amazon Confidence >= minimum (below strong)
+    PARCIAL   Amazon answered but no reliable match / no AVS / confidence below minimum
+    NO_VALIDADA  no Amazon data (not eligible, not queried or provider unavailable)"""
+    c, mins = cfg["dimensions"]["cross_platform_demand"], cfg["minimum_confidence"]
+    avs, conf, match = v(ev, "avs"), v(ev, "amazon_confidence"), v(ev, "amazon_match_status")
+    wmin, cmin = av_min if av_min is not None else _amazon_min_wps()
+    wps, wconf = v(ev, "wps"), v(ev, "wps_confidence")
+    if avs is None and conf is None and match is None:
+        if wmin is not None and (wps is None or wps < wmin):
+            why = f"no elegible para Amazon: WPS {_f(wps)} < {wmin:g}"
+        elif cmin is not None and (wconf is None or wconf < cmin):
+            why = f"no elegible para Amazon: confianza WPS {_f(wconf)} < {cmin:g}"
+        else:
+            why = "Amazon no se consultó (límite por corrida o proveedor no disponible)"
+        level = "NO_VALIDADA"
+    elif match == "NO_RELIABLE_MATCH":
+        level, why = "PARCIAL", "Amazon respondió, pero no hubo coincidencia confiable con el mismo producto"
+    elif avs is None:
+        level, why = "PARCIAL", "hay coincidencia en Amazon, pero sin AVS calculable"
+    elif conf is None or conf < mins["amazon"]:
+        level, why = "PARCIAL", f"confianza Amazon {_f(conf)} < mínimo {mins['amazon']:g}"
+    elif conf >= c["strong"]["confidence_min"]:
+        level, why = "COMPLETA", f"coincidencia confiable, AVS {_f(avs)}, confianza Amazon {_f(conf)}"
+    else:
+        level, why = "MEDIA", (f"coincidencia confiable, AVS {_f(avs)}, confianza Amazon {_f(conf)} "
+                               f"(< {c['strong']['confidence_min']:g} para completa)")
+    return {"level": level, "label": AMZ_LEVELS[level], "reason": why, "avs": avs, "amazon_confidence": conf}
+
+
+def kalopilot_potential(decisions, max_products=None):
+    """Products whose TikTok (KaloPilot) market momentum meets the rules, whatever Amazon or the other
+    layers say. Reporting only: it never changes a decision state or the shortlist."""
+    rows = [d for d in decisions if d["dimension_status"]["market_momentum"] in (STRONG, ACCEPTABLE)]
+    rows.sort(key=lambda d: (-(v(d["evidence"], "wps") or 0), str(d["product_id"])))
+    rows = rows[:max_products] if max_products else rows
+    return [{"product_id": d["product_id"], "name": d["name"], "category": d.get("category"),
+             "wps": v(d["evidence"], "wps"), "wps_confidence": v(d["evidence"], "wps_confidence"),
+             "market_momentum": d["dimension_status"]["market_momentum"], "decision_state": d["decision_state"],
+             "amazon_validation": d.get("amazon_validation")} for d in rows]
+
+
 def decide(ev, cfg, manual=None):
     dims = dimensions(ev, cfg)
     cl = checklist(ev["product_id"], cfg, manual)
@@ -719,6 +776,7 @@ def decide(ev, cfg, manual=None):
     if state == INSUFFICIENT:
         f, s, q = missing_for_insufficient(ev, cfg)
         out["missing_fields"], out["missing_sources"], out["required_next_queries"] = f, s, q
+    out["amazon_validation"] = amazon_validation_level(ev, cfg)
     out["next_actions"] = next_actions(out, tasks, pending)
     return out
 
@@ -816,7 +874,8 @@ def run(products, competitor_by_id=None, creative_by_id=None, cfg=None, manual=N
     for d in decisions:
         d["versioning"] = {k: meta[k] for k in ("decision_rules_version", "scoring_config_hash",
                                                 "runtime_config_hash", "decision_config_hash", "timestamp")}
-    return {"metadata": meta, "decisions": decisions, "shortlist": shortlist(decisions, cfg), "cfg": cfg}
+    return {"metadata": meta, "decisions": decisions, "shortlist": shortlist(decisions, cfg), "cfg": cfg,
+            "kalopilot_potential": kalopilot_potential(decisions)}
 
 
 def explain_decision(product_id, result):
@@ -857,6 +916,7 @@ def build_json(result):
                      "layers_present": d["evidence"]["layers_present"], "trust": d["evidence"].get("trust")}}
     return {"metadata": result["metadata"], "decision_rules_version": result["metadata"]["decision_rules_version"],
             "shortlist": result["shortlist"],
+            "kalopilot_potential": result.get("kalopilot_potential") or kalopilot_potential(decs),
             "ready_products": [strip(d) for d in by[READY]],
             "promising_products": [strip(d) for d in by[PROMISING]],
             "watchlist": [strip(d) for d in by[WATCH]],
@@ -889,6 +949,18 @@ def render_markdown(result):
               f"{_f(s['tie_break']['creative_opportunity'])} |" for s in sl]
     else:
         L.append("No product met every READY rule. The shortlist is left empty rather than filled with weaker products.")
+    pot = result.get("kalopilot_potential")
+    pot = pot if pot is not None else kalopilot_potential(decs)
+    L += ["", "## 2b. KaloPilot potential (Amazon not required)", "",
+          "Products whose TikTok Shop metrics (KaloPilot) meet the market-momentum rule, shown whatever the other "
+          "layers say. The Amazon label says how far the optional Amazon check got; it never hides a product.", ""]
+    if pot:
+        L += ["| Product | WPS | WPS Conf. | Momentum | Decision state | Amazon | Why |", "|---|---|---|---|---|---|---|"]
+        L += [f"| {p['name']} | {_f(p['wps'])} | {_f(p['wps_confidence'])} | {p['market_momentum']} | "
+              f"{p['decision_state']} | {(p['amazon_validation'] or {}).get('label', NA)} | "
+              f"{(p['amazon_validation'] or {}).get('reason', NA)} |" for p in pot]
+    else:
+        L.append("No product met the KaloPilot market-momentum rule in this run.")
     L += ["", "## 3. Evidence matrix", "",
           "| Product | WPS | WPS Conf. | Momentum | Mom. Conf. | AVS | Amz Conf. | BVS | BVS Conf. | Supplier Conf. | "
           "Comp. Sat/Opp/Conf | Creative Sat/Opp/Conf | History obs. |",
@@ -901,11 +973,12 @@ def render_markdown(result):
                  f"{e('creative_saturation')}/{e('creative_opportunity')}/{e('creative_confidence')} | "
                  f"{e('history_observations')} |")
     L += ["", "## 4. Decision state per product", "",
-          "| Product | State | Momentum | Cross-Platform | Commercial | Competitive | Creative | Evidence |",
-          "|---|---|---|---|---|---|---|---|"]
+          "| Product | State | Momentum | Cross-Platform | Commercial | Competitive | Creative | Evidence | Amazon |",
+          "|---|---|---|---|---|---|---|---|---|"]
     for d in decs:
         s = d["dimension_status"]
-        L.append(f"| {d['name']} | **{d['decision_state']}** | " + " | ".join(s[k] for k in DIMENSIONS) + " |")
+        L.append(f"| {d['name']} | **{d['decision_state']}** | " + " | ".join(s[k] for k in DIMENSIONS) +
+                 f" | {(d.get('amazon_validation') or {}).get('label', NA)} |")
     L += ["", "## 5. Decision confidence", "",
           "Confidence in the decision (evidence coverage and quality), not a product score.", "",
           "| Product | Decision Conf. | Coverage | Layer conf. | Provenance | Reliable sources | History |",

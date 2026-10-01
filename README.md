@@ -123,3 +123,7 @@ approval; scores, filters, decision rules and confidence minimums cannot change 
 
 production-v2 (active): discovery in home, kitchen, pet, fitness; established brands excluded; run cap 50 credits;
 max 11 paid queries per run.
+
+production-v3 (active, owner approved): all 9 categories; Amazon and BVS checks from WPS 55 (eligibility only);
+run cap 65 credits, max 16 paid queries. Reports add **KaloPilot potential (Amazon not required)** and an Amazon
+validation label per product: COMPLETA / MEDIA / PARCIAL / NO_VALIDADA (label only, never changes a decision).

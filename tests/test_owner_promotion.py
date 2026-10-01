@@ -68,6 +68,19 @@ class OwnerPromotion(TP.ConfigRoot):
             PROMO.promote_owner_change(self.root, CHANGES, approved_by=None, approved_at="t")
         self.assertEqual(PROMO.versions(self.root), ["v1"])
 
+    def test_eligibility_change_keeps_comments(self):
+        r = self.owner(CHANGES + [
+            {"file": "amazon_validation.yaml", "path": "amazon_validation.minimum_wps", "value": 55},
+            {"file": "business_viability.yaml", "path": "business_viability.eligibility.minimum_wps", "value": 55}])
+        d = Path(r["dir"])
+        self.assertEqual(PROMO._yaml(d / "amazon_validation.yaml")["amazon_validation"]["minimum_wps"], 55)
+        self.assertEqual(PROMO._yaml(d / "business_viability.yaml")["business_viability"]["eligibility"]["minimum_wps"], 55)
+        self.assertIn("# Eligible products are validated", (d / "amazon_validation.yaml").read_text())
+        with self.assertRaises(ValueError):                 # formulas stay out of reach
+            PROMO.promote_owner_change(self.root, [{"file": "amazon_validation.yaml",
+                                                    "path": "amazon_validation.matching.classes.EXACT", "value": 50}],
+                                       approved_by="o", approved_at="t")
+
     def test_activate_and_rollback(self):
         self.owner(activate_new=True)
         self.assertEqual(PROMO.active_version(self.root), "v2")

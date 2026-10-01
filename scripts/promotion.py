@@ -16,6 +16,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 from datetime import datetime, timezone
@@ -421,7 +422,22 @@ OWNER_CHANGEABLE = {                      # production file -> path prefixes the
     "runtime.yaml": ("query_plan.discovery_categories", "query_plan.discovery_exclude_established_brands",
                      "query_plan.max_credits_for_run", "query_plan.guardrails.max_queries_per_run",
                      "query_plan.guardrails.max_provider_queries.kalopilot", "credit_safety.max_credits_for_run"),
+    # which products get the (optional) Amazon / BVS checks — eligibility only, never the AVS / BVS formulas
+    "amazon_validation.yaml": ("amazon_validation.minimum_wps",),
+    "business_viability.yaml": ("business_viability.eligibility.minimum_wps",),
 }
+
+
+def _text_set_scalar(text, path, old, new):
+    """Replace one scalar in YAML text keeping comments; None if the line is not uniquely identifiable."""
+    if isinstance(new, (dict, list)) or isinstance(old, (dict, list)) or old is None:
+        return None
+    leaf = path.split(".")[-1]
+    pat = re.compile(rf"^(\s*{re.escape(leaf)}:\s*){re.escape(str(old))}(\s*(#.*)?)$", re.M)
+    hits = pat.findall(text)
+    if len(hits) != 1:
+        return None
+    return pat.sub(lambda m: f"{m.group(1)}{new}{m.group(2)}", text, count=1)
 
 
 def _split_production_text(text):
@@ -484,11 +500,15 @@ def promote_owner_change(root=ROOT, changes=None, approved_by=None, approved_at=
         summary = [f"{r['path']}: {r['current_value']} -> {r['proposed_value']} (owner approved)" for r in rs] or \
                   [f"unchanged from production-{base_version}"]
         if rs:
-            data = _yaml(p)
-            data.pop("production_meta", None)
-            for r in rs:
-                set_path(data, r["path"], r["proposed_value"])
-            body = yaml.safe_dump(data, sort_keys=False, allow_unicode=True)
+            body = _split_production_text(p.read_text())
+            for r in rs:                                  # keep comments when a scalar line is unambiguous
+                body = _text_set_scalar(body, r["path"], r["current_value"], r["proposed_value"]) if body else None
+            if body is None:
+                data = _yaml(p)
+                data.pop("production_meta", None)
+                for r in rs:
+                    set_path(data, r["path"], r["proposed_value"])
+                body = yaml.safe_dump(data, sort_keys=False, allow_unicode=True)
         else:
             body = _split_production_text(p.read_text())
         meta = _meta_block(version, created, source, summary)

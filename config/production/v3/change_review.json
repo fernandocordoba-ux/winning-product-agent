@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-10-01T01:16:30.196817+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v2",
+  "note": "Owner request: search all 9 categories (Beauty included); Amazon must not hide products with KaloPilot potential, so Amazon and BVS checks start at WPS 55 (decision 'acceptable' momentum) instead of 70. Scores, AVS/BVS formulas, filters, decision rules and confidence minimums unchanged. Brand exclusion kept.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_categories",
+      "current_value": [
+        "home",
+        "kitchen",
+        "pet",
+        "fitness"
+      ],
+      "proposed_value": [
+        "home",
+        "kitchen",
+        "pet",
+        "beauty_personal_care",
+        "fitness",
+        "automotive_accessories",
+        "tools",
+        "outdoor",
+        "electronics_accessories"
+      ],
+      "reason": "owner: include every category, Beauty is a niche of interest",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T01:16:30Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 50,
+      "proposed_value": 65,
+      "reason": "9 discovery x 4.0 + 5 deep x 3.6 + 2 Amazon x 4.0 = 62 estimated",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T01:16:30Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 50,
+      "proposed_value": 65,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T01:16:30Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 11,
+      "proposed_value": 16,
+      "reason": "9 discovery + 5 deep + 2 Amazon batches",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T01:16:30Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 11,
+      "proposed_value": 16,
+      "reason": "same",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T01:16:30Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "amazon_validation.yaml",
+      "path": "amazon_validation.minimum_wps",
+      "current_value": 70,
+      "proposed_value": 55,
+      "reason": "owner: products with KaloPilot potential (WPS >= 55) should get the Amazon check when budget allows",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T01:16:30Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "business_viability.yaml",
+      "path": "business_viability.eligibility.minimum_wps",
+      "current_value": 70,
+      "proposed_value": 55,
+      "reason": "free stage: compute margin with real supplier costs for every product with KaloPilot potential",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat approval)",
+      "approved_at": "2026-10-01T01:16:30Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 7,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

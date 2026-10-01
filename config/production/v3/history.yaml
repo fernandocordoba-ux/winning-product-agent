@@ -1,0 +1,101 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v3 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T01:16:30.196817+00:00
+# source_calibration_report: owner-approved change of production-v2 (approved by Fernando Cordoba (owner, chat approval) at 2026-10-01T01:16:30Z)
+# change_summary:
+#   - unchanged from production-v2
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Historical Tracking — Step Q (EXPERIMENTAL v1, editable here)
+# =============================================================================
+# Append-only product history. scripts/history.py never overwrites or deletes
+# an observation; only data/history/history_index.json is rebuilt each run.
+#
+# Storage: data/history/products/{safe_id}/{YYYY-MM-DD}T{HHMMSSffffff}Z.json
+#   - one immutable (read-only) file per observation, grouped by date prefix
+#     (a single YYYY-MM-DD.json per day could not keep several same-day
+#      observations without rewriting the file)
+#   - safe_id = product_id, or the Discovery fallback key with ':' -> '_'
+#   - same product + same exact timestamp -> skipped as duplicate
+# Timestamps are stored and compared in UTC; observation_date = UTC date.
+# =============================================================================
+
+history:
+  version: "history-v1"
+  base_dir: data/history
+
+  # ---------------------------------------------------------------- analysis view
+  # Discovery and Deep Analysis of the same run observe a product minutes apart.
+  # For deltas/velocity/trends those count as ONE cycle (most complete kept, tie -> later),
+  # otherwise "0 change in 1 hour" would look like deceleration. Storage is unaffected.
+  analysis:
+    same_cycle_hours: 12
+
+  # ---------------------------------------------------------------- windows
+  windows:
+    short_window_days: 7
+    medium_window_days: 14
+    long_window_days: 30
+
+  # ---------------------------------------------------------------- trend
+  # Per window and metric, using the valid observations inside
+  # [latest_timestamp - window_days, latest_timestamp]:
+  #   n            = number of observations with a value
+  #   span_days    = time between first and last of them
+  #   change       = last - first            (points for WPS; % for the rest)
+  #   consistency  = share of consecutive steps moving in the same direction as `change`
+  #   cv           = population std dev / mean of the values (see volatility)
+  #   acceleration = per-day velocity of the 2nd half of the points vs the 1st half
+  # First matching rule wins:
+  #   INSUFFICIENT_DATA : n < min_observations or span_days < window_days * min_span_fraction
+  #   VOLATILE          : cv >= volatile_cv and consistency < min_consistency
+  #   ACCELERATING      : change >= growing_min and consistency >= min_consistency and
+  #                       2nd-half velocity > 0 and > 1st-half velocity * (1 + acceleration_margin)
+  #   GROWING           : change >= growing_min and consistency >= min_consistency
+  #   DECLINING         : change <= -declining_min and consistency >= min_consistency
+  #   STABLE            : |change| < growing_min and |change| < declining_min
+  #   VOLATILE          : otherwise (large but inconsistent change)
+  trend:
+    min_observations: 3
+    min_span_fraction: 0.4                  # 7d window needs >= 2.8 days of spread
+    min_consistency: 0.6
+    acceleration_margin: 0.2                # 2nd half at least 20 % faster than 1st half
+    volatile_cv: 0.5
+    thresholds:                             # growing_min / declining_min
+      percent_metrics: { growing_min: 10, declining_min: 10 }   # gmv, units, creators, videos (% change)
+      points_metrics:  { growing_min: 3,  declining_min: 3 }    # wps (points)
+    metrics:
+      gmv: percent
+      units: percent
+      creators: percent
+      videos: percent
+      wps: points
+
+  # ---------------------------------------------------------------- volatility
+  # Method: coefficient of variation (population std dev / mean) of ALL valid
+  # observations of a metric. Needs >= min_observations values and mean > 0.
+  volatility:
+    min_observations: 3
+    levels:                                 # cv < LOW_max -> LOW; < MODERATE_max -> MODERATE; else HIGH
+      LOW_max: 0.15
+      MODERATE_max: 0.35
+    metrics: [gmv, units, wps, creators, videos]
+    primary_metric: gmv                     # drives the snapshot's volatility_level
+
+  # ---------------------------------------------------------------- migration
+  migration:
+    sources: [discovery, deep_analysis]     # each observation = one Discovery record or one Deep result
+    # Amazon / BVS results are attached to the Deep observation of the same product whose
+    # cycle they belong to: timestamp >= deep timestamp and < the next deep timestamp.
+    include_discovery_failed: true          # rejected products are tracked too
+
+production_meta:
+  config_version: production-v3
+  created_at: '2026-10-01T01:16:30.196817+00:00'
+  source_calibration_report: owner-approved change of production-v2 (approved by Fernando
+    Cordoba (owner, chat approval) at 2026-10-01T01:16:30Z)
+  change_summary:
+  - unchanged from production-v2
+  derived_from: production-v2
