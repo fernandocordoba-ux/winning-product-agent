@@ -1,0 +1,165 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v9 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T16:13:56.350446+00:00
+# source_calibration_report: owner-approved change of production-v8 (approved by Fernando Cordoba (owner, chat request: garantizar 10) at 2026-10-01T16:13:56Z)
+# change_summary:
+#   - query_plan.target_candidates: None -> 10 (owner approved)
+#   - limits.deep_analysis_max_products: 10 -> 25 (owner approved)
+#   - e2e.final_decision_max_products: 10 -> 25 (owner approved)
+#   - query_plan.max_credits_for_run: 54 -> 110 (owner approved)
+#   - credit_safety.max_credits_for_run: 54 -> 110 (owner approved)
+#   - query_plan.guardrails.max_queries_per_run: 16 -> 31 (owner approved)
+#   - query_plan.guardrails.max_provider_queries.kalopilot: 16 -> 31 (owner approved)
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+runtime:
+  market: US
+  live_mode: false
+  dry_run: true
+  explicit_live_confirmation: false
+limits:
+  discovery_max_products: 100
+  deep_analysis_max_products: 25
+  amazon_validation_max_products: 3
+  bvs_max_products: 3
+safety:
+  preserve_raw_data: true
+  append_only_history: true
+  block_secrets_in_outputs: true
+  require_credit_check: true
+  min_balance_reserve: 5.0
+  estimated_credits_per_query: 4.0
+query_plan:
+  discovery_mode: lenses
+  discovery_categories:
+  - beauty_personal_care
+  deep_batch_size: 1
+  amazon_batch_size: 2
+  max_credits_for_run: 110
+  estimated_credits:
+    discovery: 4.0
+    deep_analysis: 3.6
+    amazon_validation: 4.0
+  guardrails:
+    max_queries_per_run: 31
+    max_provider_queries:
+      kalopilot: 31
+    max_failed_queries: 2
+    max_retry_count: 0
+    note: sized from the approved limits; stop new paid queries, keep completed data,
+      PARTIAL report
+  discovery_exclude_established_brands: true
+  deep_selection: preliminary_wps
+  deep_exclude_keywords:
+  - halloween
+  - christmas
+  - xmas
+  - thanksgiving
+  - easter
+  - valentine
+  - advent
+  - santa
+  discovery_lenses:
+  - proven
+  discovery_subniches:
+  - 'beauty tools & devices: hair styling tools, facial and skin devices, makeup brushes
+    and applicators'
+  - 'nails & lashes: press-on nails, nail art kits, false lashes and lash kits'
+  - 'hair care: hair oils, masks, serums, scalp care, hair accessories'
+  - 'skincare & body care: face masks, serums, body scrubs, bath and shower accessories'
+  prefer_new_days: 14
+  target_candidates: 10
+allowed_markets:
+- US
+provider:
+  name: kalopilot
+  credential_sources:
+    env:
+    - KALOPILOT_TOKEN
+    - KALODATA_API_KEY
+    file: ~/.kalopilot/token
+paths:
+  raw: data/production/raw
+  processed: data/production/processed
+  history: data/production/history
+  reports: reports/production
+  runs: runs/production
+  cache: data/production/raw
+e2e:
+  step: PRODUCTION
+  confirmation_phrase: CONFIRM PRODUCTION LIVE RUN
+  supplier_products_max: 3
+  supplier_offers_per_product_max: 5
+  competitor_products_max: 3
+  competitors_per_product_max: 10
+  creative_products_max: 3
+  creatives_per_product_max: 20
+  final_decision_max_products: 25
+  layer_product_order: discovery PASS before REVIEW, then WPS desc, WPS Confidence
+    desc, product_id
+cache_policy:
+  discovery_ttl_hours: 24
+  deep_ttl_hours: 24
+  amazon_ttl_hours: 24
+  cache_key: query sha256 + prompt_version
+  reuse_across_environments: false
+  note: only PRODUCTION-tagged raw answers under data/production/raw are reused
+provider_retry:
+  max_retries: 0
+  retry_on: []
+  note: no automatic re-buy of a paid query
+credit_safety:
+  min_balance_reserve: 5.0
+  max_credits_for_run: 110
+  free_balance_check: true
+history_settings:
+  path: data/production/history
+  append_only: true
+  dedupe: source_snapshot_hash
+  decision_history: true
+  environment: PRODUCTION
+report_settings:
+  dir: reports/production
+  dated_never_overwritten: true
+  latest_files:
+  - latest-winning-products.md
+  - latest-final-decision.md
+  shortlist_max: 3
+  shortlist_only_state: READY_FOR_PRODUCT_VALIDATION
+degraded_mode:
+  kalopilot:
+    critical: true
+    on_unavailable: BLOCK_RUN
+    on_degraded: CONTINUE_WITH_WARNING
+  amazon:
+    mandatory: false
+    on_unavailable: CONTINUE
+    effect: cross-platform demand UNKNOWN (never estimated)
+  supplier:
+    on_unavailable: CONTINUE_NO_READY
+    on_degraded: CONTINUE
+    effect: READY requires supplier economics (decision rules ready.require_supplier_economics)
+  competitor:
+    on_unavailable: CONTINUE_REDUCED_CONFIDENCE
+    on_degraded: CONTINUE_REDUCED_CONFIDENCE
+    decision_confidence_penalty: 10
+    effect: Decision Confidence -10 for products without competitor evidence
+  creative:
+    on_unavailable: CONTINUE
+    effect: creative dimension UNKNOWN
+
+production_meta:
+  config_version: production-v9
+  created_at: '2026-10-01T16:13:56.350446+00:00'
+  source_calibration_report: 'owner-approved change of production-v8 (approved by Fernando
+    Cordoba (owner, chat request: garantizar 10) at 2026-10-01T16:13:56Z)'
+  change_summary:
+  - 'query_plan.target_candidates: None -> 10 (owner approved)'
+  - 'limits.deep_analysis_max_products: 10 -> 25 (owner approved)'
+  - 'e2e.final_decision_max_products: 10 -> 25 (owner approved)'
+  - 'query_plan.max_credits_for_run: 54 -> 110 (owner approved)'
+  - 'credit_safety.max_credits_for_run: 54 -> 110 (owner approved)'
+  - 'query_plan.guardrails.max_queries_per_run: 16 -> 31 (owner approved)'
+  - 'query_plan.guardrails.max_provider_queries.kalopilot: 16 -> 31 (owner approved)'
+  derived_from: production-v8

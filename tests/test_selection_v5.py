@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "tests"))
+sys.path.insert(0, str(ROOT))
 
 import decision_engine as DE  # noqa: E402
 import deep_analysis as DA  # noqa: E402
@@ -85,3 +86,11 @@ class CandidatesReport(unittest.TestCase):
             self.skipTest("no production run saved in this checkout")
         self.assertTrue((d / "latest.csv").exists() and (d / "latest.md").exists())
         self.assertGreater(r["rows"], 0)
+
+
+class Target(unittest.TestCase):
+    def test_candidates_found(self):
+        from winning_product_agent.runner import Runner
+        rs = [{"status": "ok", "wps": 60, "confidence": 70}, {"status": "ok", "wps": 54, "confidence": 90},
+              {"status": "ok", "wps": 70, "confidence": 50}, {"status": "failed"}]
+        self.assertEqual(Runner.candidates_found(rs), 1)

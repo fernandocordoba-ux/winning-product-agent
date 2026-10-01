@@ -1,0 +1,12 @@
+{
+  "note": "Owner: guarantee 10 candidates. Deep analysis continues in best-first order until 10 products qualify (WPS >= 55 and WPS Confidence >= 60) and then STOPS spending; it also stops at the credit cap, the balance reserve or when the candidate pool is used up. Thresholds unchanged (no weak products are added to reach 10).",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.target_candidates", "value": 10, "reason": "stop as soon as 10 qualify"},
+    {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 25, "reason": "room to reach 10 at a ~50 % hit rate"},
+    {"file": "runtime.yaml", "path": "e2e.final_decision_max_products", "value": 25, "reason": ">= deep max"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 110, "reason": "4 x 4.0 + 25 x 3.6 = 106 worst case; the run stops earlier when 10 qualify or the balance reserve is reached"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 110, "reason": "mirror"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 31, "reason": "4 + 25 + 2"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 31, "reason": "same"}
+  ]
+}

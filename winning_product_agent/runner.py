@@ -1248,6 +1248,12 @@ class Runner:
                 "data": {"status": "completed", "task_id": task_id, "report_url": data.get("report_url"),
                          "report": "```json\n" + json.dumps(obj, ensure_ascii=False) + "\n```"}}
 
+    @staticmethod
+    def candidates_found(results, wps_min=55, conf_min=60):
+        """Deep results that already qualify as candidates (market momentum ACCEPTABLE or better)."""
+        return sum(1 for r in results if r.get("status") == "ok" and (r.get("wps") or 0) >= wps_min
+                   and (r.get("confidence") or 0) >= conf_min)
+
     def recently_analyzed(self, days):
         """product ids with a successful deep analysis in the last `days` days (prefer NEW products)."""
         if not days:
@@ -1303,7 +1309,12 @@ class Runner:
             else:
                 pending.append(pid)
         size = self.eff["query_plan"].get("deep_batch_size", 1)
+        target = self.eff["query_plan"].get("target_candidates")
+        target_hit = None
         for batch in self._batches(pending, size):
+            if target and self.candidates_found(results) >= target:      # enough candidates: stop spending
+                target_hit = f"target reached: {target} candidate(s) with WPS >= 55 and Confidence >= 60"
+                break
             self.budget.plan(1)
             prods = [by_pid[x] for x in batch]
             query = DA.build_query(prods[0], cfg, market) if len(batch) == 1 else self.deep_batch_query(prods, cfg, market)
@@ -1351,11 +1362,14 @@ class Runner:
         saved = DA.save_results(report, out_dir)
         ctx["deep"], ctx["deep_file"] = results, str(saved)
         ok = sum(r.get("status") == "ok" for r in results)
-        status = COMPLETED if ok == len(selected) else (PARTIAL if ok else (BLOCKED if stop and not results else FAILED))
+        status = COMPLETED if ok == len(selected) or target_hit else (PARTIAL if ok else (BLOCKED if stop and not results else FAILED))
+        found = self.candidates_found(results)
         self._checkpoint("deep_analysis", {"status": status, "results": results, "saved": str(saved),
-                                           "not_run": not_run, "stopped": stop})
+                                           "not_run": not_run, "stopped": stop, "target": target, "target_found": found})
         return status, {"summary": f"{ok}/{len(selected)} analyzed ok" + (f"; not run: {len(not_run)}" if not_run else "")
+                        + (f"; candidates {found}/{target}" if target else "") + (f" — {target_hit}" if target_hit else "")
                         + (f" — stopped: {stop}" if stop else ""), "ok": ok, "selected": len(selected),
+                        "target": target, "target_found": found,
                         "failed": [{"product_id": r.get("product_id"), "error": r.get("error_category") or r.get("status")}
                                    for r in results if r.get("status") != "ok"], "saved": str(saved)}
 

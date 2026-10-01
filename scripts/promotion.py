@@ -423,7 +423,7 @@ OWNER_CHANGEABLE = {                      # production file -> path prefixes the
     "runtime.yaml": ("limits.discovery_max_products", "limits.deep_analysis_max_products",
                      "query_plan.deep_selection", "query_plan.deep_exclude_keywords", "query_plan.discovery_categories",
                      "query_plan.discovery_mode", "query_plan.discovery_lenses", "e2e.final_decision_max_products",
-                     "query_plan.discovery_subniches", "query_plan.prefer_new_days", "query_plan.discovery_exclude_established_brands",
+                     "query_plan.discovery_subniches", "query_plan.prefer_new_days", "query_plan.target_candidates", "query_plan.discovery_exclude_established_brands",
                      "query_plan.max_credits_for_run", "query_plan.guardrails.max_queries_per_run",
                      "query_plan.guardrails.max_provider_queries.kalopilot", "credit_safety.max_credits_for_run"),
     # which products get the (optional) Amazon / BVS checks — eligibility only, never the AVS / BVS formulas

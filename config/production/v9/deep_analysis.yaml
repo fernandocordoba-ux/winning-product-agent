@@ -1,0 +1,116 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v9 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T16:13:56.350446+00:00
+# source_calibration_report: owner-approved change of production-v8 (approved by Fernando Cordoba (owner, chat request: garantizar 10) at 2026-10-01T16:13:56Z)
+# change_summary:
+#   - unchanged from production-v8
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Deep Analysis — Step M (EXPERIMENTAL v1 thresholds, editable here)
+# =============================================================================
+# Used by scripts/deep_analysis.py. No business threshold is hardcoded in Python.
+# Deep Analysis SPENDS KaloPilot credits: see credit_protection.
+# =============================================================================
+
+version: "deep-analysis-v1"
+
+# -----------------------------------------------------------------------------
+# Stage 1 — input selection (from the latest data/processed/discovery_*.json)
+# -----------------------------------------------------------------------------
+selection:
+  deep_analysis_max_products: 40
+  eligible_statuses: [PASS, REVIEW]         # FAIL is always excluded
+  status_priority: [PASS, REVIEW]           # PASS first
+  # Within a status, keep Discovery's own deterministic order
+  # (momentum first, see filters.yaml discovery_mode.sort_by). Nothing is re-estimated.
+  require_identifier: [product_id, product_url]   # need at least one to query; else skipped (reported)
+
+# -----------------------------------------------------------------------------
+# Stage 2 — queries (one combined query per product keeps cost down)
+# -----------------------------------------------------------------------------
+queries:
+  types: [deep_product]                     # prompt: prompts/deep_analysis.md
+  period_days: 30
+  top_creators: 5                          # Step U: 10 -> 5 (answer-size limit); concentration uses top 1 / top 3
+  top_videos: 5
+
+# -----------------------------------------------------------------------------
+# Stage 10 — credit protection
+# -----------------------------------------------------------------------------
+credit_protection:
+  estimated_credits_per_query: 4.0          # observed: 2.78 (3 products), 3.98 (discovery, 15 products)
+  min_balance_reserve: 5.0                  # never go below this balance
+  # Live run stops safely (saving everything done so far) when
+  #   balance < estimated_credits_per_query + min_balance_reserve
+  cache_ttl_hours: 24                       # reuse a raw response for the same
+                                            # product + query type fetched within this window
+  dry_run_default: true                     # CLI runs dry-run unless --live is passed
+
+# -----------------------------------------------------------------------------
+# Stage 5 — trend classification (deterministic)
+#   window mean   = mean of non-null values in a 7-day window (needs >= min_points_per_window)
+#   velocity_pct  = (mean(last 7 days) - mean(previous 7 days)) / mean(previous 7 days) * 100
+#   prior_velocity_pct = same, previous 7 vs the 7 before (needs 21 days)
+#   previous-window mean <= 0 -> velocity N/A
+# Rules are checked in this order; first match wins.
+# -----------------------------------------------------------------------------
+trend:
+  window_days: 7
+  min_points_per_window: 5
+  min_history_days: 14                      # fewer non-null days in the series -> INSUFFICIENT_DATA
+  classify_on: gmv                          # series used for the label: gmv (daily GMV)
+  rules:
+    - label: INSUFFICIENT_DATA
+      when: velocity_unavailable
+    - label: DECLINING
+      when: "velocity_pct <= -10"
+    - label: ACCELERATING
+      when: "velocity_pct >= 10 and prior_velocity_pct available and velocity_pct - prior_velocity_pct >= 10"
+    - label: GROWING
+      when: "velocity_pct >= 10"
+    - label: STABLE
+      when: otherwise                       # -10 < velocity_pct < 10
+  thresholds:
+    declining_max: -10
+    growing_min: 10
+    acceleration_margin: 10
+
+# -----------------------------------------------------------------------------
+# Stage 8 — red flags (all deterministic; keyword flags only ask for review)
+# -----------------------------------------------------------------------------
+red_flags:
+  CREATOR_DEPENDENCY: { source: concentration }           # thresholds in filters.yaml
+  VIDEO_DEPENDENCY: { source: concentration }
+  SALES_DECLINING:
+    trend_label: DECLINING
+    growth_30d_max: -10                     # OR growth_30d <= -10 %
+  EXTREME_SATURATION: { source: filters.yaml risk_rules.extreme_seller_saturation }
+  INSUFFICIENT_HISTORY: { trend_label: INSUFFICIENT_DATA }
+  PRICE_INSTABILITY:
+    price_range_pct_min: 30                 # (max - min) / min * 100 over price_history; no history -> N/A
+    min_points: 3
+  LOW_DATA_CONFIDENCE:
+    confidence_below: 60
+  IP_REVIEW_REQUIRED: { source: filters.yaml risk_rules.trademark_ip_risk.keywords }   # never an infringement claim
+  REGULATED_REVIEW_REQUIRED: { source: filters.yaml risk_rules.highly_regulated.keywords }
+  SHIPPING_REVIEW_REQUIRED: { source: filters.yaml risk_rules.shipping_problems.keywords }
+
+# -----------------------------------------------------------------------------
+# Competition scope (Step U post-live calibration). A competitor count is only scored /
+# used for EXTREME_SATURATION when its taxonomy scope is comparable. PRODUCT_CLUSTER and
+# SUBCATEGORY counts are never compared with CATEGORY counts. Non-comparable -> N/A for WPS
+# (SUPPORTING metric: excluded, Confidence reduced) + COMPETITION_NOT_COMPARABLE flag.
+# -----------------------------------------------------------------------------
+competition_scope:
+  comparable_scopes: [PRODUCT_CLUSTER, SUBCATEGORY]
+
+production_meta:
+  config_version: production-v9
+  created_at: '2026-10-01T16:13:56.350446+00:00'
+  source_calibration_report: 'owner-approved change of production-v8 (approved by Fernando
+    Cordoba (owner, chat request: garantizar 10) at 2026-10-01T16:13:56Z)'
+  change_summary:
+  - unchanged from production-v8
+  derived_from: production-v8

@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-10-01T16:13:56.350446+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v8",
+  "note": "Owner: guarantee 10 candidates. Deep analysis continues in best-first order until 10 products qualify (WPS >= 55 and WPS Confidence >= 60) and then STOPS spending; it also stops at the credit cap, the balance reserve or when the candidate pool is used up. Thresholds unchanged (no weak products are added to reach 10).",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.target_candidates",
+      "current_value": null,
+      "proposed_value": 10,
+      "reason": "stop as soon as 10 qualify",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat request: garantizar 10)",
+      "approved_at": "2026-10-01T16:13:56Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "limits.deep_analysis_max_products",
+      "current_value": 10,
+      "proposed_value": 25,
+      "reason": "room to reach 10 at a ~50 % hit rate",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat request: garantizar 10)",
+      "approved_at": "2026-10-01T16:13:56Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "e2e.final_decision_max_products",
+      "current_value": 10,
+      "proposed_value": 25,
+      "reason": ">= deep max",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat request: garantizar 10)",
+      "approved_at": "2026-10-01T16:13:56Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 54,
+      "proposed_value": 110,
+      "reason": "4 x 4.0 + 25 x 3.6 = 106 worst case; the run stops earlier when 10 qualify or the balance reserve is reached",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat request: garantizar 10)",
+      "approved_at": "2026-10-01T16:13:56Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 54,
+      "proposed_value": 110,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat request: garantizar 10)",
+      "approved_at": "2026-10-01T16:13:56Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 16,
+      "proposed_value": 31,
+      "reason": "4 + 25 + 2",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat request: garantizar 10)",
+      "approved_at": "2026-10-01T16:13:56Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 16,
+      "proposed_value": 31,
+      "reason": "same",
+      "approval_status": "APPROVE",
+      "approved_by": "Fernando Cordoba (owner, chat request: garantizar 10)",
+      "approved_at": "2026-10-01T16:13:56Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 7,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}
