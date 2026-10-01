@@ -1,6 +1,6 @@
 {
-  "active_version": "v9",
-  "previous_version": "v8",
-  "activated_at": "2026-10-01T16:13:56.776907+00:00",
-  "note": "Owner: guarantee 10 candidates. Deep analysis continues in best-first order until 10 products qualify (WPS >= 55 and WPS Confidence >= 60) and then STOPS spending; it also stops at the credit cap, the balance reserve or when the candidate pool is used up. Thresholds unchanged (no weak products are added to reach 10)."
+  "active_version": "v10",
+  "previous_version": "v9",
+  "activated_at": "2026-10-01T18:41:38.395406+00:00",
+  "note": "Owner rule (stated earlier): Amazon is preferred but must never block a product. In run 20261001T162823Z_2db2d4 the 3 best products (WPS 73.1, 69.3, 66.5) were the only ones checked on Amazon; their low Amazon confidence counted as a weak evidence layer and moved them to WATCHLIST while unchecked products became PROMISING. Amazon is removed from the evidence-quality layers so it stays a label (COMPLETA/MEDIA/PARCIAL/SIN VALIDAR). Formula and other rules unchanged."
 }

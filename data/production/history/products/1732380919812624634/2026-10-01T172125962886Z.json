@@ -1,0 +1,106 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 59.99,
+    "gmv": 40813.26,
+    "units": 1638,
+    "growth": 124.51,
+    "creator_count": 154,
+    "selling_creator_count": 44,
+    "video_count": 136,
+    "selling_video_count": 39,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 1213
+  },
+  "concentration": {
+    "top_creator_revenue_share": 9.59,
+    "top_video_revenue_share": 6.41
+  },
+  "scores": {
+    "wps": 66.54,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": 25.0,
+    "amazon_confidence": 41.0,
+    "amazon_match_confidence": 53.33,
+    "amazon_price": null,
+    "amazon_competition": "MODERATE",
+    "observation_timestamp": "2026-10-01T18:38:35.600711+00:00"
+  },
+  "business": {
+    "bvs": 31.09,
+    "bvs_confidence": 26.0,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": "2026-10-01T18:38:35.716372+00:00"
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [
+      "INSUFFICIENT_SUPPLIER_DATA"
+    ],
+    "amazon_red_flags": [
+      "NO_RELIABLE_MATCH",
+      "AMAZON_DATA_INSUFFICIENT"
+    ]
+  },
+  "missing_data": [
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history",
+    "amazon:amazon_bsr",
+    "amazon:amazon_price",
+    "amazon:amazon_rating",
+    "amazon:amazon_review_count",
+    "amazon:amazon_sales_indicator",
+    "economics:contribution_margin_percent",
+    "economics:contribution_profit",
+    "economics:estimated_ad_cost_per_order",
+    "economics:expected_chargeback_cost",
+    "economics:expected_refund_cost",
+    "economics:gross_margin_percent",
+    "economics:gross_profit_before_ads",
+    "economics:import_duty_per_order",
+    "economics:landed_cost",
+    "economics:landed_cost_note",
+    "economics:product_cost",
+    "economics:supplier_shipping_cost"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T172125962886Z_1732380919812624634_deep_product.json",
+    "task_id": "5e94aa3b14ee4a7d920d18b91d129fc7",
+    "report_url": null,
+    "amazon_raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261001T183835600711Z_1732380919812624634_amazon_match.json",
+    "amazon_processed_file": null,
+    "bvs_processed_file": null,
+    "commercial_data_file": null
+  },
+  "product_id": "1732380919812624634",
+  "identity_key": "1732380919812624634",
+  "key_type": "product_id",
+  "product_name": "Lymphatic Drainage Massager & Anti-Cellulite Massage Tool, Body Sculpting Device for Arms, Legs & Stomach, Supports Smoother Skin, with Gentle Warming & Vibration, White",
+  "category": "Beauty & Personal Care > Personal Care Appliances > Facial Beauty Devices",
+  "shop": "Lentorgi USA",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T17:21:25.962886+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T17:21:25.962886+00:00",
+  "source_snapshot_hash": "534d2a515f4b7fbb0aea2154437c461bc4c0cd8dad3f0fbfb07d8e9752a34969",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.208608+00:00",
+  "imported_at": "2026-10-01T18:38:36.208608+00:00"
+}

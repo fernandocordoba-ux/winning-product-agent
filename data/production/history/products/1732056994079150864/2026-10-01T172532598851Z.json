@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 30.240000000000002,
+    "gmv": 50509.63,
+    "units": 2179,
+    "growth": 46.35,
+    "creator_count": 245,
+    "selling_creator_count": 36,
+    "video_count": 373,
+    "selling_video_count": 69,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 2588
+  },
+  "concentration": {
+    "top_creator_revenue_share": 9.1,
+    "top_video_revenue_share": 3.48
+  },
+  "scores": {
+    "wps": 65.86,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T172532598851Z_1732056994079150864_deep_product.json",
+    "task_id": "d20e8fcbc0534f2ab7077b23f946fdeb",
+    "report_url": null
+  },
+  "product_id": "1732056994079150864",
+  "identity_key": "1732056994079150864",
+  "key_type": "product_id",
+  "product_name": "cocomintbeauty - The Boar's Hair Wellness Brush | NEXT-GEN BOAR'S HAIR BRUSH FOR HAIR & SCALP HEALTH, CONDITIONS, DETANGLES & BOOSTS CIRCULATION",
+  "category": "Beauty & Personal Care > Haircare & Styling > Hair Brushes & Combs",
+  "shop": "cocomintbeauty",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T17:25:32.598851+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T17:25:32.598851+00:00",
+  "source_snapshot_hash": "4403d1c615454f230e23e712ba6a12f2e65a0c6118343563290ff30ecc589465",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.209051+00:00",
+  "imported_at": "2026-10-01T18:38:36.209051+00:00"
+}

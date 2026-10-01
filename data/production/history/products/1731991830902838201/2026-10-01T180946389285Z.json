@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 41.6,
+    "gmv": 27797.0,
+    "units": 1121,
+    "growth": 0.65,
+    "creator_count": 227,
+    "selling_creator_count": 103,
+    "video_count": 413,
+    "selling_video_count": 142,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 5400
+  },
+  "concentration": {
+    "top_creator_revenue_share": 20.8,
+    "top_video_revenue_share": 12.09
+  },
+  "scores": {
+    "wps": 36.02,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T180946389285Z_1731991830902838201_deep_product.json",
+    "task_id": "36ce72ac949849888f2eaa39843f5371",
+    "report_url": null
+  },
+  "product_id": "1731991830902838201",
+  "identity_key": "1731991830902838201",
+  "key_type": "product_id",
+  "product_name": "ELLA BELLA Keratin Hair Mask – Deep Conditioning Hair Treatment & Hair Repair Mask for Dry, Damaged, Curly, and Color-Treated Hair – Hydrating Deep Conditioner for Softness, Shine & Growth",
+  "category": "Beauty & Personal Care > Haircare & Styling > Hair Oils & Treatments",
+  "shop": "Ella Bella Hair",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T18:09:46.389285+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-01T18:09:46.389285+00:00",
+  "source_snapshot_hash": "cde9769b7b86d98b22ca4a9c34755e41c00e0a4ae6853f3211f9695b5751e01d",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.212564+00:00",
+  "imported_at": "2026-10-01T18:38:36.212564+00:00"
+}

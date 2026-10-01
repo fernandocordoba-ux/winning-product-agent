@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 29.98,
+    "gmv": 716188.41,
+    "units": 33498,
+    "growth": 679.85,
+    "creator_count": 651,
+    "selling_creator_count": 100,
+    "video_count": 1738,
+    "selling_video_count": 100,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 4940
+  },
+  "concentration": {
+    "top_creator_revenue_share": 28.68,
+    "top_video_revenue_share": 10.63
+  },
+  "scores": {
+    "wps": 63.81,
+    "confidence": 84.33
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T165613079920Z_1732371632170307626_deep_product.json",
+    "task_id": "9ca4fd49ed67481a9d487d7918529a13",
+    "report_url": null
+  },
+  "product_id": "1732371632170307626",
+  "identity_key": "1732371632170307626",
+  "key_type": "product_id",
+  "product_name": "Gentle Exfoliating Body Wash and Brightening Boost Body Wash",
+  "category": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+  "shop": "Chemist at Play",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T16:56:13.079920+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T16:56:13.079920+00:00",
+  "source_snapshot_hash": "35d68f62906a3f88c812f348111bf891919697dc9fbd5686afa36768f2fe792c",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.206632+00:00",
+  "imported_at": "2026-10-01T18:38:36.206632+00:00"
+}

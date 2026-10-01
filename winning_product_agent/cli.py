@@ -146,7 +146,6 @@ def cmd_run(a):
         return 0 if r["status"] == "DRY_RUN_COMPLETED" else 1
     s = run.live(confirm_value=a.confirm_live, resume_id=a.resume)
     print_summary(s)
-    _candidates_report()
     return 0 if s["final_status"] in ("COMPLETED", "PARTIAL") else 1
 
 
@@ -494,6 +493,7 @@ def cmd_production_run(a):
         return 0 if r["status"] == "DRY_RUN_COMPLETED" else 1
     s = run.live(confirm_value=a.confirm_live, resume_id=a.resume)
     print_summary(s)
+    _candidates_report()
     return 0 if s["final_status"] in ("COMPLETED", "PARTIAL") else 1
 
 

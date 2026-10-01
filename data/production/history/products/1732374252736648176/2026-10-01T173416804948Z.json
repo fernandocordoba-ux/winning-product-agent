@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 55.07,
+    "gmv": 51846.22,
+    "units": 1439,
+    "growth": 129.29,
+    "creator_count": 82,
+    "selling_creator_count": 47,
+    "video_count": 96,
+    "selling_video_count": 51,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 1656
+  },
+  "concentration": {
+    "top_creator_revenue_share": 22.48,
+    "top_video_revenue_share": 15.87
+  },
+  "scores": {
+    "wps": 51.54,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T173416804948Z_1732374252736648176_deep_product.json",
+    "task_id": "a63cc10e3dac46a7b4ae3cbdff56944f",
+    "report_url": null
+  },
+  "product_id": "1732374252736648176",
+  "identity_key": "1732374252736648176",
+  "key_type": "product_id",
+  "product_name": "5-in-1 Hair Dryer Brush Hot Air Styler Kit, Blow Dryer Brush Set, Multifunctional Blow Dryer, Round Hair Brush for Blow Drying, for Straightening, Curling, Drying and Smoothing, Hair Styling Tools, Ideal Gift #GLOBAL PICKS",
+  "category": "Beauty & Personal Care > Personal Care Appliances > Curlers & Straighteners",
+  "shop": "Hairstylefi",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T17:34:16.804948+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T17:34:16.804948+00:00",
+  "source_snapshot_hash": "acba2df1f3517b94734235d7a39f1bd637895b8149043545603ee9d0e5cfba09",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.209723+00:00",
+  "imported_at": "2026-10-01T18:38:36.209723+00:00"
+}

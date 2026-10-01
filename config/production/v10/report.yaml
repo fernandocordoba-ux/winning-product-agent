@@ -1,0 +1,106 @@
+# =============================================================================
+# PRODUCTION CONFIG production-v10 — IMMUTABLE (owner-approved promotion)
+# created_at: 2026-10-01T18:41:37.963325+00:00
+# source_calibration_report: owner-approved change of production-v9 (approved by Fernando Cordoba (owner rule: Amazon must not block) at 2026-10-01T18:41:37Z)
+# change_summary:
+#   - unchanged from production-v9
+# Do not edit. A new change creates config/production/v<N+1>/.
+# =============================================================================
+
+# =============================================================================
+# Final Research Report — Step P (EXPERIMENTAL v1, editable here)
+# =============================================================================
+# scripts/generate_report.py joins Discovery, Deep Analysis (WPS + Confidence),
+# Amazon Validation (AVS + Amazon Confidence) and Business Viability (BVS +
+# BVS Confidence). The scores are NEVER combined into one number.
+# Every section assignment below is a deterministic rule.
+# =============================================================================
+
+report:
+  version: "report-v1"
+  market: US
+  timezone: America/Los_Angeles             # report date = local date of the run
+  output_dir: reports
+
+  # ---------------------------------------------------------------- ranking
+  # Top section ranking (V1). NO combined/master score. Sort keys, in order:
+  #   1. WPS desc   2. Confidence desc   3. BVS desc (N/A last)   4. AVS desc (N/A last)
+  #   5. product_id asc (tie-breaker)
+  top:
+    max_products: 10
+    minimum_wps: 70
+    minimum_confidence: 60
+
+  # HIGH-CONFIDENCE CANDIDATE = a Top product with Confidence >= this and no
+  # watch reasons and no severe flags. Other Top products are "CANDIDATE".
+  high_confidence:
+    minimum_confidence: 75
+
+  # ---------------------------------------------------------------- rejected
+  # A product is REJECTED / HIGH-RISK if Discovery FAILed it or it carries any of
+  # these flags. Primary reason = first match in this priority order.
+  rejection_priority:
+    - INSUFFICIENT_DATA
+    - COLLAPSING_SALES
+    - LOW_GMV
+    - LOW_UNITS
+    - PRICE_OUT_OF_RANGE
+    - NEGATIVE_CONTRIBUTION_MARGIN
+    - CREATOR_DEPENDENCY
+    - VIDEO_DEPENDENCY
+    - EXTREME_SATURATION
+    - EXTREME_COMPETITION
+    - SALES_DECLINING
+    - IP_REVIEW_REQUIRED
+    - REGULATED_PRODUCT
+    - COUNTERFEIT_REVIEW_REQUIRED
+  # Discovery filter rule -> report reason code
+  discovery_reason_codes:
+    insufficient_data: INSUFFICIENT_DATA
+    collapsing_sales: COLLAPSING_SALES
+    gmv_30d_min: LOW_GMV
+    units_30d_min: LOW_UNITS
+    price_range: PRICE_OUT_OF_RANGE
+  rejected_min_wps: 50                      # deep-analyzed products with WPS below this -> REJECTED (LOW_WPS)
+
+  # ---------------------------------------------------------------- watchlist
+  # Not Top, not rejected, and at least one of these (all deterministic):
+  watchlist:
+    max_products: 25
+    promising_wps_min: 60                   # WPS >= this but Confidence < top.minimum_confidence
+    early_growth_min_pct: 30                # growth_30d >= this but history < min_observations
+    significant_flags_max: 1                # exactly one severe/red flag unresolved
+    include_awaiting_deep_analysis: true    # Discovery PASS/REVIEW without Deep Analysis yet
+
+  # ---------------------------------------------------------------- history
+  history:
+    min_observations: 2                     # < 2 -> INSUFFICIENT_HISTORY (never inferred from one point)
+    direction_threshold_pct: 5              # change > +5% -> ↑, < -5% -> ↓, else →
+    wps_direction_threshold_points: 2       # WPS uses points, not %
+
+  # ---------------------------------------------------------------- emerging
+  # The EMERGING PRODUCTS section uses the Step R detector (scripts/emerging.py,
+  # rules in config/emerging.yaml). The temporary Step P V1 rules were removed.
+
+  # ---------------------------------------------------------------- data quality
+  data_quality:
+    complete_tiktok_confidence_min: 90      # Confidence >= this counts as "complete TikTok data"
+    top_missing_fields: 10
+
+  # "Significant" red flags (any stage). Used by: HIGH-CONFIDENCE (none allowed),
+  # watchlist (exactly one unresolved). BVS flags marked severe also count.
+  significant_flags: [CREATOR_DEPENDENCY, VIDEO_DEPENDENCY, SALES_DECLINING, EXTREME_SATURATION, PRICE_INSTABILITY,
+                      IP_REVIEW_REQUIRED, REGULATED_REVIEW_REQUIRED, AMAZON_HIGH_SATURATION, AMAZON_PRICE_COMPRESSION,
+                      AMAZON_LOW_DEMAND, AMAZON_DOMINATED_BY_MAJOR_BRANDS, NO_RELIABLE_MATCH]
+
+  # Keys never written to reports (case-insensitive, substring match)
+  secret_key_patterns: [token, api_key, apikey, authorization, secret, password, bearer]
+
+production_meta:
+  config_version: production-v10
+  created_at: '2026-10-01T18:41:37.963325+00:00'
+  source_calibration_report: 'owner-approved change of production-v9 (approved by Fernando
+    Cordoba (owner rule: Amazon must not block) at 2026-10-01T18:41:37Z)'
+  change_summary:
+  - unchanged from production-v9
+  derived_from: production-v9

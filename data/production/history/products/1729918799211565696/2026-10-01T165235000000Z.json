@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 45.5,
+    "gmv": 57062,
+    "units": 1732,
+    "growth": 94.2,
+    "creator_count": 451,
+    "selling_creator_count": null,
+    "video_count": 702,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T165235Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T165235Z_beauty_personal_care_02ede976829448489e51b0d570323133.json",
+    "task_id": "02ede976829448489e51b0d570323133",
+    "report_url": null,
+    "record_index": 13
+  },
+  "product_id": "1729918799211565696",
+  "identity_key": "1729918799211565696",
+  "key_type": "product_id",
+  "product_name": "Sacred Santal - Sensorial Body Wash",
+  "category": null,
+  "shop": "CYKLAR",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T16:52:35+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-01T16:52:35+00:00",
+  "source_snapshot_hash": "7649b8dae2201e705bd705f798b9736ff47eba837feace4135362f05cc68eb6a",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.199789+00:00",
+  "imported_at": "2026-10-01T18:38:36.199789+00:00"
+}

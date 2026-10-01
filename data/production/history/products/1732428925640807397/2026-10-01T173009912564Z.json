@@ -1,0 +1,79 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 35.99,
+    "gmv": 44447,
+    "units": 1891,
+    "growth": 61.44,
+    "creator_count": 274,
+    "selling_creator_count": 83,
+    "video_count": 383,
+    "selling_video_count": 47,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": 5,
+    "category_product_count": 2407
+  },
+  "concentration": {
+    "top_creator_revenue_share": 6.52,
+    "top_video_revenue_share": 4.22
+  },
+  "scores": {
+    "wps": 48.33,
+    "confidence": 88.17
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "shop_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T173009912564Z_1732428925640807397_deep_product.json",
+    "task_id": "14c80db7d40346169c9ab77be86f96d8",
+    "report_url": null
+  },
+  "product_id": "1732428925640807397",
+  "identity_key": "1732428925640807397",
+  "key_type": "product_id",
+  "product_name": "ARWIN [Pack of 6] Phytoncid Transparent Soap with Hyaluronic Acid | Moisturizing 3 in 1 Face, Body & Hand Cleanser | Gentle Daily Cleansing Bar for All Skin Types",
+  "category": "Beauty & Personal Care > Bath & Body Care > Bath & Shower",
+  "shop": "ARWIN BIOCHEM",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T17:30:09.912564+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T17:30:09.912564+00:00",
+  "source_snapshot_hash": "44d75dcba261b1813f62c7d65c2efcdf4949a624fbcc28a69e225b6db2ad9399",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.209366+00:00",
+  "imported_at": "2026-10-01T18:38:36.209366+00:00"
+}

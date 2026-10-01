@@ -1,0 +1,79 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 78.0,
+    "gmv": 54424.16,
+    "units": 2264,
+    "growth": 460.34,
+    "creator_count": 289,
+    "selling_creator_count": 147,
+    "video_count": 409,
+    "selling_video_count": 154,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 4664
+  },
+  "concentration": {
+    "top_creator_revenue_share": 44.32,
+    "top_video_revenue_share": 42.93
+  },
+  "scores": {
+    "wps": 66.12,
+    "confidence": 88.17
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SHIPPING_REVIEW_REQUIRED"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261001T170050497011Z_1729502429151925426_deep_product.json",
+    "task_id": "acc69564d3e14713b0ff7a0d44554d76",
+    "report_url": null
+  },
+  "product_id": "1729502429151925426",
+  "identity_key": "1729502429151925426",
+  "key_type": "product_id",
+  "product_name": "Micro Oil CICA PDRN Serum – 4.05% CICA-PDRN, 6 Types of Centella, Barrier Repair, Plumping, Glass Skin, Hydrating Facial Serum for Sensitive, Dry & Damaged Skin, Aging, Firming | Korean Skincare | 30ml",
+  "category": "Beauty & Personal Care > Skincare > Serums & Essences",
+  "shop": "Ooznary US official",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T17:00:50.497011+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T17:00:50.497011+00:00",
+  "source_snapshot_hash": "bfaa75c52678ac3ba1d4beb546c411876c0e3775a02ab71eb92e7e9090a4b7bc",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.207120+00:00",
+  "imported_at": "2026-10-01T18:38:36.207120+00:00"
+}

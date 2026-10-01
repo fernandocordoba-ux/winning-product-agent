@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 30.240000000000002,
+    "gmv": 50510,
+    "units": 2179,
+    "growth": 46.35,
+    "creator_count": 773,
+    "selling_creator_count": null,
+    "video_count": 1226,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261001T165235Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261001T164726Z_beauty_personal_care_1494055b306d4ec9afbe03fe43b8f519.json",
+    "task_id": "1494055b306d4ec9afbe03fe43b8f519",
+    "report_url": null,
+    "record_index": 5
+  },
+  "product_id": "1732056994079150864",
+  "identity_key": "1732056994079150864",
+  "key_type": "product_id",
+  "product_name": "cocomintbeauty - The Boar's Hair Wellness Brush | NEXT-GEN BOAR'S HAIR BRUSH",
+  "category": null,
+  "shop": "cocomintbeauty",
+  "market": "US",
+  "observation_timestamp": "2026-10-01T16:47:26+00:00",
+  "observation_date": "2026-10-01",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-09-30",
+  "retrieved_at": "2026-10-01T16:47:26+00:00",
+  "source_snapshot_hash": "b2620baf994f37c9a85fd66f26147c23d2c4b52ee55aa3838d8b24cde2c0a8fb",
+  "run_id": "20261001T162823Z_2db2d4",
+  "written_at": "2026-10-01T18:38:36.203023+00:00",
+  "imported_at": "2026-10-01T18:38:36.203023+00:00"
+}

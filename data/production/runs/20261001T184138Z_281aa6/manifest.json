@@ -1,0 +1,401 @@
+{
+  "run_id": "20261001T184138Z_281aa6",
+  "started_at": "2026-10-01T18:41:38.564964+00:00",
+  "completed_at": "2026-10-01T18:41:40.122233+00:00",
+  "market": "US",
+  "mode": "REPORT_ONLY",
+  "data_environment": "PRODUCTION",
+  "profile": {
+    "name": "production-v10",
+    "path": "config/production/v10/runtime.yaml",
+    "hash": "29797a91b56c1066"
+  },
+  "runtime_config": {
+    "runtime": {
+      "market": "US",
+      "live_mode": true,
+      "dry_run": false,
+      "explicit_live_confirmation": false
+    },
+    "query_plan": {
+      "discovery_mode": "lenses",
+      "discovery_categories": [
+        "beauty_personal_care"
+      ],
+      "deep_batch_size": 1,
+      "amazon_batch_size": 2,
+      "max_credits_for_run": 110,
+      "estimated_credits": {
+        "discovery": 4.0,
+        "deep_analysis": 3.6,
+        "amazon_validation": 4.0
+      },
+      "guardrails": {
+        "max_queries_per_run": 31,
+        "max_provider_queries": {
+          "kalopilot": 31
+        },
+        "max_failed_queries": 2,
+        "max_retry_count": 0,
+        "note": "sized from the approved limits; stop new paid queries, keep completed data, PARTIAL report"
+      },
+      "discovery_exclude_established_brands": true,
+      "deep_selection": "preliminary_wps",
+      "deep_exclude_keywords": [
+        "halloween",
+        "christmas",
+        "xmas",
+        "thanksgiving",
+        "easter",
+        "valentine",
+        "advent",
+        "santa"
+      ],
+      "discovery_lenses": [
+        "proven"
+      ],
+      "discovery_subniches": [
+        "beauty tools & devices: hair styling tools, facial and skin devices, makeup brushes and applicators",
+        "nails & lashes: press-on nails, nail art kits, false lashes and lash kits",
+        "hair care: hair oils, masks, serums, scalp care, hair accessories",
+        "skincare & body care: face masks, serums, body scrubs, bath and shower accessories"
+      ],
+      "prefer_new_days": 14,
+      "target_candidates": 10
+    }
+  },
+  "config_hashes": {
+    "amazon_validation.yaml": "5483f447fb5ed5af",
+    "business_viability.yaml": "095102dec072c1f1",
+    "calibration_lane.yaml": "cc6f945a372599bf",
+    "categories.yaml": "afe19c6b21aa13cc",
+    "competitors.yaml": "478630ee63b7eb9b",
+    "creatives.yaml": "376d0fe10a73b4d5",
+    "decision.yaml": "593b2d941ada7e2d",
+    "deep_analysis.yaml": "25e9b67143ba19f5",
+    "emerging.yaml": "297b83c9f2bcc9af",
+    "filters.yaml": "2de5a9448caa531a",
+    "final_validation.yaml": "125ce67bb01283f7",
+    "history.yaml": "8467a93c9250c65a",
+    "provider_capabilities.yaml": "5c5acfae843b722f",
+    "report.yaml": "8f881f382b423f14",
+    "runtime.yaml": "d2e0749a5357aec7",
+    "runtime_aa_live.yaml": "cd314862c590feee",
+    "runtime_first_live.yaml": "319dcbec325d4843",
+    "scoring.yaml": "b7a483c92186b236",
+    "suppliers.yaml": "e11f428e5305f999"
+  },
+  "limits": {
+    "discovery_max_products": 100,
+    "deep_analysis_max_products": 25,
+    "amazon_validation_max_products": 3,
+    "bvs_max_products": 3
+  },
+  "max_products_arg": null,
+  "calibration_lane": false,
+  "stages": {
+    "preflight": {
+      "status": "PENDING"
+    },
+    "provider_health": {
+      "status": "PENDING"
+    },
+    "discovery": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T162823Z_2db2d4 (no query)"
+    },
+    "filtering": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T162823Z_2db2d4 (no query)"
+    },
+    "deep_analysis": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T162823Z_2db2d4 (no query)"
+    },
+    "wps": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T162823Z_2db2d4 (no query)"
+    },
+    "wps_confidence": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T162823Z_2db2d4 (no query)"
+    },
+    "amazon_validation": {
+      "status": "SKIPPED",
+      "summary": "restored from 20261001T162823Z_2db2d4 (no query)"
+    },
+    "supplier_research": {
+      "status": "PARTIAL",
+      "summary": "0/3 product(s) with real supplier offers (max 5 each); automated sources configured: none",
+      "products": [
+        {
+          "product_id": "1731649712946975356",
+          "name": "[Sungboon] Lifting Ampoule | Wrinkle Care | Face-Lift at Home serum with Peptides & Deep Collagen | Plumping, Smooth, Anti aging Korean Skincare mothers day gift ideas (30ml)",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        },
+        {
+          "product_id": "1731038488255632078",
+          "name": "HALOVIDA Anti-Static Hollow Round Bristle Brush - Massaging Design for Enhanced Volume,Detangling Brush for Pain-Free Brushing,Reduces Heat Damage, Perfect for Quick Drying and Voluminous Styling,Gentle,Boar bristle brush,Use in Wet and Dry Hair",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        },
+        {
+          "product_id": "1732380919812624634",
+          "name": "Lymphatic Drainage Massager & Anti-Cellulite Massage Tool, Body Sculpting Device for Arms, Legs & Stomach, Supports Smoother Skin, with Gentle Warming & Vibration, White",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        }
+      ]
+    },
+    "bvs": {
+      "status": "PARTIAL",
+      "summary": "3 evaluated; 3 incomplete (no supplier data — not fabricated)",
+      "saved": "/root/winning-product-agent/data/production/processed/business_viability/bvs_20261001T184138653928Z.json"
+    },
+    "competitor_intelligence": {
+      "status": "PARTIAL",
+      "summary": "0/3 product(s) with competitor evidence (max 10 each); no automated competitor provider configured",
+      "products": [
+        {
+          "product_id": "1731649712946975356",
+          "name": "[Sungboon] Lifting Ampoule | Wrinkle Care | Face-Lift at Home serum with Peptides & Deep Collagen | Plumping, Smooth, Anti aging Korean Skincare mothers day gift ideas (30ml)",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1731038488255632078",
+          "name": "HALOVIDA Anti-Static Hollow Round Bristle Brush - Massaging Design for Enhanced Volume,Detangling Brush for Pain-Free Brushing,Reduces Heat Damage, Perfect for Quick Drying and Voluminous Styling,Gentle,Boar bristle brush,Use in Wet and Dry Hair",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1732380919812624634",
+          "name": "Lymphatic Drainage Massager & Anti-Cellulite Massage Tool, Body Sculpting Device for Arms, Legs & Stomach, Supports Smoother Skin, with Gentle Warming & Vibration, White",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        }
+      ]
+    },
+    "creative_intelligence": {
+      "status": "COMPLETED",
+      "summary": "3/3 product(s) with creative evidence (max 20 each; saved KaloPilot top videos are free)",
+      "products": [
+        {
+          "product_id": "1731649712946975356",
+          "name": "[Sungboon] Lifting Ampoule | Wrinkle Care | Face-Lift at Home serum with Peptides & Deep Collagen | Plumping, Smooth, Anti aging Korean Skincare mothers day gift ideas (30ml)",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 31.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1731038488255632078",
+          "name": "HALOVIDA Anti-Static Hollow Round Bristle Brush - Massaging Design for Enhanced Volume,Detangling Brush for Pain-Free Brushing,Reduces Heat Damage, Perfect for Quick Drying and Voluminous Styling,Gentle,Boar bristle brush,Use in Wet and Dry Hair",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 37.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1732380919812624634",
+          "name": "Lymphatic Drainage Massager & Anti-Cellulite Massage Tool, Body Sculpting Device for Arms, Legs & Stomach, Supports Smoother Skin, with Gentle Warming & Vibration, White",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 37.0,
+          "opportunity": null,
+          "confidence": 50.0
+        }
+      ]
+    },
+    "historical_storage": {
+      "status": "PENDING"
+    },
+    "emerging_detector": {
+      "status": "COMPLETED",
+      "summary": "77 product(s) evaluated: {'INSUFFICIENT_HISTORY': 77}",
+      "saved": "/root/winning-product-agent/data/production/processed/emerging/emerging_20261001T184139114608Z.json"
+    },
+    "final_report": {
+      "status": "COMPLETED",
+      "summary": "Top 0 | watchlist 19 | rejected 15",
+      "report_markdown": "/root/winning-product-agent/reports/production/2026-10-01-winning-products-2.md",
+      "report_json": "/root/winning-product-agent/reports/production/2026-10-01-winning-products-2.json",
+      "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+      "manifest": "/root/winning-product-agent/runs/production/20261001T184138Z_281aa6/manifest.json",
+      "log": "/root/winning-product-agent/runs/production/20261001T184138Z_281aa6/log.jsonl"
+    },
+    "final_decision": {
+      "status": "COMPLETED",
+      "summary": "20 decided: {'WATCHLIST': 10, 'PROMISING_NEEDS_VALIDATION': 10}; shortlist empty",
+      "markdown": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-7.md",
+      "json": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-7.json",
+      "latest": "/root/winning-product-agent/reports/production/latest-final-decision.md"
+    },
+    "validation_packs": {
+      "status": "PENDING"
+    },
+    "production_history": {
+      "status": "PENDING"
+    },
+    "post_run_audit": {
+      "status": "COMPLETED",
+      "summary": "RUN_REVIEW_REQUIRED — 1 issue(s)",
+      "run_audit": "/root/winning-product-agent/reports/production/2026-10-01-run-audit-8.md"
+    },
+    "run_summary": {
+      "status": "COMPLETED"
+    }
+  },
+  "final_status": "REPORT_ONLY_COMPLETED",
+  "e2e": {
+    "step": "PRODUCTION",
+    "confirmation_phrase": "CONFIRM PRODUCTION LIVE RUN",
+    "supplier_products_max": 3,
+    "supplier_offers_per_product_max": 5,
+    "competitor_products_max": 3,
+    "competitors_per_product_max": 10,
+    "creative_products_max": 3,
+    "creatives_per_product_max": 20,
+    "final_decision_max_products": 25,
+    "layer_product_order": "discovery PASS before REVIEW, then WPS desc, WPS Confidence desc, product_id"
+  },
+  "config_version": "production-v10",
+  "config_dir": "/root/winning-product-agent/config/production/v10",
+  "runtime_mode": "REPORT_ONLY",
+  "run_caps": null,
+  "run_profile": null,
+  "config_manifest_hashes": {
+    "amazon_validation.yaml": "b24b155216da579685f1827dafc264d7d6931998929f13f9c21d977e9f7da2da",
+    "business_viability.yaml": "c16947bd2efe1b58dd9220fa74138fff73e8cf007728fa183d9a93811bc1daf4",
+    "calibration_lane.yaml": "f05df36f8d08deb47e9f4f123e1a6ad282a3ca3852e6fbcb20606f4358332f10",
+    "categories.yaml": "009825501424900319dad238a3258fe1dc55ef6a081be7d8feb935ca9c4459aa",
+    "change_review.json": "e660b0de9247328df73c5015dea328f3e1215ad4878b69956984a927edb3bbc5",
+    "competitor.yaml": "61f2eb43648082578bd7b6ec28620d50034486c18676dec775fa18cae485124d",
+    "creative.yaml": "de9d16407256a8e90909fc00f666c89c3b0209d0ec339645b9ff82c24bfc1253",
+    "decision_rules.yaml": "8084bff3e390a6867340fa431f35ae9ef4a17e82a1ea1a2dbd64fd74bbda37e0",
+    "deep_analysis.yaml": "253a4ba17decaae3277a54461cd10a7d6fdbcee1e43d23dd2d595c5679503537",
+    "emerging.yaml": "4412d6dcd0382d859e99966e5b72e2ddb6701376a1d97b25689d967d9d54594c",
+    "filters.yaml": "930feaa31e8da0bfee35db83f5bb56acfec816aed0564e8dcb1b09bd211f29ae",
+    "history.yaml": "e5bd2f1248fb2828ac637e863e0fd2cfd8cfecf660e647d5e4f990333e00f8e3",
+    "provider_capabilities.yaml": "c3545d77dd9a90db9df4b6a519d24b6fdd93fbcc7196294a358bb1fe43ffec47",
+    "report.yaml": "9b0781429069a2e8159037298151699d7e966e90f50a5c6a686b47aa0d0a1271",
+    "runtime.yaml": "29797a91b56c106637c01628c56c248dc12d54a129b761bd066668013a54e719",
+    "scoring.yaml": "7ee4894b860b89fcc225281a797636784fc1d6628ba547b988bd655a9476855d",
+    "supplier.yaml": "afc494a24cb6d2115c884788223eab81f2e88c1409190881710e92e5c47e4e63"
+  },
+  "config_hashes_at_start": {
+    "amazon_validation.yaml": "b24b155216da579685f1827dafc264d7d6931998929f13f9c21d977e9f7da2da",
+    "business_viability.yaml": "c16947bd2efe1b58dd9220fa74138fff73e8cf007728fa183d9a93811bc1daf4",
+    "calibration_lane.yaml": "f05df36f8d08deb47e9f4f123e1a6ad282a3ca3852e6fbcb20606f4358332f10",
+    "categories.yaml": "009825501424900319dad238a3258fe1dc55ef6a081be7d8feb935ca9c4459aa",
+    "change_review.json": "e660b0de9247328df73c5015dea328f3e1215ad4878b69956984a927edb3bbc5",
+    "competitor.yaml": "61f2eb43648082578bd7b6ec28620d50034486c18676dec775fa18cae485124d",
+    "creative.yaml": "de9d16407256a8e90909fc00f666c89c3b0209d0ec339645b9ff82c24bfc1253",
+    "decision_rules.yaml": "8084bff3e390a6867340fa431f35ae9ef4a17e82a1ea1a2dbd64fd74bbda37e0",
+    "deep_analysis.yaml": "253a4ba17decaae3277a54461cd10a7d6fdbcee1e43d23dd2d595c5679503537",
+    "emerging.yaml": "4412d6dcd0382d859e99966e5b72e2ddb6701376a1d97b25689d967d9d54594c",
+    "filters.yaml": "930feaa31e8da0bfee35db83f5bb56acfec816aed0564e8dcb1b09bd211f29ae",
+    "history.yaml": "e5bd2f1248fb2828ac637e863e0fd2cfd8cfecf660e647d5e4f990333e00f8e3",
+    "manifest.json": "38bb73b3bac2c2311da6762b2abbb648c9219ca11bb8e894d76b55ef8bf580e5",
+    "provider_capabilities.yaml": "c3545d77dd9a90db9df4b6a519d24b6fdd93fbcc7196294a358bb1fe43ffec47",
+    "report.yaml": "9b0781429069a2e8159037298151699d7e966e90f50a5c6a686b47aa0d0a1271",
+    "runtime.yaml": "29797a91b56c106637c01628c56c248dc12d54a129b761bd066668013a54e719",
+    "scoring.yaml": "7ee4894b860b89fcc225281a797636784fc1d6628ba547b988bd655a9476855d",
+    "supplier.yaml": "afc494a24cb6d2115c884788223eab81f2e88c1409190881710e92e5c47e4e63"
+  },
+  "production_data_paths": {
+    "raw": "data/production/raw",
+    "processed": "data/production/processed",
+    "history": "data/production/history",
+    "reports": "reports/production",
+    "runs": "runs/production",
+    "cache": "data/production/raw"
+  },
+  "report_only_source_run": "20261001T162823Z_2db2d4",
+  "query_log": [],
+  "provider_query_counts": {
+    "discovery": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "deep_analysis": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "amazon_validation": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    }
+  },
+  "cache_hits": 0,
+  "query_accounting": {
+    "run_id": "20261001T184138Z_281aa6",
+    "planned_queries": 0,
+    "executed_queries": 0,
+    "cached_queries": 0,
+    "blocked_queries": 0,
+    "failed_queries": 0,
+    "estimated_credit_cost": "UNKNOWN",
+    "estimated_credit_cost_basis": "no estimate configured",
+    "actual_credit_cost": 0.0,
+    "remaining_balance": "UNKNOWN"
+  },
+  "credits": {
+    "balance_start": null,
+    "balance_now": null,
+    "credits_used_reported": 0.0,
+    "credits_used_by_balance": null
+  },
+  "post_run_audit": {
+    "result": "RUN_REVIEW_REQUIRED",
+    "issues": [
+      "mapping (critical fields): 1731649712946975356: Discovery vs Deep creator_count: 2,182 vs 1,029 (53% apart); 1731649712946975356: Discovery vs Deep video_count: 2,953 vs 1,279 (57% apart); 1732312950897611691: Discovery vs Deep creator_count: 3,271 vs 1,409 (57% apart); 1732312950897611691: Discovery vs Deep video_count: 7,142 vs 3,088 (57% apart); 1732380919812624634: GMV/units = 24.92 USD per unit, outside the listed price range 59.99–59.99"
+    ],
+    "first_production_run_status": null,
+    "critical_issues": [
+      "mapping (critical fields): 1731649712946975356: Discovery vs Deep creator_count: 2,182 vs 1,029 (53% apart); 1731649712946975356: Discovery vs Deep video_count: 2,953 vs 1,279 (57% apart); 1732312950897611691: Discovery vs Deep creator_count: 3,271 vs 1,409 (57% apart); 1732312950897611691: Discovery vs Deep video_count: 7,142 vs 3,088 (57% apart); 1732380919812624634: GMV/units = 24.92 USD per unit, outside the listed price range 59.99–59.99"
+    ]
+  },
+  "outputs": {
+    "report_markdown": "/root/winning-product-agent/reports/production/2026-10-01-winning-products-2.md",
+    "report_json": "/root/winning-product-agent/reports/production/2026-10-01-winning-products-2.json",
+    "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+    "manifest": "/root/winning-product-agent/runs/production/20261001T184138Z_281aa6/manifest.json",
+    "log": "/root/winning-product-agent/runs/production/20261001T184138Z_281aa6/log.jsonl",
+    "final_decision_markdown": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-7.md",
+    "final_decision_json": "/root/winning-product-agent/reports/production/2026-10-01-final-decision-7.json",
+    "final_decision_latest": "/root/winning-product-agent/reports/production/latest-final-decision.md",
+    "run_audit": "/root/winning-product-agent/reports/production/2026-10-01-run-audit-8.md"
+  },
+  "manifest_copy_of": "/root/winning-product-agent/runs/production/20261001T184138Z_281aa6/manifest.json"
+}

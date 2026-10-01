@@ -1,0 +1,666 @@
+{
+  "mode": "live",
+  "run_id": "20261001T162823Z_2db2d4",
+  "data_environment": "PRODUCTION",
+  "deep_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json",
+  "eligible": 3,
+  "excluded": [
+    {
+      "product_id": "1732428925640807397",
+      "reason": "WPS 48.33 < 55"
+    },
+    {
+      "product_id": "1732374252736648176",
+      "reason": "WPS 51.54 < 55"
+    },
+    {
+      "product_id": "1732232336013955546",
+      "reason": "WPS 52.93 < 55"
+    },
+    {
+      "product_id": "1732261086952329570",
+      "reason": "WPS 54.88 < 55"
+    },
+    {
+      "product_id": "1732404963325480973",
+      "reason": "WPS 48.25 < 55"
+    },
+    {
+      "product_id": "1729495413829374329",
+      "reason": "WPS 54.32 < 55"
+    },
+    {
+      "product_id": "1732501025482445039",
+      "reason": "WPS 38.75 < 55"
+    },
+    {
+      "product_id": "1732456727448358954",
+      "reason": "WPS 34.46 < 55"
+    },
+    {
+      "product_id": "1731991830902838201",
+      "reason": "WPS 36.02 < 55"
+    },
+    {
+      "product_id": "1731229537092210737",
+      "reason": "WPS 41.01 < 55"
+    },
+    {
+      "product_id": "1729502429151925426",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1732056994079150864",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1732371632170307626",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1732352092134478803",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1732312950897611691",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1732200652403544833",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1732461271027192790",
+      "reason": "over max_products (3)"
+    }
+  ],
+  "stopped": null,
+  "results": [
+    {
+      "product_id": "1731649712946975356",
+      "tiktok_product_name": "[Sungboon] Lifting Ampoule | Wrinkle Care | Face-Lift at Home serum with Peptides & Deep Collagen | Plumping, Smooth, Anti aging Korean Skincare mothers day gift ideas (30ml)",
+      "observation_timestamp": "2026-10-01T18:33:57.934122+00:00",
+      "market": "US",
+      "source": {
+        "provider": "kalopilot",
+        "raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261001T183357934122Z_1731649712946975356_amazon_match.json",
+        "task_id": "862eafe0df544753916f0511b308fcd1",
+        "report_url": null,
+        "query_type": "amazon_match",
+        "cache_hit": false,
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json"
+      },
+      "tiktok_scores": {
+        "wps": 73.09,
+        "confidence": 84.83
+      },
+      "status": "ok",
+      "amazon_match_name": null,
+      "amazon_url": null,
+      "amazon_asin": null,
+      "amazon_brand": null,
+      "amazon_match_confidence": 53.33,
+      "amazon_match_class": "UNRELIABLE",
+      "amazon_match_status": "NO_RELIABLE_MATCH",
+      "amazon_match_detail": {
+        "name_similarity": {
+          "overlap": 0.4,
+          "s": 0.3333333333333333
+        },
+        "brand": {
+          "tiktok": null,
+          "amazon": "eqqualberry",
+          "s": 0.0
+        },
+        "category": {
+          "overlap": 0.6667,
+          "s": 1.0
+        },
+        "variant_attributes": {
+          "tiktok": [
+            "30ml"
+          ],
+          "s": 1.0
+        }
+      },
+      "amazon_price": null,
+      "amazon_category": null,
+      "amazon_rating": null,
+      "amazon_review_count": null,
+      "amazon_bsr": null,
+      "amazon_bsr_category": null,
+      "amazon_sales_indicator": {
+        "monthly_sales_estimate": null,
+        "source": null
+      },
+      "amazon_listing_date": null,
+      "amazon_competitor_count": 6,
+      "amazon_price_range": {
+        "min": 18.9,
+        "max": 28.03
+      },
+      "amazon_top3_brand_share_pct": 84,
+      "amazon_recent_trend": "growing",
+      "amazon_presence": "UNCERTAIN",
+      "amazon_demand_strength": null,
+      "amazon_demand_signals": {},
+      "price_ratio": null,
+      "cross_platform_demand": "INSUFFICIENT_DATA",
+      "amazon_competition": "HIGH",
+      "price_alignment": "INSUFFICIENT_DATA",
+      "cross_platform_consistency": 0.5,
+      "avs": 7.5,
+      "avs_breakdown": {
+        "amazon_demand_evidence": {
+          "points": "N/A",
+          "max": 30,
+          "status": "N/A",
+          "missing_signals": [
+            "review_count",
+            "bsr",
+            "monthly_sales_estimate"
+          ]
+        },
+        "match_confidence": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "competition_opportunity": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "price_alignment": {
+          "points": "N/A",
+          "max": 15,
+          "status": "N/A"
+        },
+        "cross_platform_consistency": {
+          "points": 7.5,
+          "max": 15,
+          "status": "full"
+        }
+      },
+      "amazon_confidence": 41.0,
+      "amazon_confidence_level": "LOW",
+      "amazon_confidence_breakdown": {
+        "match_confidence": {
+          "earned": 16.0,
+          "max": 30,
+          "status": "partial"
+        },
+        "price": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "rating_reviews": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "ranking_demand": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "comparable_listings": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "title": "SUNGBOON EDITOR Sungboon Editor Silk Peptide Intensive Lifting Ampoule 35ml, 1.18 Ounce (Pack of 1)",
+          "url": "https://www.amazon.com/dp/B0D4DHCD3Z"
+        },
+        {
+          "title": "SUNGBOON EDITOR Intensive Deep Collagen Silk Peptide Ampoule",
+          "url": "https://www.amazon.com/dp/B0GS1DYZHG"
+        },
+        {
+          "title": "SUNGBOON EDITOR Glow Intensive Silk Peptide Ampoule, Copper Peptides Serum for Face with Collagen & Multi Peptides, Hydrating Korean Skincare Facial Serum for Smooth-Looking Skin, 1.35 fl oz",
+          "url": "https://www.amazon.com/dp/B0FNRHY3SH"
+        },
+        {
+          "title": "EQQUALBERRY NAD+ Peptide Boosting Serum | 14 Peptide Serum for Face, Neck & Body | Vegan Collagen & Pink Serum for Anti-Aging, Firming & Lifting | Korean Skincare (1.01 oz / 30ml)",
+          "url": "https://www.amazon.com/dp/B0FGQ3J31K"
+        },
+        {
+          "title": "medicube PDRN Pink Peptide Serum with Salmon DNA",
+          "url": "https://www.amazon.com/dp/B0DBF65JYY"
+        }
+      ],
+      "search_sources": [
+        "KaloData Amazon US product search/rank and detail (date_range last30Day, retrieved 2026-10-01); search terms: 'sungboon', 'collagen peptide serum', 'peptide ampoule'",
+        "Amazon.com listing page for B0GS1DYZHG via web search (title resolved: SUNGBOON EDITOR Intensive Deep Collagen Silk Peptide Ampoule; 40 ml / 13 peptides / 24K gold; API title field is a placeholder)",
+        "Trend: sum of monthly sales of the 6 comparable listings, Jul-Sep 2026 vs Apr-Jun 2026 = +49.29%",
+        "TikTok reference product: [Sungboon] Lifting Ampoule (30 ml, USD 45, SUNGBOON EDITOR) as provided by user"
+      ],
+      "parse_warnings": [],
+      "config_version": "amazon-validation-v1",
+      "missing_data": [
+        "amazon_bsr",
+        "amazon_price",
+        "amazon_rating",
+        "amazon_review_count",
+        "amazon_sales_indicator"
+      ],
+      "amazon_red_flags": [
+        {
+          "flag": "NO_RELIABLE_MATCH",
+          "best_candidate_score": 53.33
+        },
+        {
+          "flag": "AMAZON_HIGH_SATURATION"
+        },
+        {
+          "flag": "AMAZON_DOMINATED_BY_MAJOR_BRANDS",
+          "top3_brand_share_pct": 84
+        },
+        {
+          "flag": "AMAZON_DATA_INSUFFICIENT",
+          "amazon_confidence": 41.0
+        }
+      ],
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T162823Z_2db2d4",
+      "calibration_only": false
+    },
+    {
+      "product_id": "1731038488255632078",
+      "tiktok_product_name": "HALOVIDA Anti-Static Hollow Round Bristle Brush - Massaging Design for Enhanced Volume,Detangling Brush for Pain-Free Brushing,Reduces Heat Damage, Perfect for Quick Drying and Voluminous Styling,Gentle,Boar bristle brush,Use in Wet and Dry Hair",
+      "observation_timestamp": "2026-10-01T18:33:57.934122+00:00",
+      "market": "US",
+      "source": {
+        "provider": "kalopilot",
+        "raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261001T183357934122Z_1731038488255632078_amazon_match.json",
+        "task_id": "862eafe0df544753916f0511b308fcd1",
+        "report_url": null,
+        "query_type": "amazon_match",
+        "cache_hit": false,
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json"
+      },
+      "tiktok_scores": {
+        "wps": 69.26,
+        "confidence": 88.17
+      },
+      "status": "ok",
+      "amazon_match_name": null,
+      "amazon_url": null,
+      "amazon_asin": null,
+      "amazon_brand": null,
+      "amazon_match_confidence": 35.56,
+      "amazon_match_class": "UNRELIABLE",
+      "amazon_match_status": "NO_RELIABLE_MATCH",
+      "amazon_match_detail": {
+        "name_similarity": {
+          "overlap": 0.375,
+          "s": 0.29166666666666663
+        },
+        "brand": {
+          "tiktok": null,
+          "amazon": "wavytalk",
+          "s": 0.0
+        },
+        "category": {
+          "overlap": 0.625,
+          "s": 1.0
+        },
+        "variant_attributes": {
+          "tiktok": [],
+          "s": null,
+          "note": "no attribute tokens in TikTok title; excluded"
+        }
+      },
+      "amazon_price": null,
+      "amazon_category": null,
+      "amazon_rating": null,
+      "amazon_review_count": null,
+      "amazon_bsr": null,
+      "amazon_bsr_category": null,
+      "amazon_sales_indicator": {
+        "monthly_sales_estimate": null,
+        "source": null
+      },
+      "amazon_listing_date": null,
+      "amazon_competitor_count": 5,
+      "amazon_price_range": {
+        "min": 14.99,
+        "max": 49.99
+      },
+      "amazon_top3_brand_share_pct": 80,
+      "amazon_recent_trend": "growing",
+      "amazon_presence": "UNCERTAIN",
+      "amazon_demand_strength": null,
+      "amazon_demand_signals": {},
+      "price_ratio": null,
+      "cross_platform_demand": "INSUFFICIENT_DATA",
+      "amazon_competition": "HIGH",
+      "price_alignment": "INSUFFICIENT_DATA",
+      "cross_platform_consistency": 1.0,
+      "avs": 15.0,
+      "avs_breakdown": {
+        "amazon_demand_evidence": {
+          "points": "N/A",
+          "max": 30,
+          "status": "N/A",
+          "missing_signals": [
+            "review_count",
+            "bsr",
+            "monthly_sales_estimate"
+          ]
+        },
+        "match_confidence": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "competition_opportunity": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "price_alignment": {
+          "points": "N/A",
+          "max": 15,
+          "status": "N/A"
+        },
+        "cross_platform_consistency": {
+          "points": 15.0,
+          "max": 15,
+          "status": "full"
+        }
+      },
+      "amazon_confidence": 35.67,
+      "amazon_confidence_level": "VERY_LOW",
+      "amazon_confidence_breakdown": {
+        "match_confidence": {
+          "earned": 10.67,
+          "max": 30,
+          "status": "partial"
+        },
+        "price": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "rating_reviews": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "ranking_demand": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "comparable_listings": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "title": "AIMIKE Round Brush for Blow Out, Medium Round Hair Brush Nano Thermal Ceramic & Ionic Tech, for Blow Drying & Styling, Curling and Shine - 2.9 inch Barrel w/Boar Bristles",
+          "url": "https://www.amazon.com/dp/B082WVW7PH"
+        },
+        {
+          "title": "Professional Round Brush for Blow Drying - Small Ceramic Ionic Thermal Barrel Brush for Sleek, Precise Heat Styling and Salon Blowout - Lightweight Round Hair Brush (Barrel 1.3 inch, Bristle 2 Inch)",
+          "url": "https://www.amazon.com/dp/B0771TSNTQ"
+        },
+        {
+          "title": "Wavytalk Thermal Brush 1.5\" Detachable Heated Round Brush for Blowout Look",
+          "url": "https://www.amazon.com/dp/B0CKTDHSRB"
+        },
+        {
+          "title": "Wavytalk Thermal Brush Blowout Boost 1.5″ Heat Round Brush for Blowout Look",
+          "url": "https://www.amazon.com/dp/B0CQSNXLJR"
+        },
+        {
+          "title": "HALOVIDA Detangler Hair Brush, Smooth Without Tugging",
+          "url": "https://www.amazon.com/dp/B0FJM7D7DN"
+        }
+      ],
+      "search_sources": [
+        "KaloData Amazon US product search/rank and detail (date_range last30Day, retrieved 2026-10-01); search terms: 'halovida', 'round bristle brush', 'boar bristle round brush'",
+        "Amazon.com HALOVIDA brand store page and listing B0FJM7D7DN via web search (title resolved; API title field is a placeholder)",
+        "halovida.com official product page (Hollow Round Bristle Brush description) via web search",
+        "Web search surfaced an Amazon page titled 'Electroplated Hollow Round Bristle Brush - Anti-Static Massage Brush, Reduces Heat Damage...' (clp/B0F54B66Z3) matching the TikTok product description, but that ID resolves to no KaloData Amazon listing, so it is not included as a candidate",
+        "Trend: sum of monthly sales of the 5 comparable listings, Jul-Sep 2026 vs Apr-Jun 2026 = +46.73%",
+        "TikTok reference product: HALOVIDA Anti-Static Hollow Round Bristle Brush (USD 34.38) as provided by user"
+      ],
+      "parse_warnings": [],
+      "config_version": "amazon-validation-v1",
+      "missing_data": [
+        "amazon_bsr",
+        "amazon_price",
+        "amazon_rating",
+        "amazon_review_count",
+        "amazon_sales_indicator"
+      ],
+      "amazon_red_flags": [
+        {
+          "flag": "NO_RELIABLE_MATCH",
+          "best_candidate_score": 35.56
+        },
+        {
+          "flag": "AMAZON_HIGH_SATURATION"
+        },
+        {
+          "flag": "AMAZON_DOMINATED_BY_MAJOR_BRANDS",
+          "top3_brand_share_pct": 80
+        },
+        {
+          "flag": "AMAZON_DATA_INSUFFICIENT",
+          "amazon_confidence": 35.67
+        }
+      ],
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T162823Z_2db2d4",
+      "calibration_only": false
+    },
+    {
+      "product_id": "1732380919812624634",
+      "tiktok_product_name": "Lymphatic Drainage Massager & Anti-Cellulite Massage Tool, Body Sculpting Device for Arms, Legs & Stomach, Supports Smoother Skin, with Gentle Warming & Vibration, White",
+      "observation_timestamp": "2026-10-01T18:38:35.600711+00:00",
+      "market": "US",
+      "source": {
+        "provider": "kalopilot",
+        "raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261001T183835600711Z_1732380919812624634_amazon_match.json",
+        "task_id": "c8bbb80bbfaa45ae97d70921091da809",
+        "report_url": null,
+        "query_type": "amazon_match",
+        "cache_hit": false,
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261001T182818261814Z.json"
+      },
+      "tiktok_scores": {
+        "wps": 66.54,
+        "confidence": 84.83
+      },
+      "status": "ok",
+      "amazon_match_name": null,
+      "amazon_url": null,
+      "amazon_asin": null,
+      "amazon_brand": null,
+      "amazon_match_confidence": 53.33,
+      "amazon_match_class": "UNRELIABLE",
+      "amazon_match_status": "NO_RELIABLE_MATCH",
+      "amazon_match_detail": {
+        "name_similarity": {
+          "overlap": 1.0,
+          "s": 1.0
+        },
+        "brand": {
+          "tiktok": null,
+          "amazon": "aimilove",
+          "s": 0.0
+        },
+        "category": {
+          "overlap": 0.0,
+          "s": 0.0
+        },
+        "variant_attributes": {
+          "tiktok": [],
+          "s": null,
+          "note": "no attribute tokens in TikTok title; excluded"
+        }
+      },
+      "amazon_price": null,
+      "amazon_category": null,
+      "amazon_rating": null,
+      "amazon_review_count": null,
+      "amazon_bsr": null,
+      "amazon_bsr_category": null,
+      "amazon_sales_indicator": {
+        "monthly_sales_estimate": null,
+        "source": null
+      },
+      "amazon_listing_date": null,
+      "amazon_competitor_count": 14,
+      "amazon_price_range": {
+        "min": 27.99,
+        "max": 209.99
+      },
+      "amazon_top3_brand_share_pct": 35.71,
+      "amazon_recent_trend": "growing",
+      "amazon_presence": "UNCERTAIN",
+      "amazon_demand_strength": null,
+      "amazon_demand_signals": {},
+      "price_ratio": null,
+      "cross_platform_demand": "INSUFFICIENT_DATA",
+      "amazon_competition": "MODERATE",
+      "price_alignment": "INSUFFICIENT_DATA",
+      "cross_platform_consistency": 1.0,
+      "avs": 25.0,
+      "avs_breakdown": {
+        "amazon_demand_evidence": {
+          "points": "N/A",
+          "max": 30,
+          "status": "N/A",
+          "missing_signals": [
+            "review_count",
+            "bsr",
+            "monthly_sales_estimate"
+          ]
+        },
+        "match_confidence": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "competition_opportunity": {
+          "points": 10.0,
+          "max": 20,
+          "status": "full"
+        },
+        "price_alignment": {
+          "points": "N/A",
+          "max": 15,
+          "status": "N/A"
+        },
+        "cross_platform_consistency": {
+          "points": 15.0,
+          "max": 15,
+          "status": "full"
+        }
+      },
+      "amazon_confidence": 41.0,
+      "amazon_confidence_level": "LOW",
+      "amazon_confidence_breakdown": {
+        "match_confidence": {
+          "earned": 16.0,
+          "max": 30,
+          "status": "partial"
+        },
+        "price": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "rating_reviews": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "ranking_demand": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "comparable_listings": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "title": "Lymphatic Drainage Massager & Anti Cellulite Massage Tool",
+          "url": "https://www.amazon.com/dp/B0H79Y7WJM"
+        },
+        {
+          "title": "Lymphatic Drainage Massager for Full Body Contouring Smoother-Looking Skin",
+          "url": "https://www.amazon.com/dp/B0FP999Q4F"
+        },
+        {
+          "title": "Lymphatic Drainage Massager & Anti Cellulite Massage Tool for Home",
+          "url": "https://www.amazon.com/dp/B0H4SJZ2WL"
+        },
+        {
+          "title": "Lymphatic Drainage Massager Electric Cupping Massager with Heat Vibration and Red Light, 12 Level Suction Body Massager for Legs Arms Waist Abdomen, Rechargeable Cellulite Massage Tool for Home Use",
+          "url": "https://www.amazon.com/dp/B0GJKKMM88"
+        },
+        {
+          "title": "Handheld Lymphatic Drainage Massager Anti Cellulite Body Sculpting Machine",
+          "url": "https://www.amazon.com/dp/B0G3V7B54T"
+        }
+      ],
+      "search_sources": [
+        "KaloData Amazon US product rank API, region US, trailing 30 days, queried 2026-10-01 (free-keyword searches: 'lymphatic drainage massager', 'anti cellulite massager', 'body sculpting device', 'lymphatic massage device', 'cellulite massager vibration', 'body massager with heat and vibration', 'anti-cellulite massage tool', 'body sculpting massager'; 'Lentorgi' returned 0 results)",
+        "KaloData Amazon US product rank API, region US, category-scoped search within Electric Massagers category path 3760901:10079996011:10080000011:3767521 with keywords 'lymphatic', 'cellulite', 'sculpt' (14 distinct comparable listings)",
+        "KaloData Amazon US category rank API, region US - Electric Massagers category lookup (6 massager categories matched)"
+      ],
+      "parse_warnings": [],
+      "config_version": "amazon-validation-v1",
+      "missing_data": [
+        "amazon_bsr",
+        "amazon_price",
+        "amazon_rating",
+        "amazon_review_count",
+        "amazon_sales_indicator"
+      ],
+      "amazon_red_flags": [
+        {
+          "flag": "NO_RELIABLE_MATCH",
+          "best_candidate_score": 53.33
+        },
+        {
+          "flag": "AMAZON_DATA_INSUFFICIENT",
+          "amazon_confidence": 41.0
+        }
+      ],
+      "data_environment": "PRODUCTION",
+      "run_id": "20261001T162823Z_2db2d4",
+      "calibration_only": false
+    }
+  ]
+}
