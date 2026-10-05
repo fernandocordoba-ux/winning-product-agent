@@ -1,0 +1,80 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 27.494999999999997,
+    "gmv": 41791.38,
+    "units": 1765,
+    "growth": 344.02,
+    "creator_count": 96,
+    "selling_creator_count": 55,
+    "video_count": 177,
+    "selling_video_count": 114,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 69644
+  },
+  "concentration": {
+    "top_creator_revenue_share": 50.13,
+    "top_video_revenue_share": 18.53
+  },
+  "scores": {
+    "wps": 47.63,
+    "confidence": 88.17
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING",
+      "EXTREME_SATURATION"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T114639731293Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T113857334216Z_1732306919019352838_deep_product.json",
+    "task_id": "4976f5ec6dd6427ebe1282742ff10d94",
+    "report_url": null
+  },
+  "product_id": "1732306919019352838",
+  "identity_key": "1732306919019352838",
+  "key_type": "product_id",
+  "product_name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360° Rotating Stand, Shockproof Air Cushion, Matte Anti-Fingerprint",
+  "category": "Phones & Electronics > Phones and Accessories > Cases, Screen Protectors & Stickers",
+  "shop": "MAGIC JOHN",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T11:38:57.334216+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+  "source_snapshot_hash": "e93894fad6eb66410954baac1297b69db48db731b65e333892c00925291489d5",
+  "run_id": "20261003T105009Z_351269",
+  "written_at": "2026-10-03T11:46:40.408707+00:00",
+  "imported_at": "2026-10-03T11:46:40.408707+00:00"
+}

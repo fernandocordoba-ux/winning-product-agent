@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-10-03T02:47:04.639773+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v10",
+  "note": "Owner (2026-10-03): beauty is on hold (label/regulatory info pending); next run is home & kitchen. Second opinion reviewed: 4 sub-niches instead of whole categories, to learn which sub-niche yields the most candidates per credit; numeric filters unchanged so the run stays comparable with beauty and works as a clean holdout. Operational exclusions inside each sub-niche: no liquids/chemicals, no fragile glass/ceramic, no oversized items, no electrical products, no sanitary/health claims. Deep-selection order unchanged. Credit cap fits the balance (87.29 - 5 reserve): 4 x 4.0 + 18 x 3.6 = 80.8.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_categories",
+      "current_value": [
+        "beauty_personal_care"
+      ],
+      "proposed_value": [
+        "home",
+        "kitchen"
+      ],
+      "reason": "owner: home & kitchen run",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_subniches",
+      "current_value": [
+        "beauty tools & devices: hair styling tools, facial and skin devices, makeup brushes and applicators",
+        "nails & lashes: press-on nails, nail art kits, false lashes and lash kits",
+        "hair care: hair oils, masks, serums, scalp care, hair accessories",
+        "skincare & body care: face masks, serums, body scrubs, bath and shower accessories"
+      ],
+      "proposed_value": {
+        "home": [
+          "storage & organization: closet, drawer, shelf and bathroom organizers, hooks, racks and hangers (non-electric; no glass or ceramic; no oversized furniture)",
+          "cleaning tools: brushes, mops, cloths, dusters, squeegees and lint removers (tools only; no liquids, sprays or chemicals; non-electric)"
+        ],
+        "kitchen": [
+          "kitchen tools & gadgets: utensils, peelers, choppers, graters, measuring and prep tools (non-electric; no glass or ceramic)",
+          "kitchen storage & organization: food storage containers, racks, drawer, sink and pantry organizers (not glass or ceramic; no oversized items)"
+        ]
+      },
+      "reason": "2 sub-niches per category = 4 discovery queries; low-regulation, easy-to-ship products",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "limits.deep_analysis_max_products",
+      "current_value": 25,
+      "proposed_value": 18,
+      "reason": "fits the credit cap",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 110,
+      "proposed_value": 82,
+      "reason": "balance 87.29 - reserve 5",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 110,
+      "proposed_value": 82,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "e2e.final_decision_max_products",
+      "current_value": 25,
+      "proposed_value": 18,
+      "reason": "must cover the deep limit",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 31,
+      "proposed_value": 22,
+      "reason": "4 discovery + 18 deep",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 31,
+      "proposed_value": 22,
+      "reason": "same",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T00:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 8,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

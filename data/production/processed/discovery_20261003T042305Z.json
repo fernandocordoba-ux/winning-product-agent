@@ -1,0 +1,4655 @@
+{
+  "pipeline": "discovery-v1",
+  "config_versions": {
+    "filters": "filters-v1",
+    "categories": "categories-v1",
+    "confidence": "confidence-v1"
+  },
+  "market": {
+    "region": "US",
+    "currency": "USD",
+    "period_days": 30
+  },
+  "raw_files": [
+    "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+    "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+    "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+    "/root/winning-product-agent/data/production/raw/20261003T034233Z_kitchen_51d413fb67864119b57c40f380a0e669.json"
+  ],
+  "summary": {
+    "records": 21,
+    "unique": 21,
+    "duplicates_removed": 0,
+    "malformed": 0,
+    "PASS": 11,
+    "REVIEW": 8,
+    "FAIL": 2,
+    "returned_candidates": 19,
+    "over_limit": 0
+  },
+  "candidates": [
+    {
+      "key": "1732394478406832933",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732394478406832933",
+        "product_name": "Minimalist Rolling Storage Cart with Wheels, Multi-Layer Adjustable…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "WoveHome",
+        "category": null,
+        "category_id": null,
+        "price_min": 60,
+        "price_max": 60,
+        "gmv_30d": 65606,
+        "gmv_prev_30d": 10898,
+        "units_30d": 2044,
+        "growth_30d": 502.0,
+        "creator_count": 60,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 82,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-12",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732394478406832933",
+          "product_name": "Minimalist Rolling Storage Cart with Wheels, Multi-Layer Adjustable…",
+          "shop_name": "WoveHome",
+          "price_min": 60,
+          "price_max": 60,
+          "gmv_30d": 65606,
+          "gmv_prev_30d": 10898,
+          "gmv_prev2_30d": 0,
+          "units_30d": 2044,
+          "units_prev_30d": null,
+          "creator_count": 60,
+          "video_count": 82,
+          "launch_date": "2026-05-12",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 60.0,
+        "price_basis": "avg",
+        "product_age_days": 142,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 60,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 60,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 65606,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 10898,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2044,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 502.0,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 60,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 82,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732316761469850306",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732316761469850306",
+        "product_name": "3-in-1 Sturdy Floor Scrub Brush, 29–50-inch adjustable handle, 360° rotating ...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "DailyGlow.US",
+        "category": null,
+        "category_id": null,
+        "price_min": 15,
+        "price_max": 36.98,
+        "gmv_30d": 55580,
+        "gmv_prev_30d": 9447,
+        "units_30d": 2678,
+        "growth_30d": 488.33,
+        "creator_count": 46,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 294,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-04-07",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+        "task_id": "da91d238653d4166bad9708483f982d2",
+        "report_url": null,
+        "fetched_at": "20261003T033317Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732316761469850306",
+          "product_name": "3-in-1 Sturdy Floor Scrub Brush, 29–50-inch adjustable handle, 360° rotating ...",
+          "shop_name": "DailyGlow.US",
+          "price_min": 15,
+          "price_max": 36.98,
+          "gmv_30d": 55580,
+          "gmv_prev_30d": 9447,
+          "gmv_prev2_30d": 10681,
+          "units_30d": 2678,
+          "units_prev_30d": null,
+          "creator_count": 46,
+          "video_count": 294,
+          "launch_date": "2026-04-07",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 25.99,
+        "price_basis": "avg",
+        "product_age_days": 179,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 15,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 36.98,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 55580,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 9447,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2678,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 488.33,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 46,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 294,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732294732712743843",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "kitchen",
+      "facts": {
+        "product_id": "1732294732712743843",
+        "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Gevoli",
+        "category": null,
+        "category_id": null,
+        "price_min": 21.99,
+        "price_max": 33.79,
+        "gmv_30d": 183853,
+        "gmv_prev_30d": 38351,
+        "units_30d": 8005,
+        "growth_30d": 379.4,
+        "creator_count": 297,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 537,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-07",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+        "task_id": "a022f0852ad64fda859209a17872d925",
+        "report_url": null,
+        "fetched_at": "20261003T033653Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732294732712743843",
+          "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact...",
+          "shop_name": "Gevoli",
+          "price_min": 21.99,
+          "price_max": 33.79,
+          "gmv_30d": 183853,
+          "gmv_prev_30d": 38351,
+          "gmv_prev2_30d": 300,
+          "units_30d": 8005,
+          "units_prev_30d": null,
+          "creator_count": 297,
+          "video_count": 537,
+          "launch_date": "2026-05-07",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 27.89,
+        "price_basis": "avg",
+        "product_age_days": 149,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 21.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 33.79,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 183853,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 38351,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 8005,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 379.4,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 297,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 537,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1730722553101979953",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "kitchen",
+      "facts": {
+        "product_id": "1730722553101979953",
+        "product_name": "Draft Top Lift Seamless Can Opener, Safe Smooth Edge, Topless...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Draft Top",
+        "category": null,
+        "category_id": null,
+        "price_min": 20.0,
+        "price_max": 31.19,
+        "gmv_30d": 66855,
+        "gmv_prev_30d": 27051,
+        "units_30d": 2733,
+        "growth_30d": 147.14,
+        "creator_count": 462,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 731,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-02-22",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+        "task_id": "a022f0852ad64fda859209a17872d925",
+        "report_url": null,
+        "fetched_at": "20261003T033653Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1730722553101979953",
+          "product_name": "Draft Top Lift Seamless Can Opener, Safe Smooth Edge, Topless...",
+          "shop_name": "Draft Top",
+          "price_min": 20.0,
+          "price_max": 31.19,
+          "gmv_30d": 66855,
+          "gmv_prev_30d": 27051,
+          "gmv_prev2_30d": 72084,
+          "units_30d": 2733,
+          "units_prev_30d": null,
+          "creator_count": 462,
+          "video_count": 731,
+          "launch_date": "2025-02-22",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 25.595,
+        "price_basis": "avg",
+        "product_age_days": 588,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 20.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 31.19,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 66855,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 27051,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2733,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 147.14,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 462,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 731,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1729459283880612691",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1729459283880612691",
+        "product_name": "7CODE 10-Pack Foldable Organizer Storage Plastic Bins, Stackable Drawer…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "7 CODE",
+        "category": null,
+        "category_id": null,
+        "price_min": 35,
+        "price_max": 149.99,
+        "gmv_30d": 35169,
+        "gmv_prev_30d": 18494,
+        "units_30d": 1041,
+        "growth_30d": 90.16,
+        "creator_count": 213,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 413,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2024-06-01",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 5,
+        "original_record": {
+          "product_id": "1729459283880612691",
+          "product_name": "7CODE 10-Pack Foldable Organizer Storage Plastic Bins, Stackable Drawer…",
+          "shop_name": "7 CODE",
+          "price_min": 35,
+          "price_max": 149.99,
+          "gmv_30d": 35169,
+          "gmv_prev_30d": 18494,
+          "gmv_prev2_30d": 10851,
+          "units_30d": 1041,
+          "units_prev_30d": null,
+          "creator_count": 213,
+          "video_count": 413,
+          "launch_date": "2024-06-01",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 92.495,
+        "price_basis": "avg",
+        "product_age_days": 852,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 35,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 149.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 35169,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 18494,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1041,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 90.16,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 213,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 413,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1730245148308116335",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1730245148308116335",
+        "product_name": "BROWNLILY Handmade Rattan Baskets - Synthetic Wicker with Vegan Leather…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "BROWNLILY",
+        "category": null,
+        "category_id": null,
+        "price_min": 58.99,
+        "price_max": 138.88,
+        "gmv_30d": 49065,
+        "gmv_prev_30d": 27195,
+        "units_30d": 937,
+        "growth_30d": 80.42,
+        "creator_count": 291,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 455,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-05-01",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 7,
+        "original_record": {
+          "product_id": "1730245148308116335",
+          "product_name": "BROWNLILY Handmade Rattan Baskets - Synthetic Wicker with Vegan Leather…",
+          "shop_name": "BROWNLILY",
+          "price_min": 58.99,
+          "price_max": 138.88,
+          "gmv_30d": 49065,
+          "gmv_prev_30d": 27195,
+          "gmv_prev2_30d": 20399,
+          "units_30d": 937,
+          "units_prev_30d": null,
+          "creator_count": 291,
+          "video_count": 455,
+          "launch_date": "2025-05-01",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 98.935,
+        "price_basis": "avg",
+        "product_age_days": 518,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 58.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 138.88,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 49065,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 27195,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 937,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 80.42,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 291,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 455,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1729619547318030783",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1729619547318030783",
+        "product_name": "3 Tier Fruit And Vegetable Basket, Fruit And Vegetable Storage Cart, Wire…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "WisdomStar",
+        "category": null,
+        "category_id": null,
+        "price_min": 38.84,
+        "price_max": 38.84,
+        "gmv_30d": 34214,
+        "gmv_prev_30d": 21743,
+        "units_30d": 1149,
+        "growth_30d": 57.36,
+        "creator_count": 194,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 889,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-01-17",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 4,
+        "original_record": {
+          "product_id": "1729619547318030783",
+          "product_name": "3 Tier Fruit And Vegetable Basket, Fruit And Vegetable Storage Cart, Wire…",
+          "shop_name": "WisdomStar",
+          "price_min": 38.84,
+          "price_max": 38.84,
+          "gmv_30d": 34214,
+          "gmv_prev_30d": 21743,
+          "gmv_prev2_30d": 17641,
+          "units_30d": 1149,
+          "units_prev_30d": null,
+          "creator_count": 194,
+          "video_count": 889,
+          "launch_date": "2025-01-17",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 38.84,
+        "price_basis": "avg",
+        "product_age_days": 622,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 38.84,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 38.84,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 34214,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 21743,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1149,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 57.36,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 194,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 889,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732112508660716356",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732112508660716356",
+        "product_name": "Beige Multifunctional Large-Capacity Plastic Storage Cart with Rolling Wheels…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "PULES Life",
+        "category": null,
+        "category_id": null,
+        "price_min": 25.74,
+        "price_max": 50,
+        "gmv_30d": 34022,
+        "gmv_prev_30d": 21906,
+        "units_30d": 1320,
+        "growth_30d": 55.31,
+        "creator_count": 1652,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 2005,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-12-18",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1732112508660716356",
+          "product_name": "Beige Multifunctional Large-Capacity Plastic Storage Cart with Rolling Wheels…",
+          "shop_name": "PULES Life",
+          "price_min": 25.74,
+          "price_max": 50,
+          "gmv_30d": 34022,
+          "gmv_prev_30d": 21906,
+          "gmv_prev2_30d": 228727,
+          "units_30d": 1320,
+          "units_prev_30d": null,
+          "creator_count": 1652,
+          "video_count": 2005,
+          "launch_date": "2025-12-18",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 37.87,
+        "price_basis": "avg",
+        "product_age_days": 287,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 25.74,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 50,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 34022,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 21906,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1320,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 55.31,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 1652,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 2005,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732374506324791819",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732374506324791819",
+        "product_name": "Microfiber Floor Mop with Bucket System - 360° Rotating Mop Head, 3 Washable ...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "YILINLIUSE",
+        "category": null,
+        "category_id": null,
+        "price_min": 38.99,
+        "price_max": 46.79,
+        "gmv_30d": 72270,
+        "gmv_prev_30d": 47468,
+        "units_30d": 2402,
+        "growth_30d": 52.25,
+        "creator_count": 160,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 411,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-07",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+        "task_id": "da91d238653d4166bad9708483f982d2",
+        "report_url": null,
+        "fetched_at": "20261003T033317Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1732374506324791819",
+          "product_name": "Microfiber Floor Mop with Bucket System - 360° Rotating Mop Head, 3 Washable ...",
+          "shop_name": "YILINLIUSE",
+          "price_min": 38.99,
+          "price_max": 46.79,
+          "gmv_30d": 72270,
+          "gmv_prev_30d": 47468,
+          "gmv_prev2_30d": 118853,
+          "units_30d": 2402,
+          "units_prev_30d": null,
+          "creator_count": 160,
+          "video_count": 411,
+          "launch_date": "2026-05-07",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 42.89,
+        "price_basis": "avg",
+        "product_age_days": 149,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 38.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 46.79,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 72270,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 47468,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2402,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 52.25,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 160,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 411,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1731698150863835974",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "kitchen",
+      "facts": {
+        "product_id": "1731698150863835974",
+        "product_name": "Manual Bread Slicer Adjustable Thickness, Hand Crank Bread Slicer for...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Brvclon Store",
+        "category": null,
+        "category_id": null,
+        "price_min": 89.98,
+        "price_max": 89.99,
+        "gmv_30d": 28042,
+        "gmv_prev_30d": 19787,
+        "units_30d": 514,
+        "growth_30d": 41.72,
+        "creator_count": 168,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 1172,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-09-09",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+        "task_id": "a022f0852ad64fda859209a17872d925",
+        "report_url": null,
+        "fetched_at": "20261003T033653Z",
+        "record_index": 5,
+        "original_record": {
+          "product_id": "1731698150863835974",
+          "product_name": "Manual Bread Slicer Adjustable Thickness, Hand Crank Bread Slicer for...",
+          "shop_name": "Brvclon Store",
+          "price_min": 89.98,
+          "price_max": 89.99,
+          "gmv_30d": 28042,
+          "gmv_prev_30d": 19787,
+          "gmv_prev2_30d": 16462,
+          "units_30d": 514,
+          "units_prev_30d": null,
+          "creator_count": 168,
+          "video_count": 1172,
+          "launch_date": "2025-09-09",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 89.985,
+        "price_basis": "avg",
+        "product_age_days": 389,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 89.98,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 89.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 28042,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 19787,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 514,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 41.72,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 168,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 1172,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732447804732052014",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732447804732052014",
+        "product_name": "SOPAMI 7ft Adjustable Telescopic Head Household Microfiber Duster - 360° Flex...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Sopami CleanNest US",
+        "category": null,
+        "category_id": null,
+        "price_min": 99,
+        "price_max": 99,
+        "gmv_30d": 27008,
+        "gmv_prev_30d": 20295,
+        "units_30d": 1194,
+        "growth_30d": 33.08,
+        "creator_count": 504,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 747,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-07-13",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+        "task_id": "da91d238653d4166bad9708483f982d2",
+        "report_url": null,
+        "fetched_at": "20261003T033317Z",
+        "record_index": 4,
+        "original_record": {
+          "product_id": "1732447804732052014",
+          "product_name": "SOPAMI 7ft Adjustable Telescopic Head Household Microfiber Duster - 360° Flex...",
+          "shop_name": "Sopami CleanNest US",
+          "price_min": 99,
+          "price_max": 99,
+          "gmv_30d": 27008,
+          "gmv_prev_30d": 20295,
+          "gmv_prev2_30d": 2338,
+          "units_30d": 1194,
+          "units_prev_30d": null,
+          "creator_count": 504,
+          "video_count": 747,
+          "launch_date": "2026-07-13",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 99.0,
+        "price_basis": "avg",
+        "product_age_days": 82,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 27008,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 20295,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1194,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 33.08,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 504,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 747,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732399018847932988",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732399018847932988",
+        "product_name": "All-in-1 Liquid Dispensing Floor Scrubber Brush Squeegee Broom - Household Mu...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Meyra",
+        "category": null,
+        "category_id": null,
+        "price_min": 30.99,
+        "price_max": 33.75,
+        "gmv_30d": 67228,
+        "gmv_prev_30d": 39301,
+        "units_30d": 2615,
+        "growth_30d": 71.06,
+        "creator_count": 57,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 229,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-05-21",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+        "task_id": "da91d238653d4166bad9708483f982d2",
+        "report_url": null,
+        "fetched_at": "20261003T033317Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1732399018847932988",
+          "product_name": "All-in-1 Liquid Dispensing Floor Scrubber Brush Squeegee Broom - Household Mu...",
+          "shop_name": "Meyra",
+          "price_min": 30.99,
+          "price_max": 33.75,
+          "gmv_30d": 67228,
+          "gmv_prev_30d": 39301,
+          "gmv_prev2_30d": 2884,
+          "units_30d": 2615,
+          "units_prev_30d": null,
+          "creator_count": 57,
+          "video_count": 229,
+          "launch_date": "2026-05-21",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 32.37,
+        "price_basis": "avg",
+        "product_age_days": 135,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "shipping_problems",
+            "action": "flag",
+            "keywords": [
+              "liquid"
+            ]
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 30.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 33.75,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 67228,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 39301,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2615,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 71.06,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 57,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 229,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1729468054420034923",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1729468054420034923",
+        "product_name": "【Holiday Deals】San Dream Magnetic Shelf for Fridge Spice Rack Organizer…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "San Dream Home",
+        "category": null,
+        "category_id": null,
+        "price_min": 29.98,
+        "price_max": 45.98,
+        "gmv_30d": 28427,
+        "gmv_prev_30d": 24199,
+        "units_30d": 1390,
+        "growth_30d": 17.47,
+        "creator_count": 431,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 641,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-12-15",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1729468054420034923",
+          "product_name": "【Holiday Deals】San Dream Magnetic Shelf for Fridge Spice Rack Organizer…",
+          "shop_name": "San Dream Home",
+          "price_min": 29.98,
+          "price_max": 45.98,
+          "gmv_30d": 28427,
+          "gmv_prev_30d": 24199,
+          "gmv_prev2_30d": 23460,
+          "units_30d": 1390,
+          "units_prev_30d": null,
+          "creator_count": 431,
+          "video_count": 641,
+          "launch_date": "2025-12-15",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 37.98,
+        "price_basis": "avg",
+        "product_age_days": 290,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 17.47,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 29.98,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 45.98,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 28427,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 24199,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1390,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 17.47,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 431,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 641,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1731560976192016786",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1731560976192016786",
+        "product_name": "CENLEN 2/3/4/5-Tier Foldable Plastic Storage Organization Cabinet with…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "niftyday",
+        "category": null,
+        "category_id": null,
+        "price_min": 73.2,
+        "price_max": 98,
+        "gmv_30d": 30839,
+        "gmv_prev_30d": 27323,
+        "units_30d": 526,
+        "growth_30d": 12.87,
+        "creator_count": 21,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 102,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-09-06",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 8,
+        "original_record": {
+          "product_id": "1731560976192016786",
+          "product_name": "CENLEN 2/3/4/5-Tier Foldable Plastic Storage Organization Cabinet with…",
+          "shop_name": "niftyday",
+          "price_min": 73.2,
+          "price_max": 98,
+          "gmv_30d": 30839,
+          "gmv_prev_30d": 27323,
+          "gmv_prev2_30d": 31302,
+          "units_30d": 526,
+          "units_prev_30d": null,
+          "creator_count": 21,
+          "video_count": 102,
+          "launch_date": "2025-09-06",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 85.6,
+        "price_basis": "avg",
+        "product_age_days": 390,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 12.87,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 73.2,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 98,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 30839,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 27323,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 526,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 12.87,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 21,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 102,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1729625334552039750",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "kitchen",
+      "facts": {
+        "product_id": "1729625334552039750",
+        "product_name": "5 Pack Fridge Organizers and Storage - Stackable Fruit Storage Containers for",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "MIESOO",
+        "category": null,
+        "category_id": null,
+        "price_min": 32.99,
+        "price_max": 32.99,
+        "gmv_30d": 336458,
+        "gmv_prev_30d": 298759,
+        "units_30d": 15227,
+        "growth_30d": 12.62,
+        "creator_count": 1562,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 2585,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2024-09-13",
+        "data_window_end": "2026-10-02",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T034233Z_kitchen_51d413fb67864119b57c40f380a0e669.json",
+        "task_id": "51d413fb67864119b57c40f380a0e669",
+        "report_url": "https://www.kalodata.com/pilot/share/file?task_id=51d413fb67864119b57c40f380a0e669&tool_call_id=toolu_c1106332b62c4848918ae64f",
+        "fetched_at": "20261003T034233Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1729625334552039750",
+          "product_name": "5 Pack Fridge Organizers and Storage - Stackable Fruit Storage Containers for",
+          "shop_name": "MIESOO",
+          "price_min": 32.99,
+          "price_max": 32.99,
+          "gmv_30d": 336458,
+          "gmv_prev_30d": 298759,
+          "gmv_prev2_30d": 555357,
+          "units_30d": 15227,
+          "units_prev_30d": 13494,
+          "creator_count": 1562,
+          "video_count": 2585,
+          "launch_date": "2024-09-13",
+          "data_window_end": "2026-10-02"
+        }
+      },
+      "calculated": {
+        "price": 32.99,
+        "price_basis": "avg",
+        "product_age_days": 749,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 12.62,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 32.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 32.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 336458,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 298759,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 15227,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 12.62,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 1562,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 2585,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T034233Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1729386633884898245",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "kitchen",
+      "facts": {
+        "product_id": "1729386633884898245",
+        "product_name": "SUSTEAS Manual Cheese Shredder - Hand Crank Rotary Grater with 5 18/10 Steel...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "SUSTEAS",
+        "category": null,
+        "category_id": null,
+        "price_min": 19.99,
+        "price_max": 109.99,
+        "gmv_30d": 84397,
+        "gmv_prev_30d": 77035,
+        "units_30d": 3955,
+        "growth_30d": 9.56,
+        "creator_count": 2876,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 3502,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2023-08-05",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+        "task_id": "a022f0852ad64fda859209a17872d925",
+        "report_url": null,
+        "fetched_at": "20261003T033653Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1729386633884898245",
+          "product_name": "SUSTEAS Manual Cheese Shredder - Hand Crank Rotary Grater with 5 18/10 Steel...",
+          "shop_name": "SUSTEAS",
+          "price_min": 19.99,
+          "price_max": 109.99,
+          "gmv_30d": 84397,
+          "gmv_prev_30d": 77035,
+          "gmv_prev2_30d": 58919,
+          "units_30d": 3955,
+          "units_prev_30d": null,
+          "creator_count": 2876,
+          "video_count": 3502,
+          "launch_date": "2023-08-05",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 64.99,
+        "price_basis": "avg",
+        "product_age_days": 1155,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 9.56,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 19.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 109.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 84397,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 77035,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 3955,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 9.56,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 2876,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 3502,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732263828432457948",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732263828432457948",
+        "product_name": "MiaoLi 4-Tier ABS Plastic Freestanding Shoe Storage Shelf - No-Assembly…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "MiAoli",
+        "category": null,
+        "category_id": null,
+        "price_min": 37.99,
+        "price_max": 70.99,
+        "gmv_30d": 31370,
+        "gmv_prev_30d": 29243,
+        "units_30d": 965,
+        "growth_30d": 7.27,
+        "creator_count": 62,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 183,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-02-08",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 6,
+        "original_record": {
+          "product_id": "1732263828432457948",
+          "product_name": "MiaoLi 4-Tier ABS Plastic Freestanding Shoe Storage Shelf - No-Assembly…",
+          "shop_name": "MiAoli",
+          "price_min": 37.99,
+          "price_max": 70.99,
+          "gmv_30d": 31370,
+          "gmv_prev_30d": 29243,
+          "gmv_prev2_30d": 8177,
+          "units_30d": 965,
+          "units_prev_30d": null,
+          "creator_count": 62,
+          "video_count": 183,
+          "launch_date": "2026-02-08",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 54.489999999999995,
+        "price_basis": "avg",
+        "product_age_days": 235,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 7.27,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 37.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 70.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 31370,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 29243,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 965,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 7.27,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 62,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 183,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732428031799693932",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1732428031799693932",
+        "product_name": "OBOTIN Heavy-Duty Floor Squeegee 2 in 1 - Lightweight & Durable Foam Blade w...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "OBOTIN Home & Living Departmen",
+        "category": null,
+        "category_id": null,
+        "price_min": 11.96,
+        "price_max": 132.8,
+        "gmv_30d": 39530,
+        "gmv_prev_30d": 2105,
+        "units_30d": 1325,
+        "growth_30d": 1777.91,
+        "creator_count": 256,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 685,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-06-05",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+        "task_id": "da91d238653d4166bad9708483f982d2",
+        "report_url": null,
+        "fetched_at": "20261003T033317Z",
+        "record_index": 3,
+        "original_record": {
+          "product_id": "1732428031799693932",
+          "product_name": "OBOTIN Heavy-Duty Floor Squeegee 2 in 1  - Lightweight & Durable Foam Blade w...",
+          "shop_name": "OBOTIN Home & Living Departmen",
+          "price_min": 11.96,
+          "price_max": 132.8,
+          "gmv_30d": 39530,
+          "gmv_prev_30d": 2105,
+          "gmv_prev2_30d": 6540,
+          "units_30d": 1325,
+          "units_prev_30d": null,
+          "creator_count": 256,
+          "video_count": 685,
+          "launch_date": "2026-06-05",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 72.38000000000001,
+        "price_basis": "avg",
+        "product_age_days": 120,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1777.91,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 11.96,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 132.8,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 39530,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 2105,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1325,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1777.91,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 256,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 685,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033317Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732071484583022634",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "kitchen",
+      "facts": {
+        "product_id": "1732071484583022634",
+        "product_name": "Aelga 12 oz Honey Dispenser No Drip with Base, 2026 Upgrade Mess Free...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Aelga",
+        "category": null,
+        "category_id": null,
+        "price_min": 22.85,
+        "price_max": 28.67,
+        "gmv_30d": 51466,
+        "gmv_prev_30d": 3394,
+        "units_30d": 2473,
+        "growth_30d": 1416.38,
+        "creator_count": 272,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 470,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-12-01",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+        "task_id": "a022f0852ad64fda859209a17872d925",
+        "report_url": null,
+        "fetched_at": "20261003T033653Z",
+        "record_index": 4,
+        "original_record": {
+          "product_id": "1732071484583022634",
+          "product_name": "Aelga 12 oz Honey Dispenser No Drip with Base, 2026 Upgrade   Mess Free...",
+          "shop_name": "Aelga",
+          "price_min": 22.85,
+          "price_max": 28.67,
+          "gmv_30d": 51466,
+          "gmv_prev_30d": 3394,
+          "gmv_prev2_30d": 6894,
+          "units_30d": 2473,
+          "units_prev_30d": null,
+          "creator_count": 272,
+          "video_count": 470,
+          "launch_date": "2025-12-01",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 25.76,
+        "price_basis": "avg",
+        "product_age_days": 306,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1416.38,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 22.85,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 28.67,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 51466,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 3394,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2473,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1416.38,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 272,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 470,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    }
+  ],
+  "failed": [
+    {
+      "key": "1729498753425118992",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "home",
+      "facts": {
+        "product_id": "1729498753425118992",
+        "product_name": "360 Degree Roating Spice Spinner, Spice Shelf Premium - Expandable and…",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Bloom Nest Home",
+        "category": null,
+        "category_id": null,
+        "price_min": 18.19,
+        "price_max": 18.19,
+        "gmv_30d": 31282,
+        "gmv_prev_30d": 1980,
+        "units_30d": 1314,
+        "growth_30d": 1479.9,
+        "creator_count": 41,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 22,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-03-08",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+        "task_id": "d015188395004aada66fa106a3d5d6ff",
+        "report_url": null,
+        "fetched_at": "20261003T032838Z",
+        "record_index": 3,
+        "original_record": {
+          "product_id": "1729498753425118992",
+          "product_name": "360 Degree Roating Spice Spinner, Spice Shelf Premium - Expandable and…",
+          "shop_name": "Bloom Nest Home",
+          "price_min": 18.19,
+          "price_max": 18.19,
+          "gmv_30d": 31282,
+          "gmv_prev_30d": 1980,
+          "gmv_prev2_30d": 164,
+          "units_30d": 1314,
+          "units_prev_30d": null,
+          "creator_count": 41,
+          "video_count": 22,
+          "launch_date": "2026-03-08",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 18.19,
+        "price_basis": "avg",
+        "product_age_days": 207,
+        "filter_status": "FAIL",
+        "filter_reasons": [
+          {
+            "rule": "price_range",
+            "action": "reject",
+            "value": 18.19,
+            "basis": "avg",
+            "min": 20,
+            "max": 100
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1479.9,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 18.19,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 18.19,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 31282,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 1980,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1314,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1479.9,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 41,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 22,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T032838Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732593672702431618",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "kitchen",
+      "facts": {
+        "product_id": "1732593672702431618",
+        "product_name": "2-Count Stainless Steel Oil Separator Ladle - Mirror Polished, Ergonomic...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "enhetk",
+        "category": null,
+        "category_id": null,
+        "price_min": 7.98,
+        "price_max": 25.0,
+        "gmv_30d": 60909,
+        "gmv_prev_30d": 0,
+        "units_30d": 2540,
+        "growth_30d": null,
+        "creator_count": 66,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 80,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-09-05",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "no_previous_revenue"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "growth_30d",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+        "task_id": "a022f0852ad64fda859209a17872d925",
+        "report_url": null,
+        "fetched_at": "20261003T033653Z",
+        "record_index": 3,
+        "original_record": {
+          "product_id": "1732593672702431618",
+          "product_name": "2-Count Stainless Steel Oil Separator Ladle - Mirror Polished, Ergonomic...",
+          "shop_name": "enhetk",
+          "price_min": 7.98,
+          "price_max": 25.0,
+          "gmv_30d": 60909,
+          "gmv_prev_30d": 0,
+          "gmv_prev2_30d": 0,
+          "units_30d": 2540,
+          "units_prev_30d": null,
+          "creator_count": 66,
+          "video_count": 80,
+          "launch_date": "2026-09-05",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 16.490000000000002,
+        "price_basis": "avg",
+        "product_age_days": 28,
+        "filter_status": "FAIL",
+        "filter_reasons": [
+          {
+            "rule": "price_range",
+            "action": "reject",
+            "value": 16.490000000000002,
+            "basis": "avg",
+            "min": 20,
+            "max": 100
+          },
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "growth_30d"
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "product_age_days",
+            "value": 28,
+            "condition": "< 30"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "collapsing_sales:revenue_growth_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "growth_30d",
+          "low_base_or_seasonal:revenue_growth_pct",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_long_term",
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 40.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 0.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 7.98,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 25.0,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 60909,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2540,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "creator_count": {
+          "value": 66,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 80,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T033653Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    }
+  ],
+  "over_limit_keys": [],
+  "duplicates": [],
+  "malformed": [],
+  "data_environment": "PRODUCTION",
+  "run_id": "20261003T042305Z_519ea0"
+}

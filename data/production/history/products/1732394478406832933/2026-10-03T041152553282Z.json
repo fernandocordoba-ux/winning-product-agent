@@ -1,0 +1,79 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 60.0,
+    "gmv": 64398.0,
+    "units": 1987,
+    "growth": 431.97,
+    "creator_count": 55,
+    "selling_creator_count": 29,
+    "video_count": 76,
+    "selling_video_count": 35,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 7011
+  },
+  "concentration": {
+    "top_creator_revenue_share": 23.72,
+    "top_video_revenue_share": 9.44
+  },
+  "scores": {
+    "wps": 43.54,
+    "confidence": 87.17
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T041326494398Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T041152553282Z_1732394478406832933_deep_product.json",
+    "task_id": "460c8ddd1b474abbb20c8a086d434ec3",
+    "report_url": null
+  },
+  "product_id": "1732394478406832933",
+  "identity_key": "1732394478406832933",
+  "key_type": "product_id",
+  "product_name": "Minimalist Rolling Storage Cart with Wheels, Multi-Layer Adjustable Freestanding Household Racks, Space-Saving Plastic Organizer, Portable Easy-Install Unit for Kitchen,Bathroom - Memorial Day Deals",
+  "category": "Home Supplies > Home Organizers > Storage Holders & Racks",
+  "shop": "WoveHome",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T04:11:52.553282+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T04:11:52.553282+00:00",
+  "source_snapshot_hash": "eb024380dc2e0e22eea20cc14c9b5c0813284ec095163b592ae3b09d40c297a7",
+  "run_id": "20261003T032125Z_33ac62",
+  "written_at": "2026-10-03T04:13:27.019887+00:00",
+  "imported_at": "2026-10-03T04:13:27.019887+00:00"
+}

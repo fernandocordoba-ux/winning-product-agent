@@ -1,0 +1,106 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 42.89,
+    "gmv": 72272.77,
+    "units": 2402,
+    "growth": 52.58,
+    "creator_count": 58,
+    "selling_creator_count": 41,
+    "video_count": 122,
+    "selling_video_count": 81,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 1156
+  },
+  "concentration": {
+    "top_creator_revenue_share": 33.89,
+    "top_video_revenue_share": 22.47
+  },
+  "scores": {
+    "wps": 62.53,
+    "confidence": 88.17
+  },
+  "amazon": {
+    "avs": 0.0,
+    "amazon_confidence": 38.89,
+    "amazon_match_confidence": 46.29,
+    "amazon_price": null,
+    "amazon_competition": "HIGH",
+    "observation_timestamp": "2026-10-03T05:17:08.750884+00:00"
+  },
+  "business": {
+    "bvs": 25.46,
+    "bvs_confidence": 26.0,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": "2026-10-03T05:17:08.853023+00:00"
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [
+      "EXTREME_COMPETITION",
+      "INSUFFICIENT_SUPPLIER_DATA"
+    ],
+    "amazon_red_flags": [
+      "NO_RELIABLE_MATCH",
+      "AMAZON_HIGH_SATURATION",
+      "AMAZON_DOMINATED_BY_MAJOR_BRANDS",
+      "AMAZON_DATA_INSUFFICIENT"
+    ]
+  },
+  "missing_data": [
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history",
+    "amazon:amazon_bsr",
+    "amazon:amazon_price",
+    "amazon:amazon_rating",
+    "amazon:amazon_review_count",
+    "amazon:amazon_sales_indicator",
+    "economics:contribution_margin_percent",
+    "economics:contribution_profit",
+    "economics:estimated_ad_cost_per_order",
+    "economics:expected_chargeback_cost",
+    "economics:expected_refund_cost",
+    "economics:gross_margin_percent",
+    "economics:gross_profit_before_ads",
+    "economics:import_duty_per_order",
+    "economics:landed_cost",
+    "economics:landed_cost_note",
+    "economics:product_cost",
+    "economics:supplier_shipping_cost"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T044921231046Z_1732374506324791819_deep_product.json",
+    "task_id": "56191c3acbb240cb9bf88c3f24d2e65e",
+    "report_url": null,
+    "amazon_raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T051708750884Z_1732374506324791819_amazon_match.json",
+    "amazon_processed_file": null,
+    "bvs_processed_file": null,
+    "commercial_data_file": null
+  },
+  "product_id": "1732374506324791819",
+  "identity_key": "1732374506324791819",
+  "key_type": "product_id",
+  "product_name": "Microfiber Floor Mop with Bucket System - 360° Rotating Mop Head, 3 Washable Microfiber Heads, 48-61-Inch Adjustable Long Handle, Deep Cleaning House Supplies for Household Items, Home Goods",
+  "category": "Home Supplies > Home Care Supplies > Mops",
+  "shop": "YILINLIUSE",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T04:49:21.231046+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T04:49:21.231046+00:00",
+  "source_snapshot_hash": "94c7520a9a6dd9a1afd1c4498e4a4d43bf4e502c1b6addf5130e32cfdd93cc12",
+  "run_id": "20261003T042305Z_519ea0",
+  "written_at": "2026-10-03T05:17:09.252613+00:00",
+  "imported_at": "2026-10-03T05:17:09.252613+00:00"
+}

@@ -1,0 +1,177 @@
+{
+  "generated_at": "2026-10-03T10:45:13.361416+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v13",
+  "note": "Owner (2026-10-03): 'make the adjustments you suggest for the next run; credits recharged; do it in electronics'. Lessons from home & kitchen (21 products from 4 queries, 7 candidates): sub-niches were too narrow because the exclusions were written into the question. Now: 6 broad sub-niches of electronics ACCESSORIES (not devices), exclusions applied afterwards by the program (batteries / power banks, chargers and mains power, medical-claim devices, surveillance, certification-heavy devices), and one automatic retry for answers the provider returns empty. Numeric filters, formula, thresholds, preliminary floor 32 and score-only order unchanged. Cap fits the balance (126.39 - 5 reserve): 6 x 4.0 + 22 x 3.6 = 103.2, Amazon only if credits remain.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_categories",
+      "current_value": [
+        "home",
+        "kitchen"
+      ],
+      "proposed_value": [
+        "electronics_accessories"
+      ],
+      "reason": "owner: electronics run",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.discovery_subniches",
+      "current_value": {
+        "home": [
+          "storage & organization: closet, drawer, shelf and bathroom organizers, hooks, racks and hangers (non-electric; no glass or ceramic; no oversized furniture)",
+          "cleaning tools: brushes, mops, cloths, dusters, squeegees and lint removers (tools only; no liquids, sprays or chemicals; non-electric)"
+        ],
+        "kitchen": [
+          "kitchen tools & gadgets: utensils, peelers, choppers, graters, measuring and prep tools (non-electric; no glass or ceramic)",
+          "kitchen storage & organization: food storage containers, racks, drawer, sink and pantry organizers (not glass or ceramic; no oversized items)"
+        ]
+      },
+      "proposed_value": {
+        "electronics_accessories": [
+          "phone cases, covers and screen protectors",
+          "phone holders, mounts, stands and grips",
+          "headphone and earbud accessories",
+          "computer, laptop and tablet accessories",
+          "camera and content-creation accessories",
+          "gaming accessories"
+        ]
+      },
+      "reason": "6 broad sub-niches; no exclusion clauses in the question",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.deep_exclude_operational",
+      "current_value": null,
+      "proposed_value": [
+        "power bank",
+        "battery",
+        "batteries",
+        "charger",
+        "charging",
+        "wall plug",
+        "power strip",
+        "surge protector",
+        "extension cord",
+        "rechargeable",
+        "bluetooth",
+        "wireless earbuds",
+        "speaker",
+        "smart watch",
+        "smartwatch",
+        "projector",
+        "drone",
+        "security camera",
+        "spy",
+        "hidden camera",
+        "tracker",
+        "gps",
+        "baby monitor",
+        "hearing",
+        "tens",
+        "massager",
+        "therapy",
+        "blood pressure",
+        "thermometer",
+        "vape"
+      ],
+      "reason": "owner exclusions applied by the program after discovery",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.deep_retry_empty_answers",
+      "current_value": null,
+      "proposed_value": 1,
+      "reason": "empty provider answers cost 0.44; ask once more",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "limits.deep_analysis_max_products",
+      "current_value": 18,
+      "proposed_value": 22,
+      "reason": "about 20 analyses are needed for 10 candidates at the observed hit rate",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "e2e.final_decision_max_products",
+      "current_value": 18,
+      "proposed_value": 22,
+      "reason": "must cover the deep limit",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 51,
+      "proposed_value": 110,
+      "reason": "balance 126.39 - reserve 5, with room left",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 51,
+      "proposed_value": 110,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_queries_per_run",
+      "current_value": 22,
+      "proposed_value": 33,
+      "reason": "6 discovery + 22 deep + 3 retries + 2 Amazon",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_provider_queries.kalopilot",
+      "current_value": 22,
+      "proposed_value": 33,
+      "reason": "same",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T12:00Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 10,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

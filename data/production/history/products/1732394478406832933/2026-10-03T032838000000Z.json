@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 60.0,
+    "gmv": 65606,
+    "units": 2044,
+    "growth": 502.0,
+    "creator_count": 60,
+    "selling_creator_count": null,
+    "video_count": 82,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T034233Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+    "task_id": "d015188395004aada66fa106a3d5d6ff",
+    "report_url": null,
+    "record_index": 0
+  },
+  "product_id": "1732394478406832933",
+  "identity_key": "1732394478406832933",
+  "key_type": "product_id",
+  "product_name": "Minimalist Rolling Storage Cart with Wheels, Multi-Layer Adjustable…",
+  "category": null,
+  "shop": "WoveHome",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T03:28:38+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-03T03:28:38+00:00",
+  "source_snapshot_hash": "92b219147e19a72ef6d63e2ca2c38f7623f356e088e9fb74d662cdb2f2dc51bf",
+  "run_id": "20261003T032125Z_33ac62",
+  "written_at": "2026-10-03T04:13:27.010071+00:00",
+  "imported_at": "2026-10-03T04:13:27.010071+00:00"
+}

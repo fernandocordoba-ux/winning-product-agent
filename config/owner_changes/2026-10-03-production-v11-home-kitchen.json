@@ -1,0 +1,20 @@
+{
+  "note": "Owner (2026-10-03): beauty is on hold (label/regulatory info pending); next run is home & kitchen. Second opinion reviewed: 4 sub-niches instead of whole categories, to learn which sub-niche yields the most candidates per credit; numeric filters unchanged so the run stays comparable with beauty and works as a clean holdout. Operational exclusions inside each sub-niche: no liquids/chemicals, no fragile glass/ceramic, no oversized items, no electrical products, no sanitary/health claims. Deep-selection order unchanged. Credit cap fits the balance (87.29 - 5 reserve): 4 x 4.0 + 18 x 3.6 = 80.8.",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.discovery_categories", "value": ["home", "kitchen"], "reason": "owner: home & kitchen run"},
+    {"file": "runtime.yaml", "path": "query_plan.discovery_subniches", "value": {
+      "home": [
+        "storage & organization: closet, drawer, shelf and bathroom organizers, hooks, racks and hangers (non-electric; no glass or ceramic; no oversized furniture)",
+        "cleaning tools: brushes, mops, cloths, dusters, squeegees and lint removers (tools only; no liquids, sprays or chemicals; non-electric)"],
+      "kitchen": [
+        "kitchen tools & gadgets: utensils, peelers, choppers, graters, measuring and prep tools (non-electric; no glass or ceramic)",
+        "kitchen storage & organization: food storage containers, racks, drawer, sink and pantry organizers (not glass or ceramic; no oversized items)"]},
+     "reason": "2 sub-niches per category = 4 discovery queries; low-regulation, easy-to-ship products"},
+    {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 18, "reason": "fits the credit cap"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 82, "reason": "balance 87.29 - reserve 5"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 82, "reason": "mirror"},
+    {"file": "runtime.yaml", "path": "e2e.final_decision_max_products", "value": 18, "reason": "must cover the deep limit"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 22, "reason": "4 discovery + 18 deep"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 22, "reason": "same"}
+  ]
+}

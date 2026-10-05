@@ -1,0 +1,1163 @@
+{
+  "deep_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+  "amazon_file": "/root/winning-product-agent/data/production/processed/amazon_validation/amazon_20261003T051708754735Z.json",
+  "eligible": 3,
+  "excluded": [
+    {
+      "product_id": "1732428031799693932",
+      "reason": "WPS 54.37 < 55"
+    },
+    {
+      "product_id": "1732316761469850306",
+      "reason": "WPS 50.39 < 55"
+    },
+    {
+      "product_id": "1732394478406832933",
+      "reason": "WPS 43.54 < 55"
+    },
+    {
+      "product_id": "1732071484583022634",
+      "reason": "WPS 48.84 < 55"
+    },
+    {
+      "product_id": "1732112508660716356",
+      "reason": "WPS 48.88 < 55"
+    },
+    {
+      "product_id": "1730245148308116335",
+      "reason": "WPS 42.16 < 55"
+    },
+    {
+      "product_id": "1729619547318030783",
+      "reason": "deep analysis not ok"
+    },
+    {
+      "product_id": "1732447804732052014",
+      "reason": "deep analysis not ok"
+    },
+    {
+      "product_id": "1732399018847932988",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1730722553101979953",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1729625334552039750",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1729386633884898245",
+      "reason": "over max_products (3)"
+    }
+  ],
+  "results": [
+    {
+      "product_id": "1732294732712743843",
+      "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+      "selling_price": 27.89,
+      "selling_price_source": "ASSUMPTION: TikTok Shop average price used as our selling price",
+      "economics": {
+        "selling_price": 27.89,
+        "product_cost": "N/A",
+        "supplier_shipping_cost": "N/A",
+        "import_duty_per_order": "N/A",
+        "landed_cost": "N/A",
+        "landed_cost_note": "N/A",
+        "payment_processing_fee": 1.11,
+        "platform_fee": 0.0,
+        "estimated_ad_cost_per_order": "N/A",
+        "expected_refund_cost": "N/A",
+        "expected_chargeback_cost": "N/A",
+        "gross_profit_before_ads": "N/A",
+        "gross_margin_percent": "N/A",
+        "contribution_profit": "N/A",
+        "contribution_margin_percent": "N/A",
+        "selling_price_source": "ASSUMPTION: TikTok Shop average price used as our selling price",
+        "product_cost_source": null
+      },
+      "supplier_metrics": {
+        "supplier_count": null,
+        "price_cv_pct": null,
+        "primary_supplier": null,
+        "rating": null,
+        "processing_days": null,
+        "us_warehouse": null,
+        "stock": null,
+        "moq": null,
+        "orders": null,
+        "warehouse_country": null
+      },
+      "shipping_metrics": {
+        "delivery_days_max": null,
+        "tracking_available": null,
+        "supplier_shipping_cost": null,
+        "shipping_cost_pct_of_price": null,
+        "fragile": null,
+        "contains_battery": null,
+        "contains_liquid": null,
+        "oversized": null,
+        "special_handling": null,
+        "customs_risk": null,
+        "longest_side_cm": null,
+        "weight_kg": null
+      },
+      "competition_metrics": {
+        "similar_listings_count": null,
+        "amazon_competition": "HIGH",
+        "price_alignment": "GOOD",
+        "amazon_top3_brand_share_pct": 60.0,
+        "cross_platform_demand": "STRONG",
+        "tiktok_units_30d": 8005.0,
+        "demand_factor": 1.0,
+        "demand_basis": "cross_platform_demand STRONG"
+      },
+      "return_risk_metrics": {
+        "actual_refund_rate_pct": null,
+        "characteristics": {
+          "SIZE_DEPENDENT": {
+            "weight": 3,
+            "evidence": "keyword in product name",
+            "keywords": [
+              "sizes"
+            ]
+          }
+        },
+        "risk_sum": 3,
+        "basis": "keyword_screening"
+      },
+      "advertising_metrics": {
+        "videos": 241.0,
+        "top3_creator_revenue_share": 82.88,
+        "top3_video_revenue_share": 58.67,
+        "restricted_ad_keywords": [],
+        "not_scored": [
+          "demonstration_potential",
+          "visual_transformation",
+          "problem_solution_clarity"
+        ]
+      },
+      "compliance_metrics": {
+        "basis": "keyword_screening",
+        "review": null,
+        "findings": {}
+      },
+      "bvs": 26.67,
+      "bvs_breakdown": {
+        "gross_margin_potential": {
+          "score": 0.0,
+          "max": 25,
+          "status": "N/A",
+          "parts": {
+            "gross_margin": {
+              "points": "N/A",
+              "max": 15,
+              "value": null
+            },
+            "contribution_margin": {
+              "points": "N/A",
+              "max": 10,
+              "value": null
+            }
+          }
+        },
+        "shipping_viability": {
+          "score": 0.0,
+          "max": 15,
+          "status": "N/A",
+          "parts": {
+            "delivery_time": {
+              "points": "N/A",
+              "max": 5,
+              "value": null
+            },
+            "shipping_cost": {
+              "points": "N/A",
+              "max": 4,
+              "value": null
+            },
+            "tracking": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "handling": {
+              "points": "N/A",
+              "max": 4,
+              "reason": "core handling fields unknown"
+            }
+          }
+        },
+        "supplier_viability": {
+          "score": 0.0,
+          "max": 15,
+          "status": "N/A",
+          "parts": {
+            "supplier_count": {
+              "points": "N/A",
+              "max": 3,
+              "value": null
+            },
+            "price_consistency": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "rating": {
+              "points": "N/A",
+              "max": 3,
+              "value": null
+            },
+            "processing_time": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "us_warehouse": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "stock": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "moq": {
+              "points": "N/A",
+              "max": 1,
+              "value": null
+            }
+          }
+        },
+        "competition_opportunity": {
+          "score": 5.0,
+          "max": 15,
+          "status": "partial",
+          "parts": {
+            "tiktok_saturation": {
+              "points": "N/A",
+              "max": 4,
+              "value": null
+            },
+            "amazon_saturation": {
+              "points": 0.0,
+              "max": 4,
+              "s": 0.0,
+              "value": "HIGH"
+            },
+            "price_compression": {
+              "points": 3.0,
+              "max": 3,
+              "s": 1.0,
+              "value": "GOOD"
+            },
+            "brand_concentration": {
+              "points": 2.0,
+              "max": 4,
+              "s": 0.5,
+              "value": 60.0
+            }
+          },
+          "demand_factor": 1.0,
+          "demand_basis": "cross_platform_demand STRONG"
+        },
+        "return_risk": {
+          "score": 7.0,
+          "max": 10,
+          "status": "full",
+          "basis": "keyword_screening"
+        },
+        "advertising_viability": {
+          "score": 4.67,
+          "max": 10,
+          "status": "full",
+          "parts": {
+            "successful_videos": {
+              "points": 2.07,
+              "max": 3,
+              "s": 0.691,
+              "value": 241.0
+            },
+            "creator_diversity": {
+              "points": 0.0,
+              "max": 3,
+              "s": 0.0,
+              "value": 82.88
+            },
+            "creative_diversity": {
+              "points": 0.6,
+              "max": 2,
+              "s": 0.3,
+              "value": 58.67
+            },
+            "ad_restriction": {
+              "points": 2.0,
+              "max": 2,
+              "s": 1.0,
+              "keywords": [],
+              "basis": "keyword_screening"
+            }
+          }
+        },
+        "compliance_ip": {
+          "score": 10.0,
+          "max": 10,
+          "status": "full",
+          "basis": "keyword_screening"
+        }
+      },
+      "bvs_confidence": 28.0,
+      "bvs_confidence_level": "VERY_LOW",
+      "bvs_confidence_breakdown": {
+        "supplier_cost": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "shipping_cost": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "delivery_time": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "supplier_data": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "competition_data": {
+          "earned": 8.0,
+          "max": 10,
+          "status": "partial"
+        },
+        "return_risk_evidence": {
+          "earned": 5.0,
+          "max": 10,
+          "status": "partial"
+        },
+        "ad_evidence": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "compliance_evidence": {
+          "earned": 5.0,
+          "max": 10,
+          "status": "partial"
+        }
+      },
+      "bvs_reliability_warning": null,
+      "commercial_red_flags": [
+        {
+          "flag": "EXTREME_COMPETITION",
+          "similar_listings_count": null,
+          "amazon_competition": "HIGH",
+          "severe": true
+        },
+        {
+          "flag": "SIZE_DEPENDENT",
+          "evidence": "keyword in product name",
+          "keywords": [
+            "sizes"
+          ],
+          "severe": false
+        },
+        {
+          "flag": "SUPPLIER_DATA_INCOMPLETE",
+          "reason": "no qualified supplier offer",
+          "source": "supplier_layer",
+          "severe": false
+        },
+        {
+          "flag": "INSUFFICIENT_SUPPLIER_DATA",
+          "missing": [
+            "product_cost",
+            "supplier_shipping_cost"
+          ],
+          "severe": true
+        }
+      ],
+      "severe_flag_count": 2,
+      "missing_data": [
+        "contribution_margin_percent",
+        "contribution_profit",
+        "estimated_ad_cost_per_order",
+        "expected_chargeback_cost",
+        "expected_refund_cost",
+        "gross_margin_percent",
+        "gross_profit_before_ads",
+        "import_duty_per_order",
+        "landed_cost",
+        "landed_cost_note",
+        "product_cost",
+        "supplier_shipping_cost"
+      ],
+      "other_scores": {
+        "wps": 65.28,
+        "confidence": 87.33,
+        "avs": 55.7,
+        "amazon_confidence": 89.0
+      },
+      "observation_timestamp": "2026-10-03T05:17:08.850694+00:00",
+      "source": {
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+        "amazon_file": "/root/winning-product-agent/data/production/processed/amazon_validation/amazon_20261003T051708754735Z.json",
+        "commercial_data_file": "supplier_layer:/root/winning-product-agent/data/production/processed/suppliers",
+        "supplier_provider": "none"
+      },
+      "config_version": "bvs-v1",
+      "selected_supplier_offer_id": null,
+      "supplier_viability": "N/A",
+      "supplier_layer": {
+        "selected_supplier_offer_id": null,
+        "qualified_offers": 0,
+        "offer_count": 1,
+        "supplier_viability": "N/A",
+        "supplier_flags": [
+          {
+            "flag": "SUPPLIER_DATA_INCOMPLETE",
+            "reason": "no qualified supplier offer"
+          }
+        ],
+        "selection_rule": "highest-ranked eligible offer; rank = eligible > delivery_tier > supplier_quality > landed_cost > supplier_confidence > offer_id",
+        "selected": null,
+        "offers": [
+          {
+            "offer_id": "off_b5976ad1d5786229",
+            "supplier_name": "Zendrop (Zendrop Fulfillment)",
+            "supplier_source": "zendrop_mcp",
+            "supplier_url": "https://app.zendrop.com/product/2023510",
+            "supplier_offer_rank": 1,
+            "match_confidence_calc": null,
+            "match_class": "REVIEW",
+            "supplier_match_status": "REVIEW",
+            "product_cost": 1.95,
+            "shipping_cost": 19.29,
+            "landed_cost": 21.24,
+            "landed_cost_note": "EXCLUDES unknown import duties (none provided; never estimated)",
+            "estimated_delivery_min_days": 8,
+            "estimated_delivery_max_days": 8,
+            "effective_delivery_days": 8,
+            "delivery_tier": "STRONG",
+            "supplier_rating": null,
+            "supplier_order_count": null,
+            "us_warehouse_available": null,
+            "tracking_available": null,
+            "minimum_order_quantity": null,
+            "available_quantity": null,
+            "inventory_status": "IN_STOCK",
+            "supplier_quality": null,
+            "supplier_confidence": 55.0,
+            "supplier_confidence_level": "LOW",
+            "eligible_for_economics": false,
+            "ineligible_reasons": [
+              "match confidence None < 75"
+            ],
+            "supplier_flags": [
+              {
+                "flag": "HIGH_SHIPPING_COST",
+                "pct_of_price": 69.16
+              },
+              {
+                "flag": "SUPPLIER_DATA_INCOMPLETE",
+                "supplier_confidence": 55.0
+              }
+            ],
+            "observed_at": "2026-10-01T04:35:00+00:00"
+          }
+        ]
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T042305Z_519ea0",
+      "calibration_only": false
+    },
+    {
+      "product_id": "1729459283880612691",
+      "product_name": "7CODE 10-Pack Foldable Organizer Storage Plastic Bins, Stackable Drawer Baskets for Drawer Organization & Kitchen Pantry, Ideal for Dorm Hacks to Fold, Stack, and Organize Wardrobe Closets",
+      "selling_price": 92.5,
+      "selling_price_source": "ASSUMPTION: TikTok Shop average price used as our selling price",
+      "economics": {
+        "selling_price": 92.5,
+        "product_cost": "N/A",
+        "supplier_shipping_cost": "N/A",
+        "import_duty_per_order": "N/A",
+        "landed_cost": "N/A",
+        "landed_cost_note": "N/A",
+        "payment_processing_fee": 2.98,
+        "platform_fee": 0.0,
+        "estimated_ad_cost_per_order": "N/A",
+        "expected_refund_cost": "N/A",
+        "expected_chargeback_cost": "N/A",
+        "gross_profit_before_ads": "N/A",
+        "gross_margin_percent": "N/A",
+        "contribution_profit": "N/A",
+        "contribution_margin_percent": "N/A",
+        "selling_price_source": "ASSUMPTION: TikTok Shop average price used as our selling price",
+        "product_cost_source": null
+      },
+      "supplier_metrics": {
+        "supplier_count": null,
+        "price_cv_pct": null,
+        "primary_supplier": null,
+        "rating": null,
+        "processing_days": null,
+        "us_warehouse": null,
+        "stock": null,
+        "moq": null,
+        "orders": null,
+        "warehouse_country": null
+      },
+      "shipping_metrics": {
+        "delivery_days_max": null,
+        "tracking_available": null,
+        "supplier_shipping_cost": null,
+        "shipping_cost_pct_of_price": null,
+        "fragile": null,
+        "contains_battery": null,
+        "contains_liquid": null,
+        "oversized": null,
+        "special_handling": null,
+        "customs_risk": null,
+        "longest_side_cm": null,
+        "weight_kg": null
+      },
+      "competition_metrics": {
+        "similar_listings_count": null,
+        "amazon_competition": "MODERATE",
+        "price_alignment": "INSUFFICIENT_DATA",
+        "amazon_top3_brand_share_pct": 45.45,
+        "cross_platform_demand": "INSUFFICIENT_DATA",
+        "tiktok_units_30d": 1041.0,
+        "demand_factor": 0.8,
+        "demand_basis": "tiktok units_30d 1041"
+      },
+      "return_risk_metrics": {
+        "actual_refund_rate_pct": null,
+        "characteristics": {},
+        "risk_sum": 0,
+        "basis": "keyword_screening"
+      },
+      "advertising_metrics": {
+        "videos": 84.0,
+        "top3_creator_revenue_share": 86.92,
+        "top3_video_revenue_share": 70.24,
+        "restricted_ad_keywords": [],
+        "not_scored": [
+          "demonstration_potential",
+          "visual_transformation",
+          "problem_solution_clarity"
+        ]
+      },
+      "compliance_metrics": {
+        "basis": "keyword_screening",
+        "review": null,
+        "findings": {}
+      },
+      "bvs": 26.59,
+      "bvs_breakdown": {
+        "gross_margin_potential": {
+          "score": 0.0,
+          "max": 25,
+          "status": "N/A",
+          "parts": {
+            "gross_margin": {
+              "points": "N/A",
+              "max": 15,
+              "value": null
+            },
+            "contribution_margin": {
+              "points": "N/A",
+              "max": 10,
+              "value": null
+            }
+          }
+        },
+        "shipping_viability": {
+          "score": 0.0,
+          "max": 15,
+          "status": "N/A",
+          "parts": {
+            "delivery_time": {
+              "points": "N/A",
+              "max": 5,
+              "value": null
+            },
+            "shipping_cost": {
+              "points": "N/A",
+              "max": 4,
+              "value": null
+            },
+            "tracking": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "handling": {
+              "points": "N/A",
+              "max": 4,
+              "reason": "core handling fields unknown"
+            }
+          }
+        },
+        "supplier_viability": {
+          "score": 0.0,
+          "max": 15,
+          "status": "N/A",
+          "parts": {
+            "supplier_count": {
+              "points": "N/A",
+              "max": 3,
+              "value": null
+            },
+            "price_consistency": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "rating": {
+              "points": "N/A",
+              "max": 3,
+              "value": null
+            },
+            "processing_time": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "us_warehouse": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "stock": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "moq": {
+              "points": "N/A",
+              "max": 1,
+              "value": null
+            }
+          }
+        },
+        "competition_opportunity": {
+          "score": 3.2,
+          "max": 15,
+          "status": "partial",
+          "parts": {
+            "tiktok_saturation": {
+              "points": "N/A",
+              "max": 4,
+              "value": null
+            },
+            "amazon_saturation": {
+              "points": 2.0,
+              "max": 4,
+              "s": 0.5,
+              "value": "MODERATE"
+            },
+            "price_compression": {
+              "points": "N/A",
+              "max": 3,
+              "value": "INSUFFICIENT_DATA"
+            },
+            "brand_concentration": {
+              "points": 2.0,
+              "max": 4,
+              "s": 0.5,
+              "value": 45.45
+            }
+          },
+          "demand_factor": 0.8,
+          "demand_basis": "tiktok units_30d 1041"
+        },
+        "return_risk": {
+          "score": 10.0,
+          "max": 10,
+          "status": "full",
+          "basis": "keyword_screening"
+        },
+        "advertising_viability": {
+          "score": 3.39,
+          "max": 10,
+          "status": "full",
+          "parts": {
+            "successful_videos": {
+              "points": 1.39,
+              "max": 3,
+              "s": 0.4621,
+              "value": 84.0
+            },
+            "creator_diversity": {
+              "points": 0.0,
+              "max": 3,
+              "s": 0.0,
+              "value": 86.92
+            },
+            "creative_diversity": {
+              "points": 0.0,
+              "max": 2,
+              "s": 0.0,
+              "value": 70.24
+            },
+            "ad_restriction": {
+              "points": 2.0,
+              "max": 2,
+              "s": 1.0,
+              "keywords": [],
+              "basis": "keyword_screening"
+            }
+          }
+        },
+        "compliance_ip": {
+          "score": 10.0,
+          "max": 10,
+          "status": "full",
+          "basis": "keyword_screening"
+        }
+      },
+      "bvs_confidence": 26.0,
+      "bvs_confidence_level": "VERY_LOW",
+      "bvs_confidence_breakdown": {
+        "supplier_cost": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "shipping_cost": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "delivery_time": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "supplier_data": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "competition_data": {
+          "earned": 6.0,
+          "max": 10,
+          "status": "partial"
+        },
+        "return_risk_evidence": {
+          "earned": 5.0,
+          "max": 10,
+          "status": "partial"
+        },
+        "ad_evidence": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "compliance_evidence": {
+          "earned": 5.0,
+          "max": 10,
+          "status": "partial"
+        }
+      },
+      "bvs_reliability_warning": null,
+      "commercial_red_flags": [
+        {
+          "flag": "INSUFFICIENT_SUPPLIER_DATA",
+          "missing": [
+            "product_cost",
+            "supplier_shipping_cost"
+          ],
+          "severe": true
+        }
+      ],
+      "severe_flag_count": 1,
+      "missing_data": [
+        "contribution_margin_percent",
+        "contribution_profit",
+        "estimated_ad_cost_per_order",
+        "expected_chargeback_cost",
+        "expected_refund_cost",
+        "gross_margin_percent",
+        "gross_profit_before_ads",
+        "import_duty_per_order",
+        "landed_cost",
+        "landed_cost_note",
+        "product_cost",
+        "supplier_shipping_cost"
+      ],
+      "other_scores": {
+        "wps": 62.64,
+        "confidence": 84.83,
+        "avs": 17.5,
+        "amazon_confidence": 34.1
+      },
+      "observation_timestamp": "2026-10-03T05:17:08.851795+00:00",
+      "source": {
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+        "amazon_file": "/root/winning-product-agent/data/production/processed/amazon_validation/amazon_20261003T051708754735Z.json",
+        "commercial_data_file": null,
+        "supplier_provider": "none"
+      },
+      "config_version": "bvs-v1",
+      "selected_supplier_offer_id": null,
+      "supplier_viability": "N/A",
+      "supplier_layer": null,
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T042305Z_519ea0",
+      "calibration_only": false
+    },
+    {
+      "product_id": "1732374506324791819",
+      "product_name": "Microfiber Floor Mop with Bucket System - 360° Rotating Mop Head, 3 Washable Microfiber Heads, 48-61-Inch Adjustable Long Handle, Deep Cleaning House Supplies for Household Items, Home Goods",
+      "selling_price": 42.89,
+      "selling_price_source": "ASSUMPTION: TikTok Shop average price used as our selling price",
+      "economics": {
+        "selling_price": 42.89,
+        "product_cost": "N/A",
+        "supplier_shipping_cost": "N/A",
+        "import_duty_per_order": "N/A",
+        "landed_cost": "N/A",
+        "landed_cost_note": "N/A",
+        "payment_processing_fee": 1.54,
+        "platform_fee": 0.0,
+        "estimated_ad_cost_per_order": "N/A",
+        "expected_refund_cost": "N/A",
+        "expected_chargeback_cost": "N/A",
+        "gross_profit_before_ads": "N/A",
+        "gross_margin_percent": "N/A",
+        "contribution_profit": "N/A",
+        "contribution_margin_percent": "N/A",
+        "selling_price_source": "ASSUMPTION: TikTok Shop average price used as our selling price",
+        "product_cost_source": null
+      },
+      "supplier_metrics": {
+        "supplier_count": null,
+        "price_cv_pct": null,
+        "primary_supplier": null,
+        "rating": null,
+        "processing_days": null,
+        "us_warehouse": null,
+        "stock": null,
+        "moq": null,
+        "orders": null,
+        "warehouse_country": null
+      },
+      "shipping_metrics": {
+        "delivery_days_max": null,
+        "tracking_available": null,
+        "supplier_shipping_cost": null,
+        "shipping_cost_pct_of_price": null,
+        "fragile": null,
+        "contains_battery": null,
+        "contains_liquid": null,
+        "oversized": null,
+        "special_handling": null,
+        "customs_risk": null,
+        "longest_side_cm": null,
+        "weight_kg": null
+      },
+      "competition_metrics": {
+        "similar_listings_count": null,
+        "amazon_competition": "HIGH",
+        "price_alignment": "INSUFFICIENT_DATA",
+        "amazon_top3_brand_share_pct": 100.0,
+        "cross_platform_demand": "INSUFFICIENT_DATA",
+        "tiktok_units_30d": 2402.0,
+        "demand_factor": 1.0,
+        "demand_basis": "tiktok units_30d 2402"
+      },
+      "return_risk_metrics": {
+        "actual_refund_rate_pct": null,
+        "characteristics": {},
+        "risk_sum": 0,
+        "basis": "keyword_screening"
+      },
+      "advertising_metrics": {
+        "videos": 81.0,
+        "top3_creator_revenue_share": 65.36,
+        "top3_video_revenue_share": 37.55,
+        "restricted_ad_keywords": [],
+        "not_scored": [
+          "demonstration_potential",
+          "visual_transformation",
+          "problem_solution_clarity"
+        ]
+      },
+      "compliance_metrics": {
+        "basis": "keyword_screening",
+        "review": null,
+        "findings": {}
+      },
+      "bvs": 25.46,
+      "bvs_breakdown": {
+        "gross_margin_potential": {
+          "score": 0.0,
+          "max": 25,
+          "status": "N/A",
+          "parts": {
+            "gross_margin": {
+              "points": "N/A",
+              "max": 15,
+              "value": null
+            },
+            "contribution_margin": {
+              "points": "N/A",
+              "max": 10,
+              "value": null
+            }
+          }
+        },
+        "shipping_viability": {
+          "score": 0.0,
+          "max": 15,
+          "status": "N/A",
+          "parts": {
+            "delivery_time": {
+              "points": "N/A",
+              "max": 5,
+              "value": null
+            },
+            "shipping_cost": {
+              "points": "N/A",
+              "max": 4,
+              "value": null
+            },
+            "tracking": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "handling": {
+              "points": "N/A",
+              "max": 4,
+              "reason": "core handling fields unknown"
+            }
+          }
+        },
+        "supplier_viability": {
+          "score": 0.0,
+          "max": 15,
+          "status": "N/A",
+          "parts": {
+            "supplier_count": {
+              "points": "N/A",
+              "max": 3,
+              "value": null
+            },
+            "price_consistency": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "rating": {
+              "points": "N/A",
+              "max": 3,
+              "value": null
+            },
+            "processing_time": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "us_warehouse": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "stock": {
+              "points": "N/A",
+              "max": 2,
+              "value": null
+            },
+            "moq": {
+              "points": "N/A",
+              "max": 1,
+              "value": null
+            }
+          }
+        },
+        "competition_opportunity": {
+          "score": 0.0,
+          "max": 15,
+          "status": "partial",
+          "parts": {
+            "tiktok_saturation": {
+              "points": "N/A",
+              "max": 4,
+              "value": null
+            },
+            "amazon_saturation": {
+              "points": 0.0,
+              "max": 4,
+              "s": 0.0,
+              "value": "HIGH"
+            },
+            "price_compression": {
+              "points": "N/A",
+              "max": 3,
+              "value": "INSUFFICIENT_DATA"
+            },
+            "brand_concentration": {
+              "points": 0.0,
+              "max": 4,
+              "s": 0.0,
+              "value": 100.0
+            }
+          },
+          "demand_factor": 1.0,
+          "demand_basis": "tiktok units_30d 2402"
+        },
+        "return_risk": {
+          "score": 10.0,
+          "max": 10,
+          "status": "full",
+          "basis": "keyword_screening"
+        },
+        "advertising_viability": {
+          "score": 5.46,
+          "max": 10,
+          "status": "full",
+          "parts": {
+            "successful_videos": {
+              "points": 1.36,
+              "max": 3,
+              "s": 0.4542,
+              "value": 81.0
+            },
+            "creator_diversity": {
+              "points": 0.9,
+              "max": 3,
+              "s": 0.3,
+              "value": 65.36
+            },
+            "creative_diversity": {
+              "points": 1.2,
+              "max": 2,
+              "s": 0.6,
+              "value": 37.55
+            },
+            "ad_restriction": {
+              "points": 2.0,
+              "max": 2,
+              "s": 1.0,
+              "keywords": [],
+              "basis": "keyword_screening"
+            }
+          }
+        },
+        "compliance_ip": {
+          "score": 10.0,
+          "max": 10,
+          "status": "full",
+          "basis": "keyword_screening"
+        }
+      },
+      "bvs_confidence": 26.0,
+      "bvs_confidence_level": "VERY_LOW",
+      "bvs_confidence_breakdown": {
+        "supplier_cost": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "shipping_cost": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "delivery_time": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "supplier_data": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "competition_data": {
+          "earned": 6.0,
+          "max": 10,
+          "status": "partial"
+        },
+        "return_risk_evidence": {
+          "earned": 5.0,
+          "max": 10,
+          "status": "partial"
+        },
+        "ad_evidence": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "compliance_evidence": {
+          "earned": 5.0,
+          "max": 10,
+          "status": "partial"
+        }
+      },
+      "bvs_reliability_warning": null,
+      "commercial_red_flags": [
+        {
+          "flag": "EXTREME_COMPETITION",
+          "similar_listings_count": null,
+          "amazon_competition": "HIGH",
+          "severe": true
+        },
+        {
+          "flag": "INSUFFICIENT_SUPPLIER_DATA",
+          "missing": [
+            "product_cost",
+            "supplier_shipping_cost"
+          ],
+          "severe": true
+        }
+      ],
+      "severe_flag_count": 2,
+      "missing_data": [
+        "contribution_margin_percent",
+        "contribution_profit",
+        "estimated_ad_cost_per_order",
+        "expected_chargeback_cost",
+        "expected_refund_cost",
+        "gross_margin_percent",
+        "gross_profit_before_ads",
+        "import_duty_per_order",
+        "landed_cost",
+        "landed_cost_note",
+        "product_cost",
+        "supplier_shipping_cost"
+      ],
+      "other_scores": {
+        "wps": 62.53,
+        "confidence": 88.17,
+        "avs": 0.0,
+        "amazon_confidence": 38.89
+      },
+      "observation_timestamp": "2026-10-03T05:17:08.853023+00:00",
+      "source": {
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+        "amazon_file": "/root/winning-product-agent/data/production/processed/amazon_validation/amazon_20261003T051708754735Z.json",
+        "commercial_data_file": null,
+        "supplier_provider": "none"
+      },
+      "config_version": "bvs-v1",
+      "selected_supplier_offer_id": null,
+      "supplier_viability": "N/A",
+      "supplier_layer": null,
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T042305Z_519ea0",
+      "calibration_only": false
+    }
+  ],
+  "run_id": "20261003T042305Z_519ea0",
+  "data_environment": "PRODUCTION"
+}

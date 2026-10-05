@@ -1,0 +1,106 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 27.89,
+    "gmv": 183852.05,
+    "units": 8005,
+    "growth": 379.42,
+    "creator_count": 262,
+    "selling_creator_count": 125,
+    "video_count": 493,
+    "selling_video_count": 241,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 601
+  },
+  "concentration": {
+    "top_creator_revenue_share": 54.54,
+    "top_video_revenue_share": 39.3
+  },
+  "scores": {
+    "wps": 65.28,
+    "confidence": 87.33
+  },
+  "amazon": {
+    "avs": 55.7,
+    "amazon_confidence": 89.0,
+    "amazon_match_confidence": 63.33,
+    "amazon_price": 24.99,
+    "amazon_competition": "HIGH",
+    "observation_timestamp": "2026-10-03T05:13:01.388158+00:00"
+  },
+  "business": {
+    "bvs": 26.67,
+    "bvs_confidence": 28.0,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": "2026-10-03T05:17:08.850694+00:00"
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [
+      "EXTREME_COMPETITION",
+      "SIZE_DEPENDENT",
+      "SUPPLIER_DATA_INCOMPLETE",
+      "INSUFFICIENT_SUPPLIER_DATA"
+    ],
+    "amazon_red_flags": [
+      "AMAZON_HIGH_SATURATION",
+      "AMAZON_DOMINATED_BY_MAJOR_BRANDS"
+    ]
+  },
+  "missing_data": [
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history",
+    "economics:contribution_margin_percent",
+    "economics:contribution_profit",
+    "economics:estimated_ad_cost_per_order",
+    "economics:expected_chargeback_cost",
+    "economics:expected_refund_cost",
+    "economics:gross_margin_percent",
+    "economics:gross_profit_before_ads",
+    "economics:import_duty_per_order",
+    "economics:landed_cost",
+    "economics:landed_cost_note",
+    "economics:product_cost",
+    "economics:supplier_shipping_cost"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T050823223311Z_1732294732712743843_deep_product.json",
+    "task_id": "dd1f37e83e3240eca74c6e574b327420",
+    "report_url": null,
+    "amazon_raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T051301388158Z_1732294732712743843_amazon_match.json",
+    "amazon_processed_file": null,
+    "bvs_processed_file": null,
+    "commercial_data_file": "supplier_layer:/root/winning-product-agent/data/production/processed/suppliers"
+  },
+  "product_id": "1732294732712743843",
+  "identity_key": "1732294732712743843",
+  "key_type": "product_id",
+  "product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+  "category": "Kitchenware > Kitchen Utensils & Gadgets > Sieves and Colanders",
+  "shop": "Gevoli",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T05:08:23.223311+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-03T05:08:23.223311+00:00",
+  "source_snapshot_hash": "dd863fdacd5c02a2112182c7ce00cb0d716d594213adeced2126b9cc3a8b2062",
+  "run_id": "20261003T042305Z_519ea0",
+  "written_at": "2026-10-03T05:17:09.254045+00:00",
+  "imported_at": "2026-10-03T05:17:09.254045+00:00"
+}

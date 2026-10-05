@@ -1,0 +1,6 @@
+{
+  "note": "Owner approved (2026-10-03): deep-analysis order by preliminary score alone. Replay of the beauty run (20 analyzed, 10 qualified): the run's order (sustained 90-day growth first) reached the 10th qualifier at analysis 22; score-only order reaches 9 in the first 10 and all 10 by 15 (about 25 credits less). One run, one category, in-sample: the home & kitchen run is the clean test. Formula, filters and thresholds unchanged.",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.deep_selection", "value": "preliminary_only", "reason": "spend deep analyses on the highest preliminary scores first"}
+  ]
+}

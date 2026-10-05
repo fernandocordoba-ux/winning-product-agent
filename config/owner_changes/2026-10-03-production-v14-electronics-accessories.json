@@ -1,0 +1,26 @@
+{
+  "note": "Owner (2026-10-03): 'make the adjustments you suggest for the next run; credits recharged; do it in electronics'. Lessons from home & kitchen (21 products from 4 queries, 7 candidates): sub-niches were too narrow because the exclusions were written into the question. Now: 6 broad sub-niches of electronics ACCESSORIES (not devices), exclusions applied afterwards by the program (batteries / power banks, chargers and mains power, medical-claim devices, surveillance, certification-heavy devices), and one automatic retry for answers the provider returns empty. Numeric filters, formula, thresholds, preliminary floor 32 and score-only order unchanged. Cap fits the balance (126.39 - 5 reserve): 6 x 4.0 + 22 x 3.6 = 103.2, Amazon only if credits remain.",
+  "changes": [
+    {"file": "runtime.yaml", "path": "query_plan.discovery_categories", "value": ["electronics_accessories"], "reason": "owner: electronics run"},
+    {"file": "runtime.yaml", "path": "query_plan.discovery_subniches", "value": {"electronics_accessories": [
+      "phone cases, covers and screen protectors",
+      "phone holders, mounts, stands and grips",
+      "headphone and earbud accessories",
+      "computer, laptop and tablet accessories",
+      "camera and content-creation accessories",
+      "gaming accessories"]}, "reason": "6 broad sub-niches; no exclusion clauses in the question"},
+    {"file": "runtime.yaml", "path": "query_plan.deep_exclude_operational", "value": [
+      "power bank", "battery", "batteries", "charger", "charging", "wall plug", "power strip", "surge protector",
+      "extension cord", "rechargeable", "bluetooth", "wireless earbuds", "speaker", "smart watch", "smartwatch",
+      "projector", "drone", "security camera", "spy", "hidden camera", "tracker", "gps", "baby monitor",
+      "hearing", "tens", "massager", "therapy", "blood pressure", "thermometer", "vape"],
+     "reason": "owner exclusions applied by the program after discovery"},
+    {"file": "runtime.yaml", "path": "query_plan.deep_retry_empty_answers", "value": 1, "reason": "empty provider answers cost 0.44; ask once more"},
+    {"file": "runtime.yaml", "path": "limits.deep_analysis_max_products", "value": 22, "reason": "about 20 analyses are needed for 10 candidates at the observed hit rate"},
+    {"file": "runtime.yaml", "path": "e2e.final_decision_max_products", "value": 22, "reason": "must cover the deep limit"},
+    {"file": "runtime.yaml", "path": "query_plan.max_credits_for_run", "value": 110, "reason": "balance 126.39 - reserve 5, with room left"},
+    {"file": "runtime.yaml", "path": "credit_safety.max_credits_for_run", "value": 110, "reason": "mirror"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_queries_per_run", "value": 33, "reason": "6 discovery + 22 deep + 3 retries + 2 Amazon"},
+    {"file": "runtime.yaml", "path": "query_plan.guardrails.max_provider_queries.kalopilot", "value": 33, "reason": "same"}
+  ]
+}

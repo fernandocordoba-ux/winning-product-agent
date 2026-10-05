@@ -1,0 +1,86 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 39.97,
+    "gmv": 51262,
+    "units": 1496,
+    "growth": null,
+    "creator_count": 50,
+    "selling_creator_count": null,
+    "video_count": 177,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "low_base_or_seasonal",
+      "missing_optional_data"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "growth_30d",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T113521Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T110637Z_electronics_accessories_c962dad41676457099a440d9548a7052.json",
+    "task_id": "c962dad41676457099a440d9548a7052",
+    "report_url": null,
+    "record_index": 2
+  },
+  "product_id": "1732510313971159444",
+  "identity_key": "1732510313971159444",
+  "key_type": "product_id",
+  "product_name": "【Limited Time Event】True Wireless Noise Reduction Earphones - Lightweight Noi...",
+  "category": null,
+  "shop": "Rudai Trading",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T11:06:37+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "REVIEW",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-03T11:06:37+00:00",
+  "source_snapshot_hash": "cbbc76e0e969ab00205e682b080218308423643f089b5861ca1b2b1af0b2e14e",
+  "run_id": "20261003T105009Z_351269",
+  "written_at": "2026-10-03T11:46:40.408339+00:00",
+  "imported_at": "2026-10-03T11:46:40.408339+00:00"
+}

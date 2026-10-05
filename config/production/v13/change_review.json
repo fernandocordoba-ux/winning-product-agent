@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-10-03T04:21:22.653178+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v12",
+  "note": "Owner (2026-10-03): 'if the run fails, fix the failures, calibrate and retry, reusing the data already paid for'. Run 20261003T032125Z_33ac62 stopped PARTIAL after 2 deep answers came back EMPTY (provider cut them at its 8,001 output-token limit; 0.44 credits each; same pattern as 1 of 22 in the beauty run). Fixes: (1) empty paid answers are no longer treated as cache hits, so those products are asked again; (2) the failed-answer cap goes from 2 to 5 because these failures are cheap and random; (3) products with a preliminary score under 32 are not deep-analyzed: in both production runs no product under 33 qualified (beauty: 7 of 7 under 33 did not; home/kitchen: preliminary 39.0 -> WPS 43.5). Small sample, to be re-checked each run. Credit cap fits the balance (56.76 - 5 reserve). Formula, filters and thresholds unchanged; discovery and the 5 completed analyses are reused from cache.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.guardrails.max_failed_queries",
+      "current_value": 2,
+      "proposed_value": 5,
+      "reason": "empty answers cost 0.44 and are random; do not abort the run on 2",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T04:25Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.deep_min_preliminary",
+      "current_value": null,
+      "proposed_value": 32,
+      "reason": "do not buy analyses that have not qualified in any run so far",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T04:25Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.max_credits_for_run",
+      "current_value": 82,
+      "proposed_value": 51,
+      "reason": "balance 56.76 - reserve 5",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T04:25Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    },
+    {
+      "file": "runtime.yaml",
+      "path": "credit_safety.max_credits_for_run",
+      "current_value": 82,
+      "proposed_value": 51,
+      "reason": "mirror",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T04:25Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 4,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

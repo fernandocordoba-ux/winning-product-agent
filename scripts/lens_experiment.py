@@ -44,7 +44,8 @@ def templates(path=ROOT / "prompts" / "discovery_lenses.md"):
 
 
 def build_queries(categories=DEFAULT_CATEGORIES, lenses=LENSES, limit=15, subniches=None):
-    """subniches: optional list of focus phrases (one query per lens x sub-niche, same category)."""
+    """subniches: optional focus phrases, one query per lens x sub-niche. A list applies to every category;
+    a dict {category_key: [phrases]} gives each category its own."""
     with CR.active(__import__("promotion").active_dir(ROOT)):
         filters, cats = D.load_yaml("filters.yaml"), D.load_yaml("categories.yaml")
     t = templates()
@@ -53,7 +54,8 @@ def build_queries(categories=DEFAULT_CATEGORIES, lenses=LENSES, limit=15, subnic
     for key in categories:
         c = next(x for x in cats["categories"] if x["key"] == key)
         for lens in lenses:
-          for sn in (subniches or [None]):
+          # a dict gives each category its own sub-niches; a list applies to every category
+          for sn in ((subniches.get(key) if isinstance(subniches, dict) else subniches) or [None]):
             name = f'{c["name"]}" — focus only on this sub-niche: "{sn}' if sn else c["name"]
             q = t[lens].format(region=m["region"], currency=m["currency"], limit=limit, category_name=name,
                                kalodata_match=", ".join(c.get("kalodata_match") or [c["name"]]),

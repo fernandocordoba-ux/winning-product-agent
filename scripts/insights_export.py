@@ -373,8 +373,99 @@ def font_faces(root=ROOT):
     return "\n".join(css)
 
 
+CAND_KEEP = ("product_id", "product_name", "category", "lens", "price_min", "price_max", "revenue_61_90d",
+             "revenue_31_60d", "revenue_last_30d", "units_30d", "creators", "videos", "filter_status",
+             "filter_reasons", "preliminary_score", "sustained_growth_90d", "deep_analyzed", "wps", "decision",
+             "amazon", "supplier_estimate", "product_url", "wps_floor", "wps_coverage_pct",
+             "avg_order_value_proxy", "price_vs_aov_flag")
+
+
+def extras(root=ROOT):
+    """Funnel of every production run + the full candidate list of the latest run (free, saved data only)."""
+    out = {"funnel": [], "candidates": []}
+    try:
+        import funnel_report as FR
+        out["funnel"] = [FR.funnel(root, m, d) for m, d in FR._runs(root)]
+        out["recommendations"] = FR.recommendations(out["funnel"]) if out["funnel"] else []
+    except Exception:  # noqa: BLE001 — the page still renders without these sections
+        pass
+    try:
+        import candidates_report as CRP
+        _, rows = CRP.collect(root)
+        out["candidates"] = [{k: r.get(k) for k in CAND_KEEP} for r in rows]
+    except Exception:  # noqa: BLE001
+        pass
+    return out
+
+
+GROUPS = (("Belleza", ("Beauty & Personal Care",)),
+          ("Hogar y cocina", ("Kitchenware", "Home Supplies", "Household Appliances", "Furniture")),
+          ("Electrónica", ("Phones & Electronics", "Computers & Office Equipment")))
+
+
+def group_of(category):
+    top = (category or "").split(">")[0].strip()
+    for name, tops in GROUPS:
+        if top in tops:
+            return name
+    return "Otras" if top else None
+
+
+def all_runs(root=ROOT):
+    """Products and candidates of EVERY production run that reached a decision (free, saved data only), each tagged
+    with its run and category group. A product seen in several runs keeps its most recent appearance."""
+    import final_validation as FV
+    import candidates_report as CRP
+    runs = root / "runs" / "production"
+    manifests = [(json.loads(mf.read_text()), mf.parent) for mf in sorted(runs.glob("*/manifest.json"))] if runs.exists() else []
+    prods, cands, run_group = {}, {}, {}
+    orig = FV.latest_production_run
+    try:
+        for m, d in manifests:
+            if m.get("mode") != "LIVE" or not (m.get("outputs") or {}).get("final_decision_json"):
+                continue
+            for r, _ in manifests:                               # newest free rebuild of this run wins
+                if r.get("report_only_source_run") == m["run_id"] and (r.get("outputs") or {}).get("final_decision_json"):
+                    m = {**m, "outputs": {**m["outputs"], "final_decision_json": r["outputs"]["final_decision_json"]}}
+            FV.latest_production_run = lambda *a, _m=m, _d=d, **k: (_m, _d)
+            try:
+                run_p = build(root, with_balance=False)["products"]
+                _, rows = CRP.collect(root)
+            except Exception:  # noqa: BLE001 - one unreadable run never hides the others
+                continue
+            tally = {}
+            for r in rows:
+                g = group_of(r.get("category"))
+                tally[g] = tally.get(g, 0) + 1
+                cands[str(r.get("product_id"))] = {**{k: r.get(k) for k in CAND_KEEP}, "group": g, "run_id": m["run_id"]}
+            for x in run_p:
+                prods[x["id"]] = {**x, "group": group_of(x.get("category")), "run_id": m["run_id"]}
+            tally.pop(None, None)
+            rg = run_group[m["run_id"]] = max(tally, key=tally.get) if tally else None
+            named = {g for g, _ in GROUPS}
+            fix = lambda g: g if g in named else (rg if rg in named else "Otras")  # noqa: E731 - category N/A -> its run's
+            for store in (cands, prods):
+                for v in store.values():
+                    if v["run_id"] == m["run_id"]:
+                        v["group"] = fix(v["group"])
+    finally:
+        FV.latest_production_run = orig
+    return list(prods.values()), list(cands.values()), run_group
+
+
 def write(root=ROOT, template=None, out_dir=None, with_balance=True):
     data = build(root, with_balance=with_balance)
+    data.update(extras(root))
+    try:
+        ps, cs, rg = all_runs(root)
+        if ps or cs:
+            data["products"], data["candidates"] = ps, cs
+            data["source_label"] = f"Todas las corridas de producción ({len(rg)}), por categoría"
+            for f in data.get("funnel") or []:
+                f["group"] = rg.get(f.get("run_id"))
+            data["groups"] = [g for g, _ in GROUPS + (("Otras", ()),) if any(c.get("group") == g for c in cs)]
+    except Exception:  # noqa: BLE001 - fall back to the latest-run view
+        pass
     out = Path(out_dir or root / "reports" / "insights")
     out.mkdir(parents=True, exist_ok=True)
     (out / "insights.json").write_text(json.dumps(data, ensure_ascii=False, indent=2, default=str))

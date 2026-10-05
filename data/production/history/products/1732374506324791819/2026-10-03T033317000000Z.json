@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 42.89,
+    "gmv": 72270,
+    "units": 2402,
+    "growth": 52.25,
+    "creator_count": 160,
+    "selling_creator_count": null,
+    "video_count": 411,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T034233Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+    "task_id": "da91d238653d4166bad9708483f982d2",
+    "report_url": null,
+    "record_index": 2
+  },
+  "product_id": "1732374506324791819",
+  "identity_key": "1732374506324791819",
+  "key_type": "product_id",
+  "product_name": "Microfiber Floor Mop with Bucket System - 360° Rotating Mop Head, 3 Washable ...",
+  "category": null,
+  "shop": "YILINLIUSE",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T03:33:17+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T03:33:17+00:00",
+  "source_snapshot_hash": "61cb0d2dbea80072e476bffe029444965ac07ae6b8e599ec3915bc999203fd97",
+  "run_id": "20261003T032125Z_33ac62",
+  "written_at": "2026-10-03T04:13:27.013859+00:00",
+  "imported_at": "2026-10-03T04:13:27.013859+00:00"
+}

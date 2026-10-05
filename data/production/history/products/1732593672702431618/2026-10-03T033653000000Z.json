@@ -1,0 +1,87 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 16.490000000000002,
+    "gmv": 60909,
+    "units": 2540,
+    "growth": null,
+    "creator_count": 66,
+    "selling_creator_count": null,
+    "video_count": 80,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "low_base_or_seasonal",
+      "missing_optional_data",
+      "price_range"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "growth_30d",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T034233Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033653Z_kitchen_a022f0852ad64fda859209a17872d925.json",
+    "task_id": "a022f0852ad64fda859209a17872d925",
+    "report_url": null,
+    "record_index": 3
+  },
+  "product_id": "1732593672702431618",
+  "identity_key": "1732593672702431618",
+  "key_type": "product_id",
+  "product_name": "2-Count Stainless Steel Oil Separator Ladle - Mirror Polished, Ergonomic...",
+  "category": null,
+  "shop": "enhetk",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T03:36:53+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "FAIL",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T03:36:53+00:00",
+  "source_snapshot_hash": "34a61850d81ce3c3dbf8ffc5952ed484897d286526c438456f5ac36468e4c536",
+  "run_id": "20261003T032125Z_33ac62",
+  "written_at": "2026-10-03T04:13:27.018312+00:00",
+  "imported_at": "2026-10-03T04:13:27.018312+00:00"
+}

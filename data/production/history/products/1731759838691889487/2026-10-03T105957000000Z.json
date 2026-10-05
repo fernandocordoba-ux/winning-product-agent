@@ -1,0 +1,82 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 41.98,
+    "gmv": 48281.42,
+    "units": 2234,
+    "growth": 76.51,
+    "creator_count": 184,
+    "selling_creator_count": null,
+    "video_count": 301,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T113521Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T105957Z_electronics_accessories_32a397b032ca4bedb1a5f1c27f463c09.json",
+    "task_id": "32a397b032ca4bedb1a5f1c27f463c09",
+    "report_url": null,
+    "record_index": 1
+  },
+  "product_id": "1731759838691889487",
+  "identity_key": "1731759838691889487",
+  "key_type": "product_id",
+  "product_name": "5-in-1 Wireless Speaker with Phone Holder, 3500mAh Power Bank, RGB Light",
+  "category": null,
+  "shop": "PUTARE",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T10:59:57+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "PASS",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T10:59:57+00:00",
+  "source_snapshot_hash": "68f37eb467aedcfb5420eaa4b83a64bd989e34a2b0dc44995ce8744c93fb9826",
+  "run_id": "20261003T105009Z_351269",
+  "written_at": "2026-10-03T11:46:40.406266+00:00",
+  "imported_at": "2026-10-03T11:46:40.406266+00:00"
+}

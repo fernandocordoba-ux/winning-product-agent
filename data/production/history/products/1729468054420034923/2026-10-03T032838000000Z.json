@@ -1,0 +1,84 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 37.98,
+    "gmv": 28427,
+    "units": 1390,
+    "growth": 17.47,
+    "creator_count": 431,
+    "selling_creator_count": null,
+    "video_count": 641,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "growth_30d_below_preferred"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T034233Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T032838Z_home_d015188395004aada66fa106a3d5d6ff.json",
+    "task_id": "d015188395004aada66fa106a3d5d6ff",
+    "report_url": null,
+    "record_index": 1
+  },
+  "product_id": "1729468054420034923",
+  "identity_key": "1729468054420034923",
+  "key_type": "product_id",
+  "product_name": "【Holiday Deals】San Dream Magnetic Shelf for Fridge Spice Rack Organizer…",
+  "category": null,
+  "shop": "San Dream Home",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T03:28:38+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "REVIEW",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-03T03:28:38+00:00",
+  "source_snapshot_hash": "58dd4931d8c9edc912522c390f7a44e1dca26ebce9463b0063ae9deca1bca86f",
+  "run_id": "20261003T032125Z_33ac62",
+  "written_at": "2026-10-03T04:13:27.015671+00:00",
+  "imported_at": "2026-10-03T04:13:27.015671+00:00"
+}

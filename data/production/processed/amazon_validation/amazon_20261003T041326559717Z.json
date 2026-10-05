@@ -1,0 +1,23 @@
+{
+  "mode": "live",
+  "run_id": "20261003T032125Z_33ac62",
+  "data_environment": "PRODUCTION",
+  "deep_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T041326494398Z.json",
+  "eligible": 2,
+  "excluded": [
+    {
+      "product_id": "1732428031799693932",
+      "reason": "WPS 54.37 < 55"
+    },
+    {
+      "product_id": "1732316761469850306",
+      "reason": "WPS 50.39 < 55"
+    },
+    {
+      "product_id": "1732394478406832933",
+      "reason": "WPS 43.54 < 55"
+    }
+  ],
+  "stopped": "max_failed_queries 2 reached",
+  "results": []
+}

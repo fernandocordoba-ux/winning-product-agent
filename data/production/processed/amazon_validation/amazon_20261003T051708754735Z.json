@@ -1,0 +1,618 @@
+{
+  "mode": "live",
+  "run_id": "20261003T042305Z_519ea0",
+  "data_environment": "PRODUCTION",
+  "deep_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+  "eligible": 3,
+  "excluded": [
+    {
+      "product_id": "1732428031799693932",
+      "reason": "WPS 54.37 < 55"
+    },
+    {
+      "product_id": "1732316761469850306",
+      "reason": "WPS 50.39 < 55"
+    },
+    {
+      "product_id": "1732394478406832933",
+      "reason": "WPS 43.54 < 55"
+    },
+    {
+      "product_id": "1732071484583022634",
+      "reason": "WPS 48.84 < 55"
+    },
+    {
+      "product_id": "1732112508660716356",
+      "reason": "WPS 48.88 < 55"
+    },
+    {
+      "product_id": "1730245148308116335",
+      "reason": "WPS 42.16 < 55"
+    },
+    {
+      "product_id": "1732399018847932988",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1730722553101979953",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1729625334552039750",
+      "reason": "over max_products (3)"
+    },
+    {
+      "product_id": "1729386633884898245",
+      "reason": "over max_products (3)"
+    }
+  ],
+  "stopped": null,
+  "results": [
+    {
+      "product_id": "1732294732712743843",
+      "tiktok_product_name": "Gevoli Collapsible Colanders 3-Pack Sturdy Kitchen Strainer Set, Compact with Over-Sink Self-Drainage Base, 3 Sizes (3QT, 4QT, 5QT) for Dinner Prep (Patent Pending, White)",
+      "observation_timestamp": "2026-10-03T05:13:01.388158+00:00",
+      "market": "US",
+      "source": {
+        "provider": "kalopilot",
+        "raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T051301388158Z_1732294732712743843_amazon_match.json",
+        "task_id": "86899d693461478c99fe575608162aaf",
+        "report_url": null,
+        "query_type": "amazon_match",
+        "cache_hit": false,
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json"
+      },
+      "tiktok_scores": {
+        "wps": 65.28,
+        "confidence": 87.33
+      },
+      "status": "ok",
+      "amazon_match_name": "Gevoli Collapsible Colanders (3 Pack Set) Food Strainers with Over-Sink Water Draining Base for Pasta Fruits and Vegetables (Patent Pending) White (3 Sizes, 3QT, 4QT and 5 Quart)",
+      "amazon_url": "https://www.amazon.com/dp/B0DSLZHBPC",
+      "amazon_asin": "B0DSLZHBPC",
+      "amazon_brand": "Gevoli",
+      "amazon_match_confidence": 63.33,
+      "amazon_match_class": "POSSIBLE",
+      "amazon_match_status": "MATCHED",
+      "amazon_match_detail": {
+        "name_similarity": {
+          "overlap": 0.55,
+          "s": 0.5833333333333333
+        },
+        "brand": {
+          "tiktok": null,
+          "amazon": "gevoli",
+          "s": 0.0
+        },
+        "category": {
+          "overlap": 0.6667,
+          "s": 1.0
+        },
+        "variant_attributes": {
+          "tiktok": [
+            "3pack",
+            "3qt",
+            "4qt",
+            "5qt"
+          ],
+          "s": 1.0
+        }
+      },
+      "amazon_price": 24.99,
+      "amazon_category": "Home & Kitchen > Kitchen & Dining > Kitchen Utensils & Gadgets > Colanders & Food Strainers > Colanders",
+      "amazon_rating": 4.8,
+      "amazon_review_count": 2018,
+      "amazon_bsr": 223,
+      "amazon_bsr_category": "Colanders",
+      "amazon_sales_indicator": {
+        "monthly_sales_estimate": 6000,
+        "source": "KaloData Amazon US database, last-30-day monthly sales estimate (queried 2026-10-03)"
+      },
+      "amazon_listing_date": "2025-01-09",
+      "amazon_competitor_count": 5,
+      "amazon_price_range": {
+        "min": 9.99,
+        "max": 24.99
+      },
+      "amazon_top3_brand_share_pct": 60.0,
+      "amazon_recent_trend": "growing",
+      "amazon_presence": "YES",
+      "amazon_demand_strength": 0.9343,
+      "amazon_demand_signals": {
+        "review_count": 0.803,
+        "bsr": 1.0,
+        "monthly_sales_estimate": 1.0
+      },
+      "price_ratio": 0.8960200788813194,
+      "cross_platform_demand": "STRONG",
+      "amazon_competition": "HIGH",
+      "price_alignment": "GOOD",
+      "cross_platform_consistency": 0.0,
+      "avs": 55.7,
+      "avs_breakdown": {
+        "amazon_demand_evidence": {
+          "points": 28.03,
+          "max": 30,
+          "status": "full",
+          "missing_signals": []
+        },
+        "match_confidence": {
+          "points": 12.67,
+          "max": 20,
+          "status": "full"
+        },
+        "competition_opportunity": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "price_alignment": {
+          "points": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "cross_platform_consistency": {
+          "points": 0.0,
+          "max": 15,
+          "status": "full"
+        }
+      },
+      "amazon_confidence": 89.0,
+      "amazon_confidence_level": "HIGH",
+      "amazon_confidence_breakdown": {
+        "match_confidence": {
+          "earned": 19.0,
+          "max": 30,
+          "status": "partial"
+        },
+        "price": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "rating_reviews": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "ranking_demand": {
+          "earned": 20.0,
+          "max": 20,
+          "status": "full"
+        },
+        "comparable_listings": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "title": "3 Pack 18/8 Stainless Steel Colander Sieves(5-Quart, 4-Quart and 3-Quart), Mesh Strainer Net Baskets with Handles & Resting Base for Strain, Drain, Rinse or Steam",
+          "url": "https://www.amazon.com/dp/B095P14H7D"
+        },
+        {
+          "title": "Gulex Colander Stainless Steel 3-Quart, Strainer Kitchen, Dishwasher Safe",
+          "url": "https://www.amazon.com/dp/B0BKRQQNPS"
+        },
+        {
+          "title": "Colander for Kitchen, 3QT, Stainless Steel Colander Strainer with Handle for Fruits Vegetables Cooking Food, Dishwasher Safe",
+          "url": "https://www.amazon.com/dp/B0CQ8Q9ZV4"
+        },
+        {
+          "title": "Freshmage Fruit Storage Containers for Fridge with Removable Colander 4 PCS",
+          "url": "https://www.amazon.com/dp/B0BY1PBQRD"
+        }
+      ],
+      "search_sources": [
+        "KaloData Amazon US database, product rank: 'collapsible colander' (380 matching listings), 'over sink colander' (217), 'silicone collapsible colander' (366); last-30-day window, queried 2026-10-03",
+        "Amazon.com product pages via https://www.amazon.com/dp/{asin} (KaloData-verified ASINs)"
+      ],
+      "parse_warnings": [],
+      "config_version": "amazon-validation-v1",
+      "missing_data": [],
+      "amazon_red_flags": [
+        {
+          "flag": "AMAZON_HIGH_SATURATION"
+        },
+        {
+          "flag": "AMAZON_DOMINATED_BY_MAJOR_BRANDS",
+          "top3_brand_share_pct": 60.0
+        }
+      ],
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T042305Z_519ea0",
+      "calibration_only": false
+    },
+    {
+      "product_id": "1729459283880612691",
+      "tiktok_product_name": "7CODE 10-Pack Foldable Organizer Storage Plastic Bins, Stackable Drawer Baskets for Drawer Organization & Kitchen Pantry, Ideal for Dorm Hacks to Fold, Stack, and Organize Wardrobe Closets",
+      "observation_timestamp": "2026-10-03T05:13:01.388158+00:00",
+      "market": "US",
+      "source": {
+        "provider": "kalopilot",
+        "raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T051301388158Z_1729459283880612691_amazon_match.json",
+        "task_id": "86899d693461478c99fe575608162aaf",
+        "report_url": null,
+        "query_type": "amazon_match",
+        "cache_hit": false,
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json"
+      },
+      "tiktok_scores": {
+        "wps": 62.64,
+        "confidence": 84.83
+      },
+      "status": "ok",
+      "amazon_match_name": null,
+      "amazon_url": null,
+      "amazon_asin": null,
+      "amazon_brand": null,
+      "amazon_match_confidence": 30.33,
+      "amazon_match_class": "UNRELIABLE",
+      "amazon_match_status": "NO_RELIABLE_MATCH",
+      "amazon_match_detail": {
+        "name_similarity": {
+          "overlap": 0.625,
+          "s": 0.7083333333333333
+        },
+        "brand": {
+          "tiktok": null,
+          "amazon": "vtopmart",
+          "s": 0.0
+        },
+        "category": {
+          "overlap": 0.1667,
+          "s": 0.1333333333333333
+        },
+        "variant_attributes": {
+          "tiktok": [
+            "10pack"
+          ],
+          "s": 0.0
+        }
+      },
+      "amazon_price": null,
+      "amazon_category": null,
+      "amazon_rating": null,
+      "amazon_review_count": null,
+      "amazon_bsr": null,
+      "amazon_bsr_category": null,
+      "amazon_sales_indicator": {
+        "monthly_sales_estimate": null,
+        "source": null
+      },
+      "amazon_listing_date": null,
+      "amazon_competitor_count": 11,
+      "amazon_price_range": {
+        "min": 9.99,
+        "max": 39.99
+      },
+      "amazon_top3_brand_share_pct": 45.45,
+      "amazon_recent_trend": "stable",
+      "amazon_presence": "UNCERTAIN",
+      "amazon_demand_strength": null,
+      "amazon_demand_signals": {},
+      "price_ratio": null,
+      "cross_platform_demand": "INSUFFICIENT_DATA",
+      "amazon_competition": "MODERATE",
+      "price_alignment": "INSUFFICIENT_DATA",
+      "cross_platform_consistency": 0.5,
+      "avs": 17.5,
+      "avs_breakdown": {
+        "amazon_demand_evidence": {
+          "points": "N/A",
+          "max": 30,
+          "status": "N/A",
+          "missing_signals": [
+            "review_count",
+            "bsr",
+            "monthly_sales_estimate"
+          ]
+        },
+        "match_confidence": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "competition_opportunity": {
+          "points": 10.0,
+          "max": 20,
+          "status": "full"
+        },
+        "price_alignment": {
+          "points": "N/A",
+          "max": 15,
+          "status": "N/A"
+        },
+        "cross_platform_consistency": {
+          "points": 7.5,
+          "max": 15,
+          "status": "full"
+        }
+      },
+      "amazon_confidence": 34.1,
+      "amazon_confidence_level": "VERY_LOW",
+      "amazon_confidence_breakdown": {
+        "match_confidence": {
+          "earned": 9.1,
+          "max": 30,
+          "status": "partial"
+        },
+        "price": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "rating_reviews": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "ranking_demand": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "comparable_listings": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "title": "DIMJ Drawer Organizer Clothes, 12 Pack Dresser Organizer for Nursery, Baby Clothes, Underwears, Sock, Fabric Dresser Bins, Drawer Dividers, Foldable Closet Organizers and Storage(Beige)",
+          "url": "https://www.amazon.com/dp/B0BC966PMQ"
+        },
+        {
+          "title": "HUUSMOT 6-Pack Collapsible Small Plastic Storage Baskets, 5.9\"x3.8\"x2.2\"",
+          "url": "https://www.amazon.com/dp/B0C6SSBMWZ"
+        },
+        {
+          "title": "Vtopmart 4 Pack Large Stackable Storage Drawers, Clear",
+          "url": "https://www.amazon.com/dp/B0BZCTXKPZ"
+        },
+        {
+          "title": "Vtopmart Clear Stackable Storage Drawers Set of 5, Plastic Organizer Bins",
+          "url": "https://www.amazon.com/dp/B0CXLK9PJ9"
+        },
+        {
+          "title": "Homsorout Closet Organizers Bins 6 Packs - Large Closet Shelf Organizer with Handles, Fabric Trapezoid Storage Bins, Collapsible Storage Cubes for Clothes, Towels, Light Gray",
+          "url": "https://www.amazon.com/dp/B0BR7MSWN2"
+        }
+      ],
+      "search_sources": [
+        "KaloData Amazon US database, product rank: 'foldable storage bins' (218 matching listings), 'stackable storage bins' (227), 'collapsible storage bins' (197); last-30-day window, queried 2026-10-03",
+        "Amazon.com product pages via https://www.amazon.com/dp/{asin} (KaloData-verified ASINs)"
+      ],
+      "parse_warnings": [],
+      "config_version": "amazon-validation-v1",
+      "missing_data": [
+        "amazon_bsr",
+        "amazon_price",
+        "amazon_rating",
+        "amazon_review_count",
+        "amazon_sales_indicator"
+      ],
+      "amazon_red_flags": [
+        {
+          "flag": "NO_RELIABLE_MATCH",
+          "best_candidate_score": 30.33
+        },
+        {
+          "flag": "AMAZON_DATA_INSUFFICIENT",
+          "amazon_confidence": 34.1
+        }
+      ],
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T042305Z_519ea0",
+      "calibration_only": false
+    },
+    {
+      "product_id": "1732374506324791819",
+      "tiktok_product_name": "Microfiber Floor Mop with Bucket System - 360° Rotating Mop Head, 3 Washable Microfiber Heads, 48-61-Inch Adjustable Long Handle, Deep Cleaning House Supplies for Household Items, Home Goods",
+      "observation_timestamp": "2026-10-03T05:17:08.750884+00:00",
+      "market": "US",
+      "source": {
+        "provider": "kalopilot",
+        "raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T051708750884Z_1732374506324791819_amazon_match.json",
+        "task_id": "a5dc9ae94a6b494daccb5a8f50942fc2",
+        "report_url": null,
+        "query_type": "amazon_match",
+        "cache_hit": false,
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json"
+      },
+      "tiktok_scores": {
+        "wps": 62.53,
+        "confidence": 88.17
+      },
+      "status": "ok",
+      "amazon_match_name": null,
+      "amazon_url": null,
+      "amazon_asin": null,
+      "amazon_brand": null,
+      "amazon_match_confidence": 46.29,
+      "amazon_match_class": "UNRELIABLE",
+      "amazon_match_status": "NO_RELIABLE_MATCH",
+      "amazon_match_detail": {
+        "name_similarity": {
+          "overlap": 0.7143,
+          "s": 0.857142857142857
+        },
+        "brand": {
+          "tiktok": null,
+          "amazon": "sarkunpio",
+          "s": 0.0
+        },
+        "category": {
+          "overlap": 0.5,
+          "s": 0.8
+        },
+        "variant_attributes": {
+          "tiktok": [
+            "61in"
+          ],
+          "s": 0.0
+        }
+      },
+      "amazon_price": null,
+      "amazon_category": null,
+      "amazon_rating": null,
+      "amazon_review_count": null,
+      "amazon_bsr": null,
+      "amazon_bsr_category": null,
+      "amazon_sales_indicator": {
+        "monthly_sales_estimate": null,
+        "source": null
+      },
+      "amazon_listing_date": null,
+      "amazon_competitor_count": 8,
+      "amazon_price_range": {
+        "min": 33.99,
+        "max": 59.96
+      },
+      "amazon_top3_brand_share_pct": 100.0,
+      "amazon_recent_trend": "declining",
+      "amazon_presence": "UNCERTAIN",
+      "amazon_demand_strength": null,
+      "amazon_demand_signals": {},
+      "price_ratio": null,
+      "cross_platform_demand": "INSUFFICIENT_DATA",
+      "amazon_competition": "HIGH",
+      "price_alignment": "INSUFFICIENT_DATA",
+      "cross_platform_consistency": 0.0,
+      "avs": 0.0,
+      "avs_breakdown": {
+        "amazon_demand_evidence": {
+          "points": "N/A",
+          "max": 30,
+          "status": "N/A",
+          "missing_signals": [
+            "review_count",
+            "bsr",
+            "monthly_sales_estimate"
+          ]
+        },
+        "match_confidence": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "competition_opportunity": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "price_alignment": {
+          "points": "N/A",
+          "max": 15,
+          "status": "N/A"
+        },
+        "cross_platform_consistency": {
+          "points": 0.0,
+          "max": 15,
+          "status": "full"
+        }
+      },
+      "amazon_confidence": 38.89,
+      "amazon_confidence_level": "VERY_LOW",
+      "amazon_confidence_breakdown": {
+        "match_confidence": {
+          "earned": 13.89,
+          "max": 30,
+          "status": "partial"
+        },
+        "price": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "rating_reviews": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "ranking_demand": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "comparable_listings": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "title": "O-Cedar EasyWring Microfiber Spin Mop, Bucket Floor Cleaning System, Red, Gray, Standard",
+          "url": "https://www.amazon.com/dp/B00WSWGVZQ"
+        },
+        {
+          "title": "O-Cedar EasyWring Microfiber Spin Mop & Bucket Floor Cleaning System + 2 Extra Refills, Red/Gray",
+          "url": "https://www.amazon.com/dp/B07VWL357N"
+        },
+        {
+          "title": "JOYMOOP Wall Mop and Bucket Set, Hands-Free Flat Floor Mop with 3 Washable Microfiber Pads, Wet and Dry Use, Ideal for Home and Commercial Floor Cleaning",
+          "url": "https://www.amazon.com/dp/B091F1RPHD"
+        },
+        {
+          "title": "O-Cedar RinseClean Spin Mop & Bucket System | Clean with Clean Water | Removes 99% of Bacteria",
+          "url": "https://www.amazon.com/dp/B08ZBDK8BT"
+        },
+        {
+          "title": "Spin Mop and Bucket Set with 6 Microfiber Heads, Deep Grey",
+          "url": "https://www.amazon.com/dp/B0GVNMVNMT"
+        }
+      ],
+      "search_sources": [
+        "KaloData Amazon US product rank, last30Day, keyword 'microfiber mop with bucket' (157 upstream matches)",
+        "KaloData Amazon US product rank, last30Day, keyword 'spin mop' (203 upstream matches)"
+      ],
+      "parse_warnings": [],
+      "config_version": "amazon-validation-v1",
+      "missing_data": [
+        "amazon_bsr",
+        "amazon_price",
+        "amazon_rating",
+        "amazon_review_count",
+        "amazon_sales_indicator"
+      ],
+      "amazon_red_flags": [
+        {
+          "flag": "NO_RELIABLE_MATCH",
+          "best_candidate_score": 46.29
+        },
+        {
+          "flag": "AMAZON_HIGH_SATURATION"
+        },
+        {
+          "flag": "AMAZON_DOMINATED_BY_MAJOR_BRANDS",
+          "top3_brand_share_pct": 100.0
+        },
+        {
+          "flag": "AMAZON_DATA_INSUFFICIENT",
+          "amazon_confidence": 38.89
+        }
+      ],
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T042305Z_519ea0",
+      "calibration_only": false
+    }
+  ]
+}
