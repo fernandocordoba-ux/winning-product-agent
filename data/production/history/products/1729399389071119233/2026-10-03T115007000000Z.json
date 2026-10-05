@@ -1,0 +1,85 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 117.245,
+    "gmv": 34349,
+    "units": 746,
+    "growth": 16.2,
+    "creator_count": 92,
+    "selling_creator_count": null,
+    "video_count": 377,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "growth_30d_below_preferred",
+      "price_range"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T115014Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T115007Z_electronics_accessories_49cbb654e5f74ae1996d2b493727f56a.json",
+    "task_id": "49cbb654e5f74ae1996d2b493727f56a",
+    "report_url": null,
+    "record_index": 7
+  },
+  "product_id": "1729399389071119233",
+  "identity_key": "1729399389071119233",
+  "key_type": "product_id",
+  "product_name": "DVC Camera, Full HD 1080P Video Recorder, Portable Camcorder with 3-Inch TFT",
+  "category": null,
+  "shop": "Creative Camera Shop",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T11:50:07+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "FAIL",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-03T11:50:07+00:00",
+  "source_snapshot_hash": "e68878df1fcf6693a7365aabf80acdf35ea303fcc54db31e74af4634c0080b24",
+  "run_id": "20261003T115012Z_dc4d67",
+  "written_at": "2026-10-03T12:01:32.802830+00:00",
+  "imported_at": "2026-10-03T12:01:32.802830+00:00"
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 39.99,
+    "gmv": 118776.3,
+    "units": 5674,
+    "growth": 111.49,
+    "creator_count": 929,
+    "selling_creator_count": 395,
+    "video_count": 1248,
+    "selling_video_count": 476,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 2043
+  },
+  "concentration": {
+    "top_creator_revenue_share": 11.74,
+    "top_video_revenue_share": 11.32
+  },
+  "scores": {
+    "wps": 77.55,
+    "confidence": 88.17
+  },
+  "amazon": {
+    "avs": 15.0,
+    "amazon_confidence": 40.47,
+    "amazon_match_confidence": 51.56,
+    "amazon_price": null,
+    "amazon_competition": "HIGH",
+    "observation_timestamp": "2026-10-03T12:01:32.263553+00:00"
+  },
+  "business": {
+    "bvs": 29.52,
+    "bvs_confidence": 26.0,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": "2026-10-03T12:01:32.346700+00:00"
+  },
+  "flags": {
+    "red_flags": [],
+    "commercial_red_flags": [
+      "EXTREME_COMPETITION",
+      "INSUFFICIENT_SUPPLIER_DATA"
+    ],
+    "amazon_red_flags": [
+      "NO_RELIABLE_MATCH",
+      "AMAZON_HIGH_SATURATION",
+      "AMAZON_DOMINATED_BY_MAJOR_BRANDS",
+      "AMAZON_DATA_INSUFFICIENT"
+    ]
+  },
+  "missing_data": [
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history",
+    "amazon:amazon_bsr",
+    "amazon:amazon_price",
+    "amazon:amazon_rating",
+    "amazon:amazon_review_count",
+    "amazon:amazon_sales_indicator",
+    "economics:contribution_margin_percent",
+    "economics:contribution_profit",
+    "economics:estimated_ad_cost_per_order",
+    "economics:expected_chargeback_cost",
+    "economics:expected_refund_cost",
+    "economics:gross_margin_percent",
+    "economics:gross_profit_before_ads",
+    "economics:import_duty_per_order",
+    "economics:landed_cost",
+    "economics:landed_cost_note",
+    "economics:product_cost",
+    "economics:supplier_shipping_cost"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T115827109441Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T115522084816Z_1731456035446887124_deep_product.json",
+    "task_id": "4b6b64f35ff8419aa25c34692f1cba98",
+    "report_url": null,
+    "amazon_raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T120132263553Z_1731456035446887124_amazon_match.json",
+    "amazon_processed_file": null,
+    "bvs_processed_file": null,
+    "commercial_data_file": null
+  },
+  "product_id": "1731456035446887124",
+  "identity_key": "1731456035446887124",
+  "key_type": "product_id",
+  "product_name": "Auto Face Tracking Tripod for Smartphones & Cellphones - Gesture Control, 360-Degree Camera Mount Selfie Accessories, Smart Shooting Phone Mount, Smartphone Camera Accessories for Vlogging, Live Streaming",
+  "category": "Phones & Electronics > Phones and Accessories > Selfie Accessories",
+  "shop": "XO Digital world store",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T11:55:22.084816+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T11:55:22.084816+00:00",
+  "source_snapshot_hash": "42bea48ff8e130c66da30d340adf09a5a3a0cdcfee7adb28bea1953365d5c2e7",
+  "run_id": "20261003T115012Z_dc4d67",
+  "written_at": "2026-10-03T12:01:32.803559+00:00",
+  "imported_at": "2026-10-03T12:01:32.803559+00:00"
+}

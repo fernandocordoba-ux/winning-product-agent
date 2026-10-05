@@ -1,0 +1,84 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 72.38000000000001,
+    "gmv": 39530,
+    "units": 1325,
+    "growth": 1777.91,
+    "creator_count": 256,
+    "selling_creator_count": null,
+    "video_count": 685,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": null
+  },
+  "concentration": {
+    "top_creator_revenue_share": null,
+    "top_video_revenue_share": null
+  },
+  "scores": {
+    "wps": null,
+    "confidence": null
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "low_base_or_seasonal"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "product_url",
+    "shop_id",
+    "category",
+    "category_id",
+    "selling_creator_count",
+    "creator_growth_pct",
+    "video_growth_pct",
+    "shop_count"
+  ],
+  "source": {
+    "stage": "discovery",
+    "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T034233Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/20261003T033317Z_home_da91d238653d4166bad9708483f982d2.json",
+    "task_id": "da91d238653d4166bad9708483f982d2",
+    "report_url": null,
+    "record_index": 3
+  },
+  "product_id": "1732428031799693932",
+  "identity_key": "1732428031799693932",
+  "key_type": "product_id",
+  "product_name": "OBOTIN Heavy-Duty Floor Squeegee 2 in 1 - Lightweight & Durable Foam Blade w...",
+  "category": null,
+  "shop": "OBOTIN Home & Living Departmen",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T03:33:17+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "discovery",
+  "data_environment": "PRODUCTION",
+  "discovery_status": "REVIEW",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T03:33:17+00:00",
+  "source_snapshot_hash": "6e18cca81defb388707ba5286d314247586772009f3b682ddbac8b2bc98bbcce",
+  "run_id": "20261003T032125Z_33ac62",
+  "written_at": "2026-10-03T04:13:27.017260+00:00",
+  "imported_at": "2026-10-03T04:13:27.017260+00:00"
+}

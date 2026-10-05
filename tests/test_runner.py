@@ -706,3 +706,51 @@ class PlanRestriction(Base):
         self.assertEqual(out["products"]["deep_analyzed_ok"], 5)
         m = json.loads((s.run_dir / "manifest.json").read_text())
         self.assertEqual(m["credits_charged_before_run"], 1.67)
+
+
+# ============================================================ empty answers: one automatic retry (owner rule)
+class EmptyAnswerRetry(Base):
+    class Flaky(FakeProvider):
+        """The first deep answer for the first product comes back EMPTY at the provider's output limit."""
+
+        def __init__(self, always=False, **kw):
+            super().__init__(**kw)
+            self.always, self.seen = always, {}
+
+        def wait(self, task_id):
+            q, k = self.submits[-1], self.kinds[-1]
+            if k == "deep":
+                key = tuple(self.ids(q))
+                self.seen[key] = self.seen.get(key, 0) + 1
+                first = next(iter(self.seen))
+                if key == first and (self.always or self.seen[key] == 1):
+                    self.balance = round(self.balance - 0.44, 2)
+                    return {"success": True, "data": {"status": "completed", "task_id": task_id, "message_id": "1",
+                                                      "text": "", "report": None, "credits_consumed": 0.44,
+                                                      "token_usage": {"output_tokens": 8001}}}
+            return super().wait(task_id)
+
+    def _run(self, retries, always=False):
+        fake = self.Flaky(always=always)
+        r = self.runner(fake, isatty=False)
+        r.eff["query_plan"]["deep_retry_empty_answers"] = retries
+        r.eff["query_plan"]["deep_batch_size"] = 1
+        s = r.live(confirm_value=PHRASE)
+        return fake, r, s
+
+    def test_no_retry_by_default(self):
+        fake, r, s = self._run(0)
+        self.assertEqual(fake.kinds.count("deep"), 5)
+        self.assertEqual(s["products"]["deep_analyzed_ok"], 4)
+
+    def test_one_retry_recovers_the_product(self):
+        fake, r, s = self._run(1)
+        self.assertEqual(fake.kinds.count("deep"), 6)                     # 5 products + 1 retry, asked last
+        self.assertEqual(s["products"]["deep_analyzed_ok"], 5)
+        self.assertEqual(max(fake.seen.values()), 2)
+
+    def test_retry_is_bounded(self):
+        fake, r, s = self._run(1, always=True)
+        self.assertEqual(fake.kinds.count("deep"), 6)                     # never more than one extra attempt
+        self.assertEqual(s["products"]["deep_analyzed_ok"], 4)
+        self.assertEqual(len(r.stages["deep_analysis"]["failed"]), 1)

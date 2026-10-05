@@ -838,6 +838,9 @@ class Runner:
         cfg = copy.deepcopy(self.cfg_deep)
         cfg["selection"]["deep_analysis_max_products"] = self.limits["deep_analysis_max_products"]
         cfg["selection"]["order"] = self.eff["query_plan"].get("deep_selection") or cfg["selection"].get("order")
+        if self.eff["query_plan"].get("deep_min_preliminary") is not None:
+            cfg["selection"]["min_preliminary"] = self.eff["query_plan"]["deep_min_preliminary"]
+        cfg["selection"]["exclude_operational"] = self.eff["query_plan"].get("deep_exclude_operational") or []
         cfg["selection"]["exclude_keywords"] = self.eff["query_plan"].get("deep_exclude_keywords") or []
         cfg["selection"]["deprioritize_ids"] = self.recently_analyzed(self.eff["query_plan"].get("prefer_new_days"))
         sel, _ = DA.select_candidates(res, cfg)
@@ -1276,6 +1279,9 @@ class Runner:
         cfg = copy.deepcopy(self.cfg_deep)
         cfg["selection"]["deep_analysis_max_products"] = self.limits["deep_analysis_max_products"]
         cfg["selection"]["order"] = self.eff["query_plan"].get("deep_selection") or cfg["selection"].get("order")
+        if self.eff["query_plan"].get("deep_min_preliminary") is not None:
+            cfg["selection"]["min_preliminary"] = self.eff["query_plan"]["deep_min_preliminary"]
+        cfg["selection"]["exclude_operational"] = self.eff["query_plan"].get("deep_exclude_operational") or []
         cfg["selection"]["exclude_keywords"] = self.eff["query_plan"].get("deep_exclude_keywords") or []
         cfg["selection"]["deprioritize_ids"] = self.recently_analyzed(self.eff["query_plan"].get("prefer_new_days"))
         cfgs = {"deep": cfg, "filters": self.filters, "scoring": load_scoring_config()}
@@ -1311,7 +1317,12 @@ class Runner:
         size = self.eff["query_plan"].get("deep_batch_size", 1)
         target = self.eff["query_plan"].get("target_candidates")
         target_hit = None
-        for batch in self._batches(pending, size):
+        queue = self._batches(pending, size)
+        max_retry = int(self.eff["query_plan"].get("deep_retry_empty_answers") or 0)   # owner rule; 0 = never
+        retried, qi = {}, 0
+        while qi < len(queue):
+            batch = queue[qi]
+            qi += 1
             if target and self.candidates_found(results) >= target:      # enough candidates: stop spending
                 target_hit = f"target reached: {target} candidate(s) with WPS >= 55 and Confidence >= 60"
                 break
@@ -1336,7 +1347,12 @@ class Runner:
             err = response_error(resp)
             if len(batch) == 1:
                 raw = DA.save_raw_deep(resp, {**base, "product_id": batch[0], "query_type": "deep_product"}, raw_dir)
-                if err:
+                if err == "empty_answer_output_token_limit" and retried.get(batch[0], 0) < max_retry:
+                    retried[batch[0]] = retried.get(batch[0], 0) + 1      # provider cut the answer: ask again
+                    queue.append([batch[0]])                              # once the other products are done
+                    self.log.log("deep_analysis", "RETRY_QUEUED", query_type="deep_product", message=batch[0],
+                                 error_category=err)
+                elif err:
                     add({"product_id": batch[0], "status": "failed", "error_category": err,
                          "source": {"raw_file": str(raw)}}, batch[0])
                 else:

@@ -1,0 +1,2465 @@
+{
+  "pipeline": "discovery-v1",
+  "config_versions": {
+    "filters": "filters-v1",
+    "categories": "categories-v1",
+    "confidence": "confidence-v1"
+  },
+  "market": {
+    "region": "US",
+    "currency": "USD",
+    "period_days": 30
+  },
+  "raw_files": [
+    "/root/winning-product-agent/data/production/raw/20261003T105418Z_electronics_accessories_18f97e5a130a47d5ba742e6f1538fe21.json",
+    "/root/winning-product-agent/data/production/raw/20261003T105957Z_electronics_accessories_32a397b032ca4bedb1a5f1c27f463c09.json",
+    "/root/winning-product-agent/data/production/raw/20261003T110637Z_electronics_accessories_c962dad41676457099a440d9548a7052.json",
+    "/root/winning-product-agent/data/production/raw/20261003T111014Z_electronics_accessories_db89638654d54c5c8c5f4479dbeb86b8.json",
+    "/root/winning-product-agent/data/production/raw/20261003T113521Z_electronics_accessories_a15b0223801148bab3fc8e4b600abbc8.json"
+  ],
+  "summary": {
+    "records": 11,
+    "unique": 11,
+    "duplicates_removed": 0,
+    "malformed": 0,
+    "PASS": 4,
+    "REVIEW": 7,
+    "FAIL": 0,
+    "returned_candidates": 11,
+    "over_limit": 0
+  },
+  "candidates": [
+    {
+      "key": "1732568812313612543",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1732568812313612543",
+        "product_name": "Wireless Earbuds with 3D Stereo Audio, Universal Fit, Multiple Ear Tip Sizes,...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "JHX Store",
+        "category": null,
+        "category_id": null,
+        "price_min": 43.78,
+        "price_max": 43.78,
+        "gmv_30d": 107635,
+        "gmv_prev_30d": 11126,
+        "units_30d": 3024,
+        "growth_30d": 867.42,
+        "creator_count": 102,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 287,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-08-20",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T110637Z_electronics_accessories_c962dad41676457099a440d9548a7052.json",
+        "task_id": "c962dad41676457099a440d9548a7052",
+        "report_url": null,
+        "fetched_at": "20261003T110637Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732568812313612543",
+          "product_name": "Wireless Earbuds with 3D Stereo Audio, Universal Fit, Multiple Ear Tip Sizes,...",
+          "shop_name": "JHX Store",
+          "price_min": 43.78,
+          "price_max": 43.78,
+          "gmv_30d": 107635,
+          "gmv_prev_30d": 11126,
+          "gmv_prev2_30d": 0,
+          "units_30d": 3024,
+          "units_prev_30d": 303,
+          "creator_count": 102,
+          "video_count": 287,
+          "launch_date": "2026-08-20",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 43.78,
+        "price_basis": "avg",
+        "product_age_days": 42,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 43.78,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 43.78,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 107635,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 11126,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 3024,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 867.42,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 102,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 287,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732306919019352838",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1732306919019352838",
+        "product_name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360°",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "MAGIC JOHN",
+        "category": null,
+        "category_id": null,
+        "price_min": 25,
+        "price_max": 29.99,
+        "gmv_30d": 40991.2,
+        "gmv_prev_30d": 9379,
+        "units_30d": 1727,
+        "growth_30d": 337.05,
+        "creator_count": 217,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 489,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-03-28",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T105418Z_electronics_accessories_18f97e5a130a47d5ba742e6f1538fe21.json",
+        "task_id": "18f97e5a130a47d5ba742e6f1538fe21",
+        "report_url": null,
+        "fetched_at": "20261003T105418Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732306919019352838",
+          "product_name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360°",
+          "shop_name": "MAGIC JOHN",
+          "price_min": 25,
+          "price_max": 29.99,
+          "gmv_30d": 40991.2,
+          "gmv_prev_30d": 9379,
+          "gmv_prev2_30d": 10024,
+          "units_30d": 1727,
+          "units_prev_30d": null,
+          "creator_count": 217,
+          "video_count": 489,
+          "launch_date": "2026-03-28",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 27.494999999999997,
+        "price_basis": "avg",
+        "product_age_days": 189,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 25,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 29.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 40991.2,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 9379,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1727,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 337.05,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 217,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 489,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732397010730783697",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1732397010730783697",
+        "product_name": "360° Rotating Wireless Charging Car Phone Mount with RGB Ambient Light",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "MeWe",
+        "category": null,
+        "category_id": null,
+        "price_min": 39.9,
+        "price_max": 39.9,
+        "gmv_30d": 304358.6,
+        "gmv_prev_30d": 108867.18,
+        "units_30d": 10139,
+        "growth_30d": 179.57,
+        "creator_count": 26,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 452,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-06-06",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T105957Z_electronics_accessories_32a397b032ca4bedb1a5f1c27f463c09.json",
+        "task_id": "32a397b032ca4bedb1a5f1c27f463c09",
+        "report_url": null,
+        "fetched_at": "20261003T105957Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1732397010730783697",
+          "product_name": "360° Rotating Wireless Charging Car Phone Mount with RGB Ambient Light",
+          "shop_name": "MeWe",
+          "price_min": 39.9,
+          "price_max": 39.9,
+          "gmv_30d": 304358.6,
+          "gmv_prev_30d": 108867.18,
+          "gmv_prev2_30d": 60387.44,
+          "units_30d": 10139,
+          "units_prev_30d": 3538,
+          "creator_count": 26,
+          "video_count": 452,
+          "launch_date": "2026-06-06",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 39.9,
+        "price_basis": "avg",
+        "product_age_days": 119,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 39.9,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 39.9,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 304358.6,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 108867.18,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 10139,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 179.57,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 26,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 452,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1731759838691889487",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1731759838691889487",
+        "product_name": "5-in-1 Wireless Speaker with Phone Holder, 3500mAh Power Bank, RGB Light",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "PUTARE",
+        "category": null,
+        "category_id": null,
+        "price_min": 41.98,
+        "price_max": 41.98,
+        "gmv_30d": 48281.42,
+        "gmv_prev_30d": 27352.67,
+        "units_30d": 2234,
+        "growth_30d": 76.51,
+        "creator_count": 184,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 301,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-09-20",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T105957Z_electronics_accessories_32a397b032ca4bedb1a5f1c27f463c09.json",
+        "task_id": "32a397b032ca4bedb1a5f1c27f463c09",
+        "report_url": null,
+        "fetched_at": "20261003T105957Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1731759838691889487",
+          "product_name": "5-in-1 Wireless Speaker with Phone Holder, 3500mAh Power Bank, RGB Light",
+          "shop_name": "PUTARE",
+          "price_min": 41.98,
+          "price_max": 41.98,
+          "gmv_30d": 48281.42,
+          "gmv_prev_30d": 27352.67,
+          "gmv_prev2_30d": 25123.75,
+          "units_30d": 2234,
+          "units_prev_30d": 1751,
+          "creator_count": 184,
+          "video_count": 301,
+          "launch_date": "2025-09-20",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 41.98,
+        "price_basis": "avg",
+        "product_age_days": 378,
+        "filter_status": "PASS",
+        "filter_reasons": [],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 41.98,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 41.98,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 48281.42,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 27352.67,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2234,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 76.51,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 184,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 301,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105957Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1729489737433321957",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1729489737433321957",
+        "product_name": "Cooper Cases TabStand Sturdy Tablet Mount - Flexible Metal-Aluminum Rotatable",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Cooper Cases",
+        "category": null,
+        "category_id": null,
+        "price_min": 24.95,
+        "price_max": 38.94,
+        "gmv_30d": 32351,
+        "gmv_prev_30d": 25320,
+        "units_30d": 1361,
+        "growth_30d": 27.77,
+        "creator_count": 859,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 916,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2024-06-27",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T111014Z_electronics_accessories_db89638654d54c5c8c5f4479dbeb86b8.json",
+        "task_id": "db89638654d54c5c8c5f4479dbeb86b8",
+        "report_url": null,
+        "fetched_at": "20261003T111014Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1729489737433321957",
+          "product_name": "Cooper Cases TabStand Sturdy Tablet Mount - Flexible Metal-Aluminum Rotatable",
+          "shop_name": "Cooper Cases",
+          "price_min": 24.95,
+          "price_max": 38.94,
+          "gmv_30d": 32351,
+          "gmv_prev_30d": 25320,
+          "gmv_prev2_30d": 28305,
+          "units_30d": 1361,
+          "units_prev_30d": null,
+          "creator_count": 859,
+          "video_count": 916,
+          "launch_date": "2024-06-27",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 31.945,
+        "price_basis": "avg",
+        "product_age_days": 828,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 27.77,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 24.95,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 38.94,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 32351,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 25320,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1361,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 27.77,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 859,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 916,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T111014Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1729386017821135441",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1729386017821135441",
+        "product_name": "GAMINJA P58 Charging Base Cooling Bracket Compatible With PS5 Console, Vertical",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "GAMINJA",
+        "category": null,
+        "category_id": null,
+        "price_min": 24.95,
+        "price_max": 91.08,
+        "gmv_30d": 34706,
+        "gmv_prev_30d": 28558,
+        "units_30d": 1622,
+        "growth_30d": 21.53,
+        "creator_count": 122,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 799,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2023-12-13",
+        "data_window_end": "2026-10-02",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T113521Z_electronics_accessories_a15b0223801148bab3fc8e4b600abbc8.json",
+        "task_id": "a15b0223801148bab3fc8e4b600abbc8",
+        "report_url": null,
+        "fetched_at": "20261003T113521Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1729386017821135441",
+          "product_name": "GAMINJA P58 Charging Base Cooling Bracket Compatible With PS5 Console, Vertical",
+          "shop_name": "GAMINJA",
+          "price_min": 24.95,
+          "price_max": 91.08,
+          "gmv_30d": 34706,
+          "gmv_prev_30d": 28558,
+          "gmv_prev2_30d": 31944,
+          "units_30d": 1622,
+          "units_prev_30d": null,
+          "creator_count": 122,
+          "video_count": 799,
+          "launch_date": "2023-12-13",
+          "data_window_end": "2026-10-02"
+        }
+      },
+      "calculated": {
+        "price": 58.015,
+        "price_basis": "avg",
+        "product_age_days": 1024,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 21.53,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 24.95,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 91.08,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 34706,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 28558,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1622,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 21.53,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 122,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 799,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1731532158983246389",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1731532158983246389",
+        "product_name": "JORREP Wireless PS5 Console Controller with Hall Effect Joystick - Anti-Drift,",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Yabao Road Trading",
+        "category": null,
+        "category_id": null,
+        "price_min": 45.0,
+        "price_max": 80.99,
+        "gmv_30d": 91832,
+        "gmv_prev_30d": 83056,
+        "units_30d": 1674,
+        "growth_30d": 10.57,
+        "creator_count": 107,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 340,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-08-03",
+        "data_window_end": "2026-10-02",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T113521Z_electronics_accessories_a15b0223801148bab3fc8e4b600abbc8.json",
+        "task_id": "a15b0223801148bab3fc8e4b600abbc8",
+        "report_url": null,
+        "fetched_at": "20261003T113521Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1731532158983246389",
+          "product_name": "JORREP Wireless PS5 Console Controller with Hall Effect Joystick - Anti-Drift,",
+          "shop_name": "Yabao Road Trading",
+          "price_min": 45.0,
+          "price_max": 80.99,
+          "gmv_30d": 91832,
+          "gmv_prev_30d": 83056,
+          "gmv_prev2_30d": 38744,
+          "units_30d": 1674,
+          "units_prev_30d": null,
+          "creator_count": 107,
+          "video_count": 340,
+          "launch_date": "2025-08-03",
+          "data_window_end": "2026-10-02"
+        }
+      },
+      "calculated": {
+        "price": 62.995,
+        "price_basis": "avg",
+        "product_age_days": 425,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 10.57,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 45.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 80.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 91832,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 83056,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1674,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 10.57,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 107,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 340,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732303807580115633",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1732303807580115633",
+        "product_name": "Sports Wireless Bluetooth 6.0 Earbuds (On-Ear Headphones) - Ergonomic Sport D...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "LeDa US",
+        "category": null,
+        "category_id": null,
+        "price_min": 21.99,
+        "price_max": 21.99,
+        "gmv_30d": 44650,
+        "gmv_prev_30d": 41248,
+        "units_30d": 2162,
+        "growth_30d": 8.25,
+        "creator_count": 565,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 1447,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-03-24",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T110637Z_electronics_accessories_c962dad41676457099a440d9548a7052.json",
+        "task_id": "c962dad41676457099a440d9548a7052",
+        "report_url": null,
+        "fetched_at": "20261003T110637Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1732303807580115633",
+          "product_name": "Sports Wireless Bluetooth 6.0 Earbuds (On-Ear Headphones) - Ergonomic Sport D...",
+          "shop_name": "LeDa US",
+          "price_min": 21.99,
+          "price_max": 21.99,
+          "gmv_30d": 44650,
+          "gmv_prev_30d": 41248,
+          "gmv_prev2_30d": 46837,
+          "units_30d": 2162,
+          "units_prev_30d": 1876,
+          "creator_count": 565,
+          "video_count": 1447,
+          "launch_date": "2026-03-24",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 21.99,
+        "price_basis": "avg",
+        "product_age_days": 191,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 8.25,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 21.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 21.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 44650,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 41248,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 2162,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 8.25,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 565,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 1447,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1731239712772821133",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1731239712772821133",
+        "product_name": "Wireless Pro Handheld Gamepad - PS5 Controller with RGB Lights, Dual Vibration,",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Bonacell",
+        "category": null,
+        "category_id": null,
+        "price_min": 49.99,
+        "price_max": 129.99,
+        "gmv_30d": 144881,
+        "gmv_prev_30d": 136787,
+        "units_30d": 3337,
+        "growth_30d": 5.92,
+        "creator_count": 247,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 1019,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2025-06-14",
+        "data_window_end": "2026-10-02",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T113521Z_electronics_accessories_a15b0223801148bab3fc8e4b600abbc8.json",
+        "task_id": "a15b0223801148bab3fc8e4b600abbc8",
+        "report_url": null,
+        "fetched_at": "20261003T113521Z",
+        "record_index": 0,
+        "original_record": {
+          "product_id": "1731239712772821133",
+          "product_name": "Wireless Pro Handheld Gamepad - PS5 Controller with RGB Lights, Dual Vibration,",
+          "shop_name": "Bonacell",
+          "price_min": 49.99,
+          "price_max": 129.99,
+          "gmv_30d": 144881,
+          "gmv_prev_30d": 136787,
+          "gmv_prev2_30d": 272492,
+          "units_30d": 3337,
+          "units_prev_30d": null,
+          "creator_count": 247,
+          "video_count": 1019,
+          "launch_date": "2025-06-14",
+          "data_window_end": "2026-10-02"
+        }
+      },
+      "calculated": {
+        "price": 89.99000000000001,
+        "price_basis": "avg",
+        "product_age_days": 475,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "growth_30d_below_preferred",
+            "action": "flag",
+            "value": 5.92,
+            "preferred_min": 30
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 49.99,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 129.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 144881,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 136787,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 3337,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 5.92,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 247,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 1019,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "20261003T113521Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732250308902949401",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1732250308902949401",
+        "product_name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Star Sky Phone Case",
+        "category": null,
+        "category_id": null,
+        "price_min": 31,
+        "price_max": 37.75,
+        "gmv_30d": 42793.76,
+        "gmv_prev_30d": 2558,
+        "units_30d": 1388,
+        "growth_30d": 1572.94,
+        "creator_count": 58,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 253,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-01-24",
+        "data_window_end": "2026-10-03",
+        "growth_30d_provider": null,
+        "growth_source": "calculated"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T105418Z_electronics_accessories_18f97e5a130a47d5ba742e6f1538fe21.json",
+        "task_id": "18f97e5a130a47d5ba742e6f1538fe21",
+        "report_url": null,
+        "fetched_at": "20261003T105418Z",
+        "record_index": 1,
+        "original_record": {
+          "product_id": "1732250308902949401",
+          "product_name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro",
+          "shop_name": "Star Sky Phone Case",
+          "price_min": 31,
+          "price_max": 37.75,
+          "gmv_30d": 42793.76,
+          "gmv_prev_30d": 2558,
+          "gmv_prev2_30d": 86,
+          "units_30d": 1388,
+          "units_prev_30d": null,
+          "creator_count": 58,
+          "video_count": 253,
+          "launch_date": "2026-01-24",
+          "data_window_end": "2026-10-03"
+        }
+      },
+      "calculated": {
+        "price": 34.375,
+        "price_basis": "avg",
+        "product_age_days": 252,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "revenue_growth_pct",
+            "value": 1572.94,
+            "condition": "> 1000"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 50.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 10.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 31,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 37.75,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 42793.76,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 2558,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1388,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1572.94,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "creator_count": {
+          "value": 58,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 253,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "20261003T105418Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    },
+    {
+      "key": "1732510313971159444",
+      "key_type": "product_id",
+      "market": "US",
+      "currency": "USD",
+      "period_days": 30,
+      "observation_date": "2026-10-03",
+      "category_key": "electronics_accessories",
+      "facts": {
+        "product_id": "1732510313971159444",
+        "product_name": "【Limited Time Event】True Wireless Noise Reduction Earphones - Lightweight Noi...",
+        "product_url": null,
+        "shop_id": null,
+        "shop_name": "Rudai Trading",
+        "category": null,
+        "category_id": null,
+        "price_min": 39.97,
+        "price_max": 39.97,
+        "gmv_30d": 51262,
+        "gmv_prev_30d": 0,
+        "units_30d": 1496,
+        "growth_30d": null,
+        "creator_count": 50,
+        "selling_creator_count": null,
+        "creator_growth_pct": null,
+        "video_count": 177,
+        "video_growth_pct": null,
+        "shop_count": null,
+        "launch_date": "2026-09-03",
+        "data_window_end": "2026-10-01",
+        "growth_30d_provider": null,
+        "growth_source": "no_previous_revenue"
+      },
+      "missing_fields": [
+        "product_url",
+        "shop_id",
+        "category",
+        "category_id",
+        "growth_30d",
+        "selling_creator_count",
+        "creator_growth_pct",
+        "video_growth_pct",
+        "shop_count"
+      ],
+      "parse_warnings": [],
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/20261003T110637Z_electronics_accessories_c962dad41676457099a440d9548a7052.json",
+        "task_id": "c962dad41676457099a440d9548a7052",
+        "report_url": null,
+        "fetched_at": "20261003T110637Z",
+        "record_index": 2,
+        "original_record": {
+          "product_id": "1732510313971159444",
+          "product_name": "【Limited Time Event】True Wireless Noise Reduction Earphones - Lightweight Noi...",
+          "shop_name": "Rudai Trading",
+          "price_min": 39.97,
+          "price_max": 39.97,
+          "gmv_30d": 51262,
+          "gmv_prev_30d": 0,
+          "gmv_prev2_30d": 0,
+          "units_30d": 1496,
+          "units_prev_30d": 0,
+          "creator_count": 50,
+          "video_count": 177,
+          "launch_date": "2026-09-03",
+          "data_window_end": "2026-10-01"
+        }
+      },
+      "calculated": {
+        "price": 39.97,
+        "price_basis": "avg",
+        "product_age_days": 28,
+        "filter_status": "REVIEW",
+        "filter_reasons": [
+          {
+            "rule": "missing_optional_data",
+            "action": "flag",
+            "field": "growth_30d"
+          },
+          {
+            "rule": "low_base_or_seasonal",
+            "action": "flag",
+            "input": "product_age_days",
+            "value": 28,
+            "condition": "< 30"
+          }
+        ],
+        "na_checks": [
+          "collapsing_sales:last7_vs_first7_sales_pct",
+          "collapsing_sales:revenue_growth_pct",
+          "extreme_seller_saturation:category_product_count",
+          "extreme_seller_saturation:similar_listings_count",
+          "growth_30d",
+          "low_base_or_seasonal:revenue_growth_pct",
+          "selling_creator_count"
+        ],
+        "filters_version": "filters-v1",
+        "wps_if_calculable": {
+          "status": "pending",
+          "score": "N/A",
+          "reason": "insufficient data for a full WPS at discovery stage; deep analysis required",
+          "na_metrics": [
+            "growth_long_term",
+            "growth_recent_trend",
+            "growth_acceleration",
+            "video_momentum",
+            "creator_growth",
+            "competition_category_growth",
+            "competition_saturation",
+            "margin_potential",
+            "trend_stability"
+          ]
+        },
+        "confidence_if_calculable": {
+          "score": 40.0,
+          "level": "LOW",
+          "stage": "discovery",
+          "breakdown": {
+            "sales_history": 0.0,
+            "gmv_data": 10.0,
+            "units_sold": 10.0,
+            "growth_data": 0.0,
+            "price_data": 5.0,
+            "creator_data": 7.5,
+            "video_data": 7.5,
+            "competition_shop_data": 0.0,
+            "trend_history_data": 0.0
+          }
+        }
+      },
+      "provenance": {
+        "price_min": {
+          "value": 39.97,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 39.97,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_30d": {
+          "value": 51262,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 0,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1496,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "growth_30d_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "creator_count": {
+          "value": 50,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 177,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-01",
+          "retrieved_at": "20261003T110637Z",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "data_environment": "PRODUCTION"
+    }
+  ],
+  "failed": [],
+  "over_limit_keys": [],
+  "duplicates": [],
+  "malformed": [],
+  "data_environment": "PRODUCTION",
+  "run_id": "20261003T105009Z_351269"
+}

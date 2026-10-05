@@ -1,0 +1,79 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 34.375,
+    "gmv": 43848.76,
+    "units": 1425,
+    "growth": 1445.65,
+    "creator_count": 58,
+    "selling_creator_count": 20,
+    "video_count": 198,
+    "selling_video_count": 199,
+    "shop_count": 1
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 30918
+  },
+  "concentration": {
+    "top_creator_revenue_share": 40.9,
+    "top_video_revenue_share": 21.47
+  },
+  "scores": {
+    "wps": 46.51,
+    "confidence": 88.17
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T114639731293Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T114334662077Z_1732250308902949401_deep_product.json",
+    "task_id": "7b98a196f6b6430fa6b9d9aefaaa279c",
+    "report_url": null
+  },
+  "product_id": "1732250308902949401",
+  "identity_key": "1732250308902949401",
+  "key_type": "product_id",
+  "product_name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro Max, Durable High-End Smartphone Casing, Mobile Phone Protection Accessories, Thoughtful Gift",
+  "category": "Phones & Electronics > Phones and Accessories > Cases, Screen Protectors & Stickers",
+  "shop": "Star Sky Phone Case",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T11:43:34.662077+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-02",
+  "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+  "source_snapshot_hash": "0c3aafe250e8d630021b3fbdea8022118fc47fb2a935f04db6cae7f52a784caa",
+  "run_id": "20261003T105009Z_351269",
+  "written_at": "2026-10-03T11:46:40.409280+00:00",
+  "imported_at": "2026-10-03T11:46:40.409280+00:00"
+}

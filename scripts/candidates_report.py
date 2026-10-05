@@ -19,9 +19,17 @@ sys.path.insert(0, str(HERE))
 
 import final_validation as FV  # noqa: E402
 import discovery as D  # noqa: E402
+import deep_analysis as DA  # noqa: E402
 
 NA = "N/A"
 OUT = ROOT / "reports" / "production" / "candidates"
+SNAP = ROOT / "data" / "production" / "calibration" / "snapshots"
+# Frozen per run for later calibration (never recomputed): every discovered product, low scores included.
+SNAP_COLS = ("run_id", "run_date", "config_version", "scoring_version", "scoring_hash", "product_id", "product_name",
+             "category", "lens", "filter_status", "deep_analyzed", "deep_status", "wps", "wps_floor", "wps_coverage_pct",
+             "wps_confidence", "decision", "preliminary_score", "sustained_growth_90d", "revenue_61_90d",
+             "revenue_31_60d", "revenue_last_30d", "units_30d", "creators", "videos", "price_min", "price_max",
+             "avg_order_value_proxy", "price_vs_aov_flag", "gmv_velocity_pct", "launch_date", "data_window_end")
 STATE_ES = {"READY_FOR_PRODUCT_VALIDATION": "Listo para validar", "PROMISING_NEEDS_VALIDATION": "Prometedor",
             "WATCHLIST": "En observación", "REJECT": "Descartado", "INSUFFICIENT_DATA": "Datos insuficientes"}
 
@@ -55,6 +63,23 @@ def collect(root=ROOT):
     decs = {str(d["product_id"]): d for k in ("ready_products", "promising_products", "watchlist", "rejected_products",
                                               "insufficient_data") for d in dec.get(k) or []}
     sup_dir = root / "data" / "production" / "processed" / "suppliers"
+    cfg_hashes = {}
+    scoring = None
+    try:
+        import yaml
+        import hashlib
+        raw = (Path(m.get("config_dir") or "") / "scoring.yaml").read_bytes()
+        scoring = yaml.safe_load(raw)
+        cfg_hashes = {"scoring.yaml": hashlib.sha256(raw).hexdigest()}      # the exact file read here
+    except (OSError, ValueError, ImportError):
+        pass
+    excl_kw, floor = [], None
+    try:
+        import yaml as _y
+        qp = (_y.safe_load((Path(m.get("config_dir") or "") / "runtime.yaml").read_text()) or {}).get("query_plan") or {}
+        excl_kw, floor = qp.get("deep_exclude_operational") or [], qp.get("deep_min_preliminary")
+    except (OSError, ValueError, ImportError):
+        pass
     lens_by_raw = {}
     for q in disc_ck.get("queries") or []:
         env = _j(q.get("raw_file")) or {}
@@ -71,6 +96,23 @@ def collect(root=ROOT):
                    key=lambda o2: o2["product_cost"] + o2["shipping_cost"], default=None)
         amz = x.get("amazon_validation") or {}
         g = lambda k: D.parse_value(o.get(k), "num")[0]  # noqa: E731
+        pts = d.get("wps_points") or {}
+        seq = (g("gmv_prev2_30d"), f.get("gmv_prev_30d"), f.get("gmv_30d"))
+        prelim = c.get("preliminary_wps")
+        if prelim is None and scoring:                       # same free score the deep selection uses
+            try:
+                prelim = DA.preliminary_score(p, scoring)
+            except Exception:                                # noqa: BLE001 - report only, never blocks
+                prelim = None
+        sustained = c.get("sustained_growth")
+        if sustained is None and None not in seq:
+            sustained = seq[0] < seq[1] < seq[2]
+        units, gmv = f.get("units_30d"), f.get("gmv_30d")
+        aov = round(gmv / units, 2) if gmv is not None and units else None   # realized revenue per unit (a proxy)
+        lo, hi = f.get("price_min"), f.get("price_max")
+        aov_flag = None
+        if aov is not None and lo is not None and hi is not None:            # flag only; no field replaces another
+            aov_flag = "OK" if lo * 0.8 <= aov <= hi * 1.2 else "REVISAR"
         row = {
             "product_id": pid, "product_name": f.get("product_name"), "shop": f.get("shop_name"),
             "category": f.get("category") or d.get("category"), "lens": lens_by_raw.get(str((p.get("source") or {}).get("raw_file"))),
@@ -81,9 +123,14 @@ def collect(root=ROOT):
             "shops_selling": f.get("shop_count"), "launch_date": f.get("launch_date"),
             "filter_status": c.get("filter_status"),
             "filter_reasons": "; ".join(str(r.get("rule")) for r in c.get("filter_reasons") or []),
-            "preliminary_score": c.get("preliminary_wps"), "sustained_growth_90d": c.get("sustained_growth"),
+            "preliminary_score": prelim, "sustained_growth_90d": sustained,
+            "avg_order_value_proxy": aov, "price_vs_aov_flag": aov_flag,
+            "data_window_end": f.get("data_window_end") or o.get("data_window_end"),
             "deep_analyzed": bool(d), "deep_status": d.get("status"),
             "wps": d.get("wps"), "wps_confidence": d.get("confidence"),
+            # WPS = earned / possible. Floor = earned / 100 (unknown components count as 0); coverage = possible / 100.
+            "wps_floor": round(pts["earned"], 2) if pts.get("earned") is not None else None,
+            "wps_coverage_pct": round(pts["possible"], 1) if pts.get("possible") is not None else None,
             "trend": (d.get("trend_metrics") or {}).get("label") if d else None,
             "gmv_velocity_pct": ((d.get("trend_metrics") or {}).get("gmv") or {}).get("velocity_pct") if d else None,
             "video_sales_share_pct": (d.get("video_metrics") or {}).get("sales_share_pct") if d else None,
@@ -99,12 +146,75 @@ def collect(root=ROOT):
         }
         for k, comp in (d.get("wps_breakdown") or {}).items():
             row[f"wps_{k}"] = f"{comp.get('points')}/{comp.get('max')}"
+        hit = DA._seasonal(p, excl_kw) if excl_kw else []
+        row["excluded"] = bool(hit)                         # owner exclusion applied by the program
+        row["exclusion_reason"] = ("exclusión operativa: " + ", ".join(hit)) if hit else None
+        row["below_preliminary_floor"] = (prelim is not None and floor is not None and prelim < floor)
+        row.update(run_id=m.get("run_id"), run_date=(m.get("started_at") or "")[:10],
+                   config_version=m.get("config_version"), scoring_version=(scoring or {}).get("version"),
+                   scoring_hash=(cfg_hashes.get("scoring.yaml") or "")[:16] or None)
         row["product_url"] = f.get("product_url") or (f"https://shop.tiktok.com/view/product/{pid}" if pid.isdigit() else None)
         rows.append(row)
     order = ["Listo para validar", "Prometedor", "En observación", "Datos insuficientes", "Descartado", None]
     rows.sort(key=lambda r: (not r["deep_analyzed"], order.index(r["decision"]) if r["decision"] in order else 9,
                              -(r["wps"] or 0), -(r["preliminary_score"] or 0)))
     return m, rows
+
+
+def write_two_views(m, rows, out_dir=OUT):
+    """Two workbooks for the same run: WITH the owner exclusions applied (excluded products removed) and WITHOUT
+    them (every discovered product; excluded ones keep their discovery data and show why they were left out —
+    they have no WPS because no deep analysis was bought for them)."""
+    try:
+        from openpyxl import Workbook
+        from openpyxl.styles import Font, PatternFill
+    except ImportError:
+        return []
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    cols = list(dict.fromkeys(k for r in rows for k in r))
+    lead = ["product_name", "decision", "wps", "excluded", "exclusion_reason", "preliminary_score", "units_30d",
+            "revenue_last_30d", "avg_order_value_proxy", "price_min", "price_max"]
+    cols = [c for c in lead if c in cols] + [c for c in cols if c not in lead]
+    files = []
+    for tag, view in (("con-exclusiones", [r for r in rows if not r.get("excluded")]), ("sin-exclusiones", rows)):
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Candidatos"
+        ws.append(cols)
+        for r in view:
+            ws.append([("Sí" if r[k] else "No") if isinstance(r.get(k), bool) else _v(r.get(k)) for k in cols])
+        for cell in ws[1]:
+            cell.font = Font(bold=True, color="FFFFFF")
+            cell.fill = PatternFill("solid", fgColor="1F5C4A")
+        ws.freeze_panes = "B2"
+        for col in ws.columns:
+            ws.column_dimensions[col[0].column_letter].width = min(48, max(10, max(len(str(c.value or "")) for c in col[:40]) + 2))
+        info = wb.create_sheet("Info")
+        n_ex = sum(bool(r.get("excluded")) for r in rows)
+        for k, v in (("Corrida", m["run_id"]), ("Vista", tag), ("Productos en esta vista", len(view)),
+                     ("Productos excluidos por regla del dueño", n_ex),
+                     ("Nota", "Los excluidos no tienen WPS: no se compró su análisis a fondo. N/A = dato no disponible.")):
+            info.append([k, v])
+        path = out_dir / f"{m['run_id']}-{tag}.xlsx"
+        wb.save(path)
+        files.append(str(path))
+    return files
+
+
+def write_snapshot(m, rows, snap_dir=None):
+    """Calibration snapshot: one frozen CSV per run with EVERY discovered product (also the low scores and the
+    ones never deep-analyzed), so later runs can measure what happened to them. Written once, never overwritten."""
+    snap_dir = Path(snap_dir or SNAP)
+    path = snap_dir / f"{m['run_id']}.csv"
+    if path.exists():
+        return path
+    snap_dir.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=SNAP_COLS)
+        w.writeheader()
+        w.writerows({k: _v(r.get(k)) for k in SNAP_COLS} for r in rows)
+    return path
 
 
 def write(root=ROOT, out_dir=OUT):
@@ -149,10 +259,12 @@ def write(root=ROOT, out_dir=OUT):
         L.append(f"| {i} | {(r['product_name'] or '')[:60]} | {_v(r['decision'])} | {_v(r['wps'])} | {_v(r['preliminary_score'])} | "
                  f"{_v(r['revenue_61_90d'])} → {_v(r['revenue_31_60d'])} → {_v(r['revenue_last_30d'])} | {_v(r['units_30d'])} | {_v(r['amazon'])} |")
     base.with_suffix(".md").write_text("\n".join(L) + "\n")
+    snap = write_snapshot(m, rows)
+    views = write_two_views(m, rows, out_dir)
     for ext in (".csv", ".xlsx", ".md"):
         if base.with_suffix(ext).exists():
             (out_dir / f"latest{ext}").write_bytes(base.with_suffix(ext).read_bytes())
-    return {"run_id": m["run_id"], "rows": len(rows), "files": [str(base.with_suffix(e)) for e in (".csv", ".xlsx", ".md")]}
+    return {"run_id": m["run_id"], "rows": len(rows), "snapshot": str(snap) if snap else None, "views": views, "files": [str(base.with_suffix(e)) for e in (".csv", ".xlsx", ".md")]}
 
 
 if __name__ == "__main__":

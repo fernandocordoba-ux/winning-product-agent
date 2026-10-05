@@ -1,0 +1,83 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 25.76,
+    "gmv": 51465.42,
+    "units": 2473,
+    "growth": 1397.68,
+    "creator_count": 154,
+    "selling_creator_count": 67,
+    "video_count": 208,
+    "selling_video_count": 71,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 3393
+  },
+  "concentration": {
+    "top_creator_revenue_share": 75.44,
+    "top_video_revenue_share": 74.88
+  },
+  "scores": {
+    "wps": 48.84,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": null,
+    "bvs_confidence": null,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": null
+  },
+  "flags": {
+    "red_flags": [
+      "CREATOR_DEPENDENCY",
+      "VIDEO_DEPENDENCY",
+      "SALES_DECLINING",
+      "SHIPPING_REVIEW_REQUIRED"
+    ],
+    "commercial_red_flags": [],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T042745061766Z_1732071484583022634_deep_product.json",
+    "task_id": "a9e84acfbfaf4caebd51545f39d1e427",
+    "report_url": null
+  },
+  "product_id": "1732071484583022634",
+  "identity_key": "1732071484583022634",
+  "key_type": "product_id",
+  "product_name": "Aelga 12 oz Honey Dispenser No Drip with Base, 2026 Upgrade Mess Free Syrup Dispenser for Coffee or Tea, Glass Honey Jar Pot with Handle, Black",
+  "category": "Kitchenware > Kitchen Utensils & Gadgets > Preserving Containers",
+  "shop": "Aelga",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T04:27:45.061766+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-03T04:27:45.061766+00:00",
+  "source_snapshot_hash": "19aab9baf678152b4c3192ef280b61e7b5fac9b99922daba30f99750267774a3",
+  "run_id": "20261003T042305Z_519ea0",
+  "written_at": "2026-10-03T05:17:09.249437+00:00",
+  "imported_at": "2026-10-03T05:17:09.249437+00:00"
+}

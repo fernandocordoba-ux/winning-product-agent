@@ -1,0 +1,106 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 92.495,
+    "gmv": 35166.43,
+    "units": 1041,
+    "growth": 90.2,
+    "creator_count": 98,
+    "selling_creator_count": 52,
+    "video_count": 191,
+    "selling_video_count": 84,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 10321
+  },
+  "concentration": {
+    "top_creator_revenue_share": 79.96,
+    "top_video_revenue_share": 55.33
+  },
+  "scores": {
+    "wps": 62.64,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": 17.5,
+    "amazon_confidence": 34.1,
+    "amazon_match_confidence": 30.33,
+    "amazon_price": null,
+    "amazon_competition": "MODERATE",
+    "observation_timestamp": "2026-10-03T05:13:01.388158+00:00"
+  },
+  "business": {
+    "bvs": 26.59,
+    "bvs_confidence": 26.0,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": "2026-10-03T05:17:08.851795+00:00"
+  },
+  "flags": {
+    "red_flags": [
+      "CREATOR_DEPENDENCY"
+    ],
+    "commercial_red_flags": [
+      "INSUFFICIENT_SUPPLIER_DATA"
+    ],
+    "amazon_red_flags": [
+      "NO_RELIABLE_MATCH",
+      "AMAZON_DATA_INSUFFICIENT"
+    ]
+  },
+  "missing_data": [
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history",
+    "amazon:amazon_bsr",
+    "amazon:amazon_price",
+    "amazon:amazon_rating",
+    "amazon:amazon_review_count",
+    "amazon:amazon_sales_indicator",
+    "economics:contribution_margin_percent",
+    "economics:contribution_profit",
+    "economics:estimated_ad_cost_per_order",
+    "economics:expected_chargeback_cost",
+    "economics:expected_refund_cost",
+    "economics:gross_margin_percent",
+    "economics:gross_profit_before_ads",
+    "economics:import_duty_per_order",
+    "economics:landed_cost",
+    "economics:landed_cost_note",
+    "economics:product_cost",
+    "economics:supplier_shipping_cost"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T050823284613Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T043222414982Z_1729459283880612691_deep_product.json",
+    "task_id": "ff37e497c09b4a03af771770b331cb9c",
+    "report_url": null,
+    "amazon_raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T051301388158Z_1729459283880612691_amazon_match.json",
+    "amazon_processed_file": null,
+    "bvs_processed_file": null,
+    "commercial_data_file": null
+  },
+  "product_id": "1729459283880612691",
+  "identity_key": "1729459283880612691",
+  "key_type": "product_id",
+  "product_name": "7CODE 10-Pack Foldable Organizer Storage Plastic Bins, Stackable Drawer Baskets for Drawer Organization & Kitchen Pantry, Ideal for Dorm Hacks to Fold, Stack, and Organize Wardrobe Closets",
+  "category": "Home Supplies > Home Organizers > Storage Boxes & Bins",
+  "shop": "7 CODE",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T04:32:22.414982+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-01",
+  "retrieved_at": "2026-10-03T04:32:22.414982+00:00",
+  "source_snapshot_hash": "487fdb5f1c7c48785fa0ef0205be6c3f2c65aa41b4e140c150372eff2a06fdf5",
+  "run_id": "20261003T042305Z_519ea0",
+  "written_at": "2026-10-03T05:17:09.250328+00:00",
+  "imported_at": "2026-10-03T05:17:09.250328+00:00"
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": "history-v1.2",
+  "tiktok": {
+    "price": 32.99,
+    "gmv": 347618.45,
+    "units": 15738,
+    "growth": 15.94,
+    "creator_count": 651,
+    "selling_creator_count": 313,
+    "video_count": 893,
+    "selling_video_count": null,
+    "shop_count": null
+  },
+  "competition": {
+    "similar_listings_count": null,
+    "category_product_count": 1531
+  },
+  "concentration": {
+    "top_creator_revenue_share": 29.18,
+    "top_video_revenue_share": 11.34
+  },
+  "scores": {
+    "wps": 57.77,
+    "confidence": 84.83
+  },
+  "amazon": {
+    "avs": null,
+    "amazon_confidence": null,
+    "amazon_match_confidence": null,
+    "amazon_price": null,
+    "amazon_competition": null,
+    "observation_timestamp": null
+  },
+  "business": {
+    "bvs": 27.03,
+    "bvs_confidence": 22.0,
+    "gross_margin_percent": null,
+    "contribution_margin_percent": null,
+    "observation_timestamp": "2026-10-03T04:13:26.624420+00:00"
+  },
+  "flags": {
+    "red_flags": [
+      "SALES_DECLINING"
+    ],
+    "commercial_red_flags": [
+      "INSUFFICIENT_SUPPLIER_DATA"
+    ],
+    "amazon_red_flags": []
+  },
+  "missing_data": [
+    "selling_video_count",
+    "video_growth_pct",
+    "shop_count",
+    "similar_listings_count",
+    "daily_units",
+    "daily_creator_count",
+    "daily_video_count",
+    "price_history",
+    "economics:contribution_margin_percent",
+    "economics:contribution_profit",
+    "economics:estimated_ad_cost_per_order",
+    "economics:expected_chargeback_cost",
+    "economics:expected_refund_cost",
+    "economics:gross_margin_percent",
+    "economics:gross_profit_before_ads",
+    "economics:import_duty_per_order",
+    "economics:landed_cost",
+    "economics:landed_cost_note",
+    "economics:product_cost",
+    "economics:supplier_shipping_cost"
+  ],
+  "source": {
+    "stage": "deep_analysis",
+    "processed_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T041326494398Z.json",
+    "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T035900465292Z_1729625334552039750_deep_product.json",
+    "task_id": "0898035acd1945d48b0ed4ae9827d16f",
+    "report_url": null,
+    "bvs_processed_file": null,
+    "commercial_data_file": null
+  },
+  "product_id": "1729625334552039750",
+  "identity_key": "1729625334552039750",
+  "key_type": "product_id",
+  "product_name": "5 Pack Fridge Organizers and Storage - Stackable Fruit Storage Containers for Fridge with Removable Colander, BPA-Free Food Storage Container for Salad Berry Lettuce Vegetables Meat Keeper Fresh",
+  "category": "Kitchenware > Kitchen Utensils & Gadgets > Preserving Containers",
+  "shop": "MIESOO",
+  "market": "US",
+  "observation_timestamp": "2026-10-03T03:59:00.465292+00:00",
+  "observation_date": "2026-10-03",
+  "source_stage": "deep_analysis",
+  "data_environment": "PRODUCTION",
+  "provider_observation_timestamp": "2026-10-03",
+  "retrieved_at": "2026-10-03T03:59:00.465292+00:00",
+  "source_snapshot_hash": "5cb1ad7c267152cffd6e4a628fccc3db3d4b9dea8bf8a7b9cc2d2d721da5fb09",
+  "run_id": "20261003T032125Z_33ac62",
+  "written_at": "2026-10-03T04:13:27.018899+00:00",
+  "imported_at": "2026-10-03T04:13:27.018899+00:00"
+}

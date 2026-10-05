@@ -94,3 +94,63 @@ class Target(unittest.TestCase):
         rs = [{"status": "ok", "wps": 60, "confidence": 70}, {"status": "ok", "wps": 54, "confidence": 90},
               {"status": "ok", "wps": 70, "confidence": 50}, {"status": "failed"}]
         self.assertEqual(Runner.candidates_found(rs), 1)
+
+
+class ScoreOnlyOrder(unittest.TestCase):
+    """preliminary_only: the score alone decides; sustained 90-day growth no longer jumps the queue."""
+
+    def _res(self):
+        small = cand("S", "Small sustained", 300, 10, 20)                       # low score, sustained growth
+        small["source"] = {"original_record": {"gmv_prev2_30d": 1000, "gmv_prev_30d": 2000, "gmv_30d": 3000}}
+        big = cand("B", "Big steady", 9000, 400, 900)                           # high score, not sustained
+        big["source"] = {"original_record": {"gmv_prev2_30d": 9000, "gmv_prev_30d": 5000, "gmv_30d": 6000}}
+        return {"candidates": [small, big]}
+
+    def test_sustained_first_vs_score_only(self):
+        cfg = DA.load_cfg()
+        cfg["selection"].update(deep_analysis_max_products=2, order="preliminary_wps")
+        sel, _ = DA.select_candidates(self._res(), copy.deepcopy(cfg))
+        self.assertEqual([p["key"] for p in sel], ["S", "B"])                   # previous rule, unchanged
+        cfg["selection"]["order"] = "preliminary_only"
+        sel, _ = DA.select_candidates(self._res(), copy.deepcopy(cfg))
+        self.assertEqual([p["key"] for p in sel], ["B", "S"])
+        self.assertTrue(all(p["calculated"]["preliminary_wps"] is not None for p in sel))
+
+
+class PreliminaryFloorAndEmptyCache(unittest.TestCase):
+    def test_floor_skips_low_scores_with_reason(self):
+        cfg = DA.load_cfg()
+        res = {"candidates": [cand("LOW", "Tiny", 210, 11, 21, growth=1), cand("HIGH", "Big", 9000, 400, 900)]}
+        cfg["selection"].update(deep_analysis_max_products=5, order="preliminary_only", min_preliminary=32)
+        sel, skipped = DA.select_candidates(res, copy.deepcopy(cfg))
+        self.assertEqual([p["key"] for p in sel], ["HIGH"])
+        self.assertTrue(any(s["key"] == "LOW" and "below 32" in s["reason"] for s in skipped))
+        cfg["selection"].pop("min_preliminary")                                  # no floor -> both, as before
+        sel, _ = DA.select_candidates(res, copy.deepcopy(cfg))
+        self.assertEqual({p["key"] for p in sel}, {"LOW", "HIGH"})
+
+    def test_empty_paid_answer_is_not_a_cache_hit(self):
+        import json
+        import tempfile
+        from datetime import datetime, timezone
+        d = Path(tempfile.mkdtemp())
+        now = datetime.now(timezone.utc)
+        env = {"observation_timestamp": now.isoformat(),
+               "response": {"data": {"status": "completed", "text": "", "report": None}}}
+        (d / "20260101T000000Z_P1_deep_product.json").write_text(json.dumps(env))
+        self.assertIsNone(DA.find_cached("P1", "deep_product", 72, now, d))
+        env["response"]["data"]["text"] = "```json\n{}\n```"
+        (d / "20260101T000001Z_P1_deep_product.json").write_text(json.dumps(env))
+        self.assertIsNotNone(DA.find_cached("P1", "deep_product", 72, now, d))
+
+
+class OperationalExclusions(unittest.TestCase):
+    def test_program_side_exclusion_has_its_own_reason(self):
+        cfg = DA.load_cfg()
+        res = {"candidates": [cand("PB", "20000mAh Power Bank Fast Charger", 9000, 400, 900),
+                              cand("OK", "Magnetic Phone Holder for Car", 8000, 300, 500)]}
+        cfg["selection"].update(deep_analysis_max_products=5, order="preliminary_only",
+                                exclude_operational=["power bank", "charger"])
+        sel, skipped = DA.select_candidates(res, copy.deepcopy(cfg))
+        self.assertEqual([p["key"] for p in sel], ["OK"])
+        self.assertTrue(any(s["key"] == "PB" and "operational exclusion" in s["reason"] for s in skipped))

@@ -1,0 +1,48 @@
+{
+  "config_version": "production-v12",
+  "version": "v12",
+  "promotion_timestamp": "2026-10-03T03:17:25.417020+00:00",
+  "promotion_kind": "OWNER_APPROVED",
+  "derived_from": "production-v11",
+  "approved_by": "owner",
+  "approved_at": "2026-10-03T03:10Z",
+  "source_calibration_version": {
+    "report": "reports/production-calibration.md",
+    "generated_at": "2026-09-30T22:42:01.668504+00:00",
+    "result": "MORE_CALIBRATION_REQUIRED"
+  },
+  "source_calibration_report": "owner-approved change of production-v11 (approved by owner at 2026-10-03T03:10Z)",
+  "decision_rules_version": "Z-v1-production-v1",
+  "scoring_version": "wps-v2.2",
+  "changes": {
+    "approved": 1,
+    "rejected": 0,
+    "deferred": 0
+  },
+  "aliases": {
+    "decision.yaml": "decision_rules.yaml",
+    "suppliers.yaml": "supplier.yaml",
+    "competitors.yaml": "competitor.yaml",
+    "creatives.yaml": "creative.yaml"
+  },
+  "hash_algorithm": "sha256",
+  "files": {
+    "amazon_validation.yaml": "bd588442d47e4d2cca8e43c1dfd89fefcbf6e7be8add381c6644b2d8e1381c90",
+    "business_viability.yaml": "418838fe34cf4f67af5fcb759895a9a409d3341b87ed65c30f1e3c6e8f7eef2e",
+    "calibration_lane.yaml": "7ea23e0611d0808f517b5af0b99b31a83c4fcafb3ce8bd442bb9ff71b8a070c1",
+    "categories.yaml": "ca51b0e60524db743e95e4d60ac68af7e83cba73c208943122f11fec4cf65956",
+    "change_review.json": "96744310333ca6912f334f438b2c773b16a3167c763ef61211cf6ce91add11d0",
+    "competitor.yaml": "c5be0a93faa44a516bcc7253f86ab00c9700c56507ea1b6480d8d26ba4fbd253",
+    "creative.yaml": "3f482918c64785bb852b123987fcb3f49148d01247fdafedc2fc9de89b9fa1de",
+    "decision_rules.yaml": "6c62a81b246e1947813a01f2845e5799f6aa28498dc72242684845593236b2af",
+    "deep_analysis.yaml": "19d64c8c455b748e467bc65743b6501d00ca026a4db9941c3dfa8f3bda1eaf36",
+    "emerging.yaml": "78da62b0edffd6ad13f008c4d47ca124074e43e5c79902c2f90319016cf83a7a",
+    "filters.yaml": "6b07e4c350bc27d3731c7ed11c47df2425f1f7b852ee06954aa1efeaeac56c80",
+    "history.yaml": "550981158a764dcb5ccbfe4be9f95511d670d1b01abb181b96adb4bfcf18526b",
+    "provider_capabilities.yaml": "593af6aaf93197a60533ae016ff70d6940587b17d5bb1e52b091dbaf77573166",
+    "report.yaml": "1fef99f63c8066ec468f8d557f5cc9bb60193526a9537a05715d8515b924103b",
+    "runtime.yaml": "54de5db48c6d004ce5728c5417e41083d7223c68ed73cfe6b387565950d76a19",
+    "scoring.yaml": "489af15de619521c0388b061ebf9d363cfa55c2f7df47ad785b7c95ad04a8ef7",
+    "supplier.yaml": "91c84b96f069ec7f61127a7ec97652bc57fc5006a6a50374646593dbeffb2c97"
+  }
+}

@@ -77,6 +77,33 @@ code { font: 13.5px var(--mono); background: var(--chip); padding: 2px 6px; bord
 .copy { font: 600 13px var(--body); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; margin-left: 6px; }
 @media (max-width: 520px) { .row { grid-template-columns: 1fr; } .row .val { text-align: left; } }
 @media (prefers-reduced-motion: no-preference) { .sheet { animation: rise .25s ease-out; } @keyframes rise { from { transform: translateY(4px); } to { transform: none; } } }
+
+/* v2 layout: a workbench — sticky section tabs, a sortable product ledger, and one detail sheet per product. */
+.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; border-bottom: 1px solid var(--line); }
+.tab { font: 600 14.5px var(--body); padding: 9px 14px; border-radius: 999px; border: 1px solid transparent; background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--panel); }
+.cats { display: flex; gap: 8px; overflow-x: auto; padding-block: 4px 10px; }
+.cat { font: 600 14.5px var(--body); padding: 10px 14px; min-height: 44px; border-radius: var(--r); border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; white-space: nowrap; }
+.cat small { font: 500 12.5px var(--mono); color: var(--muted); margin-left: 6px; }
+.cat[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.cat:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.tab:focus-visible, .th-btn:focus-visible, tr.click:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tools input, .tools select { font: 15px var(--body); padding: 9px 12px; border-radius: var(--r); border: 1px solid var(--line); background: var(--panel); color: var(--ink); min-width: 0; }
+.tools input { flex: 1 1 220px; }
+.th-btn { all: unset; cursor: pointer; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; }
+.th-btn[data-dir]::after { content: " ▾"; } .th-btn[data-dir="asc"]::after { content: " ▴"; }
+tr.click { cursor: pointer; } tr.click:hover td { background: var(--accent-soft); }
+td.name { max-width: 340px; min-width: 180px; } td.name small { display: block; color: var(--muted); font-size: 12.5px; }
+.spark { display: inline-block; vertical-align: middle; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; } .grid2 > * { min-width: 0; display: grid; gap: 12px; align-content: start; }
+.fbar { display: grid; grid-template-columns: minmax(120px, 34%) 1fr auto; gap: 10px; align-items: center; padding: 6px 0; font-size: 14.5px; }
+.fbar .track { height: 18px; background: var(--na-bg); border-radius: 5px; overflow: hidden; } .fbar .track i { display: block; height: 100%; background: var(--accent); }
+.fbar b { font: 600 14.5px var(--mono); font-variant-numeric: tabular-nums; }
+.back { all: unset; cursor: pointer; color: var(--accent); font-weight: 600; font-size: 14.5px; width: fit-content; }
+.count { font: 500 13px var(--mono); color: var(--muted); }
+h1 { font-size: clamp(24px, 4vw, 34px); }
+@media (max-width: 520px) { .fbar { grid-template-columns: 1fr auto; } .fbar .track { grid-column: 1 / -1; order: 3; } }
 </style>
 
 <div class="wrap">
@@ -84,205 +111,162 @@ code { font: 13.5px var(--mono); background: var(--chip); padding: 2px 6px; bord
     <div class="eyebrow">Winning Product Agent · TikTok Shop US</div>
     <h1>¿Qué quieres saber hoy?</h1>
     <div class="source" id="source"></div>
-    <div id="banner"></div>
   </header>
-
-  <form class="ask" id="ask" autocomplete="off">
-    <label for="q" class="eyebrow" style="flex-basis:100%">Escribe tu pregunta o elige una abajo</label>
-    <input id="q" name="q" placeholder="Ej.: ¿cuánto he gastado?, ¿por qué Laura Geller tiene 52?">
-    <button type="submit">Preguntar</button>
-  </form>
-
-  <nav class="questions" id="questions" aria-label="Preguntas"></nav>
-
-  <section class="sheet" id="answer" aria-live="polite"></section>
-
+  <nav class="cats" id="cats" aria-label="Categorías"></nav>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones"></nav>
+  <section class="sheet" id="view" aria-live="polite"></section>
   <p class="note" id="foot"></p>
 </div>
 
 <script>
 const DATA = /*__INSIGHTS_DATA__*/null;
-
-const Q = [
-  { id: "ready", t: "¿Hay algún producto listo para probar?", s: "Shortlist y puerta de lanzamiento", k: ["listo", "lanzar", "probar", "shortlist", "ganador", "ready"] },
-  { id: "potential", t: "¿Qué productos tienen potencial?", s: "Métricas de KaloPilot + validación de Amazon", k: ["potencial", "amazon", "kalopilot", "prometedor", "candidato"] },
-  { id: "list", t: "¿Cómo quedaron los productos?", s: "Estado de cada producto", k: ["productos", "quedaron", "estado", "lista", "todos"] },
-  { id: "score", t: "¿Por qué este producto tiene ese puntaje?", s: "WPS explicado punto por punto", k: ["por qué", "porque", "puntaje", "wps", "score", "puntos"], p: true },
-  { id: "gaps", t: "¿Qué le falta a un producto?", s: "Dimensiones, alertas y siguientes pasos", k: ["falta", "faltan", "alerta", "riesgo", "dimension", "flag"], p: true },
-  { id: "cost", t: "¿Cuánto he gastado?", s: "Créditos por corrida y saldo", k: ["gast", "crédit", "credit", "costo", "saldo", "dinero"] },
-  { id: "quality", t: "¿Qué tan confiables son los datos?", s: "Qué campos llegan y cuáles no", k: ["confiab", "datos", "calidad", "campos", "disponib"] },
-  { id: "health", t: "¿Está todo funcionando?", s: "Sistema, config y proveedores", k: ["funciona", "sistema", "salud", "error", "config"] },
-  { id: "next", t: "¿Qué hago ahora?", s: "Próximos pasos en orden", k: ["hago", "siguiente", "ahora", "paso", "próximo", "proximo"] },
-];
-
-const QT = (id) => (Q.find((q) => q.id === id) || {}).t || "";
-const AMZ_TONE = { COMPLETA: "good", MEDIA: "good", PARCIAL: "warn", NO_VALIDADA: "muted" };
-const amz = (a) => a ? tag(a.label, AMZ_TONE[a.level] || "muted") : tag("Sin dato de Amazon", "muted");
 const $ = (s) => document.querySelector(s);
 const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const num = (v, d = 2, u = "") => v === null || v === undefined || Number.isNaN(v) ? "N/A" :
-  (Math.abs(v) >= 1000 ? Math.round(v).toLocaleString("es") : (+v).toLocaleString("es", { maximumFractionDigits: d })) + u;
-const tag = (text, tone) => `<span class="tag ${tone}">${esc(text)}</span>`;
-const why = (text, label = "¿Por qué?") => text ? `<details><summary>${label}</summary><p>${esc(text)}</p></details>` : "";
+const num = (v, d = 1) => v === null || v === undefined || v === "" || Number.isNaN(+v) ? "N/A" :
+  (Math.abs(+v) >= 1000 ? Math.round(+v).toLocaleString("es") : (+v).toLocaleString("es", { maximumFractionDigits: d }));
+const money = (v) => v === null || v === undefined ? "N/A" : (+v >= 1000 ? Math.round(+v / 1000) + "k" : Math.round(+v));
+const tag = (t, tone) => `<span class="tag ${tone}">${esc(t)}</span>`;
+const why = (t, label = "¿Por qué?") => t ? `<details><summary>${label}</summary><p>${esc(t)}</p></details>` : "";
 const row = (label, val, explain, extra = "") => `<div class="row"><div class="label">${label}</div><div class="val">${val}</div>${extra}${why(explain)}</div>`;
+const stat = (v, l) => `<div class="stat"><b>${v}</b><span>${esc(l)}</span></div>`;
+const AMZ = { COMPLETA: "good", MEDIA: "good", PARCIAL: "warn", NO_VALIDADA: "muted" };
+const amz = (a) => a ? tag(a.label, AMZ[a.level] || "muted") : tag("Sin dato", "muted");
+const DEC = { "Listo para validar": "good", "Prometedor": "good", "En observación": "warn", "Descartado": "bad", "Datos insuficientes": "muted" };
+const wpsTone = (w) => w == null ? "muted" : w >= 70 ? "good" : w >= 55 ? "warn" : "bad";
+const store = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
 
-let current = "ready";
-let product = null;
+const P0 = DATA ? DATA.products : [];
+const C0 = DATA ? (DATA.candidates || []) : [];
+const F0 = DATA ? (DATA.funnel || []) : [];
+const G = DATA ? (DATA.groups || []) : [];
+const byId = Object.fromEntries(P0.map((p) => [p.id, p]));
+let grp = "", P = P0, C = C0, F = F0;
+const isCand = (p) => ["PROMISING_NEEDS_VALIDATION", "READY_FOR_PRODUCT_VALIDATION"].includes(p.state);
+function scope() { const f = (x) => !grp || x.group === grp; P = P0.filter(f); C = C0.filter(f); F = F0.filter(f); }
+const TABS = [["resumen", "Resumen"], ["productos", "Productos"], ["embudo", "Embudo"], ["corridas", "Corridas"], ["sistema", "Sistema"]];
+let tab = "resumen", product = null, q = "", fState = "", onlyDeep = false, sortKey = "wps", sortDir = "desc";
 
-function wpsTone(w) { return w === null || w === undefined ? "muted" : w >= 70 ? "good" : w >= 55 ? "warn" : "bad"; }
-
-function header() {
-  const d = DATA;
-  $("#source").innerHTML = `<span>Fuente: <b>${esc(d.source_label)}</b></span>` +
-    `<span>Config ${esc(d.config_version || "N/A")}</span>` +
-    `<span>Saldo KaloPilot: <b>${num(d.balance)}</b> créditos</span>` +
-    `<span>Actualizado ${esc(new Date(d.generated_at).toLocaleString("es"))}</span>`;
-  $("#banner").innerHTML = d.production_pending
-    ? `<div class="banner">Aún no hay corrida de producción. Lo que ves son los datos de calibración re-evaluados con las reglas de producción. Cuando corras producción, esta página se actualiza con los datos nuevos.</div>`
-    : `<div class="banner prod">Datos de la corrida de producción <code>${esc(d.run_id)}</code>.</div>`;
-  $("#foot").textContent = "Esta página solo muestra datos. No hace consultas pagadas, no pide muestras, no contacta proveedores y no gasta en anuncios.";
+function spark(c) {
+  const v = [c.revenue_61_90d, c.revenue_31_60d, c.revenue_last_30d];
+  if (v.some((x) => x == null)) return `<span class="count">${money(v[1])} → ${money(v[2])}</span>`;
+  const m = Math.max(...v, 1), pts = v.map((x, i) => `${4 + i * 26},${22 - (x / m) * 18}`).join(" ");
+  const up = v[0] < v[1] && v[1] < v[2];
+  return `<svg class="spark" width="60" height="26" viewBox="0 0 60 26" role="img" aria-label="Ventas ${money(v[0])}, ${money(v[1])}, ${money(v[2])} USD"><polyline points="${pts}" fill="none" stroke="var(--${up ? "good" : "warn"})" stroke-width="2"/><circle cx="56" cy="${22 - (v[2] / m) * 18}" r="3" fill="var(--${up ? "good" : "warn"})"/></svg> <span class="count">${money(v[2])}</span>`;
 }
 
-function questions() {
-  $("#questions").innerHTML = Q.map((q) =>
-    `<button class="chip" data-q="${q.id}" aria-pressed="${q.id === current}">${esc(q.t)}<small>${esc(q.s)}</small></button>`).join("");
-  document.querySelectorAll(".chip").forEach((b) => b.addEventListener("click", () => show(b.dataset.q)));
-}
-
-function productPicker() {
-  const ps = DATA.products;
-  if (!product && ps.length) product = ps[0].id;
-  return `<div class="products" role="group" aria-label="Producto">` + ps.map((p) =>
-    `<button class="pill-btn" data-p="${esc(p.id)}" aria-pressed="${p.id === product}" title="${esc(p.name)}">${esc(p.name.slice(0, 38))}</button>`).join("") + `</div>`;
-}
-
-const R = {
-  ready() {
-    const d = DATA, ps = d.products;
-    const ready = ps.filter((p) => p.state === "READY_FOR_PRODUCT_VALIDATION");
-    const counts = Object.entries(d.counts).map(([k, v]) => `<div class="stat"><b>${v}</b><span>${esc(k)}</span></div>`).join("");
-    const lead = ready.length
-      ? `Sí: <b>${ready.length}</b> producto(s) pasaron todas las reglas y están listos para la validación manual.`
-      : `Todavía no. Ningún producto llegó a <b>Listo para validar</b>.`;
-    const reason = ready.length ? "" :
-      "Para llegar a ese estado un producto necesita, además de buena demanda en TikTok, costo real de proveedor (para calcular el margen), investigación de competidores y creativos clasificados. Hoy esas tres fuentes no tienen datos importados, así que el sistema no puede aprobar ninguno. No es que los productos sean malos: es que falta evidencia, y el sistema nunca la inventa.";
-    const fv = d.final_validation.length ? `<h3>Puerta de lanzamiento</h3><div class="rows">` + d.final_validation.map((r) =>
-      row(esc(r.name), tag(r.state, r.state === "LAUNCH_TEST_READY" ? "good" : r.state === "REJECT" ? "bad" : "warn"),
-        "Pendiente: " + (r.missing.join("; ") || "nada"))).join("") + `</div>` : "";
-    return `<h2>${QT("ready")}</h2><p class="lead">${lead}</p>${why(reason, "¿Por qué no hay ninguno?")}<div class="stats">${counts}</div>${fv}`;
+const V = {
+  resumen() {
+    const d = DATA, last = F[F.length - 1] || {};
+    const prom = P.filter((p) => ["PROMISING_NEEDS_VALIDATION", "READY_FOR_PRODUCT_VALIDATION"].includes(p.state));
+    const top = [...prom].sort((a, b) => (b.wps || 0) - (a.wps || 0)).slice(0, 5);
+    const where = grp ? "en " + esc(grp) : "en todas las categorías analizadas";
+    const lead = prom.length ? `<b>${prom.length}</b> producto(s) con potencial ${where}. Toca uno para ver su detalle.` : `Ningún producto alcanzó el puntaje mínimo (WPS 55) ${where}.`;
+    const spent = F.reduce((s, f) => s + (f.credits || 0), 0);
+    const perCat = !grp && G.length > 1 ? `<h3>Por categoría</h3><div class="table-wrap"><table><thead><tr><th>Categoría</th><th>Encontrados</th><th>Analizados</th><th>Candidatos</th><th>Mejor WPS</th><th>Créditos</th></tr></thead><tbody>${G.map((g) => { const ps = P0.filter((p) => p.group === g), cd = ps.filter(isCand), best = Math.max(...ps.map((p) => p.wps || 0), 0); return `<tr class="click" tabindex="0" data-grp="${esc(g)}"><td class="name">${esc(g)}</td><td class="num">${C0.filter((c) => c.group === g).length}</td><td class="num">${ps.length}</td><td class="num"><b>${cd.length}</b></td><td class="num">${best ? tag(num(best), wpsTone(best)) : "N/A"}</td><td class="num">${num(F0.filter((f) => f.group === g).reduce((s, f) => s + (f.credits || 0), 0))}</td></tr>`; }).join("")}</tbody></table></div>` : "";
+    return `<h2>Resumen</h2><p class="lead">${lead}</p>
+      <div class="stats">${stat(prom.length, "Candidatos (Prometedor o Listo)")}${stat(C.length || P.length, "Productos encontrados")}${stat(P.length, "Analizados a fondo")}${stat(num(spent), grp ? "Créditos en esta categoría" : "Créditos en estas corridas")}${stat(num(d.balance), "Saldo de créditos")}</div>
+      ${perCat}
+      ${top.length ? `<h3>Mejores candidatos</h3><div class="rows">${top.map((p) => `<div class="row"><div class="label"><button class="back" data-p="${esc(p.id)}">${esc(p.name.slice(0, 70))}</button>${!grp && p.group ? ` <span class="note">${esc(p.group)}</span>` : ""}</div><div class="val">WPS ${num(p.wps)} ${amz(p.amazon)}</div></div>`).join("")}</div>` : ""}
+      ${d.audit && d.audit.issues.length ? `<h3>Avisos de la auditoría</h3><ul class="plain">${d.audit.issues.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>` : ""}
+      ${(d.recommendations || []).length ? `<h3>Qué puede mejorar</h3><ul class="plain">${d.recommendations.map((r) => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
+      ${why("WPS (0–100) mide la fuerza del producto en TikTok Shop: 55 es aceptable y 70 es fuerte. Prometedor = buen puntaje sin alertas negativas. La etiqueta de Amazon es informativa y nunca descarta un producto.", "¿Cómo leer esto?")}`;
   },
-  potential() {
-    const pot = DATA.potential || [];
-    const lead = pot.length
-      ? `<b>${pot.length}</b> producto(s) cumplen las métricas de demanda de KaloPilot (WPS ≥ 55 con datos confiables). Se muestran aunque Amazon no los haya validado.`
-      : "En esta corrida ningún producto cumplió las métricas de demanda de KaloPilot (WPS ≥ 55 con datos confiables).";
-    const rows = pot.map((p) => row(`${esc(p.name)} <span class="note">${esc(p.category || "")}</span>`,
-      `WPS <b>${num(p.wps)}</b> · ${amz(p.amazon)}`,
-      `Estado de la decisión: ${p.state_es}. Amazon: ${p.amazon ? p.amazon.reason : "sin dato"}.`)).join("");
-    return `<h2>${QT("potential")}</h2><p class="lead">${lead}</p>` +
-      why("Amazon es preferible pero no obligatorio. Etiquetas: completa = coincidencia confiable y confianza ≥ 60; media = coincidencia confiable y confianza 50–59; parcial = Amazon respondió pero sin coincidencia confiable o con poca confianza; sin validar = no se consultó (no elegible o sin presupuesto). La etiqueta nunca oculta un producto ni cambia su estado.", "¿Qué significa la etiqueta de Amazon?") +
-      `<div class="rows">${rows}</div>`;
+  productos() {
+    if (product && byId[product]) return V.detalle(byId[product]);
+    const src = C.length ? C : P.map((p) => ({ product_id: p.id, product_name: p.name, category: p.category, wps: p.wps, decision: p.state_es, deep_analyzed: true, units_30d: p.units, amazon: p.amazon && p.amazon.label }));
+    const states = [...new Set(src.map((c) => c.decision).filter(Boolean))];
+    let rows = src.filter((c) => (!q || (c.product_name || "").toLowerCase().includes(q.toLowerCase())) && (!fState || c.decision === fState) && (!onlyDeep || c.deep_analyzed));
+    const val = (c) => sortKey === "name" ? (c.product_name || "").toLowerCase() : (c[sortKey] ?? -Infinity);
+    rows.sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : 0) * (sortDir === "asc" ? 1 : -1));
+    const th = (k, l, cls = "") => `<th class="${cls}" aria-sort="${sortKey === k ? (sortDir === "asc" ? "ascending" : "descending") : "none"}"><button class="th-btn" data-sort="${k}" ${sortKey === k ? `data-dir="${sortDir}"` : ""}>${l}</button></th>`;
+    const body = rows.map((c) => { const has = byId[c.product_id];
+      return `<tr class="${has ? "click" : ""}" ${has ? `tabindex="0" data-p="${esc(c.product_id)}"` : ""}><td class="name">${esc((c.product_name || "").slice(0, 80))}<small>${!grp && c.group ? esc(c.group) + " · " : ""}${esc((c.category || "").split(">").pop().trim())}${c.lens ? " · " + esc(c.lens.split(":").pop().split(":")[0].slice(0, 28)) : ""}</small></td>
+        <td>${c.decision ? tag(c.decision, DEC[c.decision] || "muted") : tag(c.deep_analyzed ? "Análisis fallido" : "Sin analizar", "muted")}</td>
+        <td class="num">${c.wps != null ? tag(num(c.wps), wpsTone(c.wps)) : "N/A"}</td><td class="num">${num(c.preliminary_score)}</td>
+        <td>${spark(c)}</td><td class="num">${num(c.units_30d, 0)}</td><td class="num">${num(c.avg_order_value_proxy)}${c.price_vs_aov_flag === "REVISAR" ? " " + tag("≠ lista", "warn") : ""}</td><td class="num">${num(c.creators, 0)}</td></tr>`; }).join("");
+    return `<h2>Productos</h2>
+      <div class="tools"><input id="search" type="search" placeholder="Buscar producto…" value="${esc(q)}" aria-label="Buscar producto">
+        <select id="fstate" aria-label="Filtrar por decisión"><option value="">Todas las decisiones</option>${states.map((s) => `<option ${s === fState ? "selected" : ""}>${esc(s)}</option>`).join("")}</select>
+        <label style="font-size:14.5px"><input id="fdeep" type="checkbox" ${onlyDeep ? "checked" : ""}> Solo analizados a fondo</label>
+        <span class="count">${rows.length} de ${src.length}</span></div>
+      <div class="table-wrap"><table><thead><tr>${th("name", "Producto")}${th("decision", "Decisión")}${th("wps", "WPS")}${th("preliminary_score", "Preliminar")}${th("revenue_last_30d", "Ventas 90→30 d")}${th("units_30d", "Unidades")}${th("avg_order_value_proxy", "Ingreso/unidad")}${th("creators", "Creadores")}</tr></thead><tbody>${body || `<tr><td colspan="8">Ningún producto coincide con el filtro.</td></tr>`}</tbody></table></div>
+      <p class="note">Toca el encabezado de una columna para ordenar. Toca un producto analizado para ver su detalle. La línea muestra las ventas de 61–90, 31–60 y últimos 30 días (verde = crecimiento sostenido). Ingreso/unidad = ventas ÷ unidades de 30 días (USD); «≠ lista» indica que queda fuera del precio publicado.</p>`;
   },
-  list() {
-    const rows = DATA.products.map((p) => `<tr><td>${esc(p.name)}</td><td>${tag(p.state_es, p.tone)}</td>` +
-      `<td class="num">${num(p.wps)}</td><td class="num">${num(p.decision_confidence)}</td><td>${amz(p.amazon)}</td><td>${esc(p.state_why)}</td></tr>`).join("");
-    return `<h2>${QT("list")}</h2><p class="lead">${DATA.products.length} productos evaluados. El <b>WPS</b> (0–100) mide qué tan fuerte se ve en TikTok; la <b>confianza de la decisión</b> mide cuánta evidencia hay detrás, no qué tan bueno es.</p>` +
-      `<div class="table-wrap"><table><thead><tr><th>Producto</th><th>Estado</th><th>WPS</th><th>Confianza decisión</th><th>Amazon</th><th>Qué significa</th></tr></thead><tbody>${rows}</tbody></table></div>` +
-      why("Estados: Listo para validar → pasó todo; Prometedor → buena demanda pero faltan datos; En observación → una dimensión débil; Descartado → evidencia negativa clara; Datos insuficientes → falta información para decidir.", "¿Qué significa cada estado?");
+  detalle(p) {
+    const c = C0.find((x) => x.product_id === p.id) || {};
+    const comps = p.wps_components.map((k) => { const pct = k.points == null ? 0 : Math.max(0, Math.min(100, k.points / k.max * 100));
+      return row(`${esc(k.metric)} <span class="note">(${k.tier === "CORE" ? "principal" : "de apoyo"})</span>`, k.points == null ? "N/A" : `${num(k.points, 2)} / ${num(k.max)}`, k.why, `<div class="bar"><i style="width:${pct}%"></i></div>`); }).join("");
+    const dims = p.dimensions.map((d) => row(esc(d.dimension), tag(d.status, d.tone), d.why)).join("");
+    return `<button class="back" id="back">← Todos los productos</button><h2>${esc(p.name)}</h2>
+      <p class="lead">${tag(p.state_es, p.tone)} · WPS <b>${num(p.wps)}</b> · ${amz(p.amazon)}</p>${why(p.state_why + " " + p.dc_why + (p.amazon ? " Amazon: " + p.amazon.reason + "." : ""))}
+      <div class="stats">${stat(num(p.gmv, 0), "Ventas 30 días (USD)")}${stat(num(p.units, 0), "Unidades 30 días")}${stat(num(p.price), "Precio promedio (USD)")}${stat(num(p.creators, 0) + " / " + num(p.videos, 0), "Creadores / videos")}${stat(num(p.wps_confidence), "Confianza de datos")}${c.avg_order_value_proxy != null ? stat(num(c.avg_order_value_proxy), "Ingreso real por unidad (USD)") : ""}${c.wps_coverage_pct != null ? stat(num(c.wps_floor) + " · " + num(c.wps_coverage_pct, 0) + " %", "WPS piso · cobertura") : ""}</div>
+      ${c.supplier_estimate ? `<p class="note">Proveedor (solo referencia): ${esc(c.supplier_estimate)}</p>` : ""}
+      <div class="grid2"><div><h3>Puntaje WPS, componente por componente</h3><div class="rows">${comps}</div></div>
+      <div><h3>Dimensiones de la decisión</h3><div class="rows">${dims}</div>
+      ${p.flags.length ? `<h3>Alertas</h3><ul class="plain">${p.flags.map((f) => `<li>${esc(f.es)}</li>`).join("")}</ul>` : ""}
+      ${p.next_actions.length ? `<h3>Siguientes pasos</h3><ol class="steps">${p.next_actions.map((a) => `<li>${esc(a)}</li>`).join("")}</ol>` : ""}</div></div>
+      ${c.product_url ? `<p class="note"><a href="${esc(c.product_url)}" target="_blank" rel="noopener">Ver en TikTok Shop</a></p>` : ""}`;
   },
-  score() {
-    const p = DATA.products.find((x) => x.id === product) || DATA.products[0];
-    if (!p) return `<h2>${QT("score")}</h2><p class="lead">No hay productos.</p>`;
-    const comps = p.wps_components.map((c) => {
-      const pct = c.points === null ? 0 : Math.max(0, Math.min(100, c.points / c.max * 100));
-      const val = c.points === null ? "N/A" : `${num(c.points)} / ${num(c.max)}`;
-      return row(`${esc(c.metric)} <span class="note">(${c.tier === "CORE" ? "principal" : "de apoyo"})</span>`, val, c.why, `<div class="bar"><i style="width:${pct}%"></i></div>`);
-    }).join("");
-    return `<h2>${esc(p.name)}</h2>${productPicker()}` +
-      `<p class="lead">WPS <b>${num(p.wps)}</b> ${tag(p.wps >= 70 ? "Fuerte" : p.wps >= 55 ? "Aceptable" : "Débil", wpsTone(p.wps))} con confianza de datos <b>${num(p.wps_confidence)}</b>.</p>` +
-      why("El WPS suma 11 componentes. Cada uno toma un dato real de KaloPilot y lo pasa por una escala fija (abajo ves la escala de cada uno). El total se normaliza a 0–100. Para la decisión, 55 es aceptable y 70 es fuerte.", "¿Cómo se calcula el WPS?") +
-      `<div class="stats"><div class="stat"><b>${num(p.gmv, 0)}</b><span>Ventas 30 días (USD)</span></div><div class="stat"><b>${num(p.units, 0)}</b><span>Unidades 30 días</span></div><div class="stat"><b>${num(p.price)}</b><span>Precio promedio (USD)</span></div><div class="stat"><b>${num(p.creators, 0)} / ${num(p.videos, 0)}</b><span>Creadores / videos</span></div></div>` +
-      `<div class="rows">${comps}</div>`;
+  embudo() {
+    const f = F[F.length - 1];
+    if (!f) return `<h2>Embudo</h2><p class="lead">Todavía no hay corridas de producción.</p>`;
+    const st = [["Registros recibidos", f.records], ["Pasan los filtros", (f.pass || 0) + (f.review || 0)], ["Candidatos conservados", f.candidates_kept], ["Análisis profundo completo", f.deep_ok], ["Califican (WPS ≥ 55)", f.qualified], ["Prometedor o Listo", (f.states.PROMISING_NEEDS_VALIDATION || 0) + (f.states.READY_FOR_PRODUCT_VALIDATION || 0)]];
+    const max = Math.max(...st.map((x) => x[1] || 0), 1);
+    const w = f.wps.filter((x) => x != null), bins = Array.from({ length: 10 }, (_, i) => w.filter((x) => x >= i * 10 && x < i * 10 + 10).length), bm = Math.max(...bins, 1);
+    return `<h2>Embudo de la última corrida${f.group ? " · " + esc(f.group) : ""}</h2><p class="lead">De <b>${num(f.records, 0)}</b> productos recibidos quedaron <b>${f.qualified}</b> que califican. Tasa de acierto del análisis profundo: <b>${f.hit_rate == null ? "N/A" : Math.round(f.hit_rate * 100) + " %"}</b>.</p>
+      <div>${st.map(([l, v]) => `<div class="fbar"><span>${l}</span><div class="track"><i style="width:${(v || 0) / max * 100}%"></i></div><b>${num(v, 0)}</b></div>`).join("")}</div>
+      <div class="grid2"><div><h3>Por qué se detuvieron o marcaron</h3>${f.filter_reasons.length ? `<div class="rows">${f.filter_reasons.map(([r, n]) => row(esc(r.replace(/_/g, " ")), n)).join("")}</div>` : `<p class="note">Ningún producto fue detenido por los filtros.</p>`}
+        <p class="note">Búsquedas: ${f.answers_ok} útiles de ${f.queries}. Análisis fallidos: ${f.deep_failed}. No ejecutados: ${f.deep_not_run}${f.target ? ` (se detuvo al llegar a ${f.target})` : ""}.</p></div>
+      <div><h3>Distribución del WPS</h3><div>${bins.map((n, i) => `<div class="fbar"><span>${i * 10}–${i * 10 + 9}${i === 5 ? " · aceptable" : i === 7 ? " · fuerte" : ""}</span><div class="track"><i style="width:${n / bm * 100}%;background:var(--${i >= 7 ? "good" : i >= 5 ? "warn" : "na"})"></i></div><b>${n}</b></div>`).join("")}</div></div></div>`;
   },
-  gaps() {
-    const p = DATA.products.find((x) => x.id === product) || DATA.products[0];
-    if (!p) return `<h2>${QT("gaps")}</h2><p class="lead">No hay productos.</p>`;
-    const dims = p.dimensions.map((d) => row(esc(d.dimension), tag(d.status, d.tone), d.why + (d.technical ? `  (detalle técnico: ${d.technical})` : ""))).join("");
-    const flags = p.flags.length ? `<h3>Alertas</h3><ul class="plain">${p.flags.map((f) => `<li><b>${esc(f.code.replace(/_/g, " ").toLowerCase())}</b>: ${esc(f.es)}</li>`).join("")}</ul>` : "";
-    const next = p.next_actions.length ? `<h3>Siguientes pasos</h3><ol class="steps">${p.next_actions.map((a) => `<li>${esc(a)}</li>`).join("")}</ol>` : "";
-    return `<h2>${esc(p.name)}</h2>${productPicker()}<p class="lead">Estado: ${tag(p.state_es, p.tone)} · confianza de la decisión <b>${num(p.decision_confidence)}</b> · ${amz(p.amazon)}</p>${why(p.state_why + " " + p.dc_why + (p.amazon ? " Amazon: " + p.amazon.reason + "." : ""))}` +
-      `<h3>Las 6 dimensiones de la decisión</h3><div class="rows">${dims}</div>${flags}${next}`;
+  corridas() {
+    const rows = F.map((f) => `<tr><td>${esc(f.run_id.slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3"))}</td><td>${esc(f.group || "N/A")}</td><td>${esc(f.config)}</td><td class="num">${num(f.records, 0)}</td><td class="num">${f.deep_ok}</td><td class="num"><b>${f.qualified}</b></td><td class="num">${f.hit_rate == null ? "N/A" : Math.round(f.hit_rate * 100) + " %"}</td><td class="num">${num(f.credits)}</td><td class="num">${num(f.credits_per_candidate)}</td></tr>`).join("");
+    const c = DATA.costs, total = c.reduce((s, r) => s + (r.creditos || 0), 0);
+    return `<h2>Corridas comparadas</h2><div class="stats">${stat(num(DATA.balance), "Saldo actual")}${stat(num(total), "Créditos gastados en total")}${stat(F.length, "Corridas de producción")}</div>
+      <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Categoría</th><th>Configuración</th><th>Registros</th><th>Analizados</th><th>Candidatos</th><th>Acierto</th><th>Créditos</th><th>Créditos por candidato</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${why("Créditos por candidato es la medida de eficiencia: cuánto costó encontrar cada producto con WPS de 55 o más. Mientras más bajo, mejor funciona la búsqueda.", "¿Qué comparar?")}
+      <h3>Todas las consultas pagadas</h3><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Resultado</th><th>Consultas</th><th>Créditos</th><th>Saldo final</th></tr></thead><tbody>${c.map((r) => `<tr><td>${esc(r.fecha)}</td><td>${esc(r.tipo)}</td><td>${esc(r.estado)}</td><td class="num">${r.consultas_pagadas}</td><td class="num">${num(r.creditos)}</td><td class="num">${num(r.saldo_fin)}</td></tr>`).join("")}</tbody></table></div>`;
   },
-  cost() {
-    const c = DATA.costs;
-    const total = c.reduce((s, r) => s + (r.creditos || 0), 0);
-    const deep = c.filter((r) => r.por_analisis_profundo && r.consultas_pagadas > 1).map((r) => r.por_analisis_profundo);
-    const avg = deep.length ? deep.reduce((a, b) => a + b, 0) / deep.length : null;
-    const rows = c.map((r) => `<tr><td>${esc(r.fecha)}</td><td>${esc(r.tipo)}</td><td>${esc(r.estado)}</td><td class="num">${r.consultas_pagadas}</td><td class="num">${num(r.creditos)}</td><td class="num">${num(r.saldo_fin)}</td></tr>`).join("");
-    return `<h2>${QT("cost")}</h2><div class="stats"><div class="stat"><b>${num(DATA.balance)}</b><span>Saldo actual</span></div><div class="stat"><b>${num(total)}</b><span>Créditos gastados en corridas registradas</span></div><div class="stat"><b>${num(avg)}</b><span>Promedio por análisis profundo</span></div></div>` +
-      why("Los créditos se miden con el saldo gratuito de KaloPilot antes y después de cada consulta. Las corridas que marcan 0 fueron bloqueadas o importaron resultados ya pagados. Aparte hubo ~5.6 créditos gastados en discovery antes de que existiera el runner (no aparecen en esta tabla).") +
-      `<div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Resultado</th><th>Consultas pagadas</th><th>Créditos</th><th>Saldo final</th></tr></thead><tbody>${rows}</tbody></table></div>`;
-  },
-  quality() {
-    const q = DATA.data_quality;
-    const tone = { RELIABLE: "good", USABLE: "warn", SPARSE: "bad", UNRELIABLE: "bad" };
-    const es = { RELIABLE: "Confiable", USABLE: "Usable", SPARSE: "Escaso", UNRELIABLE: "No confiable" };
-    const rows = q.map((r) => row(esc(r.campo.replace("Deep · ", "Análisis · ").replace("Discovery · ", "Descubrimiento · ")),
-      `${r.disponible}/${r.total} ${tag(es[r.estado] || r.estado, tone[r.estado] || "muted")}`, null,
-      `<div class="bar"><i style="width:${r.total ? r.disponible / r.total * 100 : 0}%"></i></div>`)).join("");
-    return `<h2>${QT("quality")}</h2><p class="lead">Cuántas veces llegó cada dato en las respuestas reales de KaloPilot.</p>` +
-      why("Confiable = llega en 90 % o más de las respuestas; Usable = 70–89 %; Escaso = 30–69 %; No confiable = menos de 30 % o con problemas de mapeo. Los campos escasos nunca se usan como datos principales. Amazon, proveedores y competidores no aparecen porque todavía no hay datos reales de esas fuentes.", "¿Cómo se clasifica?") +
-      `<div class="rows">${rows}</div>`;
-  },
-  health() {
-    const h = DATA.health;
-    const comps = Object.entries(h.components || {}).map(([k, v]) => row(esc(k), tag(v === "READY" ? "Listo" : v, v === "READY" ? "good" : "bad"))).join("");
-    return `<h2>${QT("health")}</h2><p class="lead">Chequeo previo: ${tag(h.preflight === "READY_FOR_DRY_RUN" ? "Todo listo" : h.preflight, h.preflight === "READY_FOR_DRY_RUN" ? "good" : "bad")} · configuración ${esc(h.config.version || "N/A")} ${tag(h.config.hashes_ok ? "sin cambios" : "modificada", h.config.hashes_ok ? "good" : "bad")}</p>` +
-      why("La configuración de producción está sellada con huellas digitales (hashes). Si alguien cambia un archivo, el sistema lo detecta y bloquea la corrida. El chequeo previo revisa configuración, rutas, módulos y la compuerta de seguridad que impide consultas pagadas sin tu confirmación.") +
-      (DATA.audit ? `<h3>Auditoría de la última corrida</h3><div class="rows">` +
-        row("Resultado", tag(DATA.audit.result === "RUN_VALIDATED" ? "Validada" : "Requiere revisión", DATA.audit.result === "RUN_VALIDATED" ? "good" : "warn"),
-          DATA.audit.issues.length ? DATA.audit.issues.join(" ") : "Todos los chequeos pasaron.") + `</div>` : "") +
-      `<div class="rows">${comps}</div>`;
-  },
-  next() {
-    const d = DATA, steps = [];
-    if (d.production_pending) steps.push("Correr la primera corrida de producción: escribe exactamente CONFIRM PRODUCTION LIVE RUN en el chat (unos 4–22 créditos, tope 25).");
-    steps.push("Importar ofertas reales de proveedor (costo + envío) de los productos con mejor WPS: sin eso ningún producto puede llegar a Listo para validar.");
-    steps.push("Importar investigación de competidores directos (tiendas, precios, anuncios).");
-    steps.push("Importar creativos clasificados (hooks y ángulos) de esos productos.");
-    steps.push("Correr la validación final: python -m winning_product_agent final-validation --latest");
-    d.final_validation.forEach((r) => r.actions.slice(0, 3).forEach((a) => steps.push(`${r.name}: ${a}`)));
-    return `<h2>${QT("next")}</h2><ol class="steps">${steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>` +
-      why("El orden sigue las dependencias: primero datos reales de producción, después las fuentes que desbloquean el margen y la competencia, y al final la puerta de lanzamiento. Ningún paso gasta dinero sin tu confirmación.") +
-      `<p class="note">Comando para la validación final <code id="cmd">python -m winning_product_agent final-validation --latest</code><button class="copy" id="copy" type="button">Copiar</button></p>`;
+  sistema() {
+    const h = DATA.health, q2 = DATA.data_quality, es = { RELIABLE: ["Confiable", "good"], USABLE: ["Usable", "warn"], SPARSE: ["Escaso", "bad"], UNRELIABLE: ["No confiable", "bad"] };
+    const comps = Object.entries(h.components || {}), bad = comps.filter(([, v]) => v !== "READY");
+    return `<h2>Sistema</h2><div class="stats">${stat(esc(h.config.version || "N/A"), "Configuración activa")}${stat(h.config.hashes_ok ? "Sin cambios" : "Alterada", "Integridad de la configuración")}${stat(`${comps.length - bad.length}/${comps.length}`, "Componentes listos")}</div>
+      ${bad.length ? `<ul class="plain">${bad.map(([k, v]) => `<li>${esc(k)}: ${esc(v)}</li>`).join("")}</ul>` : ""}
+      ${DATA.audit ? `<h3>Auditoría de la última corrida</h3><div class="rows">${row("Resultado", tag(DATA.audit.result === "RUN_VALIDATED" ? "Validada" : "Requiere revisión", DATA.audit.result === "RUN_VALIDATED" ? "good" : "warn"), DATA.audit.issues.join(" ") || "Todos los chequeos pasaron.")}</div>` : ""}
+      <h3>Disponibilidad de los datos</h3><div class="rows">${q2.map((r) => row(esc(r.campo.replace("Deep · ", "Análisis · ").replace("Discovery · ", "Búsqueda · ")), `${r.disponible}/${r.total} ${tag((es[r.estado] || [r.estado])[0], (es[r.estado] || [0, "muted"])[1])}`)).join("")}</div>
+      <p class="note">Lo que falta aparece como N/A: el sistema nunca estima ni inventa valores.</p>`;
   },
 };
 
-function show(id) {
-  current = id;
-  $("#answer").innerHTML = R[id]();
-  document.querySelectorAll(".chip").forEach((b) => b.setAttribute("aria-pressed", b.dataset.q === id));
-  document.querySelectorAll(".pill-btn").forEach((b) => b.addEventListener("click", () => { product = b.dataset.p; show(current); }));
-  const cp = $("#copy");
-  if (cp) cp.addEventListener("click", () => {
-    const t = $("#cmd").textContent;
-    navigator.clipboard?.writeText(t).then(() => { cp.textContent = "Copiado"; }, () => {
-      const r = document.createRange(); r.selectNodeContents($("#cmd")); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-    });
-  });
+function render() {
+  scope();
+  $("#cats").innerHTML = G.length > 1 ? [["", "Todas"]].concat(G.map((g) => [g, g])).map(([k, l]) => `<button class="cat" aria-pressed="${k === grp}" data-grp="${esc(k)}">${esc(l)}<small>${(k ? P0.filter((p) => p.group === k) : P0).filter(isCand).length} candidatos</small></button>`).join("") : "";
+  store.set("wpa-grp", grp);
+  $("#tabs").innerHTML = TABS.map(([k, l]) => `<button class="tab" role="tab" aria-selected="${k === tab}" data-tab="${k}">${l}</button>`).join("");
+  $("#view").innerHTML = V[tab]();
+  store.set("wpa-tab", tab);
 }
+function go(t, pid) { tab = t; product = pid || null; history.replaceState(null, "", "#" + t); render(); window.scrollTo({ top: 0 }); }
 
-$("#ask").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const text = $("#q").value.toLowerCase();
-  const hit = DATA.products.find((p) => p.name.toLowerCase().split(/\s+/).slice(0, 2).some((w) => w.length > 3 && text.includes(w)));
-  if (hit) product = hit.id;
-  let best = null, score = 0;
-  Q.forEach((q) => { const s = q.k.filter((k) => text.includes(k)).length; if (s > score) { score = s; best = q; } });
-  if (!best && hit) best = Q.find((q) => q.id === "gaps");
-  if (best) show(best.id);
-  else $("#answer").innerHTML = `<h2>No entendí la pregunta</h2><p class="lead">Prueba con una de estas:</p><ul class="plain">${Q.map((q) => `<li>${esc(q.t)}</li>`).join("")}</ul>`;
-});
-
-header(); questions(); show(current);
+if (!DATA) { $("#view").innerHTML = "<h2>Sin datos</h2><p class='lead'>Genera la página con el comando insights.</p>"; }
+else {
+  $("#source").innerHTML = `<span>${esc(DATA.source_label)}</span><span>Config ${esc(DATA.config_version || "N/A")}</span><span>Actualizado ${new Date(DATA.generated_at).toLocaleString("es")}</span>`;
+  $("#foot").textContent = "Esta página solo muestra datos. No hace consultas pagadas, no pide muestras, no contacta proveedores y no gasta en anuncios.";
+  const h = location.hash.slice(1); tab = V[h] && h !== "detalle" ? h : (V[store.get("wpa-tab", "")] ? store.get("wpa-tab", "resumen") : "resumen"); if (tab === "detalle") tab = "resumen";
+  grp = G.includes(store.get("wpa-grp", "")) ? store.get("wpa-grp", "") : "";
+  document.addEventListener("click", (e) => {
+    const g = e.target.closest("[data-grp]"); if (g) { grp = g.dataset.grp; fState = ""; return go(tab === "productos" ? "productos" : tab); }
+    const t = e.target.closest("[data-tab]"); if (t) return go(t.dataset.tab);
+    const s = e.target.closest("[data-sort]"); if (s) { const k = s.dataset.sort; sortDir = sortKey === k && sortDir === "desc" ? "asc" : "desc"; sortKey = k; return render(); }
+    const p = e.target.closest("[data-p]"); if (p) return go("productos", p.dataset.p);
+    if (e.target.id === "back") return go("productos");
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.matches("tr.click")) { if (e.target.dataset.grp) { grp = e.target.dataset.grp; go(tab); } else go("productos", e.target.dataset.p); } });
+  document.addEventListener("input", (e) => {
+    if (e.target.id === "search") { q = e.target.value; const pos = e.target.selectionStart; render(); const n = $("#search"); n.focus(); n.setSelectionRange(pos, pos); }
+    if (e.target.id === "fstate") { fState = e.target.value; render(); }
+    if (e.target.id === "fdeep") { onlyDeep = e.target.checked; render(); }
+  });
+  render();
+}
 </script>

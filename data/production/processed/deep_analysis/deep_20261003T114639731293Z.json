@@ -1,0 +1,3004 @@
+{
+  "mode": "live",
+  "run_id": "20261003T105009Z_351269",
+  "data_environment": "PRODUCTION",
+  "discovery_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T113521Z.json",
+  "selected": 3,
+  "skipped": [
+    {
+      "key": "1732568812313612543",
+      "reason": "operational exclusion ['wireless earbuds']: not deep-analyzed"
+    },
+    {
+      "key": "1732397010730783697",
+      "reason": "operational exclusion ['charging']: not deep-analyzed"
+    },
+    {
+      "key": "1731759838691889487",
+      "reason": "operational exclusion ['power bank', 'speaker']: not deep-analyzed"
+    },
+    {
+      "key": "1729386017821135441",
+      "reason": "operational exclusion ['charging']: not deep-analyzed"
+    },
+    {
+      "key": "1732303807580115633",
+      "reason": "operational exclusion ['bluetooth']: not deep-analyzed"
+    },
+    {
+      "key": "1731532158983246389",
+      "reason": "preliminary score 24.85 below 32: not deep-analyzed"
+    },
+    {
+      "key": "1731239712772821133",
+      "reason": "preliminary score 31.8 below 32: not deep-analyzed"
+    },
+    {
+      "key": "1732510313971159444",
+      "reason": "preliminary score 19.36 below 32: not deep-analyzed"
+    }
+  ],
+  "not_run": [],
+  "stopped": null,
+  "results": [
+    {
+      "status": "ok",
+      "product_id": "1732306919019352838",
+      "product_name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360° Rotating Stand, Shockproof Air Cushion, Matte Anti-Fingerprint",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732306919019352838&language=en-US&currency=USD&region=US",
+      "category": "Phones & Electronics > Phones and Accessories > Cases, Screen Protectors & Stickers",
+      "category_id": "601925",
+      "shop": {
+        "shop_id": "7495468182119418630",
+        "shop_name": "MAGIC JOHN"
+      },
+      "price": {
+        "min": 25.0,
+        "max": 29.99,
+        "avg": 27.494999999999997,
+        "history": null
+      },
+      "gmv": 41791.38,
+      "units": 1765,
+      "growth": {
+        "growth_30d_pct": 344.02,
+        "category_growth_pct": -11.32,
+        "gmv_prev_30d": 9412.02,
+        "growth_30d_provider": 344.02,
+        "growth_source": "calculated"
+      },
+      "launch_date": "2026-03-28",
+      "data_window_end": "2026-10-03",
+      "commission_pct": 5,
+      "creator_metrics": {
+        "total": 96,
+        "selling": 55,
+        "growth_pct": -34.25,
+        "top_creators": [
+          {
+            "creator_id": "7310483997769860142",
+            "name": "MAGICJOHN.OFFICIAL",
+            "revenue": 20948.55,
+            "growth_pct": 35.93
+          },
+          {
+            "creator_id": "7375743281953031211",
+            "name": "JayC Tech",
+            "revenue": 8228.25,
+            "growth_pct": -22.84
+          },
+          {
+            "creator_id": "7437434065594319918",
+            "name": "MAGIC JOHN",
+            "revenue": 3889.57,
+            "growth_pct": 237.97
+          },
+          {
+            "creator_id": "7124949209296585771",
+            "name": "magicjohn_official.us3",
+            "revenue": 2299.3,
+            "growth_pct": 47.09
+          },
+          {
+            "creator_id": "7266826556155462698",
+            "name": "Decsteamboy us",
+            "revenue": 1704.19,
+            "growth_pct": -48.63
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 177,
+        "selling": 114,
+        "growth_pct": -36.79,
+        "sales_share_pct": 96.77,
+        "top_videos": [
+          {
+            "video_id": "7645371343684373773",
+            "creator": "jayctech",
+            "revenue": 7744.25,
+            "views": 200531
+          },
+          {
+            "video_id": "7684310127863663902",
+            "creator": "magicjohn.official",
+            "revenue": 5474.56,
+            "views": 142010
+          },
+          {
+            "video_id": "7627310749626469663",
+            "creator": "magicjohn.official",
+            "revenue": 4780.94,
+            "views": 119692
+          },
+          {
+            "video_id": "7686901128809696543",
+            "creator": "magicjohn.official",
+            "revenue": 4623.16,
+            "views": 200724
+          },
+          {
+            "video_id": "7659788407253552398",
+            "creator": "chidsj",
+            "revenue": 1704.19,
+            "views": 40176
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 69644,
+        "category_product_count_level": "Cases, Screen Protectors & Stickers",
+        "competition_count": 69644,
+        "competition_scope": "SUBCATEGORY",
+        "competition_category_id": "601925",
+        "competition_subcategory_id": "601925",
+        "competition_comparable": true,
+        "category_level_stated": "Cases, Screen Protectors & Stickers",
+        "competition_source_field": "category_product_count"
+      },
+      "sales_history": {
+        "daily_gmv": [
+          420,
+          448,
+          280,
+          192,
+          192,
+          224,
+          675,
+          1200,
+          750,
+          2475,
+          2575,
+          2677,
+          2142,
+          1784,
+          2158,
+          2347,
+          2420,
+          3322,
+          2794,
+          2134,
+          1782,
+          1540,
+          1166,
+          1210,
+          594,
+          374,
+          572,
+          1100,
+          1012,
+          1232
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -59.8,
+          "prior_velocity_pct": -6.19,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "DECLINING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732306919019352838",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 50.13,
+            "reason": null,
+            "inputs": {
+              "gmv": 41791.38,
+              "creators_count": 96,
+              "items_returned": 5,
+              "top_revenue_sum": 20948.55
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 79.12,
+            "reason": null,
+            "inputs": {
+              "gmv": 41791.38,
+              "creators_count": 96,
+              "items_returned": 5,
+              "top_revenue_sum": 33066.37
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 18.53,
+            "reason": null,
+            "inputs": {
+              "gmv": 41791.38,
+              "videos_count": 177,
+              "items_returned": 5,
+              "top_revenue_sum": 7744.25
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 43.07,
+            "reason": null,
+            "inputs": {
+              "gmv": 41791.38,
+              "videos_count": 177,
+              "items_returned": 5,
+              "top_revenue_sum": 17999.75
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 50.13,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 18.53,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 47.63,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_long_term": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "growth_recent_trend": {
+          "points": 0.0,
+          "max": 10,
+          "tier": "SUPPORTING"
+        },
+        "growth_acceleration": {
+          "points": 0.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        },
+        "demand": {
+          "points": 8.35,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "video_momentum": {
+          "points": 11.29,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "creator_reach": {
+          "points": 5.2,
+          "max": 9,
+          "tier": "CORE"
+        },
+        "creator_growth": {
+          "points": 3.6,
+          "max": 6,
+          "tier": "SUPPORTING"
+        },
+        "competition_category_growth": {
+          "points": 0.93,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "competition_saturation": {
+          "points": 0.0,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "margin_potential": {
+          "points": 6.1,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "trend_stability": {
+          "points": 2.16,
+          "max": 5,
+          "tier": "SUPPORTING"
+        }
+      },
+      "wps_groups": {
+        "growth_momentum": {
+          "points": 10.0,
+          "max": 25.0,
+          "na": []
+        },
+        "demand": {
+          "points": 8.35,
+          "max": 15.0,
+          "na": []
+        },
+        "video_momentum": {
+          "points": 11.29,
+          "max": 15.0,
+          "na": []
+        },
+        "creator_momentum": {
+          "points": 8.8,
+          "max": 15.0,
+          "na": []
+        },
+        "competition": {
+          "points": 0.93,
+          "max": 15.0,
+          "na": []
+        },
+        "margin_potential": {
+          "points": 6.1,
+          "max": 10.0,
+          "na": []
+        },
+        "trend_stability": {
+          "points": 2.16,
+          "max": 5.0,
+          "na": []
+        }
+      },
+      "wps_points": {
+        "earned": 47.63,
+        "possible": 100.0
+      },
+      "wps_missing_by_tier": {
+        "CORE": [],
+        "SUPPORTING": [],
+        "ENHANCEMENT": []
+      },
+      "wps_inputs": {
+        "product_id": "1732306919019352838",
+        "product_name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360° Rotating Stand, Shockproof Air Cushion, Matte Anti-Fingerprint",
+        "recent_velocity_pct": -59.8,
+        "acceleration_pp": -53.61,
+        "competition_count_comparable": 69644,
+        "revenue_growth_pct": 344.02,
+        "units_sold": 1765,
+        "videos_count": 177,
+        "video_sales_share_pct": 96.77,
+        "creators_count": 96,
+        "category_growth_pct": -11.32,
+        "category_product_count": 69644,
+        "price_avg": 27.494999999999997,
+        "commission_pct": 5,
+        "gmv": 41791.38,
+        "price_min": 25.0,
+        "price_max": 29.99,
+        "shops_count": 1,
+        "similar_listings_count": null,
+        "launch_date_days": 189,
+        "history_snapshots": 0
+      },
+      "confidence_adjustments": [
+        {
+          "reason": "ENHANCEMENT field missing: price_history",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_creator_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_video_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_units",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: creator_growth_pct",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: video_growth_pct",
+          "points": -1
+        }
+      ],
+      "confidence_before_adjustments": 94.17,
+      "provenance": {
+        "price_min": {
+          "value": 25.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 29.99,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_avg": {
+          "value": 27.494999999999997,
+          "provider": "kalopilot",
+          "source_field": "price_min+price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "gmv_30d": {
+          "value": 41791.38,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 9412.02,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "previous 30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1765,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 344.02,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d,gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d vs previous 30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED",
+          "provider_value": 344.02
+        },
+        "daily_gmv": {
+          "value": [
+            420,
+            448,
+            280,
+            192,
+            192,
+            224,
+            675,
+            1200,
+            750,
+            2475,
+            2575,
+            2677,
+            2142,
+            1784,
+            2158,
+            2347,
+            2420,
+            3322,
+            2794,
+            2134,
+            1782,
+            1540,
+            1166,
+            1210,
+            594,
+            374,
+            572,
+            1100,
+            1012,
+            1232
+          ],
+          "provider": "kalopilot",
+          "source_field": "daily_gmv",
+          "scope": "PRODUCT",
+          "period": "daily, 30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_count": {
+          "value": 96,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_creator_count": {
+          "value": 55,
+          "provider": "kalopilot",
+          "source_field": "selling_creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_creators": {
+          "value": [
+            {
+              "creator_id": "7310483997769860142",
+              "name": "MAGICJOHN.OFFICIAL",
+              "revenue": 20948.55,
+              "growth_pct": 35.93
+            },
+            {
+              "creator_id": "7375743281953031211",
+              "name": "JayC Tech",
+              "revenue": 8228.25,
+              "growth_pct": -22.84
+            },
+            {
+              "creator_id": "7437434065594319918",
+              "name": "MAGIC JOHN",
+              "revenue": 3889.57,
+              "growth_pct": 237.97
+            },
+            {
+              "creator_id": "7124949209296585771",
+              "name": "magicjohn_official.us3",
+              "revenue": 2299.3,
+              "growth_pct": 47.09
+            },
+            {
+              "creator_id": "7266826556155462698",
+              "name": "Decsteamboy us",
+              "revenue": 1704.19,
+              "growth_pct": -48.63
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_creators",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_growth_pct": {
+          "value": -34.25,
+          "provider": "kalopilot",
+          "source_field": "creator_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 177,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_video_count": {
+          "value": 114,
+          "provider": "kalopilot",
+          "source_field": "selling_video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_sales_share_pct": {
+          "value": 96.77,
+          "provider": "kalopilot",
+          "source_field": "video_sales_share_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_videos": {
+          "value": [
+            {
+              "video_id": "7645371343684373773",
+              "creator": "jayctech",
+              "revenue": 7744.25,
+              "views": 200531
+            },
+            {
+              "video_id": "7684310127863663902",
+              "creator": "magicjohn.official",
+              "revenue": 5474.56,
+              "views": 142010
+            },
+            {
+              "video_id": "7627310749626469663",
+              "creator": "magicjohn.official",
+              "revenue": 4780.94,
+              "views": 119692
+            },
+            {
+              "video_id": "7686901128809696543",
+              "creator": "magicjohn.official",
+              "revenue": 4623.16,
+              "views": 200724
+            },
+            {
+              "video_id": "7659788407253552398",
+              "creator": "chidsj",
+              "revenue": 1704.19,
+              "views": 40176
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_videos",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_growth_pct": {
+          "value": -36.79,
+          "provider": "kalopilot",
+          "source_field": "video_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "category_growth_pct": {
+          "value": -11.32,
+          "provider": "kalopilot",
+          "source_field": "category_growth_pct",
+          "scope": "CATEGORY (as returned)",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "competition_count": {
+          "value": 69644,
+          "provider": "kalopilot",
+          "source_field": "category_product_count",
+          "scope": "SUBCATEGORY",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": 1,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "commission_pct": {
+          "value": 5,
+          "provider": "kalopilot",
+          "source_field": "commission_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "similar_listings_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "similar_listings_count",
+          "scope": "PRODUCT_CLUSTER",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-03",
+          "retrieved_at": "2026-10-03T11:38:57.334216+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "wps_input_provenance": {
+        "revenue_growth_pct": "growth_30d",
+        "recent_velocity_pct": "daily_gmv",
+        "acceleration_pp": "daily_gmv",
+        "units_sold": "units_30d",
+        "videos_count": "video_count",
+        "video_sales_share_pct": "video_sales_share_pct",
+        "creators_count": "creator_count",
+        "top_creators_growth_pct": "top_creators",
+        "category_growth_pct": "category_growth_pct",
+        "competition_count_comparable": "competition_count",
+        "price_avg": "price_avg",
+        "commission_pct": "commission_pct",
+        "daily_sales_series": "daily_gmv",
+        "gmv": "gmv_30d",
+        "shops_count": "shop_count",
+        "similar_listings_count": "similar_listings_count"
+      },
+      "wps_na_metrics": [],
+      "confidence": 88.17,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 6.67,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 2.5,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "SALES_DECLINING",
+          "trend": "DECLINING",
+          "growth_30d_pct": 344.02
+        },
+        {
+          "flag": "EXTREME_SATURATION",
+          "input": "category_product_count",
+          "value": 69644,
+          "condition": ">= 50000"
+        }
+      ],
+      "missing_data": [
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732306919019352838",
+        "product_name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360° Rotating Stand, Shockproof Air Cushion, Matte Anti-Fingerprint",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732306919019352838&language=en-US&currency=USD&region=US",
+        "category_path": "Phones & Electronics > Phones and Accessories > Cases, Screen Protectors & Stickers",
+        "category_id": "601925",
+        "shop_id": "7495468182119418630",
+        "shop_name": "MAGIC JOHN",
+        "price_min": 25.0,
+        "price_max": 29.99,
+        "gmv_30d": 41791.38,
+        "units_30d": 1765,
+        "gmv_prev_30d": 9412.02,
+        "growth_30d_pct": 344.02,
+        "category_growth_pct": -11.32,
+        "launch_date": "2026-03-28",
+        "data_window_end": "2026-10-03",
+        "commission_pct": 5,
+        "daily_gmv": [
+          420,
+          448,
+          280,
+          192,
+          192,
+          224,
+          675,
+          1200,
+          750,
+          2475,
+          2575,
+          2677,
+          2142,
+          1784,
+          2158,
+          2347,
+          2420,
+          3322,
+          2794,
+          2134,
+          1782,
+          1540,
+          1166,
+          1210,
+          594,
+          374,
+          572,
+          1100,
+          1012,
+          1232
+        ],
+        "creator_count": 96,
+        "selling_creator_count": 55,
+        "creator_growth_pct": -34.25,
+        "top_creators": [
+          {
+            "creator_id": "7310483997769860142",
+            "name": "MAGICJOHN.OFFICIAL",
+            "revenue": 20948.55,
+            "growth_pct": 35.93
+          },
+          {
+            "creator_id": "7375743281953031211",
+            "name": "JayC Tech",
+            "revenue": 8228.25,
+            "growth_pct": -22.84
+          },
+          {
+            "creator_id": "7437434065594319918",
+            "name": "MAGIC JOHN",
+            "revenue": 3889.57,
+            "growth_pct": 237.97
+          },
+          {
+            "creator_id": "7124949209296585771",
+            "name": "magicjohn_official.us3",
+            "revenue": 2299.3,
+            "growth_pct": 47.09
+          },
+          {
+            "creator_id": "7266826556155462698",
+            "name": "Decsteamboy us",
+            "revenue": 1704.19,
+            "growth_pct": -48.63
+          }
+        ],
+        "video_count": 177,
+        "selling_video_count": 114,
+        "video_growth_pct": -36.79,
+        "video_sales_share_pct": 96.77,
+        "top_videos": [
+          {
+            "video_id": "7645371343684373773",
+            "creator": "jayctech",
+            "revenue": 7744.25,
+            "views": 200531
+          },
+          {
+            "video_id": "7684310127863663902",
+            "creator": "magicjohn.official",
+            "revenue": 5474.56,
+            "views": 142010
+          },
+          {
+            "video_id": "7627310749626469663",
+            "creator": "magicjohn.official",
+            "revenue": 4780.94,
+            "views": 119692
+          },
+          {
+            "video_id": "7686901128809696543",
+            "creator": "magicjohn.official",
+            "revenue": 4623.16,
+            "views": 200724
+          },
+          {
+            "video_id": "7659788407253552398",
+            "creator": "chidsj",
+            "revenue": 1704.19,
+            "views": 40176
+          }
+        ],
+        "shop_count": 1,
+        "category_product_count": 69644,
+        "category_product_count_level": "Cases, Screen Protectors & Stickers",
+        "leaf_category_id": "601925"
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v2.2",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-10-03T11:38:57.334216+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T113857334216Z_1732306919019352838_deep_product.json",
+        "task_id": "4976f5ec6dd6427ebe1282742ff10d94",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732306919019352838",
+        "discovery_status": "PASS"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T105009Z_351269",
+      "_pid": "1732306919019352838"
+    },
+    {
+      "status": "ok",
+      "product_id": "1732250308902949401",
+      "product_name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro Max, Durable High-End Smartphone Casing, Mobile Phone Protection Accessories, Thoughtful Gift",
+      "product_url": "https://www.kalodata.com/product/detail?id=1732250308902949401&language=en-US&currency=USD&region=US",
+      "category": "Phones & Electronics > Phones and Accessories > Cases, Screen Protectors & Stickers",
+      "category_id": "601925",
+      "shop": {
+        "shop_id": "7494196046038402585",
+        "shop_name": "Star Sky Phone Case"
+      },
+      "price": {
+        "min": 31.0,
+        "max": 37.75,
+        "avg": 34.375,
+        "history": null
+      },
+      "gmv": 43848.76,
+      "units": 1425,
+      "growth": {
+        "growth_30d_pct": 1445.65,
+        "category_growth_pct": -28.05,
+        "gmv_prev_30d": 2836.91,
+        "growth_30d_provider": 1445.65,
+        "growth_source": "calculated"
+      },
+      "launch_date": "2026-01-24",
+      "data_window_end": "2026-10-02",
+      "commission_pct": 10.0,
+      "creator_metrics": {
+        "total": 58,
+        "selling": 20,
+        "growth_pct": 286.67,
+        "top_creators": [
+          {
+            "creator_id": "7244616351908643882",
+            "name": "@shopdrewss",
+            "revenue": 17932.92,
+            "growth_pct": -16.96
+          },
+          {
+            "creator_id": "7559907003059078199",
+            "name": "Star Sky Phone Case",
+            "revenue": 9408.24,
+            "growth_pct": 509.38
+          },
+          {
+            "creator_id": "6901370895753135109",
+            "name": "ladyzamor",
+            "revenue": 4756.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7158390104905434158",
+            "name": "proddfinds",
+            "revenue": 3181.33,
+            "growth_pct": 31.81
+          },
+          {
+            "creator_id": "7593624813852967949",
+            "name": "Starry",
+            "revenue": 3044.01,
+            "growth_pct": 143.16
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 198,
+        "selling": 199,
+        "growth_pct": 102.04,
+        "sales_share_pct": 100.0,
+        "top_videos": [
+          {
+            "video_id": "7682332305616014622",
+            "creator": "shopdrewss",
+            "revenue": 9413.55,
+            "views": 609537
+          },
+          {
+            "video_id": "7673797017704893726",
+            "creator": "shopdrewss",
+            "revenue": 6895.45,
+            "views": 455428
+          },
+          {
+            "video_id": "7689968523803626783",
+            "creator": "miss.zamor",
+            "revenue": 4118.0,
+            "views": 411738
+          },
+          {
+            "video_id": "7687845318183963918",
+            "creator": "eliana202510",
+            "revenue": 3799.0,
+            "views": 278473
+          },
+          {
+            "video_id": "7687875465201175822",
+            "creator": "eliana202510",
+            "revenue": 2175.0,
+            "views": 154228
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": 1,
+        "similar_listings_count": null,
+        "category_product_count": 30918,
+        "category_product_count_level": "Cases, Screen Protectors & Stickers",
+        "competition_count": 30918,
+        "competition_scope": "SUBCATEGORY",
+        "competition_category_id": "601925",
+        "competition_subcategory_id": "601925",
+        "competition_comparable": true,
+        "category_level_stated": "Cases, Screen Protectors & Stickers",
+        "competition_source_field": "category_product_count"
+      },
+      "sales_history": {
+        "daily_gmv": [
+          186.0,
+          288.0,
+          290.0,
+          284.0,
+          192.0,
+          220.0,
+          402.0,
+          819.0,
+          561.0,
+          1770.0,
+          2436.0,
+          1716.0,
+          1876.0,
+          2027.0,
+          1326.0,
+          1443.0,
+          1943.0,
+          2726.0,
+          2755.0,
+          2175.0,
+          1740.0,
+          1769.0,
+          2291.0,
+          2117.0,
+          2581.0,
+          1856.0,
+          1972.0,
+          1247.0,
+          1508.0,
+          1334.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -18.08,
+          "prior_velocity_pct": 22.27,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "DECLINING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1732250308902949401",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 40.9,
+            "reason": null,
+            "inputs": {
+              "gmv": 43848.76,
+              "creators_count": 58,
+              "items_returned": 5,
+              "top_revenue_sum": 17932.92
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 73.2,
+            "reason": null,
+            "inputs": {
+              "gmv": 43848.76,
+              "creators_count": 58,
+              "items_returned": 5,
+              "top_revenue_sum": 32097.159999999996
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 21.47,
+            "reason": null,
+            "inputs": {
+              "gmv": 43848.76,
+              "videos_count": 198,
+              "items_returned": 5,
+              "top_revenue_sum": 9413.55
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 46.59,
+            "reason": null,
+            "inputs": {
+              "gmv": 43848.76,
+              "videos_count": 198,
+              "items_returned": 5,
+              "top_revenue_sum": 20427.0
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 40.9,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 21.47,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 46.51,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_long_term": {
+          "points": 10.0,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "growth_recent_trend": {
+          "points": 0.38,
+          "max": 10,
+          "tier": "SUPPORTING"
+        },
+        "growth_acceleration": {
+          "points": 0.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        },
+        "demand": {
+          "points": 7.53,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "video_momentum": {
+          "points": 11.48,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "creator_reach": {
+          "points": 4.04,
+          "max": 9,
+          "tier": "CORE"
+        },
+        "creator_growth": {
+          "points": 3.6,
+          "max": 6,
+          "tier": "SUPPORTING"
+        },
+        "competition_category_growth": {
+          "points": 0.0,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "competition_saturation": {
+          "points": 0.78,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "margin_potential": {
+          "points": 5.93,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "trend_stability": {
+          "points": 2.77,
+          "max": 5,
+          "tier": "SUPPORTING"
+        }
+      },
+      "wps_groups": {
+        "growth_momentum": {
+          "points": 10.38,
+          "max": 25.0,
+          "na": []
+        },
+        "demand": {
+          "points": 7.53,
+          "max": 15.0,
+          "na": []
+        },
+        "video_momentum": {
+          "points": 11.48,
+          "max": 15.0,
+          "na": []
+        },
+        "creator_momentum": {
+          "points": 7.64,
+          "max": 15.0,
+          "na": []
+        },
+        "competition": {
+          "points": 0.78,
+          "max": 15.0,
+          "na": []
+        },
+        "margin_potential": {
+          "points": 5.93,
+          "max": 10.0,
+          "na": []
+        },
+        "trend_stability": {
+          "points": 2.77,
+          "max": 5.0,
+          "na": []
+        }
+      },
+      "wps_points": {
+        "earned": 46.51,
+        "possible": 100.0
+      },
+      "wps_missing_by_tier": {
+        "CORE": [],
+        "SUPPORTING": [],
+        "ENHANCEMENT": []
+      },
+      "wps_inputs": {
+        "product_id": "1732250308902949401",
+        "product_name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro Max, Durable High-End Smartphone Casing, Mobile Phone Protection Accessories, Thoughtful Gift",
+        "recent_velocity_pct": -18.08,
+        "acceleration_pp": -40.35,
+        "competition_count_comparable": 30918,
+        "revenue_growth_pct": 1445.65,
+        "units_sold": 1425,
+        "videos_count": 198,
+        "video_sales_share_pct": 100.0,
+        "creators_count": 58,
+        "category_growth_pct": -28.05,
+        "category_product_count": 30918,
+        "price_avg": 34.375,
+        "commission_pct": 10.0,
+        "gmv": 43848.76,
+        "price_min": 31.0,
+        "price_max": 37.75,
+        "shops_count": 1,
+        "similar_listings_count": null,
+        "launch_date_days": 251,
+        "history_snapshots": 0
+      },
+      "confidence_adjustments": [
+        {
+          "reason": "ENHANCEMENT field missing: price_history",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_creator_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_video_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_units",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: creator_growth_pct",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: video_growth_pct",
+          "points": -1
+        }
+      ],
+      "confidence_before_adjustments": 94.17,
+      "provenance": {
+        "price_min": {
+          "value": 31.0,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 37.75,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_avg": {
+          "value": 34.375,
+          "provider": "kalopilot",
+          "source_field": "price_min+price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "gmv_30d": {
+          "value": 43848.76,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 2836.91,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "previous 30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1425,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 1445.65,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d,gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d vs previous 30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED",
+          "provider_value": 1445.65
+        },
+        "daily_gmv": {
+          "value": [
+            186.0,
+            288.0,
+            290.0,
+            284.0,
+            192.0,
+            220.0,
+            402.0,
+            819.0,
+            561.0,
+            1770.0,
+            2436.0,
+            1716.0,
+            1876.0,
+            2027.0,
+            1326.0,
+            1443.0,
+            1943.0,
+            2726.0,
+            2755.0,
+            2175.0,
+            1740.0,
+            1769.0,
+            2291.0,
+            2117.0,
+            2581.0,
+            1856.0,
+            1972.0,
+            1247.0,
+            1508.0,
+            1334.0
+          ],
+          "provider": "kalopilot",
+          "source_field": "daily_gmv",
+          "scope": "PRODUCT",
+          "period": "daily, 30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_count": {
+          "value": 58,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_creator_count": {
+          "value": 20,
+          "provider": "kalopilot",
+          "source_field": "selling_creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_creators": {
+          "value": [
+            {
+              "creator_id": "7244616351908643882",
+              "name": "@shopdrewss",
+              "revenue": 17932.92,
+              "growth_pct": -16.96
+            },
+            {
+              "creator_id": "7559907003059078199",
+              "name": "Star Sky Phone Case",
+              "revenue": 9408.24,
+              "growth_pct": 509.38
+            },
+            {
+              "creator_id": "6901370895753135109",
+              "name": "ladyzamor",
+              "revenue": 4756.0,
+              "growth_pct": 0.0
+            },
+            {
+              "creator_id": "7158390104905434158",
+              "name": "proddfinds",
+              "revenue": 3181.33,
+              "growth_pct": 31.81
+            },
+            {
+              "creator_id": "7593624813852967949",
+              "name": "Starry",
+              "revenue": 3044.01,
+              "growth_pct": 143.16
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_creators",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_growth_pct": {
+          "value": 286.67,
+          "provider": "kalopilot",
+          "source_field": "creator_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 198,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_video_count": {
+          "value": 199,
+          "provider": "kalopilot",
+          "source_field": "selling_video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_sales_share_pct": {
+          "value": 100.0,
+          "provider": "kalopilot",
+          "source_field": "video_sales_share_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_videos": {
+          "value": [
+            {
+              "video_id": "7682332305616014622",
+              "creator": "shopdrewss",
+              "revenue": 9413.55,
+              "views": 609537
+            },
+            {
+              "video_id": "7673797017704893726",
+              "creator": "shopdrewss",
+              "revenue": 6895.45,
+              "views": 455428
+            },
+            {
+              "video_id": "7689968523803626783",
+              "creator": "miss.zamor",
+              "revenue": 4118.0,
+              "views": 411738
+            },
+            {
+              "video_id": "7687845318183963918",
+              "creator": "eliana202510",
+              "revenue": 3799.0,
+              "views": 278473
+            },
+            {
+              "video_id": "7687875465201175822",
+              "creator": "eliana202510",
+              "revenue": 2175.0,
+              "views": 154228
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_videos",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_growth_pct": {
+          "value": 102.04,
+          "provider": "kalopilot",
+          "source_field": "video_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "category_growth_pct": {
+          "value": -28.05,
+          "provider": "kalopilot",
+          "source_field": "category_growth_pct",
+          "scope": "CATEGORY (as returned)",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "competition_count": {
+          "value": 30918,
+          "provider": "kalopilot",
+          "source_field": "category_product_count",
+          "scope": "SUBCATEGORY",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": 1,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "commission_pct": {
+          "value": 10.0,
+          "provider": "kalopilot",
+          "source_field": "commission_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "similar_listings_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "similar_listings_count",
+          "scope": "PRODUCT_CLUSTER",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:43:34.662077+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "wps_input_provenance": {
+        "revenue_growth_pct": "growth_30d",
+        "recent_velocity_pct": "daily_gmv",
+        "acceleration_pp": "daily_gmv",
+        "units_sold": "units_30d",
+        "videos_count": "video_count",
+        "video_sales_share_pct": "video_sales_share_pct",
+        "creators_count": "creator_count",
+        "top_creators_growth_pct": "top_creators",
+        "category_growth_pct": "category_growth_pct",
+        "competition_count_comparable": "competition_count",
+        "price_avg": "price_avg",
+        "commission_pct": "commission_pct",
+        "daily_sales_series": "daily_gmv",
+        "gmv": "gmv_30d",
+        "shops_count": "shop_count",
+        "similar_listings_count": "similar_listings_count"
+      },
+      "wps_na_metrics": [],
+      "confidence": 88.17,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 6.67,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 2.5,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "SALES_DECLINING",
+          "trend": "DECLINING",
+          "growth_30d_pct": 1445.65
+        }
+      ],
+      "missing_data": [
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1732250308902949401",
+        "product_name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro Max, Durable High-End Smartphone Casing, Mobile Phone Protection Accessories, Thoughtful Gift",
+        "product_url": "https://www.kalodata.com/product/detail?id=1732250308902949401&language=en-US&currency=USD&region=US",
+        "category_path": "Phones & Electronics > Phones and Accessories > Cases, Screen Protectors & Stickers",
+        "category_id": 601925,
+        "shop_id": "7494196046038402585",
+        "shop_name": "Star Sky Phone Case",
+        "price_min": 31.0,
+        "price_max": 37.75,
+        "gmv_30d": 43848.76,
+        "units_30d": 1425,
+        "gmv_prev_30d": 2836.91,
+        "growth_30d_pct": 1445.65,
+        "category_growth_pct": -28.05,
+        "launch_date": "2026-01-24",
+        "data_window_end": "2026-10-02",
+        "commission_pct": 10.0,
+        "daily_gmv": [
+          186.0,
+          288.0,
+          290.0,
+          284.0,
+          192.0,
+          220.0,
+          402.0,
+          819.0,
+          561.0,
+          1770.0,
+          2436.0,
+          1716.0,
+          1876.0,
+          2027.0,
+          1326.0,
+          1443.0,
+          1943.0,
+          2726.0,
+          2755.0,
+          2175.0,
+          1740.0,
+          1769.0,
+          2291.0,
+          2117.0,
+          2581.0,
+          1856.0,
+          1972.0,
+          1247.0,
+          1508.0,
+          1334.0
+        ],
+        "creator_count": 58,
+        "selling_creator_count": 20,
+        "creator_growth_pct": 286.67,
+        "top_creators": [
+          {
+            "creator_id": "7244616351908643882",
+            "name": "@shopdrewss",
+            "revenue": 17932.92,
+            "growth_pct": -16.96
+          },
+          {
+            "creator_id": "7559907003059078199",
+            "name": "Star Sky Phone Case",
+            "revenue": 9408.24,
+            "growth_pct": 509.38
+          },
+          {
+            "creator_id": "6901370895753135109",
+            "name": "ladyzamor",
+            "revenue": 4756.0,
+            "growth_pct": 0.0
+          },
+          {
+            "creator_id": "7158390104905434158",
+            "name": "proddfinds",
+            "revenue": 3181.33,
+            "growth_pct": 31.81
+          },
+          {
+            "creator_id": "7593624813852967949",
+            "name": "Starry",
+            "revenue": 3044.01,
+            "growth_pct": 143.16
+          }
+        ],
+        "video_count": 198,
+        "selling_video_count": 199,
+        "video_growth_pct": 102.04,
+        "video_sales_share_pct": 100.0,
+        "top_videos": [
+          {
+            "video_id": "7682332305616014622",
+            "creator": "shopdrewss",
+            "revenue": 9413.55,
+            "views": 609537
+          },
+          {
+            "video_id": "7673797017704893726",
+            "creator": "shopdrewss",
+            "revenue": 6895.45,
+            "views": 455428
+          },
+          {
+            "video_id": "7689968523803626783",
+            "creator": "miss.zamor",
+            "revenue": 4118.0,
+            "views": 411738
+          },
+          {
+            "video_id": "7687845318183963918",
+            "creator": "eliana202510",
+            "revenue": 3799.0,
+            "views": 278473
+          },
+          {
+            "video_id": "7687875465201175822",
+            "creator": "eliana202510",
+            "revenue": 2175.0,
+            "views": 154228
+          }
+        ],
+        "shop_count": 1,
+        "category_product_count": 30918,
+        "category_product_count_level": "Cases, Screen Protectors & Stickers",
+        "leaf_category_id": 601925
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v2.2",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-10-03T11:43:34.662077+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T114334662077Z_1732250308902949401_deep_product.json",
+        "task_id": "7b98a196f6b6430fa6b9d9aefaaa279c",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1732250308902949401",
+        "discovery_status": "REVIEW"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T105009Z_351269",
+      "_pid": "1732250308902949401"
+    },
+    {
+      "status": "ok",
+      "product_id": "1729489737433321957",
+      "product_name": "Cooper Cases TabStand Sturdy Tablet Mount - Flexible Metal-Aluminum Rotatable Monitor Holder, Tool-Free Assembly, 13 in Minimum to 17 in iPad/Tablet/Smartphone Clamp Grip Desk Accessory, Adjustable Tilt, 4.4lb Capacity, Silicone-Free, Streamer Use",
+      "product_url": "https://www.kalodata.com/product/detail?id=1729489737433321957&language=en-US&currency=USD&region=US",
+      "category": "Phones & Electronics > Tablet & Computer Accessories > Tablet Stands & Bases",
+      "category_id": "601739",
+      "shop": {
+        "shop_id": "7495755422216587749",
+        "shop_name": "Cooper Cases"
+      },
+      "price": {
+        "min": 24.95,
+        "max": 38.94,
+        "avg": 31.945,
+        "history": null
+      },
+      "gmv": 30983.47,
+      "units": 1294,
+      "growth": {
+        "growth_30d_pct": 15.11,
+        "category_growth_pct": -24.32,
+        "gmv_prev_30d": 26917.14,
+        "growth_30d_provider": 15.11,
+        "growth_source": "calculated"
+      },
+      "launch_date": "2024-06-27",
+      "data_window_end": "2026-10-02",
+      "commission_pct": 0,
+      "creator_metrics": {
+        "total": 294,
+        "selling": 63,
+        "growth_pct": -27.94,
+        "top_creators": [
+          {
+            "creator_id": "6643228401942446086",
+            "name": "Diana | Mom Home Finds",
+            "revenue": 8731.02,
+            "growth_pct": -32.58
+          },
+          {
+            "creator_id": "7201619734999352366",
+            "name": "TETE&KEKE👭🏾",
+            "revenue": 3929.81,
+            "growth_pct": -38.1
+          },
+          {
+            "creator_id": "7021934910534059013",
+            "name": "DoraPalm 💖",
+            "revenue": 3516.09,
+            "growth_pct": -40.44
+          },
+          {
+            "creator_id": "289255722083831808",
+            "name": "Chris🌸 | TTS finds",
+            "revenue": 2991.67,
+            "growth_pct": -100.0
+          },
+          {
+            "creator_id": "7401196646933726250",
+            "name": "Sergio Deals 🇺🇸",
+            "revenue": 1817.55,
+            "growth_pct": 9.13
+          }
+        ],
+        "daily_count": null
+      },
+      "video_metrics": {
+        "total": 272,
+        "selling": 40,
+        "growth_pct": -18.32,
+        "sales_share_pct": 72.69,
+        "top_videos": [
+          {
+            "video_id": "7632186685341715742",
+            "creator": "digomezlife",
+            "revenue": 4579.4,
+            "views": 514857
+          },
+          {
+            "video_id": "7637322596912090398",
+            "creator": "digomezlife",
+            "revenue": 3034.51,
+            "views": 313433
+          },
+          {
+            "video_id": "7649975498671475981",
+            "creator": "tntdealss",
+            "revenue": 2822.28,
+            "views": 300373
+          },
+          {
+            "video_id": "7671854234932907277",
+            "creator": "tetenkeke",
+            "revenue": 2467.49,
+            "views": 261635
+          },
+          {
+            "video_id": "7597961012700024095",
+            "creator": "chrissysgems",
+            "revenue": 2023.14,
+            "views": 263386
+          }
+        ],
+        "daily_count": null
+      },
+      "competition_metrics": {
+        "shop_count": null,
+        "similar_listings_count": null,
+        "category_product_count": 323,
+        "category_product_count_level": "Tablet Stands & Bases",
+        "competition_count": 323,
+        "competition_scope": "SUBCATEGORY",
+        "competition_category_id": "601739",
+        "competition_subcategory_id": "992136",
+        "competition_comparable": true,
+        "category_level_stated": "Tablet Stands & Bases",
+        "competition_source_field": "category_product_count"
+      },
+      "sales_history": {
+        "daily_gmv": [
+          1380.0,
+          1941.0,
+          1618.0,
+          1359.0,
+          1844.0,
+          1150.0,
+          964.0,
+          1531.0,
+          1359.0,
+          1124.0,
+          866.0,
+          736.0,
+          1020.0,
+          801.0,
+          1565.0,
+          613.0,
+          1024.0,
+          1088.0,
+          2016.0,
+          1056.0,
+          660.0,
+          704.0,
+          924.0,
+          440.0,
+          242.0,
+          174.0,
+          609.0,
+          725.0,
+          638.0,
+          812.0
+        ],
+        "daily_units": null
+      },
+      "trend_metrics": {
+        "gmv": {
+          "velocity_pct": -51.28,
+          "prior_velocity_pct": 11.11,
+          "points": 30
+        },
+        "units": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "creators": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "videos": {
+          "velocity_pct": null,
+          "prior_velocity_pct": null,
+          "points": 0
+        },
+        "label": "DECLINING",
+        "classified_on": "gmv"
+      },
+      "concentration_metrics": {
+        "product_id": "1729489737433321957",
+        "metrics": {
+          "top_creator_revenue_share": {
+            "value": 28.18,
+            "reason": null,
+            "inputs": {
+              "gmv": 30983.47,
+              "creators_count": 294,
+              "items_returned": 5,
+              "top_revenue_sum": 8731.02
+            }
+          },
+          "top3_creator_revenue_share": {
+            "value": 52.21,
+            "reason": null,
+            "inputs": {
+              "gmv": 30983.47,
+              "creators_count": 294,
+              "items_returned": 5,
+              "top_revenue_sum": 16176.92
+            }
+          },
+          "top_video_revenue_share": {
+            "value": 14.78,
+            "reason": null,
+            "inputs": {
+              "gmv": 30983.47,
+              "videos_count": 272,
+              "items_returned": 5,
+              "top_revenue_sum": 4579.4
+            }
+          },
+          "top3_video_revenue_share": {
+            "value": 33.68,
+            "reason": null,
+            "inputs": {
+              "gmv": 30983.47,
+              "videos_count": 272,
+              "items_returned": 5,
+              "top_revenue_sum": 10436.19
+            }
+          }
+        },
+        "flags": {
+          "CREATOR_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 28.18,
+            "condition": "> 70"
+          },
+          "VIDEO_DEPENDENCY": {
+            "status": "CLEAR",
+            "value": 14.78,
+            "condition": "> 70"
+          }
+        }
+      },
+      "wps": 43.53,
+      "wps_complete": true,
+      "wps_breakdown": {
+        "growth_long_term": {
+          "points": 1.51,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "growth_recent_trend": {
+          "points": 0.0,
+          "max": 10,
+          "tier": "SUPPORTING"
+        },
+        "growth_acceleration": {
+          "points": 0.0,
+          "max": 5,
+          "tier": "SUPPORTING"
+        },
+        "demand": {
+          "points": 7.16,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "video_momentum": {
+          "points": 8.32,
+          "max": 15,
+          "tier": "CORE"
+        },
+        "creator_reach": {
+          "points": 7.78,
+          "max": 9,
+          "tier": "CORE"
+        },
+        "creator_growth": {
+          "points": 1.2,
+          "max": 6,
+          "tier": "SUPPORTING"
+        },
+        "competition_category_growth": {
+          "points": 0.0,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "competition_saturation": {
+          "points": 7.5,
+          "max": 7.5,
+          "tier": "SUPPORTING"
+        },
+        "margin_potential": {
+          "points": 6.63,
+          "max": 10,
+          "tier": "CORE"
+        },
+        "trend_stability": {
+          "points": 3.44,
+          "max": 5,
+          "tier": "SUPPORTING"
+        }
+      },
+      "wps_groups": {
+        "growth_momentum": {
+          "points": 1.51,
+          "max": 25.0,
+          "na": []
+        },
+        "demand": {
+          "points": 7.16,
+          "max": 15.0,
+          "na": []
+        },
+        "video_momentum": {
+          "points": 8.32,
+          "max": 15.0,
+          "na": []
+        },
+        "creator_momentum": {
+          "points": 8.98,
+          "max": 15.0,
+          "na": []
+        },
+        "competition": {
+          "points": 7.5,
+          "max": 15.0,
+          "na": []
+        },
+        "margin_potential": {
+          "points": 6.63,
+          "max": 10.0,
+          "na": []
+        },
+        "trend_stability": {
+          "points": 3.44,
+          "max": 5.0,
+          "na": []
+        }
+      },
+      "wps_points": {
+        "earned": 43.53,
+        "possible": 100.0
+      },
+      "wps_missing_by_tier": {
+        "CORE": [],
+        "SUPPORTING": [],
+        "ENHANCEMENT": []
+      },
+      "wps_inputs": {
+        "product_id": "1729489737433321957",
+        "product_name": "Cooper Cases TabStand Sturdy Tablet Mount - Flexible Metal-Aluminum Rotatable Monitor Holder, Tool-Free Assembly, 13 in Minimum to 17 in iPad/Tablet/Smartphone Clamp Grip Desk Accessory, Adjustable Tilt, 4.4lb Capacity, Silicone-Free, Streamer Use",
+        "recent_velocity_pct": -51.28,
+        "acceleration_pp": -62.39,
+        "competition_count_comparable": 323,
+        "revenue_growth_pct": 15.11,
+        "units_sold": 1294,
+        "videos_count": 272,
+        "video_sales_share_pct": 72.69,
+        "creators_count": 294,
+        "category_growth_pct": -24.32,
+        "category_product_count": 323,
+        "price_avg": 31.945,
+        "commission_pct": 0,
+        "gmv": 30983.47,
+        "price_min": 24.95,
+        "price_max": 38.94,
+        "shops_count": null,
+        "similar_listings_count": null,
+        "launch_date_days": 827,
+        "history_snapshots": 0
+      },
+      "confidence_adjustments": [
+        {
+          "reason": "ENHANCEMENT field missing: price_history",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_creator_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_video_count",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: daily_units",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: creator_growth_pct",
+          "points": -1
+        },
+        {
+          "reason": "ENHANCEMENT field missing: video_growth_pct",
+          "points": -1
+        }
+      ],
+      "confidence_before_adjustments": 90.83,
+      "provenance": {
+        "price_min": {
+          "value": 24.95,
+          "provider": "kalopilot",
+          "source_field": "price_min",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_max": {
+          "value": 38.94,
+          "provider": "kalopilot",
+          "source_field": "price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "price_avg": {
+          "value": 31.945,
+          "provider": "kalopilot",
+          "source_field": "price_min+price_max",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED"
+        },
+        "gmv_30d": {
+          "value": 30983.47,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "gmv_prev_30d": {
+          "value": 26917.14,
+          "provider": "kalopilot",
+          "source_field": "gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "previous 30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "units_30d": {
+          "value": 1294,
+          "provider": "kalopilot",
+          "source_field": "units_30d",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "growth_30d": {
+          "value": 15.11,
+          "provider": "kalopilot",
+          "source_field": "gmv_30d,gmv_prev_30d",
+          "scope": "PRODUCT",
+          "period": "30d vs previous 30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "DERIVED",
+          "quality": "CALCULATED",
+          "provider_value": 15.11
+        },
+        "daily_gmv": {
+          "value": [
+            1380.0,
+            1941.0,
+            1618.0,
+            1359.0,
+            1844.0,
+            1150.0,
+            964.0,
+            1531.0,
+            1359.0,
+            1124.0,
+            866.0,
+            736.0,
+            1020.0,
+            801.0,
+            1565.0,
+            613.0,
+            1024.0,
+            1088.0,
+            2016.0,
+            1056.0,
+            660.0,
+            704.0,
+            924.0,
+            440.0,
+            242.0,
+            174.0,
+            609.0,
+            725.0,
+            638.0,
+            812.0
+          ],
+          "provider": "kalopilot",
+          "source_field": "daily_gmv",
+          "scope": "PRODUCT",
+          "period": "daily, 30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_count": {
+          "value": 294,
+          "provider": "kalopilot",
+          "source_field": "creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_creator_count": {
+          "value": 63,
+          "provider": "kalopilot",
+          "source_field": "selling_creator_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_creators": {
+          "value": [
+            {
+              "creator_id": "6643228401942446086",
+              "name": "Diana | Mom Home Finds",
+              "revenue": 8731.02,
+              "growth_pct": -32.58
+            },
+            {
+              "creator_id": "7201619734999352366",
+              "name": "TETE&KEKE👭🏾",
+              "revenue": 3929.81,
+              "growth_pct": -38.1
+            },
+            {
+              "creator_id": "7021934910534059013",
+              "name": "DoraPalm 💖",
+              "revenue": 3516.09,
+              "growth_pct": -40.44
+            },
+            {
+              "creator_id": "289255722083831808",
+              "name": "Chris🌸 | TTS finds",
+              "revenue": 2991.67,
+              "growth_pct": -100.0
+            },
+            {
+              "creator_id": "7401196646933726250",
+              "name": "Sergio Deals 🇺🇸",
+              "revenue": 1817.55,
+              "growth_pct": 9.13
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_creators",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "creator_growth_pct": {
+          "value": -27.94,
+          "provider": "kalopilot",
+          "source_field": "creator_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_count": {
+          "value": 272,
+          "provider": "kalopilot",
+          "source_field": "video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "selling_video_count": {
+          "value": 40,
+          "provider": "kalopilot",
+          "source_field": "selling_video_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_sales_share_pct": {
+          "value": 72.69,
+          "provider": "kalopilot",
+          "source_field": "video_sales_share_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "top_videos": {
+          "value": [
+            {
+              "video_id": "7632186685341715742",
+              "creator": "digomezlife",
+              "revenue": 4579.4,
+              "views": 514857
+            },
+            {
+              "video_id": "7637322596912090398",
+              "creator": "digomezlife",
+              "revenue": 3034.51,
+              "views": 313433
+            },
+            {
+              "video_id": "7649975498671475981",
+              "creator": "tntdealss",
+              "revenue": 2822.28,
+              "views": 300373
+            },
+            {
+              "video_id": "7671854234932907277",
+              "creator": "tetenkeke",
+              "revenue": 2467.49,
+              "views": 261635
+            },
+            {
+              "video_id": "7597961012700024095",
+              "creator": "chrissysgems",
+              "revenue": 2023.14,
+              "views": 263386
+            }
+          ],
+          "provider": "kalopilot",
+          "source_field": "top_videos",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "video_growth_pct": {
+          "value": -18.32,
+          "provider": "kalopilot",
+          "source_field": "video_growth_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "category_growth_pct": {
+          "value": -24.32,
+          "provider": "kalopilot",
+          "source_field": "category_growth_pct",
+          "scope": "CATEGORY (as returned)",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "competition_count": {
+          "value": 323,
+          "provider": "kalopilot",
+          "source_field": "category_product_count",
+          "scope": "SUBCATEGORY",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "shop_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "shop_count",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        },
+        "commission_pct": {
+          "value": 0,
+          "provider": "kalopilot",
+          "source_field": "commission_pct",
+          "scope": "PRODUCT",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "AVAILABLE",
+          "quality": "PROVIDER"
+        },
+        "similar_listings_count": {
+          "value": null,
+          "provider": "kalopilot",
+          "source_field": "similar_listings_count",
+          "scope": "PRODUCT_CLUSTER",
+          "period": "30d",
+          "provider_observation_timestamp": "2026-10-02",
+          "retrieved_at": "2026-10-03T11:46:39.695869+00:00",
+          "availability": "MISSING",
+          "quality": "N/A"
+        }
+      },
+      "wps_input_provenance": {
+        "revenue_growth_pct": "growth_30d",
+        "recent_velocity_pct": "daily_gmv",
+        "acceleration_pp": "daily_gmv",
+        "units_sold": "units_30d",
+        "videos_count": "video_count",
+        "video_sales_share_pct": "video_sales_share_pct",
+        "creators_count": "creator_count",
+        "top_creators_growth_pct": "top_creators",
+        "category_growth_pct": "category_growth_pct",
+        "competition_count_comparable": "competition_count",
+        "price_avg": "price_avg",
+        "commission_pct": "commission_pct",
+        "daily_sales_series": "daily_gmv",
+        "gmv": "gmv_30d",
+        "shops_count": "shop_count",
+        "similar_listings_count": "similar_listings_count"
+      },
+      "wps_na_metrics": [],
+      "confidence": 84.83,
+      "confidence_level": "HIGH",
+      "confidence_breakdown": {
+        "sales_history": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "gmv_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "units_sold": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        },
+        "growth_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "price_data": {
+          "earned": 5.0,
+          "max": 5,
+          "status": "full"
+        },
+        "creator_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "video_data": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_shop_data": {
+          "earned": 3.33,
+          "max": 10,
+          "status": "partial"
+        },
+        "trend_history_data": {
+          "earned": 2.5,
+          "max": 5,
+          "status": "partial"
+        }
+      },
+      "verdict": "skip",
+      "red_flags": [
+        {
+          "flag": "SALES_DECLINING",
+          "trend": "DECLINING",
+          "growth_30d_pct": 15.11
+        }
+      ],
+      "missing_data": [
+        "shop_count",
+        "similar_listings_count",
+        "daily_units",
+        "daily_creator_count",
+        "daily_video_count",
+        "price_history"
+      ],
+      "parse_warnings": [],
+      "labels": {
+        "FACT": [
+          "product_*",
+          "category*",
+          "shop",
+          "price.min/max/history",
+          "gmv",
+          "units",
+          "growth",
+          "creator_metrics",
+          "video_metrics",
+          "competition_metrics",
+          "sales_history"
+        ],
+        "CALCULATION": [
+          "price.avg",
+          "trend_metrics",
+          "concentration_metrics",
+          "wps*",
+          "confidence*",
+          "verdict",
+          "red_flags"
+        ],
+        "MISSING DATA": "missing_data"
+      },
+      "original_record": {
+        "product_id": "1729489737433321957",
+        "product_name": "Cooper Cases TabStand Sturdy Tablet Mount - Flexible Metal-Aluminum Rotatable Monitor Holder, Tool-Free Assembly, 13 in Minimum to 17 in iPad/Tablet/Smartphone Clamp Grip Desk Accessory, Adjustable Tilt, 4.4lb Capacity, Silicone-Free, Streamer Use",
+        "product_url": "https://www.kalodata.com/product/detail?id=1729489737433321957&language=en-US&currency=USD&region=US",
+        "category_path": "Phones & Electronics > Tablet & Computer Accessories > Tablet Stands & Bases",
+        "category_id": "601739",
+        "shop_id": "7495755422216587749",
+        "shop_name": "Cooper Cases",
+        "price_min": 24.95,
+        "price_max": 38.94,
+        "gmv_30d": 30983.47,
+        "units_30d": 1294,
+        "gmv_prev_30d": 26917.14,
+        "growth_30d_pct": 15.11,
+        "category_growth_pct": -24.32,
+        "launch_date": "2024-06-27",
+        "data_window_end": "2026-10-02",
+        "commission_pct": 0,
+        "daily_gmv": [
+          1380.0,
+          1941.0,
+          1618.0,
+          1359.0,
+          1844.0,
+          1150.0,
+          964.0,
+          1531.0,
+          1359.0,
+          1124.0,
+          866.0,
+          736.0,
+          1020.0,
+          801.0,
+          1565.0,
+          613.0,
+          1024.0,
+          1088.0,
+          2016.0,
+          1056.0,
+          660.0,
+          704.0,
+          924.0,
+          440.0,
+          242.0,
+          174.0,
+          609.0,
+          725.0,
+          638.0,
+          812.0
+        ],
+        "creator_count": 294,
+        "selling_creator_count": 63,
+        "creator_growth_pct": -27.94,
+        "top_creators": [
+          {
+            "creator_id": "6643228401942446086",
+            "name": "Diana | Mom Home Finds",
+            "revenue": 8731.02,
+            "growth_pct": -32.58
+          },
+          {
+            "creator_id": "7201619734999352366",
+            "name": "TETE&KEKE👭🏾",
+            "revenue": 3929.81,
+            "growth_pct": -38.1
+          },
+          {
+            "creator_id": "7021934910534059013",
+            "name": "DoraPalm 💖",
+            "revenue": 3516.09,
+            "growth_pct": -40.44
+          },
+          {
+            "creator_id": "289255722083831808",
+            "name": "Chris🌸 | TTS finds",
+            "revenue": 2991.67,
+            "growth_pct": -100.0
+          },
+          {
+            "creator_id": "7401196646933726250",
+            "name": "Sergio Deals 🇺🇸",
+            "revenue": 1817.55,
+            "growth_pct": 9.13
+          }
+        ],
+        "video_count": 272,
+        "selling_video_count": 40,
+        "video_growth_pct": -18.32,
+        "video_sales_share_pct": 72.69,
+        "top_videos": [
+          {
+            "video_id": "7632186685341715742",
+            "creator": "digomezlife",
+            "revenue": 4579.4,
+            "views": 514857
+          },
+          {
+            "video_id": "7637322596912090398",
+            "creator": "digomezlife",
+            "revenue": 3034.51,
+            "views": 313433
+          },
+          {
+            "video_id": "7649975498671475981",
+            "creator": "tntdealss",
+            "revenue": 2822.28,
+            "views": 300373
+          },
+          {
+            "video_id": "7671854234932907277",
+            "creator": "tetenkeke",
+            "revenue": 2467.49,
+            "views": 261635
+          },
+          {
+            "video_id": "7597961012700024095",
+            "creator": "chrissysgems",
+            "revenue": 2023.14,
+            "views": 263386
+          }
+        ],
+        "shop_count": null,
+        "category_product_count": 323,
+        "category_product_count_level": "Tablet Stands & Bases",
+        "leaf_category_id": "992136"
+      },
+      "config_versions": {
+        "deep": "deep-analysis-v1",
+        "filters": "filters-v1",
+        "wps": "wps-v2.2",
+        "confidence": "confidence-v1"
+      },
+      "observation_timestamp": "2026-10-03T11:46:39.695869+00:00",
+      "market": "US",
+      "source": {
+        "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T114639695869Z_1729489737433321957_deep_product.json",
+        "task_id": "4e7d0a256a3940c79894f0c2ac00f624",
+        "report_url": null,
+        "query_type": "deep_product",
+        "cache_hit": false,
+        "discovery_key": "1729489737433321957",
+        "discovery_status": "REVIEW"
+      },
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T105009Z_351269",
+      "_pid": "1729489737433321957"
+    }
+  ]
+}

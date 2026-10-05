@@ -63,3 +63,26 @@ class Lens(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PerCategorySubniches(unittest.TestCase):
+    def test_dict_gives_each_category_its_own(self):
+        import lens_experiment as LX
+        qs = LX.build_queries(("home", "kitchen"), ("proven",), limit=15,
+                              subniches={"home": ["storage"], "kitchen": ["gadgets", "containers"]})
+        self.assertEqual([(q["category_key"], q["subniche"]) for q in qs],
+                         [("home", "storage"), ("kitchen", "gadgets"), ("kitchen", "containers")])
+        self.assertTrue(all(q["subniche"] in q["query"] for q in qs))
+        flat = LX.build_queries(("home", "kitchen"), ("proven",), limit=15, subniches=["x"])
+        self.assertEqual([q["subniche"] for q in flat], ["x", "x"])            # a list still applies to all
+
+    def test_prompts_do_not_ask_for_fields_the_provider_never_returns(self):
+        from pathlib import Path
+        root = Path(__file__).resolve().parent.parent / "prompts"
+        lens = (root / "discovery_lenses.md").read_text()
+        self.assertNotIn('"shop_count"', lens)
+        self.assertNotIn('"creator_growth_pct"', lens)
+        for f in ("deep_analysis.md", "deep_analysis_batch.md"):
+            t = (root / f).read_text()
+            self.assertNotIn("price_history", t)
+            self.assertNotIn("similar_listings_count", t)

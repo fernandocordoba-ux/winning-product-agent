@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-10-03T03:17:25.417020+00:00",
+  "kind": "OWNER_APPROVED",
+  "base_version": "v11",
+  "note": "Owner approved (2026-10-03): deep-analysis order by preliminary score alone. Replay of the beauty run (20 analyzed, 10 qualified): the run's order (sustained 90-day growth first) reached the 10th qualifier at analysis 22; score-only order reaches 9 in the first 10 and all 10 by 15 (about 25 credits less). One run, one category, in-sample: the home & kitchen run is the clean test. Formula, filters and thresholds unchanged.",
+  "changes": [
+    {
+      "file": "runtime.yaml",
+      "path": "query_plan.deep_selection",
+      "current_value": "preliminary_wps",
+      "proposed_value": "preliminary_only",
+      "reason": "spend deep analyses on the highest preliminary scores first",
+      "approval_status": "APPROVE",
+      "approved_by": "owner",
+      "approved_at": "2026-10-03T03:10Z",
+      "approval_kind": "OWNER_EXPLICIT"
+    }
+  ],
+  "counts": {
+    "APPROVE": 1,
+    "REJECT": 0,
+    "DEFER": 0
+  }
+}

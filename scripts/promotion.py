@@ -421,7 +421,9 @@ def promote(root=ROOT, rev=None, version=None, now=None, proposed_dir=None, repl
 OWNER_CHANGEABLE = {                      # production file -> path prefixes the owner may change explicitly
     "decision_rules.yaml": ("decision.insufficient_if_unknown_at_least", "dimensions.evidence_quality.layers"),
     "runtime.yaml": ("limits.discovery_max_products", "limits.deep_analysis_max_products",
-                     "query_plan.deep_selection", "query_plan.deep_exclude_keywords", "query_plan.discovery_categories",
+                     "query_plan.deep_selection", "query_plan.deep_min_preliminary",
+                     "query_plan.guardrails.max_failed_queries", "query_plan.deep_exclude_keywords",
+                     "query_plan.deep_exclude_operational", "query_plan.deep_retry_empty_answers", "query_plan.discovery_categories",
                      "query_plan.discovery_mode", "query_plan.discovery_lenses", "e2e.final_decision_max_products",
                      "query_plan.discovery_subniches", "query_plan.prefer_new_days", "query_plan.target_candidates", "query_plan.discovery_exclude_established_brands",
                      "query_plan.max_credits_for_run", "query_plan.guardrails.max_queries_per_run",

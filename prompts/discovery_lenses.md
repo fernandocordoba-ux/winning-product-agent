@@ -35,7 +35,7 @@ Do not use the Category Overview module (it is not included in this account's pl
 Do not estimate or invent missing values. Use null for any value that is not available. A real zero must be returned as 0, not null.
 
 Return the result as ONE fenced JSON code block (```json ... ```), an array of objects with exactly these keys:
-"product_id" (KaloData/TikTok product ID as a string), "product_name" (max 80 characters), "shop_name", "price_min", "price_max", "gmv_30d" (last 30 days), "gmv_prev_30d" (days 31-60), "gmv_prev2_30d" (days 61-90), "units_30d", "units_prev_30d", "creator_count", "creator_growth_pct", "video_count", "shop_count", "launch_date" (YYYY-MM-DD), "data_window_end" (YYYY-MM-DD).
+"product_id" (KaloData/TikTok product ID as a string), "product_name" (max 80 characters), "shop_name", "price_min", "price_max", "gmv_30d" (last 30 days), "gmv_prev_30d" (days 31-60), "gmv_prev2_30d" (days 61-90), "units_30d", "units_prev_30d", "creator_count", "video_count", "launch_date" (YYYY-MM-DD), "data_window_end" (YYYY-MM-DD).
 Keep the answer short: no commentary before or after the JSON block (long answers are cut off and the data is lost).
 Numbers must be plain numbers in {currency} with no symbols or abbreviations (write 4206171, not "$4.2M").
 ===

@@ -1,0 +1,857 @@
+{
+  "run_id": "20261003T115012Z_dc4d67",
+  "started_at": "2026-10-03T11:50:12.914793+00:00",
+  "completed_at": "2026-10-03T12:01:33.916795+00:00",
+  "market": "US",
+  "mode": "LIVE",
+  "data_environment": "PRODUCTION",
+  "profile": {
+    "name": "production-v14",
+    "path": "config/production/v14/runtime.yaml",
+    "hash": "b8ab0a8ddfc84d67"
+  },
+  "runtime_config": {
+    "runtime": {
+      "market": "US",
+      "live_mode": true,
+      "dry_run": false,
+      "explicit_live_confirmation": false
+    },
+    "query_plan": {
+      "discovery_mode": "lenses",
+      "discovery_categories": [
+        "electronics_accessories"
+      ],
+      "deep_batch_size": 1,
+      "amazon_batch_size": 2,
+      "max_credits_for_run": 110,
+      "estimated_credits": {
+        "discovery": 4.0,
+        "deep_analysis": 3.6,
+        "amazon_validation": 4.0
+      },
+      "guardrails": {
+        "max_queries_per_run": 33,
+        "max_provider_queries": {
+          "kalopilot": 33
+        },
+        "max_failed_queries": 5,
+        "max_retry_count": 0,
+        "note": "sized from the approved limits; stop new paid queries, keep completed data, PARTIAL report"
+      },
+      "discovery_exclude_established_brands": true,
+      "deep_selection": "preliminary_only",
+      "deep_exclude_keywords": [
+        "halloween",
+        "christmas",
+        "xmas",
+        "thanksgiving",
+        "easter",
+        "valentine",
+        "advent",
+        "santa"
+      ],
+      "discovery_lenses": [
+        "proven"
+      ],
+      "discovery_subniches": {
+        "electronics_accessories": [
+          "phone cases, covers and screen protectors",
+          "phone holders, mounts, stands and grips",
+          "headphone and earbud accessories",
+          "computer, laptop and tablet accessories",
+          "camera and content-creation accessories",
+          "gaming accessories"
+        ]
+      },
+      "prefer_new_days": 14,
+      "target_candidates": 10,
+      "deep_min_preliminary": 32,
+      "deep_exclude_operational": [
+        "power bank",
+        "battery",
+        "batteries",
+        "charger",
+        "charging",
+        "wall plug",
+        "power strip",
+        "surge protector",
+        "extension cord",
+        "rechargeable",
+        "bluetooth",
+        "wireless earbuds",
+        "speaker",
+        "smart watch",
+        "smartwatch",
+        "projector",
+        "drone",
+        "security camera",
+        "spy",
+        "hidden camera",
+        "tracker",
+        "gps",
+        "baby monitor",
+        "hearing",
+        "tens",
+        "massager",
+        "therapy",
+        "blood pressure",
+        "thermometer",
+        "vape"
+      ],
+      "deep_retry_empty_answers": 1
+    }
+  },
+  "config_hashes": {
+    "amazon_validation.yaml": "5483f447fb5ed5af",
+    "business_viability.yaml": "095102dec072c1f1",
+    "calibration_lane.yaml": "cc6f945a372599bf",
+    "categories.yaml": "afe19c6b21aa13cc",
+    "competitors.yaml": "478630ee63b7eb9b",
+    "creatives.yaml": "376d0fe10a73b4d5",
+    "decision.yaml": "593b2d941ada7e2d",
+    "deep_analysis.yaml": "25e9b67143ba19f5",
+    "emerging.yaml": "297b83c9f2bcc9af",
+    "filters.yaml": "2de5a9448caa531a",
+    "final_validation.yaml": "125ce67bb01283f7",
+    "history.yaml": "8467a93c9250c65a",
+    "provider_capabilities.yaml": "5c5acfae843b722f",
+    "report.yaml": "8f881f382b423f14",
+    "runtime.yaml": "d2e0749a5357aec7",
+    "runtime_aa_live.yaml": "cd314862c590feee",
+    "runtime_first_live.yaml": "319dcbec325d4843",
+    "scoring.yaml": "b7a483c92186b236",
+    "suppliers.yaml": "e11f428e5305f999"
+  },
+  "limits": {
+    "discovery_max_products": 100,
+    "deep_analysis_max_products": 22,
+    "amazon_validation_max_products": 3,
+    "bvs_max_products": 3
+  },
+  "max_products_arg": null,
+  "calibration_lane": false,
+  "stages": {
+    "preflight": {
+      "status": "COMPLETED",
+      "summary": "READY_FOR_DRY_RUN"
+    },
+    "provider_health": {
+      "status": "COMPLETED",
+      "summary": "kalopilot AVAILABLE, amazon DEGRADED, supplier DEGRADED, competitor DEGRADED, creative AVAILABLE"
+    },
+    "discovery": {
+      "status": "COMPLETED",
+      "summary": "6/6 discovery answers",
+      "queries": 6,
+      "answers": 6,
+      "stop_reason": null
+    },
+    "filtering": {
+      "status": "COMPLETED",
+      "summary": "19 unique: PASS 8, REVIEW 10, FAIL 1 (malformed 0)",
+      "counts": {
+        "records": 19,
+        "unique": 19,
+        "duplicates_removed": 0,
+        "malformed": 0,
+        "PASS": 8,
+        "REVIEW": 10,
+        "FAIL": 1,
+        "returned_candidates": 18,
+        "over_limit": 0
+      },
+      "processed_file": "/root/winning-product-agent/data/production/processed/discovery_20261003T115014Z.json"
+    },
+    "deep_analysis": {
+      "status": "PARTIAL",
+      "summary": "4/5 analyzed ok; candidates 1/10",
+      "ok": 4,
+      "selected": 5,
+      "target": 10,
+      "target_found": 1,
+      "failed": [
+        {
+          "product_id": "1732423150078759822",
+          "error": "malformed"
+        }
+      ],
+      "saved": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T115827109441Z.json"
+    },
+    "wps": {
+      "status": "COMPLETED",
+      "summary": "WPS for 4 product(s); incomplete: 0",
+      "products": [
+        {
+          "product_id": "1732306919019352838",
+          "wps": 47.63,
+          "complete": true,
+          "verdict": "skip",
+          "na_metrics": []
+        },
+        {
+          "product_id": "1732250308902949401",
+          "wps": 46.51,
+          "complete": true,
+          "verdict": "skip",
+          "na_metrics": []
+        },
+        {
+          "product_id": "1729489737433321957",
+          "wps": 43.53,
+          "complete": true,
+          "verdict": "skip",
+          "na_metrics": []
+        },
+        {
+          "product_id": "1731456035446887124",
+          "wps": 77.55,
+          "complete": true,
+          "verdict": "winner",
+          "na_metrics": []
+        }
+      ]
+    },
+    "wps_confidence": {
+      "status": "COMPLETED",
+      "summary": "Confidence for 4 product(s)",
+      "products": [
+        {
+          "product_id": "1732306919019352838",
+          "confidence": 89.42,
+          "level": "HIGH"
+        },
+        {
+          "product_id": "1732250308902949401",
+          "confidence": 89.42,
+          "level": "HIGH"
+        },
+        {
+          "product_id": "1729489737433321957",
+          "confidence": 86.08,
+          "level": "HIGH"
+        },
+        {
+          "product_id": "1731456035446887124",
+          "confidence": 88.17,
+          "level": "HIGH"
+        }
+      ]
+    },
+    "amazon_validation": {
+      "status": "COMPLETED",
+      "summary": "1/1 validated",
+      "eligible": 1,
+      "saved": "/root/winning-product-agent/data/production/processed/amazon_validation/amazon_20261003T120132268100Z.json"
+    },
+    "supplier_research": {
+      "status": "PARTIAL",
+      "summary": "0/3 product(s) with real supplier offers (max 5 each); automated sources configured: none",
+      "products": [
+        {
+          "product_id": "1731456035446887124",
+          "name": "Auto Face Tracking Tripod for Smartphones & Cellphones - Gesture Control, 360-Degree Camera Mount Selfie Accessories, Smart Shooting Phone Mount, Smartphone Camera Accessories for Vlogging, Live Streaming",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        },
+        {
+          "product_id": "1732306919019352838",
+          "name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360° Rotating Stand, Shockproof Air Cushion, Matte Anti-Fingerprint",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        },
+        {
+          "product_id": "1732250308902949401",
+          "name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro Max, Durable High-End Smartphone Casing, Mobile Phone Protection Accessories, Thoughtful Gift",
+          "source": "NO_SOURCE_AVAILABLE",
+          "automated_sources_configured": [],
+          "offers_available": 0,
+          "offers_used": 0,
+          "offer_ids": [],
+          "note": "no supplier offer imported for this product and no automated supplier provider configured — economics stay N/A"
+        }
+      ]
+    },
+    "bvs": {
+      "status": "PARTIAL",
+      "summary": "1 evaluated; 1 incomplete (no supplier data — not fabricated)",
+      "saved": "/root/winning-product-agent/data/production/processed/business_viability/bvs_20261003T120132346826Z.json"
+    },
+    "competitor_intelligence": {
+      "status": "PARTIAL",
+      "summary": "0/3 product(s) with competitor evidence (max 10 each); no automated competitor provider configured",
+      "products": [
+        {
+          "product_id": "1731456035446887124",
+          "name": "Auto Face Tracking Tripod for Smartphones & Cellphones - Gesture Control, 360-Degree Camera Mount Selfie Accessories, Smart Shooting Phone Mount, Smartphone Camera Accessories for Vlogging, Live Streaming",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1732306919019352838",
+          "name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360° Rotating Stand, Shockproof Air Cushion, Matte Anti-Fingerprint",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        },
+        {
+          "product_id": "1732250308902949401",
+          "name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro Max, Durable High-End Smartphone Casing, Mobile Phone Protection Accessories, Thoughtful Gift",
+          "source": "NO_SOURCE_AVAILABLE",
+          "observations_used": 0
+        }
+      ]
+    },
+    "creative_intelligence": {
+      "status": "COMPLETED",
+      "summary": "3/3 product(s) with creative evidence (max 20 each; saved KaloPilot top videos are free)",
+      "products": [
+        {
+          "product_id": "1731456035446887124",
+          "name": "Auto Face Tracking Tripod for Smartphones & Cellphones - Gesture Control, 360-Degree Camera Mount Selfie Accessories, Smart Shooting Phone Mount, Smartphone Camera Accessories for Vlogging, Live Streaming",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 31.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1732306919019352838",
+          "name": "MAGIC JOHN iPhone18 Pro/ Pro Max/ iPhone17 Pro/Pro Max Case | MagSafe, 360° Rotating Stand, Shockproof Air Cushion, Matte Anti-Fingerprint",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 43.0,
+          "opportunity": null,
+          "confidence": 50.0
+        },
+        {
+          "product_id": "1732250308902949401",
+          "name": "Aluminium-Magnesium Alloy Shockproof Protective Case for iPhone 16/17/18 Pro Max, Durable High-End Smartphone Casing, Mobile Phone Protection Accessories, Thoughtful Gift",
+          "source": "kalopilot_saved",
+          "saved_kalopilot_imported": 5,
+          "creatives_used": 5,
+          "qualified": 5,
+          "saturation": 37.0,
+          "opportunity": null,
+          "confidence": 50.0
+        }
+      ]
+    },
+    "historical_storage": {
+      "status": "COMPLETED",
+      "summary": "9 observation(s) appended, 14 duplicate(s) skipped",
+      "written": 9,
+      "duplicates": 14
+    },
+    "emerging_detector": {
+      "status": "COMPLETED",
+      "summary": "114 product(s) evaluated: {'INSUFFICIENT_HISTORY': 114}",
+      "saved": "/root/winning-product-agent/data/production/processed/emerging/emerging_20261003T120132919154Z.json"
+    },
+    "final_report": {
+      "status": "COMPLETED",
+      "summary": "Top 0 | watchlist 14 | rejected 5",
+      "report_markdown": "/root/winning-product-agent/reports/production/2026-10-03-winning-products-2.md",
+      "report_json": "/root/winning-product-agent/reports/production/2026-10-03-winning-products-2.json",
+      "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+      "manifest": "/root/winning-product-agent/runs/production/20261003T115012Z_dc4d67/manifest.json",
+      "log": "/root/winning-product-agent/runs/production/20261003T115012Z_dc4d67/log.jsonl"
+    },
+    "final_decision": {
+      "status": "COMPLETED",
+      "summary": "4 decided: {'WATCHLIST': 2, 'PROMISING_NEEDS_VALIDATION': 1, 'REJECT': 1}; shortlist empty",
+      "markdown": "/root/winning-product-agent/reports/production/2026-10-03-final-decision-4.md",
+      "json": "/root/winning-product-agent/reports/production/2026-10-03-final-decision-4.json",
+      "latest": "/root/winning-product-agent/reports/production/latest-final-decision.md"
+    },
+    "validation_packs": {
+      "status": "SKIPPED",
+      "summary": "no READY_FOR_PRODUCT_VALIDATION product: no validation pack"
+    },
+    "production_history": {
+      "status": "COMPLETED",
+      "summary": "4 decision observation(s) appended, 0 unchanged snapshot(s) skipped"
+    },
+    "post_run_audit": {
+      "status": "COMPLETED",
+      "summary": "RUN_REVIEW_REQUIRED — 1 issue(s)",
+      "run_audit": "/root/winning-product-agent/reports/production/2026-10-03-run-audit-4.md"
+    },
+    "run_summary": {
+      "status": "COMPLETED",
+      "summary": "PARTIAL"
+    }
+  },
+  "final_status": "PARTIAL",
+  "e2e": {
+    "step": "PRODUCTION",
+    "confirmation_phrase": "CONFIRM PRODUCTION LIVE RUN",
+    "supplier_products_max": 3,
+    "supplier_offers_per_product_max": 5,
+    "competitor_products_max": 3,
+    "competitors_per_product_max": 10,
+    "creative_products_max": 3,
+    "creatives_per_product_max": 20,
+    "final_decision_max_products": 22,
+    "layer_product_order": "discovery PASS before REVIEW, then WPS desc, WPS Confidence desc, product_id"
+  },
+  "config_version": "production-v14",
+  "config_dir": "/root/winning-product-agent/config/production/v14",
+  "runtime_mode": "LIVE",
+  "run_caps": null,
+  "run_profile": null,
+  "config_manifest_hashes": {
+    "amazon_validation.yaml": "0da06cbd6511442ec76ee803ab05bbd3ac623c4ee42b904e0a6af2db19a915dd",
+    "business_viability.yaml": "61bcaca6a75ff1baa0c6083c9eb647a500748df453d948aab39af663ddb6dd55",
+    "calibration_lane.yaml": "f33961715791432f7abf5e920bb4f7e2fa77e0426f5f73ffb524e3da7d26a453",
+    "categories.yaml": "df7b2719ba470fc4e6dfe2baa5b540b6a8d66b46d38e3a2dadece51a458a92e6",
+    "change_review.json": "8c7c29968b3973084758cc7285f6bff1e99ef3591657ba1687744e7f1acd815f",
+    "competitor.yaml": "030524c3e4fb1f8a445e26a6dc08f89c12ef997032f386f0b7821b196ef17ce6",
+    "creative.yaml": "15dfcdcd1b34f7d48c7897db7ac6816b9c0501ada824a8ee8157a6015208e1f0",
+    "decision_rules.yaml": "3994eabbaab6d3d909e9f5a96560d6183a3ec2a3ab3bb8217c9e911029a8fba9",
+    "deep_analysis.yaml": "f43fbd514be474199281e10d30ed1b1be45253e550ffdf078bea6e295839250a",
+    "emerging.yaml": "fcac37efc4165525e5812f0d9c33675ab929e237ed2a2ad61f23cca8c3ed9c00",
+    "filters.yaml": "0d128cf960a37cead3c29a5f747397824148b69113e9cd7feeafba2f554a2b65",
+    "history.yaml": "8481bd23e3b36f0c7573a6e6c35487ea343a89ff29bd7ca9e640b65d6515fa46",
+    "provider_capabilities.yaml": "2f977f5a594b8c9c366fb097bf2a75c00f9ae51dcfd59b632bb9850a15e23489",
+    "report.yaml": "771cf6a6fbbe3f73053ec3ad7fec99dbbdab664be7acc7a5174ebf7a2e737464",
+    "runtime.yaml": "b8ab0a8ddfc84d678acad08a68f99d4f51d805529e70c3ca8a03763d129a3203",
+    "scoring.yaml": "55b9c0e1a6a92cbfc02c9b58fafe754be2b2b9dd301f416a87f49b77135d9dea",
+    "supplier.yaml": "d3d343db89934ea84056397ff71ae2eeadf9979d5fc7771ef7abe4686f3b5efd"
+  },
+  "config_hashes_at_start": {
+    "amazon_validation.yaml": "0da06cbd6511442ec76ee803ab05bbd3ac623c4ee42b904e0a6af2db19a915dd",
+    "business_viability.yaml": "61bcaca6a75ff1baa0c6083c9eb647a500748df453d948aab39af663ddb6dd55",
+    "calibration_lane.yaml": "f33961715791432f7abf5e920bb4f7e2fa77e0426f5f73ffb524e3da7d26a453",
+    "categories.yaml": "df7b2719ba470fc4e6dfe2baa5b540b6a8d66b46d38e3a2dadece51a458a92e6",
+    "change_review.json": "8c7c29968b3973084758cc7285f6bff1e99ef3591657ba1687744e7f1acd815f",
+    "competitor.yaml": "030524c3e4fb1f8a445e26a6dc08f89c12ef997032f386f0b7821b196ef17ce6",
+    "creative.yaml": "15dfcdcd1b34f7d48c7897db7ac6816b9c0501ada824a8ee8157a6015208e1f0",
+    "decision_rules.yaml": "3994eabbaab6d3d909e9f5a96560d6183a3ec2a3ab3bb8217c9e911029a8fba9",
+    "deep_analysis.yaml": "f43fbd514be474199281e10d30ed1b1be45253e550ffdf078bea6e295839250a",
+    "emerging.yaml": "fcac37efc4165525e5812f0d9c33675ab929e237ed2a2ad61f23cca8c3ed9c00",
+    "filters.yaml": "0d128cf960a37cead3c29a5f747397824148b69113e9cd7feeafba2f554a2b65",
+    "history.yaml": "8481bd23e3b36f0c7573a6e6c35487ea343a89ff29bd7ca9e640b65d6515fa46",
+    "manifest.json": "b08f9346423c1075cc2752618ce52b2c9687285fb16ba84badb6775a6029c834",
+    "provider_capabilities.yaml": "2f977f5a594b8c9c366fb097bf2a75c00f9ae51dcfd59b632bb9850a15e23489",
+    "report.yaml": "771cf6a6fbbe3f73053ec3ad7fec99dbbdab664be7acc7a5174ebf7a2e737464",
+    "runtime.yaml": "b8ab0a8ddfc84d678acad08a68f99d4f51d805529e70c3ca8a03763d129a3203",
+    "scoring.yaml": "55b9c0e1a6a92cbfc02c9b58fafe754be2b2b9dd301f416a87f49b77135d9dea",
+    "supplier.yaml": "d3d343db89934ea84056397ff71ae2eeadf9979d5fc7771ef7abe4686f3b5efd"
+  },
+  "production_data_paths": {
+    "raw": "data/production/raw",
+    "processed": "data/production/processed",
+    "history": "data/production/history",
+    "reports": "reports/production",
+    "runs": "runs/production",
+    "cache": "data/production/raw"
+  },
+  "provider_health": {
+    "providers": {
+      "kalopilot": {
+        "status": "AVAILABLE",
+        "balance": 87.75,
+        "detail": "credentials present; free credit endpoint answered",
+        "authentication": "AUTHENTICATED",
+        "capability": "discovery + deep analysis + Amazon validation (provider_capabilities.yaml)",
+        "last_successful_query": {
+          "timestamp": "2026-10-03T11:46:39.695197+00:00",
+          "source": "production",
+          "stage": "deep_analysis"
+        }
+      },
+      "amazon": {
+        "status": "DEGRADED",
+        "detail": "via KaloPilot; reliability never measured live (AB)",
+        "authentication": "via KaloPilot",
+        "capability": "KaloPilot Amazon prompt (never measured live)",
+        "last_successful_query": "NOT_MEASURED"
+      },
+      "supplier": {
+        "status": "DEGRADED",
+        "sources": [
+          "manual_import"
+        ],
+        "imported_files": 3,
+        "detail": "manual import only (no automated supplier provider configured)",
+        "authentication": "not required (manual)",
+        "capability": "manual_import only",
+        "last_successful_query": "N/A (no paid query)"
+      },
+      "competitor": {
+        "status": "DEGRADED",
+        "sources": [
+          "manual_import"
+        ],
+        "imported_files": 0,
+        "detail": "manual import only (no automated competitor provider configured)",
+        "authentication": "not required (manual)",
+        "capability": "manual_import only",
+        "last_successful_query": "N/A (no paid query)"
+      },
+      "creative": {
+        "status": "AVAILABLE",
+        "sources": [
+          "kalopilot_saved",
+          "manual_import"
+        ],
+        "detail": "saved KaloPilot top videos + imports",
+        "authentication": "via KaloPilot",
+        "capability": "saved KaloPilot top_videos (no hooks / angles / dates) + manual_import",
+        "last_successful_query": "N/A (no paid query)"
+      }
+    },
+    "degraded_mode_decisions": [
+      {
+        "provider": "amazon",
+        "status": "DEGRADED",
+        "action": "CONTINUE",
+        "effect": "cross-platform demand UNKNOWN (never estimated)"
+      },
+      {
+        "provider": "supplier",
+        "status": "DEGRADED",
+        "action": "CONTINUE",
+        "effect": "READY requires supplier economics (decision rules ready.require_supplier_economics)"
+      },
+      {
+        "provider": "competitor",
+        "status": "DEGRADED",
+        "action": "CONTINUE_REDUCED_CONFIDENCE",
+        "effect": "Decision Confidence -10 for products without competitor evidence"
+      }
+    ],
+    "blocks": [],
+    "degraded_effects": {
+      "WPS": "unaffected (TikTok data only)",
+      "AVS": "computed only for eligible products (WPS>=55, Conf>=60); Amazon never measured live, matches are not forced",
+      "BVS": "partial: real supplier economics only for products with imported offers; otherwise INSUFFICIENT_SUPPLIER_DATA (never estimated)",
+      "Competitor Intelligence": "only for products with imported competitor research; otherwise Competitive Environment UNKNOWN",
+      "Creative Intelligence": "saved KaloPilot top videos (free) + imports; without hook / angle / date the creative confidence stays <= 60 < minimum 65 -> Creative Opportunity UNKNOWN",
+      "Decision Confidence": "-10 for every product without competitor evidence (competitor provider DEGRADED)",
+      "READY_FOR_PRODUCT_VALIDATION eligibility": "requires supplier economics (imported offers), competitor evidence and classified creative evidence; with the current sources NO product can reach READY unless those are imported before the run"
+    },
+    "checked_at": "2026-10-03T11:50:12.914423+00:00"
+  },
+  "query_budget": {
+    "stages": {
+      "discovery": {
+        "planned_queries": 6,
+        "cached": 6,
+        "expected_paid_min": 0,
+        "expected_paid_max": 0,
+        "mode": "lenses",
+        "max_products": 100,
+        "estimate_per_query": 4.0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 0.0
+      },
+      "deep_analysis": {
+        "planned_queries": 22,
+        "cached": "checked per product at run time",
+        "expected_paid_min": 0,
+        "expected_paid_max": 22,
+        "max_products": 22,
+        "batch_size": 1,
+        "note": "0 only if no PASS/REVIEW candidate or all cached (< 24 h)",
+        "estimate_per_query": 3.6,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 79.2
+      },
+      "amazon_validation": {
+        "planned_queries": 2,
+        "cached": "checked per product at run time",
+        "expected_paid_min": 0,
+        "expected_paid_max": 2,
+        "max_products": 3,
+        "batch_size": 2,
+        "note": "only products with WPS>=55, Conf>=60 (may be 0)",
+        "estimate_per_query": 4.0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 8.0
+      }
+    },
+    "providers": {
+      "KaloPilot (TikTok Shop: discovery + deep analysis)": {
+        "planned_queries": 28,
+        "cache_hits_known": 6,
+        "expected_paid_min": 0,
+        "expected_paid_max": 22,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 79.2,
+        "note": "deep cache (< 24 h, same prompt) checked per product at run time"
+      },
+      "Amazon (via KaloPilot Amazon validation)": {
+        "planned_queries": 2,
+        "cache_hits_known": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 2,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 8.0,
+        "note": "only products with WPS>=55, Conf>=60 (may be 0)"
+      },
+      "Suppliers": {
+        "planned_queries": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 0.0,
+        "sources": [
+          "manual_import"
+        ],
+        "limits": "3 products x 5 offers",
+        "note": "no automated supplier API configured: only offers already imported are used (no order, no supplier contact)"
+      },
+      "Competitors": {
+        "planned_queries": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 0.0,
+        "sources": [
+          "manual_import"
+        ],
+        "limits": "3 products x 10",
+        "note": "no automated competitor API configured: only research already imported is used"
+      },
+      "Creatives": {
+        "planned_queries": 0,
+        "expected_paid_min": 0,
+        "expected_paid_max": 0,
+        "estimated_credits_min": 0.0,
+        "estimated_credits_max": 0.0,
+        "sources": [
+          "kalopilot_saved",
+          "manual_import"
+        ],
+        "limits": "3 products x 20",
+        "note": "saved KaloPilot top_videos of the deep answers (free, no new query) + manual imports"
+      }
+    },
+    "planned_queries_max": 30,
+    "cached_queries": 6,
+    "expected_paid_queries_min": 0,
+    "expected_paid_queries_max": 24,
+    "estimated_credits_min": 0.0,
+    "estimated_credits_max": 87.2,
+    "estimate_basis": "configured estimate per paid query (query_plan.estimated_credits) — NOT a provider quote; batched queries have no observed cost yet",
+    "max_credits_for_run": 110,
+    "min_balance_reserve": 5.0
+  },
+  "query_log": [
+    {
+      "stage": "discovery",
+      "action": "CACHE_HIT",
+      "query_type": "discovery",
+      "products": [
+        "electronics_accessories"
+      ],
+      "timestamp": "2026-10-03T11:50:13.932672+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/20261003T105418Z_electronics_accessories_18f97e5a130a47d5ba742e6f1538fe21.json"
+    },
+    {
+      "stage": "discovery",
+      "action": "CACHE_HIT",
+      "query_type": "discovery",
+      "products": [
+        "electronics_accessories"
+      ],
+      "timestamp": "2026-10-03T11:50:13.935747+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/20261003T105957Z_electronics_accessories_32a397b032ca4bedb1a5f1c27f463c09.json"
+    },
+    {
+      "stage": "discovery",
+      "action": "CACHE_HIT",
+      "query_type": "discovery",
+      "products": [
+        "electronics_accessories"
+      ],
+      "timestamp": "2026-10-03T11:50:13.938710+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/20261003T110637Z_electronics_accessories_c962dad41676457099a440d9548a7052.json"
+    },
+    {
+      "stage": "discovery",
+      "action": "CACHE_HIT",
+      "query_type": "discovery",
+      "products": [
+        "electronics_accessories"
+      ],
+      "timestamp": "2026-10-03T11:50:13.941861+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/20261003T111014Z_electronics_accessories_db89638654d54c5c8c5f4479dbeb86b8.json"
+    },
+    {
+      "stage": "discovery",
+      "action": "CACHE_HIT",
+      "query_type": "discovery",
+      "products": [
+        "electronics_accessories"
+      ],
+      "timestamp": "2026-10-03T11:50:13.944898+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/20261003T115007Z_electronics_accessories_49cbb654e5f74ae1996d2b493727f56a.json"
+    },
+    {
+      "stage": "discovery",
+      "action": "CACHE_HIT",
+      "query_type": "discovery",
+      "products": [
+        "electronics_accessories"
+      ],
+      "timestamp": "2026-10-03T11:50:13.948026+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/20261003T113521Z_electronics_accessories_a15b0223801148bab3fc8e4b600abbc8.json"
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "CACHE_HIT",
+      "query_type": "deep_product",
+      "products": [
+        "1732306919019352838"
+      ],
+      "timestamp": "2026-10-03T11:50:14.333294+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T113857334216Z_1732306919019352838_deep_product.json"
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "CACHE_HIT",
+      "query_type": "deep_product",
+      "products": [
+        "1732250308902949401"
+      ],
+      "timestamp": "2026-10-03T11:50:14.359052+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T114334662077Z_1732250308902949401_deep_product.json"
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "CACHE_HIT",
+      "query_type": "deep_product",
+      "products": [
+        "1729489737433321957"
+      ],
+      "timestamp": "2026-10-03T11:50:14.386498+00:00",
+      "raw_file": "/root/winning-product-agent/data/production/raw/deep_analysis/20261003T114639695869Z_1729489737433321957_deep_product.json"
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "LIVE_QUERY",
+      "query_type": "deep_product",
+      "products": [
+        "1731456035446887124"
+      ],
+      "timestamp": "2026-10-03T11:55:22.084014+00:00",
+      "task_id": "4b6b64f35ff8419aa25c34692f1cba98",
+      "credits": 2.95,
+      "error_category": null
+    },
+    {
+      "stage": "deep_analysis",
+      "action": "LIVE_QUERY",
+      "query_type": "deep_product",
+      "products": [
+        "1732423150078759822"
+      ],
+      "timestamp": "2026-10-03T11:58:27.025259+00:00",
+      "task_id": "be7f313209bc42dfbf1361adf5d8023d",
+      "credits": 0.81,
+      "error_category": null
+    },
+    {
+      "stage": "amazon_validation",
+      "action": "LIVE_QUERY",
+      "query_type": "amazon_match",
+      "products": [
+        "1731456035446887124"
+      ],
+      "timestamp": "2026-10-03T12:01:32.261488+00:00",
+      "task_id": "d80b67119b9647d6b46963687f034dfb",
+      "credits": 1.98,
+      "error_category": null
+    }
+  ],
+  "provider_query_counts": {
+    "discovery": {
+      "LIVE_QUERY": 0,
+      "CACHE_HIT": 6,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "deep_analysis": {
+      "LIVE_QUERY": 2,
+      "CACHE_HIT": 3,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    },
+    "amazon_validation": {
+      "LIVE_QUERY": 1,
+      "CACHE_HIT": 0,
+      "FETCHED_RESULT": 0,
+      "BLOCKED": 0,
+      "FAILED": 0
+    }
+  },
+  "cache_hits": 9,
+  "query_accounting": {
+    "run_id": "20261003T115012Z_dc4d67",
+    "planned_queries": 12,
+    "executed_queries": 3,
+    "cached_queries": 9,
+    "blocked_queries": 0,
+    "failed_queries": 0,
+    "estimated_credit_cost": "UNKNOWN",
+    "estimated_credit_cost_basis": "no estimate configured",
+    "actual_credit_cost": 5.74,
+    "remaining_balance": 82.01
+  },
+  "credits": {
+    "balance_start": 87.75,
+    "balance_now": 82.01,
+    "credits_used_reported": 5.74,
+    "credits_used_by_balance": 5.74
+  },
+  "post_run_audit": {
+    "result": "RUN_REVIEW_REQUIRED",
+    "issues": [
+      "mapping (critical fields): 1732306919019352838: Discovery vs Deep creator_count: 217 vs 96 (56% apart); 1732306919019352838: Discovery vs Deep video_count: 489 vs 177 (64% apart); 1732250308902949401: selling videos 199 > total videos 198; 1729489737433321957: Discovery vs Deep creator_count: 859 vs 294 (66% apart); 1729489737433321957: Discovery vs Deep video_count: 916 vs 272 (70% apart)"
+    ],
+    "first_production_run_status": null,
+    "critical_issues": [
+      "mapping (critical fields): 1732306919019352838: Discovery vs Deep creator_count: 217 vs 96 (56% apart); 1732306919019352838: Discovery vs Deep video_count: 489 vs 177 (64% apart); 1732250308902949401: selling videos 199 > total videos 198; 1729489737433321957: Discovery vs Deep creator_count: 859 vs 294 (66% apart); 1729489737433321957: Discovery vs Deep video_count: 916 vs 272 (70% apart)"
+    ]
+  },
+  "outputs": {
+    "report_markdown": "/root/winning-product-agent/reports/production/2026-10-03-winning-products-2.md",
+    "report_json": "/root/winning-product-agent/reports/production/2026-10-03-winning-products-2.json",
+    "report_latest": "/root/winning-product-agent/reports/production/latest-winning-products.md",
+    "manifest": "/root/winning-product-agent/runs/production/20261003T115012Z_dc4d67/manifest.json",
+    "log": "/root/winning-product-agent/runs/production/20261003T115012Z_dc4d67/log.jsonl",
+    "final_decision_markdown": "/root/winning-product-agent/reports/production/2026-10-03-final-decision-4.md",
+    "final_decision_json": "/root/winning-product-agent/reports/production/2026-10-03-final-decision-4.json",
+    "final_decision_latest": "/root/winning-product-agent/reports/production/latest-final-decision.md",
+    "run_audit": "/root/winning-product-agent/reports/production/2026-10-03-run-audit-4.md"
+  },
+  "summary": {
+    "discovered": 19,
+    "pass": 8,
+    "review": 10,
+    "fail": 1,
+    "deep_analyzed_ok": 4,
+    "deep_failed": 1,
+    "amazon_validated": 1,
+    "bvs_evaluated": 1,
+    "stop_reason": null,
+    "provider_failure": null
+  },
+  "manifest_copy_of": "/root/winning-product-agent/runs/production/20261003T115012Z_dc4d67/manifest.json"
+}

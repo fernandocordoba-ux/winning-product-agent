@@ -1,0 +1,219 @@
+{
+  "mode": "live",
+  "run_id": "20261003T115012Z_dc4d67",
+  "data_environment": "PRODUCTION",
+  "deep_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T115827109441Z.json",
+  "eligible": 1,
+  "excluded": [
+    {
+      "product_id": "1732306919019352838",
+      "reason": "WPS 47.63 < 55"
+    },
+    {
+      "product_id": "1732250308902949401",
+      "reason": "WPS 46.51 < 55"
+    },
+    {
+      "product_id": "1729489737433321957",
+      "reason": "WPS 43.53 < 55"
+    }
+  ],
+  "stopped": null,
+  "results": [
+    {
+      "product_id": "1731456035446887124",
+      "tiktok_product_name": "Auto Face Tracking Tripod for Smartphones & Cellphones - Gesture Control, 360-Degree Camera Mount Selfie Accessories, Smart Shooting Phone Mount, Smartphone Camera Accessories for Vlogging, Live Streaming",
+      "observation_timestamp": "2026-10-03T12:01:32.263553+00:00",
+      "market": "US",
+      "source": {
+        "provider": "kalopilot",
+        "raw_file": "/root/winning-product-agent/data/production/raw/amazon_validation/20261003T120132263553Z_1731456035446887124_amazon_match.json",
+        "task_id": "d80b67119b9647d6b46963687f034dfb",
+        "report_url": null,
+        "query_type": "amazon_match",
+        "cache_hit": false,
+        "deep_analysis_file": "/root/winning-product-agent/data/production/processed/deep_analysis/deep_20261003T115827109441Z.json"
+      },
+      "tiktok_scores": {
+        "wps": 77.55,
+        "confidence": 88.17
+      },
+      "status": "ok",
+      "amazon_match_name": null,
+      "amazon_url": null,
+      "amazon_asin": null,
+      "amazon_brand": null,
+      "amazon_match_confidence": 51.56,
+      "amazon_match_class": "UNRELIABLE",
+      "amazon_match_status": "NO_RELIABLE_MATCH",
+      "amazon_match_detail": {
+        "name_similarity": {
+          "overlap": 0.6,
+          "s": 0.6666666666666665
+        },
+        "brand": {
+          "tiktok": null,
+          "amazon": "ubeesize",
+          "s": 0.0
+        },
+        "category": {
+          "overlap": 0.5,
+          "s": 0.8
+        },
+        "variant_attributes": {
+          "tiktok": [],
+          "s": null,
+          "note": "no attribute tokens in TikTok title; excluded"
+        }
+      },
+      "amazon_price": null,
+      "amazon_category": null,
+      "amazon_rating": null,
+      "amazon_review_count": null,
+      "amazon_bsr": null,
+      "amazon_bsr_category": null,
+      "amazon_sales_indicator": {
+        "monthly_sales_estimate": null,
+        "source": null
+      },
+      "amazon_listing_date": null,
+      "amazon_competitor_count": 5,
+      "amazon_price_range": {
+        "min": 22.99,
+        "max": 49.99
+      },
+      "amazon_top3_brand_share_pct": 60,
+      "amazon_recent_trend": "growing",
+      "amazon_presence": "UNCERTAIN",
+      "amazon_demand_strength": null,
+      "amazon_demand_signals": {},
+      "price_ratio": null,
+      "cross_platform_demand": "INSUFFICIENT_DATA",
+      "amazon_competition": "HIGH",
+      "price_alignment": "INSUFFICIENT_DATA",
+      "cross_platform_consistency": 1.0,
+      "avs": 15.0,
+      "avs_breakdown": {
+        "amazon_demand_evidence": {
+          "points": "N/A",
+          "max": 30,
+          "status": "N/A",
+          "missing_signals": [
+            "review_count",
+            "bsr",
+            "monthly_sales_estimate"
+          ]
+        },
+        "match_confidence": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "competition_opportunity": {
+          "points": 0.0,
+          "max": 20,
+          "status": "full"
+        },
+        "price_alignment": {
+          "points": "N/A",
+          "max": 15,
+          "status": "N/A"
+        },
+        "cross_platform_consistency": {
+          "points": 15.0,
+          "max": 15,
+          "status": "full"
+        }
+      },
+      "amazon_confidence": 40.47,
+      "amazon_confidence_level": "LOW",
+      "amazon_confidence_breakdown": {
+        "match_confidence": {
+          "earned": 15.47,
+          "max": 30,
+          "status": "partial"
+        },
+        "price": {
+          "earned": 0.0,
+          "max": 10,
+          "status": "missing"
+        },
+        "rating_reviews": {
+          "earned": 0.0,
+          "max": 15,
+          "status": "missing"
+        },
+        "ranking_demand": {
+          "earned": 0.0,
+          "max": 20,
+          "status": "missing"
+        },
+        "comparable_listings": {
+          "earned": 15.0,
+          "max": 15,
+          "status": "full"
+        },
+        "competition_data": {
+          "earned": 10.0,
+          "max": 10,
+          "status": "full"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "title": "USKEYVISION 70.9\" Auto Face Tracking Tripod 360° Rotation w/Light(UTK-02)",
+          "url": "https://www.amazon.com/dp/B0DCVZDL4F"
+        },
+        {
+          "title": "MQOUNY Auto Face Tracking Phone Holder, 360° Rotation Face Body Phone Tripod Smart Shooting Camera Mount with Rechargeable Remote and Light for Live Vlog Streaming Video, Rechargeable",
+          "url": "https://www.amazon.com/dp/B0CW5ZFT6W"
+        },
+        {
+          "title": "Crienten Auto Face Tracking Tripod, 360° AI Face Tracking Phone Holder with Remote, No App，Smart Phone Stand for iPhone & Android, Rechargeable Tripod for Video Recording, Live Streaming, TikTok, Vlog",
+          "url": "https://www.amazon.com/dp/B0CYLGPY76"
+        },
+        {
+          "title": "Acer Gadget Auto Face Tracking Tripod for iPhone",
+          "url": "https://www.amazon.com/dp/B0F6Y6RXVN"
+        },
+        {
+          "title": "UBeesize 70\" Auto Face Tracking Phone Tripod for iPhone & Camera with Light",
+          "url": "https://www.amazon.com/dp/B0GHRD2L56"
+        }
+      ],
+      "search_sources": [
+        "KaloData Amazon US product ranking (last30Day, sorted by monthly revenue): keyword 'tracking' scoped to category Cell Phones & Accessories > Accessories > Photo & Video Accessories > Tripods (category path 2335752011:2407755011:21209100011:11139610011) - 5 rows matched upstream, full match set returned",
+        "KaloData Amazon US product ranking (last30Day): keyword sweeps 'face tracking tripod', 'auto tracking tripod phone', 'face tracking phone', 'phone gimbal AI tracking vlog' - used for recall, comparable set taken from the Tripods-category query"
+      ],
+      "parse_warnings": [],
+      "config_version": "amazon-validation-v1",
+      "missing_data": [
+        "amazon_bsr",
+        "amazon_price",
+        "amazon_rating",
+        "amazon_review_count",
+        "amazon_sales_indicator"
+      ],
+      "amazon_red_flags": [
+        {
+          "flag": "NO_RELIABLE_MATCH",
+          "best_candidate_score": 51.56
+        },
+        {
+          "flag": "AMAZON_HIGH_SATURATION"
+        },
+        {
+          "flag": "AMAZON_DOMINATED_BY_MAJOR_BRANDS",
+          "top3_brand_share_pct": 60
+        },
+        {
+          "flag": "AMAZON_DATA_INSUFFICIENT",
+          "amazon_confidence": 40.47
+        }
+      ],
+      "data_environment": "PRODUCTION",
+      "run_id": "20261003T115012Z_dc4d67",
+      "calibration_only": false
+    }
+  ]
+}

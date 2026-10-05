@@ -68,7 +68,8 @@ def _seasonal(product, keywords):
 
 def select_candidates(discovery_result, cfg, scoring_cfg=None):
     """PASS before REVIEW (keeping Discovery's order inside each status), FAIL excluded.
-    selection.order = preliminary_wps -> highest preliminary score first (status as tie-break).
+    selection.order = preliminary_wps -> sustained 90-day growth first, then highest preliminary score.
+    selection.order = preliminary_only -> highest preliminary score first, nothing else ahead of it.
     selection.exclude_keywords -> seasonal products are listed but not deep-analyzed."""
     sel = cfg["selection"]
     eligible = set(sel["eligible_statuses"])
@@ -85,7 +86,17 @@ def select_candidates(discovery_result, cfg, scoring_cfg=None):
             else:
                 keep.append(p)
         pool = keep
-    if sel.get("order") == "preliminary_wps":
+    if sel.get("exclude_operational"):        # owner exclusions applied HERE, by the program (not asked of the provider)
+        keep = []
+        for p in pool:
+            hit = _seasonal(p, sel["exclude_operational"])
+            if hit:
+                skipped.append({"key": p["key"], "reason": f"operational exclusion {hit}: not deep-analyzed"})
+            else:
+                keep.append(p)
+        pool = keep
+    if sel.get("order") in ("preliminary_wps", "preliminary_only"):
+        sustained_first = sel["order"] == "preliminary_wps"      # preliminary_only: score alone decides
         for p in pool:
             p["calculated"]["preliminary_wps"] = preliminary_score(p, scoring_cfg)
         for p in pool:                        # 90-day sustained growth (lens answers) ranks first
@@ -93,7 +104,19 @@ def select_candidates(discovery_result, cfg, scoring_cfg=None):
             seq = [disc.parse_value(o.get(k), "num")[0] for k in ("gmv_prev2_30d", "gmv_prev_30d", "gmv_30d")]
             p["calculated"]["sustained_growth"] = (None if None in seq else seq[0] < seq[1] < seq[2])
         old = set(sel.get("deprioritize_ids") or [])          # analyzed recently -> after new products
+        floor = sel.get("min_preliminary")                    # owner rule: below it, no paid deep analysis
+        if floor is not None:
+            keep = []
+            for p in pool:
+                pre = p["calculated"]["preliminary_wps"]
+                if pre is not None and pre < floor:
+                    skipped.append({"key": p["key"], "reason": f"preliminary score {pre} below {floor}: "
+                                                               "not deep-analyzed"})
+                else:
+                    keep.append(p)
+            pool = keep
         ordered = sorted(enumerate(pool), key=lambda ip: (str(ip[1]["facts"].get("product_id")) in old,
+                                                          sustained_first and
                                                           ip[1]["calculated"].get("sustained_growth") is not True,
                                                           -(ip[1]["calculated"]["preliminary_wps"] or 0),
                                                           rank.get(ip[1]["calculated"]["filter_status"], 99), ip[0]))
@@ -137,7 +160,10 @@ def find_cached(product_id, query_type, ttl_hours, now, raw_dir=RAW_DIR):
             ts = datetime.fromisoformat(env["observation_timestamp"])
         except (ValueError, KeyError, json.JSONDecodeError):
             continue
-        status = ((env.get("response") or {}).get("data") or {}).get("status")
+        data = (env.get("response") or {}).get("data") or {}
+        status = data.get("status")
+        if "text" in data and not (data.get("text") or "").strip() and not data.get("report"):
+            continue            # paid but EMPTY answer (provider cut it at its output limit): not a cache hit, ask again
         if status == "completed" and now - ts <= timedelta(hours=ttl_hours):
             best = path
     return best
